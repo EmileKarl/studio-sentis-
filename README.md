@@ -20,8 +20,14 @@ Le skill [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
 est installé dans `.claude/skills/` (via `npx ui-ux-pro-max-cli init --ai claude`),
 ce qui ajoute :
 
-`ui-ux-pro-max`, `design`, `design-system`, `ui-styling`, `brand`,
+`ui-ux-pro-max`, `uupm-design`, `design-system`, `ui-styling`, `brand`,
 `banner-design`, `slides`.
+
+Le bundle livre ce dernier sous le nom `design`, qui masque le skill `design`
+intégré à Claude Code (le canvas Claude Design) : un seul des deux se résout
+sous ce nom. Il est donc renommé ici en `uupm-design`. Ce renommage est à
+réappliquer après chaque `npx ui-ux-pro-max-cli update`, qui recrée
+`skills/design/`.
 
 Il s'active automatiquement sur les demandes UI/UX. Ses scripts de recherche
 sont en Python (stdlib uniquement, aucun accès réseau) :
