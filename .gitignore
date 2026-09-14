@@ -1,2 +1,9 @@
 __pycache__/
 *.py[cod]
+
+# Impeccable: platform-specific engine binary, re-downloaded (sha256-verified)
+# on first run, so it must not be committed
+.claude/skills/impeccable/scripts/bin/
+
+# Claude Code machine-local settings; Impeccable installs its edit hook here
+.claude/settings.local.json

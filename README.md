@@ -32,3 +32,37 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --d
 ```
 
 **Prérequis :** Python 3.x. Pour mettre à jour : `npx ui-ux-pro-max-cli update`.
+
+### Impeccable
+
+[Impeccable](https://github.com/pbakaus/impeccable) est installé dans
+`.claude/skills/impeccable/` (via `npx impeccable install --providers=claude
+--scope=project`), avec ses 4 sous-agents dans `.claude/agents/`.
+
+Un seul point d'entrée, 23 commandes :
+
+```
+/impeccable init          # à lancer en premier : écrit PRODUCT.md
+/impeccable audit <cible>
+/impeccable critique <cible>
+/impeccable polish <cible>
+```
+
+Le détecteur (61 règles déterministes, sans LLM ni clé API) s'utilise aussi
+directement :
+
+```bash
+.claude/skills/impeccable/scripts/impeccable detect src/
+```
+
+**Deux choses ne sont pas versionnées, volontairement :**
+
+- `scripts/bin/` — le moteur est un binaire compilé par plateforme (~16 Mo).
+  Le launcher le retélécharge au premier lancement et vérifie son sha256.
+- `.claude/settings.local.json` — le hook Impeccable, qui lance le détecteur
+  après chaque Edit/Write et en fin de tour. Upstream le veut machine-local.
+  Chacun l'obtient en relançant `npx impeccable install`; pour l'activer pour
+  toute l'équipe, déplacer son contenu dans `.claude/settings.json` (Impeccable
+  le reconnaît aussi à cet endroit).
+
+Pour mettre à jour : `npx impeccable update`.
