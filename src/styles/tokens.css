@@ -1,0 +1,191 @@
+/* =========================================================================
+   NEXUS UI — Design tokens
+   Direction : Swiss editorial / technical instrument.
+   Every text-on-surface pair below is verified against WCAG AA (4.5:1)
+   with the Impeccable detector. Do not edit a value without re-running:
+     .claude/skills/impeccable/scripts/impeccable detect <probe>
+   ========================================================================= */
+
+:root {
+  /* --- Surfaces (light) ------------------------------------------------ */
+  --paper: #faf9f7;           /* page background, warm off-white */
+  --surface: #ffffff;         /* raised card */
+  --surface-2: #f2f0ec;       /* inset / sunken */
+  --overlay: rgb(20 18 15 / 0.55);
+
+  /* --- Ink ------------------------------------------------------------- */
+  --ink: #14120f;             /* primary text */
+  --ink-secondary: #46423b;   /* secondary text */
+  --ink-muted: #6b655b;       /* muted / captions — 4.5:1 on all 3 surfaces */
+
+  /* --- Line ------------------------------------------------------------ */
+  --rule: #ddd9d1;            /* hairline rule, the Swiss grid line */
+  --rule-strong: #b9b3a8;
+
+  /* --- Signal ---------------------------------------------------------- */
+  --signal: #e23e1f;          /* brand vermilion — graphic + large text only */
+  --signal-aa: #be2f16;       /* AA-safe: body text on paper, or fill under white */
+  --signal-contrast: #ffffff;
+
+  /* --- Status ---------------------------------------------------------- */
+  --success: #1f7a4c;
+  --warning: #8a5800;
+  --error: #c0311a;
+  --info: #1f5f9e;
+
+  /* --- shadcn bridge (light) ------------------------------------------- */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--ink);
+  --destructive: var(--error);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--signal);
+
+  --chart-1: #14120f;
+  --chart-2: #be2f16;
+  --chart-3: #1f5f9e;
+  --chart-4: #1f7a4c;
+  --chart-5: #8a5800;
+
+  --sidebar: var(--surface-2);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--surface);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--signal);
+
+  /* --- Radii: deliberately sharp. Swiss, not bubble. ------------------- */
+  --radius: 0.25rem;
+  --radius-none: 0px;
+  --radius-full: 9999px;
+
+  /* --- Spacing scale (§5.3) -------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* --- Elevation. Flat by default; depth is earned, not decorative. ---- */
+  --shadow-sm: 0 1px 2px rgb(20 18 15 / 0.06);
+  --shadow-md: 0 2px 8px rgb(20 18 15 / 0.08);
+  --shadow-lg: 0 8px 32px rgb(20 18 15 / 0.10);
+  --glow: 0 0 0 1px var(--signal), 0 0 24px rgb(226 62 31 / 0.18);
+  --blur-sm: 4px;
+  --blur-md: 12px;
+
+  /* --- Grid (§5.6) ------------------------------------------------------ */
+  --container-max: 1440px;
+  /* Mesure d'un paragraphe (§3.1 E). Exprimée en ch : l'unité se résout sur
+     la police de l'élément QUI PORTE la classe. À poser sur le texte
+     lui-même, jamais sur un conteneur dont la taille de police diffère. */
+  --content-max: 68ch;
+  --gutter: 24px;
+  --columns: 12;
+}
+
+.dark {
+  --paper: #0d0c0b;
+  --surface: #171614;
+  --surface-2: #211f1c;
+  --overlay: rgb(0 0 0 / 0.66);
+
+  --ink: #f5f2ed;
+  --ink-secondary: #b8b2a8;
+  --ink-muted: #948e83;       /* raised from #8a847a: that failed AA on surface-2 */
+
+  --rule: #2e2b27;
+  --rule-strong: #46423b;
+
+  --signal: #ff5a36;
+  --signal-aa: #ff5a36;
+  --signal-contrast: #0d0c0b;
+
+  --success: #5fd19a;
+  --warning: #e5a83b;
+  --error: #ff7a63;
+  --info: #6fb2f0;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--ink);
+  --destructive: var(--error);
+  --border: var(--rule);
+  --input: var(--rule-strong);
+  --ring: var(--signal);
+
+  --chart-1: #f5f2ed;
+  --chart-2: #ff5a36;
+  --chart-3: #6fb2f0;
+  --chart-4: #5fd19a;
+  --chart-5: #e5a83b;
+
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--signal);
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 2px 8px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 8px 32px rgb(0 0 0 / 0.6);
+  --glow: 0 0 0 1px var(--signal), 0 0 24px rgb(255 90 54 / 0.25);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-signal: var(--signal);
+  --color-signal-aa: var(--signal-aa);
+  --color-signal-contrast: var(--signal-contrast);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --spacing-gutter: var(--gutter);
+  --container-page: var(--container-max);
+}

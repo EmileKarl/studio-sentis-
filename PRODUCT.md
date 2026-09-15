@@ -58,6 +58,9 @@ canaux d'acquisition restent à définir.
 - **Bilingue français + anglais dès le départ.** Contrainte structurelle : la
   mise en page doit absorber les écarts de longueur entre les deux langues, et
   l'internationalisation ne peut pas être ajoutée après coup.
+  *État : non tenue.* NEXUS UI est en français uniquement et aucune
+  infrastructure i18n n'est posée — dette connue, consignée dans
+  `docs/audit.md`.
 - Entreprise non encore ouverte : ni forme juridique, ni tarifs, ni délais, ni
   zone d'intervention confirmés.
 - Périmètre exact de chaque service non décidé.
@@ -72,14 +75,31 @@ canaux d'acquisition restent à définir.
   décision.
 - Voix de marque non établie.
 
+## Premier projet — NEXUS UI
+
+Le cahier des charges `NEXUS_UI_Cahier_des_Charges.txt` (v1.0) définit le
+premier projet de l'agence : un *digital starter kit*, à la fois infrastructure
+technique des projets suivants et pièce de portfolio.
+
+Ce dépôt **est** NEXUS UI. Le site de l'agence Studio Sentis n'est pas encore
+construit ; il se bâtira sur cette base.
+
+Ce choix répond directement à l'absence de preuve ci-dessous : une agence sans
+portfolio construit d'abord la démonstration de son propre savoir-faire.
+
+Niveau 1 (Foundation) livré et vérifié. Voir `docs/audit.md`.
+
 ## Evidence on Hand
 
-**Aucune.** Confirmé explicitement :
+**Aucune preuve client.** Confirmé explicitement :
 
 - aucun projet client livré ;
 - aucun témoignage, aucune étude de cas, aucune référence nommable ;
 - aucun chiffre, aucune ancienneté, aucune récompense ;
 - aucun logo client à afficher.
+
+La seule pièce montrable est NEXUS UI lui-même, et elle vaut ce que vaut son
+exécution.
 
 Tout travail futur doit traiter cette absence comme un fait durable jusqu'à
 information contraire. Ne pas fabriquer de témoignages, de logos clients, de

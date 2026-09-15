@@ -1,0 +1,794 @@
+NEXUS UI — DIGITAL STARTER KIT CAHIER DES CHARGES COMPLET ET VISION DU
+PROJET
+
+Version : 1.0 Objectif : créer une base de projet numérique moderne,
+professionnelle, réutilisable et évolutive pour les futurs projets web
+et digitaux.
+
+====================================================================== 1.
+VISION GÉNÉRALE
+======================================================================
+
+Le projet doit être bien plus qu’un simple template ou qu’une landing
+page.
+
+Il doit constituer :
+
+-   Un projet réel et fonctionnel.
+-   Un laboratoire de design.
+-   Une bibliothèque de composants réutilisables.
+-   Une bibliothèque d’animations.
+-   Une base technique pour les futurs projets.
+-   Une référence visuelle professionnelle.
+-   Un système de travail structuré pour l’intelligence artificielle.
+-   Une base pouvant être montrée dans un portfolio ou à des clients.
+
+Objectif principal :
+
+Construire une infrastructure de création numérique capable de produire
+des applications modernes, cohérentes, animées, maintenables,
+responsives et professionnelles.
+
+Le projet doit être conçu pour pouvoir être réutilisé dans : - Des sites
+vitrines. - Des SaaS. - Des dashboards. - Des portfolios. - Des
+plateformes digitales. - Des applications métier. - Des interfaces
+administratives. - Des expériences interactives.
+
+L’IA ne doit pas seulement générer du code. Elle doit agir comme : -
+Directeur artistique. - UX designer. - UI designer. - Architecte
+logiciel. - Développeur front-end. - Expert en motion design. - Expert
+responsive. - Expert accessibilité. - Contrôleur qualité. - Responsable
+de la documentation.
+
+======================================================================
+2. PRINCIPES DIRECTEURS
+======================================================================
+
+Le projet doit respecter les principes suivants :
+
+1.  La qualité visuelle ne doit pas être sacrifiée à la vitesse.
+2.  Les composants doivent être réutilisables.
+3.  Les animations doivent servir l’expérience utilisateur.
+4.  Le design doit être cohérent sur toutes les pages.
+5.  Le responsive doit être réel et testé.
+6.  Le code doit être propre, maintenable et documenté.
+7.  L’IA doit vérifier son travail avant de déclarer le projet terminé.
+8.  Les bibliothèques doivent être utilisées lorsqu’elles apportent une
+    réelle valeur.
+9.  Le projet doit être performant et accessible.
+10. L’inspiration visuelle ne doit pas devenir une copie d’un site
+    existant.
+11. Les interfaces doivent être utilisables sur desktop, tablette et
+    mobile.
+12. Le système doit pouvoir évoluer avec de nouveaux composants et de
+    nouvelles fonctionnalités.
+
+======================================================================
+3. RECHERCHE VISUELLE ET DIRECTION ARTISTIQUE
+======================================================================
+
+Avant le développement, l’IA doit effectuer une phase de recherche
+visuelle.
+
+Elle doit rechercher et analyser :
+
+-   Les tendances actuelles du design digital.
+-   Les sites SaaS premium.
+-   Les sites de studios créatifs.
+-   Les sites technologiques.
+-   Les interfaces de dashboards.
+-   Les sites éditoriaux.
+-   Les sites utilisant des animations avancées.
+-   Les sites utilisant des grilles originales.
+-   Les sites utilisant le défilement horizontal.
+-   Les sites utilisant des illustrations personnalisées.
+-   Les systèmes de design professionnels.
+-   Les compositions modernes et responsives.
+
+La recherche doit servir à identifier des principes de conception et non
+à copier une identité complète.
+
+3.1. Dossier de recherche visuelle obligatoire
+
+Le dossier doit contenir :
+
+A. Moodboard - 5 à 10 références visuelles minimum. - Ambiance
+générale. - Style graphique. - Niveau de contraste. - Type de
+composition. - Style d’images. - Style d’illustrations. - Style de
+navigation. - Style des cartes et boutons.
+
+B. Analyse des références Pour chaque référence : - Ce qui fonctionne. -
+Pourquoi cela fonctionne. - Ce qui peut être adapté. - Ce qui doit être
+évité. - Ce qui est pertinent pour le projet. - Ce qui ne correspond pas
+aux objectifs.
+
+C. Direction artistique L’IA doit proposer plusieurs directions
+possibles, par exemple : - Minimalisme premium. - Dark futuristic. -
+Editorial digital. - Creative technology. - Soft modern. - Neo-brutalism
+contrôlé. - Glassmorphism subtil. - Swiss-inspired grid.
+
+Elle doit ensuite recommander une direction principale et justifier ce
+choix.
+
+D. Palette de couleurs Définir : - Couleur principale. - Couleur
+secondaire. - Couleur d’accent. - Couleurs de fond. - Couleurs de
+surface. - Couleurs de texte. - Couleurs de bordure. - Couleurs
+d’état. - Couleurs du mode clair. - Couleurs du mode sombre. -
+Contrastes et accessibilité.
+
+E. Typographie Définir : - Police principale. - Police secondaire
+éventuelle. - Police des titres. - Police du corps. - Police des
+labels. - Échelle typographique. - Poids. - Hauteur de ligne. -
+Espacement des lettres. - Largeur maximale des paragraphes. - Gestion
+des titres longs. - Comportement responsive.
+
+F. Illustrations et visuels Rechercher ou créer : - Illustrations SVG. -
+Illustrations abstraites. - Illustrations 3D si pertinentes. - Images
+éditoriales. - Icônes. - Textures. - Fonds animés. - Éléments
+décoratifs. - Vidéos courtes si nécessaire.
+
+Pour chaque ressource, préciser : - Source. - Format. - Dimensions. -
+Usage. - Licence. - Nom de fichier. - Emplacement dans le projet.
+
+G. Patterns Prévoir éventuellement : - Grilles. - Points. - Lignes. -
+Formes géométriques. - Dégradés. - Grain visuel. - Trames. - Motifs
+répétitifs. - Formes organiques. - Patterns animés.
+
+H. Grilles et compositions Explorer : - Grille 12 colonnes. - Grille
+asymétrique. - Bento grid. - Split layout. - Full-bleed layout. -
+Editorial grid. - Masonry. - Cartes horizontales. - Compositions
+superposées. - Sections à largeur variable. - Dispositions adaptées au
+mobile.
+
+La grille doit être choisie selon le contenu et non uniquement selon les
+tendances.
+
+I. Motion board Définir : - Types d’animations. - Durées. - Courbes
+d’accélération. - Délais. - Stagger. - Distance de déplacement. -
+Intensité. - Déclencheurs. - Animations au chargement. - Animations au
+scroll. - Animations au survol. - Animations tactiles. - Comportement
+avec reduced motion.
+
+======================================================================
+4. STACK TECHNIQUE RECOMMANDÉE
+======================================================================
+
+Stack principale :
+
+-   Framework : Next.js.
+-   Interface : React.
+-   Langage : TypeScript.
+-   Styles : Tailwind CSS.
+-   Composants : shadcn/ui.
+-   Animations complexes : GSAP.
+-   Animations liées au scroll : GSAP ScrollTrigger.
+-   Défilement fluide : Lenis, si pertinent.
+-   Animations simples : Motion.
+-   Icônes : Lucide React.
+-   3D optionnelle : Three.js et React Three Fiber.
+-   Backend optionnel : Supabase.
+-   Déploiement : Vercel.
+
+Règles d’utilisation :
+
+-   Motion doit être utilisé pour les transitions et interactions
+    simples.
+-   GSAP doit être utilisé pour les timelines et animations complexes.
+-   ScrollTrigger doit être utilisé pour les animations pilotées par le
+    scroll.
+-   Lenis ne doit être utilisé que si le défilement fluide apporte une
+    réelle valeur.
+-   Three.js ne doit être ajouté que si une expérience 3D est justifiée.
+-   Éviter d’installer des bibliothèques inutiles.
+-   Éviter les conflits entre plusieurs systèmes d’animation.
+-   Préserver les performances et l’accessibilité.
+
+======================================================================
+5. DESIGN SYSTEM
+======================================================================
+
+Le projet doit disposer d’un véritable système de design.
+
+5.1. Couleurs
+
+Créer des tokens pour : - Background principal. - Background
+secondaire. - Surface. - Surface secondaire. - Primary. - Secondary. -
+Accent. - Text primary. - Text secondary. - Text muted. - Border. -
+Success. - Warning. - Error. - Info. - Overlay. - Focus ring.
+
+5.2. Typographie
+
+Définir : - Font family. - Display font. - Heading font. - Body font. -
+Label font. - Font sizes. - Font weights. - Line heights. - Letter
+spacing. - Styles de titres. - Styles de paragraphes. - Styles de
+labels. - Styles de boutons. - Styles de navigation.
+
+5.3. Espacements
+
+Créer une échelle cohérente, par exemple : - 4 px. - 8 px. - 12 px. - 16
+px. - 24 px. - 32 px. - 48 px. - 64 px. - 96 px. - 128 px.
+
+5.4. Rayons
+
+-   Small.
+-   Medium.
+-   Large.
+-   Extra large.
+-   Full.
+
+5.5. Ombres et effets
+
+-   Shadow small.
+-   Shadow medium.
+-   Shadow large.
+-   Glow.
+-   Blur.
+-   Background opacity.
+-   Border opacity.
+-   Elevation levels.
+
+5.6. Grilles
+
+Définir : - Container. - Max-width. - Nombre de colonnes. -
+Gouttières. - Marges. - Breakpoints. - Layout desktop. - Layout
+tablette. - Layout mobile. - Layouts asymétriques. - Layouts
+horizontaux.
+
+5.7. Motion tokens
+
+Définir : - Durées. - Easing. - Delays. - Stagger. - Distances. -
+Intensité. - Transitions standard. - Transitions rapides. - Transitions
+lentes. - Animations désactivées en reduced motion.
+
+======================================================================
+6. BIBLIOTHÈQUE DE COMPOSANTS
+======================================================================
+
+6.1. Layout
+
+-   Container.
+-   Section.
+-   Stack.
+-   Grid.
+-   Flex layout.
+-   Split layout.
+-   Bento grid.
+-   Masonry.
+-   Full-width section.
+-   Horizontal scroll section.
+-   Pinned section.
+-   Responsive wrapper.
+
+6.2. Navigation
+
+-   Navbar desktop.
+-   Navbar mobile.
+-   Sidebar.
+-   Mobile drawer.
+-   Tabs.
+-   Breadcrumb.
+-   Dropdown.
+-   Command menu.
+-   Pagination.
+-   Step navigation.
+
+6.3. Contenu
+
+-   Hero section.
+-   Feature cards.
+-   Testimonial cards.
+-   Pricing cards.
+-   Statistics.
+-   Timeline.
+-   FAQ.
+-   Gallery.
+-   Blog cards.
+-   Team cards.
+-   Logo cloud.
+-   Case study cards.
+-   Call-to-action sections.
+
+6.4. Formulaires
+
+-   Input.
+-   Textarea.
+-   Select.
+-   Checkbox.
+-   Radio.
+-   Switch.
+-   Slider.
+-   Date picker.
+-   Search field.
+-   File upload.
+-   Form validation.
+-   Password field.
+
+6.5. Feedback et overlays
+
+-   Toast.
+-   Alert.
+-   Modal.
+-   Drawer.
+-   Tooltip.
+-   Popover.
+-   Dropdown.
+-   Loading.
+-   Skeleton.
+-   Empty state.
+-   Error state.
+-   Success state.
+-   Confirmation state.
+
+6.6. Data display
+
+-   Table.
+-   Data cards.
+-   Charts.
+-   Progress bars.
+-   Activity feed.
+-   Status badges.
+-   Metric cards.
+-   Filters.
+-   Sorting controls.
+
+6.7. Motion components
+
+-   Reveal.
+-   Stagger container.
+-   Text reveal.
+-   Image reveal.
+-   Scroll reveal.
+-   Horizontal scroll.
+-   Parallax.
+-   Animated counter.
+-   Page transition.
+-   Hover interaction.
+-   Magnetic button.
+-   Tilt card.
+-   Cursor-follow element.
+
+Chaque composant doit inclure : - Une version de base. - Des
+variantes. - Des états. - Des propriétés. - Un exemple. - Un
+comportement responsive. - Une documentation. - Des règles
+d’accessibilité.
+
+======================================================================
+7. ARCHITECTURE DES ANIMATIONS ET DU MOUVEMENT
+======================================================================
+
+Les animations doivent être organisées dans une architecture claire.
+
+7.1. Défilement vertical
+
+Le comportement principal doit être : - Fluide. - Naturel. -
+Responsive. - Compatible clavier. - Compatible tactile. - Compatible
+lecteur d’écran. - Compatible reduced motion.
+
+7.2. Défilement horizontal
+
+Prévoir des démonstrations de : - Galerie de projets. - Présentation de
+fonctionnalités. - Timeline. - Collection de composants. - Parcours
+visuel. - Comparaison de solutions.
+
+Utiliser : - Défilement natif pour les carrousels simples. - GSAP et
+ScrollTrigger pour les séquences complexes.
+
+7.3. Sections épinglées
+
+Prévoir des sections où : - Le titre reste visible. - Les cartes
+défilent horizontalement. - Une illustration évolue. - Une timeline se
+construit. - Le contenu change progressivement.
+
+7.4. Parallaxe
+
+Utiliser la parallaxe pour : - Arrière-plans. - Illustrations. -
+Décors. - Images. - Éléments graphiques.
+
+La parallaxe doit rester légère et ne pas nuire à la lisibilité.
+
+7.5. Interactions au curseur
+
+Prévoir éventuellement : - Hover. - Magnetic buttons. - Tilt léger. -
+Cursor follow. - Effets de profondeur. - Déplacement subtil. - Highlight
+au survol.
+
+7.6. Animations de texte
+
+Prévoir : - Reveal. - Split text. - Apparition par mots. - Apparition
+par lignes. - Masques. - Transitions typographiques. - Animations de
+compteurs.
+
+7.7. Transitions de pages
+
+Prévoir : - Fade. - Slide. - Scale. - Transition de contenu. -
+Transition de layout.
+
+7.8. Règles motion
+
+-   L’animation doit renforcer la compréhension.
+-   Éviter les animations partout.
+-   Éviter les mouvements trop rapides.
+-   Éviter les mouvements qui provoquent des nausées.
+-   Ne pas bloquer la navigation.
+-   Respecter prefers-reduced-motion.
+-   Éviter les layout shifts.
+-   Préserver les performances mobiles.
+
+======================================================================
+8. CONCEPT DU PREMIER PROJET : NEXUS UI
+======================================================================
+
+Nom de travail : NEXUS UI — DIGITAL STARTER KIT
+
+Le nom pourra être modifié.
+
+Positionnement : Une plateforme de référence présentant des interfaces
+modernes, des composants, des systèmes de design et des expériences
+interactives.
+
+Objectif : Démontrer que le Starter Kit peut servir de base à des sites,
+applications, SaaS, dashboards et plateformes digitales.
+
+Le projet doit être un véritable laboratoire de design et non une simple
+page de démonstration.
+
+======================================================================
+9. PAGES DU PROJET
+======================================================================
+
+9.1. Landing Page
+
+Objectif : Présenter le projet, son identité et ses capacités.
+
+Sections : - Navbar. - Hero animé. - Introduction. - Présentation du
+système. - Aperçu des composants. - Section horizontale. - Galerie de
+démonstration. - Statistiques. - Présentation des technologies. - CTA. -
+Footer.
+
+Animations : - Reveal du hero. - Texte animé. - Illustration réactive. -
+Scroll horizontal. - Apparition progressive des cartes. - Transitions
+douces. - Parallaxe légère.
+
+9.2. Design System
+
+Objectif : Présenter les fondations visuelles.
+
+Contenu : - Couleurs. - Typographies. - Espacements. - Rayons. -
+Ombres. - Boutons. - Inputs. - États. - Grilles. - Motion tokens. -
+Modes clair et sombre.
+
+9.3. Components
+
+Objectif : Présenter les composants réutilisables.
+
+Catégories : - Buttons. - Forms. - Navigation. - Cards. - Overlays. -
+Feedback. - Layout. - Data display. - Motion.
+
+Chaque composant doit afficher : - Son apparence. - Ses variantes. - Ses
+états. - Ses propriétés. - Son comportement responsive. - Son exemple
+d’utilisation. - Ses règles d’accessibilité.
+
+9.4. Motion Lab
+
+Objectif : Démontrer les animations et les interactions.
+
+Sections : - Fade. - Slide. - Stagger. - Reveal. - Text animation. -
+Hover effects. - Scroll reveal. - Parallaxe. - Horizontal scroll. -
+Pinned sections. - Page transitions. - Reduced motion.
+
+9.5. Gallery / Inspiration
+
+Objectif : Présenter les directions visuelles et les possibilités de
+composition.
+
+Contenu : - Grilles. - Patterns. - Illustrations. - Cartes. -
+Compositions. - Sections éditoriales. - Variantes de hero. - Variantes
+de navigation. - Variantes de footer. - Variantes de mise en page.
+
+9.6. Dashboard
+
+Objectif : Démontrer l’utilisation du système dans une interface
+applicative.
+
+Éléments : - Sidebar. - Navbar. - Statistiques. - Graphiques. -
+Tableaux. - Activités récentes. - Notifications. - Filtres. -
+Recherche. - Mode clair et sombre.
+
+9.7. Settings
+
+Objectif : Démontrer les interfaces de configuration.
+
+Contenu : - Profil. - Apparence. - Notifications. - Sécurité. -
+Préférences. - Gestion du compte. - Choix du thème. - Préférences
+d’animation.
+
+9.8. Documentation
+
+Objectif : Expliquer comment utiliser le Starter Kit.
+
+Contenu : - Installation. - Architecture. - Utilisation des
+composants. - Utilisation des animations. - Conventions de code. -
+Design tokens. - Responsive. - Accessibilité. - Performance. -
+Contribution. - Guide de création d’une nouvelle page.
+
+======================================================================
+10. MODE CLAIR ET MODE SOMBRE
+======================================================================
+
+Le projet doit prévoir : - Mode clair. - Mode sombre. - Mode système
+automatique. - Contraste suffisant. - États cohérents dans les deux
+thèmes. - Persistance du choix de l’utilisateur. - Adaptation des
+illustrations et patterns. - Vérification des couleurs dans chaque
+thème.
+
+======================================================================
+11. RESPONSIVE DESIGN
+======================================================================
+
+Le responsive doit être traité comme une fonctionnalité essentielle.
+
+Tailles à vérifier :
+
+Desktop : - 1440 px. - 1280 px. - 1024 px.
+
+Tablette : - 834 px. - 768 px.
+
+Mobile : - 430 px. - 390 px. - 375 px. - 320 px.
+
+Vérifications obligatoires : - Aucun texte ne déborde. - Aucun bouton ne
+sort de son conteneur. - Aucun titre ne casse la mise en page. - Aucun
+mot ne dépasse de son bloc. - Les espacements restent cohérents. - Les
+grilles s’adaptent. - Les images conservent leur ratio. - Les menus
+mobiles fonctionnent. - Les sections horizontales restent utilisables au
+tactile. - Les animations ne bloquent pas la navigation. - Les tableaux
+larges disposent d’un comportement adapté. - Les formulaires restent
+utilisables. - Les textes restent lisibles. - Les zones tactiles sont
+suffisamment grandes.
+
+======================================================================
+12. ARCHITECTURE DU PROJET
+======================================================================
+
+Structure recommandée :
+
+nexus-ui/ │ ├── app/ │ ├── page.tsx │ ├── design-system/ │ ├──
+components/ │ ├── animations/ │ ├── gallery/ │ ├── dashboard/ │ ├──
+settings/ │ └── docs/ │ ├── components/ │ ├── ui/ │ ├── layout/ │ ├──
+navigation/ │ ├── sections/ │ ├── cards/ │ ├── forms/ │ ├──
+data-display/ │ └── motion/ │ ├── lib/ │ ├── utils.ts │ ├── constants.ts
+│ ├── animations.ts │ └── accessibility.ts │ ├── styles/ │ ├──
+globals.css │ ├── tokens.css │ └── motion.css │ ├── public/ │ ├──
+images/ │ ├── illustrations/ │ ├── patterns/ │ ├── icons/ │ └── fonts/ │
+├── docs/ │ ├── design-system.md │ ├── architecture.md │ ├──
+animation-guidelines.md │ ├── quality-checklist.md │ └── contribution.md
+│ ├── tests/ │ ├── components/ │ ├── pages/ │ └── accessibility/ │ └──
+README.md
+
+Règles d’architecture : - Séparer clairement les composants, les pages,
+les données et les styles. - Éviter les composants monolithiques. -
+Éviter de dupliquer le code. - Centraliser les tokens. - Centraliser les
+animations réutilisables. - Prévoir une documentation pour chaque
+composant important. - Utiliser TypeScript strictement. - Prévoir une
+organisation qui facilite l’ajout de nouvelles pages.
+
+======================================================================
+13. PROCESSUS DE TRAVAIL OBLIGATOIRE POUR L’IA
+======================================================================
+
+Phase 1 — Compréhension L’IA doit : - Comprendre le projet. - Identifier
+les utilisateurs. - Identifier les objectifs. - Identifier les
+fonctionnalités. - Identifier les pages. - Identifier les contraintes. -
+Identifier les exigences visuelles et techniques.
+
+Phase 2 — Recherche L’IA doit : - Rechercher des références. - Étudier
+les tendances pertinentes. - Proposer des palettes. - Proposer des
+typographies. - Proposer des grilles. - Proposer des illustrations. -
+Proposer des patterns. - Proposer une direction motion. - Justifier ses
+choix.
+
+Phase 3 — Conception L’IA doit produire : - Architecture des pages. -
+Wireframes. - Design system. - Composants. - Navigation. - États de
+l’interface. - Responsive design. - Plan des animations. - Plan des
+données éventuelles.
+
+Phase 4 — Validation de la direction Avant de développer entièrement : -
+Présenter la direction artistique. - Présenter les choix techniques. -
+Présenter l’arborescence. - Présenter les composants. - Présenter les
+animations. - Identifier les risques. - Vérifier la cohérence globale.
+
+Phase 5 — Développement L’IA doit : - Configurer le projet. - Installer
+les dépendances nécessaires. - Créer les tokens. - Créer les layouts. -
+Créer les composants. - Créer les pages. - Ajouter les animations. -
+Ajouter les interactions. - Ajouter les états. - Connecter les données
+si nécessaire. - Documenter les choix importants.
+
+Phase 6 — Vérification fonctionnelle L’IA doit vérifier : - Toutes les
+pages existent. - Tous les liens fonctionnent. - Les boutons ont un
+comportement. - Les formulaires ont des états. - Les menus
+fonctionnent. - Les modales fonctionnent. - Les transitions
+fonctionnent. - Les modes clair et sombre fonctionnent. - Les sections
+horizontales fonctionnent. - Les états de chargement, erreur et vide
+existent.
+
+Phase 7 — Vérification visuelle L’IA doit vérifier : - Alignements. -
+Espacements. - Hiérarchie. - Contraste. - Cohérence des couleurs. -
+Cohérence des rayons. - Cohérence des ombres. - Cohérence des
+composants. - Lisibilité. - Densité visuelle. - Équilibre des pages. -
+Qualité des images et illustrations.
+
+Phase 8 — Vérification typographique L’IA doit vérifier : - Taille des
+titres. - Hauteur des lignes. - Longueur des paragraphes. - Débordement
+des mots. - Espacement entre les blocs. - Lisibilité mobile. - Titres
+trop grands. - Textes trop espacés. - Textes collés. - Mauvais
+alignements. - Césures et retours à la ligne.
+
+Phase 9 — Vérification responsive L’IA doit tester : - Desktop. -
+Tablette. - Mobile. - Orientation. - Touch. - Scroll horizontal. - Menu
+mobile. - Formulaires. - Tableaux. - Images. - Cartes. - Sections
+animées.
+
+Phase 10 — Vérification des animations L’IA doit vérifier : - Absence
+d’animation bloquée. - Absence de saut de layout. - Absence de scroll
+cassé. - Absence de mouvements excessifs. - Absence de conflit entre
+bibliothèques. - Respect de prefers-reduced-motion. - Bonne fluidité. -
+Bon déclenchement. - Bonne vitesse. - Compatibilité mobile.
+
+Phase 11 — Vérification technique L’IA doit vérifier : - TypeScript. -
+ESLint. - Build. - Console. - Imports inutilisés. - Composants
+inutilisés. - Erreurs runtime. - Performance. - Accessibilité. - SEO de
+base. - Optimisation des images. - Chargement des polices. - Poids des
+dépendances.
+
+Phase 12 — Vérification navigateur Lorsque les outils sont disponibles,
+l’IA doit : - Lancer le projet. - Ouvrir chaque page dans un
+navigateur. - Tester les interactions. - Prendre des captures d’écran. -
+Vérifier les erreurs de console. - Vérifier les débordements. - Vérifier
+les animations. - Corriger les problèmes. - Refaire les captures après
+correction.
+
+Phase 13 — Correction L’IA doit : - Corriger les erreurs trouvées. -
+Prioriser les problèmes bloquants. - Corriger les problèmes visuels
+importants. - Corriger les problèmes responsive. - Corriger les
+problèmes d’accessibilité. - Corriger les problèmes de performance.
+
+Phase 14 — Audit final L’IA doit comparer le projet au cahier des
+charges et fournir : - Ce qui est terminé. - Ce qui a été testé. - Les
+problèmes corrigés. - Les éventuels problèmes restants. - Les
+améliorations possibles. - Les fichiers importants. - Les commandes pour
+lancer et construire le projet.
+
+L’IA ne doit pas déclarer le projet terminé uniquement parce que le code
+compile.
+
+======================================================================
+14. CHECKLIST DE QUALITÉ FINALE
+======================================================================
+
+Design : [ ] Direction artistique cohérente. [ ] Palette cohérente. [ ]
+Typographie cohérente. [ ] Grilles cohérentes. [ ] Espacements
+cohérents. [ ] Composants cohérents. [ ] Illustrations pertinentes. [ ]
+Patterns maîtrisés. [ ] Mode clair cohérent. [ ] Mode sombre cohérent.
+
+UX : [ ] Navigation intuitive. [ ] Hiérarchie claire. [ ] Boutons
+compréhensibles. [ ] États de chargement présents. [ ] États d’erreur
+présents. [ ] États vides présents. [ ] Formulaires utilisables. [ ]
+Navigation mobile fonctionnelle. [ ] Scroll horizontal compréhensible. [
+] Animations non bloquantes.
+
+Responsive : [ ] Desktop testé. [ ] Tablette testée. [ ] Mobile testé. [
+] Aucun débordement. [ ] Aucun texte coupé. [ ] Aucun bouton hors écran.
+[ ] Images adaptées. [ ] Grilles adaptées. [ ] Tableaux adaptés. [ ]
+Touch fonctionnel.
+
+Motion : [ ] Animations cohérentes. [ ] Durées maîtrisées. [ ] Easing
+cohérent. [ ] Scroll fluide. [ ] Scroll horizontal fonctionnel. [ ]
+Pinned sections fonctionnelles. [ ] Parallaxe maîtrisée. [ ] Page
+transitions fonctionnelles. [ ] Reduced motion pris en compte. [ ] Pas
+de layout shift important.
+
+Technique : [ ] TypeScript valide. [ ] Lint valide. [ ] Build valide. [
+] Console propre. [ ] Pas d’imports inutiles. [ ] Pas de composants
+inutilisés. [ ] Performance acceptable. [ ] Accessibilité vérifiée. [ ]
+Images optimisées. [ ] Documentation présente. [ ] README complet.
+
+======================================================================
+15. LIVRABLES ATTENDUS
+======================================================================
+
+À la fin du projet, les livrables doivent comprendre :
+
+1.  Le projet complet fonctionnel.
+2.  Le dépôt GitHub proprement organisé.
+3.  Le design system.
+4.  La bibliothèque de composants.
+5.  La bibliothèque d’animations.
+6.  Les pages de démonstration.
+7.  Les illustrations et patterns utilisés.
+8.  La documentation technique.
+9.  La documentation de design.
+10. La documentation des animations.
+11. La checklist de qualité.
+12. Les tests de base.
+13. Le README.
+14. Les instructions d’installation.
+15. Les instructions de lancement.
+16. Les instructions de build.
+17. Les instructions de déploiement.
+18. Le rapport d’audit final.
+
+======================================================================
+16. VISION À LONG TERME
+======================================================================
+
+Le Starter Kit doit évoluer progressivement.
+
+Évolutions possibles : - Ajout de nouveaux composants. - Ajout de
+nouvelles animations. - Ajout de nouveaux thèmes. - Ajout de nouvelles
+grilles. - Ajout de nouvelles variantes de pages. - Ajout de composants
+de dashboard. - Ajout de composants e-commerce. - Ajout de composants
+SaaS. - Ajout de composants mobiles. - Ajout de modèles de
+formulaires. - Ajout de modèles de navigation. - Ajout de modèles de
+pages marketing. - Ajout de modèles de pages d’administration. - Ajout
+de tests automatisés. - Ajout de tests visuels. - Ajout de documentation
+interactive.
+
+Le projet doit devenir une base personnelle de production numérique.
+
+======================================================================
+17. RECOMMANDATION PROFESSIONNELLE FINALE
+======================================================================
+
+Il est recommandé de construire le projet en trois niveaux.
+
+Niveau 1 — Foundation - Next.js. - TypeScript. - Tailwind. -
+shadcn/ui. - Design tokens. - Layouts. - Composants essentiels. -
+Responsive. - Accessibilité. - Documentation de base.
+
+Niveau 2 — Premium UI - Direction artistique. - Illustrations. -
+Patterns. - Bento grids. - Sections éditoriales. - Cartes premium. -
+Typographie. - Transitions. - Micro-interactions. - Modes clair et
+sombre.
+
+Niveau 3 — Motion & Experience - GSAP. - ScrollTrigger. - Lenis si
+nécessaire. - Scroll horizontal. - Parallaxe. - Text reveal. - Page
+transitions. - Animations complexes. - 3D si nécessaire.
+
+Il ne faut pas commencer par les effets les plus complexes. Une
+animation impressionnante sur une mauvaise structure reste une mauvaise
+expérience.
+
+La priorité doit être :
+
+1.  Architecture.
+2.  Design system.
+3.  Composants.
+4.  Pages.
+5.  Responsive.
+6.  Accessibilité.
+7.  Animations.
+8.  Tests.
+9.  Correction.
+10. Documentation.
+
+======================================================================
+CONCLUSION
+======================================================================
+
+NEXUS UI doit être conçu comme un premier produit de fondation.
+
+Ce projet doit permettre de démarrer rapidement de futurs projets tout
+en conservant : - Une qualité visuelle professionnelle. - Une
+architecture propre. - Une cohérence de design. - Des composants
+réutilisables. - Des animations maîtrisées. - Une expérience
+responsive. - Une documentation claire. - Un processus de contrôle
+qualité strict.
+
+La formulation centrale du projet est :
+
+« Construis une infrastructure de création numérique capable de produire
+des applications modernes, cohérentes, animées, maintenables,
+responsives et professionnelles. Tu dois rechercher, recommander,
+concevoir, développer, tester, corriger et documenter le projet. Tu ne
+dois pas déclarer le travail terminé tant que chaque page, chaque
+composant, chaque animation et chaque format d’écran n’a pas été
+vérifié. »

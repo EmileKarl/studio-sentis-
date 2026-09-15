@@ -1,0 +1,157 @@
+/**
+ * Vérification responsive et accessibilité (§11, §13 phases 9, 10 et 12).
+ *
+ * Charge chaque page aux neuf largeurs imposées par le cahier des charges,
+ * dans les deux thèmes, et échoue s'il trouve :
+ *   - un débordement horizontal du document ou d'un élément ;
+ *   - un texte tronqué hors d'un conteneur prévu pour défiler ;
+ *   - une erreur de console ;
+ *   - une cible tactile sous 24x24 px ;
+ *   - un titre resté invisible sous prefers-reduced-motion.
+ *
+ * Usage :  npm run build && npm run start &  puis  npm run verify
+ */
+import { chromium } from "playwright";
+import { mkdirSync } from "node:fs";
+
+const BASE = process.env.BASE_URL ?? "http://localhost:3100";
+const PAGES = [
+  ["/", "accueil"],
+  ["/design-system", "design-system"],
+  ["/components", "composants"],
+];
+// §11 — les neuf largeurs imposées par le cahier des charges.
+const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];
+const SHOT_AT = new Set([1440, 768, 375]);
+
+const SHOTS = process.env.SHOT_DIR ?? "tests/__screenshots__";
+mkdirSync(SHOTS, { recursive: true });
+
+// CHROME_PATH permet de pointer un Chromium déjà présent (CI, conteneur)
+// plutôt que de laisser Playwright en télécharger un.
+const launchOptions = process.env.CHROME_PATH
+  ? { executablePath: process.env.CHROME_PATH }
+  : {};
+const browser = await chromium.launch(launchOptions);
+const findings = [];
+
+for (const theme of ["light", "dark"]) {
+  for (const [path, name] of PAGES) {
+    for (const width of WIDTHS) {
+      const ctx = await browser.newContext({
+        viewport: { width, height: 900 },
+        colorScheme: theme,
+        deviceScaleFactor: 1,
+      });
+      const page = await ctx.newPage();
+      const consoleErrors = [];
+      page.on("console", (m) => {
+        if (m.type() === "error") consoleErrors.push(m.text());
+      });
+      page.on("pageerror", (e) => consoleErrors.push(`pageerror: ${e.message}`));
+
+      await page.goto(BASE + path, { waitUntil: "networkidle" });
+      await page.waitForTimeout(350);
+
+      // 1. débordement horizontal du document
+      const overflow = await page.evaluate(() => {
+        const d = document.documentElement;
+        return { scroll: d.scrollWidth, client: d.clientWidth };
+      });
+      if (overflow.scroll > overflow.client + 1) {
+        findings.push(
+          `[overflow-page] ${theme} ${name} @${width}px — scrollWidth ${overflow.scroll} > ${overflow.client}`,
+        );
+      }
+
+      // 2. éléments qui dépassent le viewport
+      const wide = await page.evaluate((w) => {
+        const out = [];
+        for (const el of document.querySelectorAll("body *")) {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) continue;
+          const style = getComputedStyle(el);
+          if (style.position === "fixed") continue;
+          // ignore les conteneurs à défilement horizontal volontaire
+          let p = el.parentElement, inScroller = false;
+          while (p) {
+            const ps = getComputedStyle(p);
+            if (["auto", "scroll", "hidden", "clip"].includes(ps.overflowX)) { inScroller = true; break; }
+            p = p.parentElement;
+          }
+          if (inScroller) continue;
+          if (r.right > w + 1 || r.left < -1) {
+            out.push(`${el.tagName.toLowerCase()}.${(el.className || "").toString().slice(0, 40)} right=${Math.round(r.right)} left=${Math.round(r.left)}`);
+          }
+        }
+        return out.slice(0, 4);
+      }, width);
+      for (const w of wide) findings.push(`[overflow-el] ${theme} ${name} @${width}px — ${w}`);
+
+      // 3. texte tronqué / mots qui dépassent leur bloc
+      const clipped = await page.evaluate(() => {
+        const out = [];
+        for (const el of document.querySelectorAll("p,h1,h2,h3,h4,span,a,button,td,th,li,dt,dd,code")) {
+          if (!el.firstChild || el.children.length > 0) continue;
+          if (el.scrollWidth > el.clientWidth + 2) {
+            const s = getComputedStyle(el);
+            if (s.overflow === "hidden" || s.textOverflow === "ellipsis") continue;
+            if (s.whiteSpace === "nowrap") continue;
+            out.push(`${el.tagName.toLowerCase()} "${(el.textContent || "").trim().slice(0, 30)}" ${el.scrollWidth}>${el.clientWidth}`);
+          }
+        }
+        return out.slice(0, 4);
+      });
+      for (const c of clipped) findings.push(`[text-clip] ${theme} ${name} @${width}px — ${c}`);
+
+      for (const e of consoleErrors) findings.push(`[console] ${theme} ${name} @${width}px — ${e}`);
+
+      if (SHOT_AT.has(width)) {
+        await page.screenshot({
+          path: `${SHOTS}/${name}-${theme}-${width}.png`,
+          fullPage: width === 1440,
+        });
+      }
+      await ctx.close();
+    }
+  }
+}
+
+// 4. zones tactiles < 24px sur mobile (§11)
+const ctx = await browser.newContext({ viewport: { width: 375, height: 800 }, hasTouch: true });
+const page = await ctx.newPage();
+await page.goto(BASE + "/", { waitUntil: "networkidle" });
+const small = await page.evaluate(() => {
+  const out = [];
+  for (const el of document.querySelectorAll("a,button,[role=button],[role=radio],input,select")) {
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) continue;
+    if (el.closest(".sr-only")) continue;
+    if (el.className && el.className.toString().includes("sr-only")) continue;
+    if (r.width < 24 || r.height < 24) out.push(`${el.tagName.toLowerCase()} "${(el.getAttribute("aria-label") || el.textContent || "").trim().slice(0, 24)}" ${Math.round(r.width)}x${Math.round(r.height)}`);
+  }
+  return out.slice(0, 6);
+});
+for (const s of small) findings.push(`[touch-target] accueil @375px — ${s}`);
+await ctx.close();
+
+// 5. reduced-motion : rien ne doit rester invisible
+const rm = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
+const rmPage = await rm.newPage();
+await rmPage.goto(BASE + "/", { waitUntil: "networkidle" });
+await rmPage.waitForTimeout(400);
+const invisible = await rmPage.evaluate(() => {
+  const h1 = document.querySelector("h1");
+  if (!h1) return "h1 introuvable";
+  const spans = [...h1.querySelectorAll("span")];
+  const hidden = spans.filter((s) => parseFloat(getComputedStyle(s).opacity) < 0.9);
+  return hidden.length ? `${hidden.length}/${spans.length} fragments du h1 restent sous opacity 0.9` : null;
+});
+if (invisible) findings.push(`[reduced-motion] accueil — ${invisible}`);
+await rm.close();
+
+await browser.close();
+
+console.log(findings.length ? findings.join("\n") : "AUCUN PROBLEME DETECTE");
+console.log(`\n--- ${findings.length} constat(s) ---`);
+process.exit(findings.length ? 1 : 0);
