@@ -23,7 +23,7 @@ export const NAV: NavItem[] = [
     href: "/motion",
     label: "Motion Lab",
     description: "Fade, stagger, reveal, scroll, parallaxe, transitions de page.",
-    status: "planned",
+    status: "live",
   },
   {
     href: "/gallery",

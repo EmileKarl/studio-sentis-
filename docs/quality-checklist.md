@@ -32,7 +32,7 @@
 ## Responsive
 
 Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
-1440 px, dans les deux thèmes.
+1440 px, dans les deux thèmes, sur les quatre pages.
 
 - [x] Desktop testé
 - [x] Tablette testée
@@ -52,9 +52,9 @@ Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
 - [x] Easing cohérent — aucun rebond
 - [x] Scroll fluide — comportement natif, pas de scroll détourné
 - [x] Scroll horizontal fonctionnel
-- [ ] Pinned sections fonctionnelles — non construites (Niveau 3)
-- [ ] Parallaxe maîtrisée — non construite (Niveau 3)
-- [ ] Page transitions fonctionnelles — non construites (Niveau 3)
+- [x] Pinned sections fonctionnelles — `position: sticky`, scroll jamais détourné
+- [x] Parallaxe maîtrisée — course totale de 28px, plafonnée par construction
+- [x] Page transitions fonctionnelles — 240ms, opacité + 8px, sans animation de sortie
 - [x] `reduced-motion` pris en compte — traité globalement dans `motion.css`
 - [x] Pas de layout shift important — aucune erreur de console, build statique
 
@@ -63,7 +63,7 @@ Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
 - [x] TypeScript valide — `tsc --noEmit`, 0 erreur
 - [x] Lint valide — 0 erreur, 0 avertissement
 - [x] Build valide — 0 avertissement
-- [x] Console propre — 0 erreur sur 54 chargements
+- [x] Console propre — 0 erreur sur 72 chargements
 - [x] Pas d'imports inutiles — vérifié par le lint
 - [x] Pas de composants inutilisés — 2 composants retirés à ce titre
 - [x] Performance acceptable — 3 pages entièrement statiques

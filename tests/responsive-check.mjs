@@ -6,6 +6,7 @@
  *   - un débordement horizontal du document ou d'un élément ;
  *   - un texte tronqué hors d'un conteneur prévu pour défiler ;
  *   - une erreur de console ;
+ *   - un texte laissé transparent alors qu'il est dans le viewport ;
  *   - une cible tactile sous 24x24 px ;
  *   - un titre resté invisible sous prefers-reduced-motion.
  *
@@ -19,6 +20,7 @@ const PAGES = [
   ["/", "accueil"],
   ["/design-system", "design-system"],
   ["/components", "composants"],
+  ["/motion", "motion"],
 ];
 // §11 — les neuf largeurs imposées par le cahier des charges.
 const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];
@@ -117,7 +119,53 @@ for (const theme of ["light", "dark"]) {
   }
 }
 
-// 4. zones tactiles < 24px sur mobile (§11)
+// 4. aucun texte ne reste invisible PENDANT qu'il est dans le viewport.
+//
+// Une entrée au scroll qui ne part pas laisse du contenu à opacity:0 sans rien
+// casser d'autre : ni le build, ni le lint, ni une capture ne le signalent.
+// C'est ce qui a laissé passer un h1 rendu à opacity:0 et des compteurs figés.
+// On descend donc la page par écrans, en laissant le temps aux animations de
+// se jouer, et on refuse tout texte transparent alors qu'il est visible.
+for (const [path, name] of PAGES) {
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE + path, { waitUntil: "networkidle" });
+
+  const steps = await page.evaluate(() => Math.ceil(document.body.scrollHeight / 700));
+  for (let i = 0; i <= steps; i++) {
+    await page.evaluate((y) => window.scrollTo(0, y), i * 700);
+    await page.waitForTimeout(700);
+    const invisible = await page.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll("p,h1,h2,h3,h4,li,dd,dt,span,a,button")) {
+        const txt = (el.textContent || "").trim();
+        if (!txt || el.children.length) continue;
+        if (el.closest(".sr-only")) continue;
+        if (el.className.toString().includes("sr-only")) continue;
+        // WCAG 1.4.3 exempte les composants d'interface inactifs : un contrôle
+        // désactivé est atténué exprès, c'est ce qui le signale comme tel.
+        if (el.closest("[disabled], [aria-disabled='true'], :disabled")) continue;
+        const r = el.getBoundingClientRect();
+        // uniquement ce qui est réellement dans le viewport
+        if (r.bottom < 40 || r.top > window.innerHeight - 40) continue;
+        if (r.width === 0 || r.height === 0) continue;
+        let opacity = 1, node = el;
+        while (node && node !== document.body) {
+          opacity *= parseFloat(getComputedStyle(node).opacity);
+          node = node.parentElement;
+        }
+        if (opacity < 0.9) out.push(`${Math.round(opacity * 100)}% "${txt.slice(0, 34)}"`);
+      }
+      return [...new Set(out)].slice(0, 3);
+    });
+    for (const v of invisible) {
+      findings.push(`[invisible-in-view] ${name} @scroll ${i * 700}px — ${v}`);
+    }
+  }
+  await ctx.close();
+}
+
+// 5. zones tactiles < 24px sur mobile (§11)
 const ctx = await browser.newContext({ viewport: { width: 375, height: 800 }, hasTouch: true });
 const page = await ctx.newPage();
 await page.goto(BASE + "/", { waitUntil: "networkidle" });
@@ -135,7 +183,7 @@ const small = await page.evaluate(() => {
 for (const s of small) findings.push(`[touch-target] accueil @375px — ${s}`);
 await ctx.close();
 
-// 5. reduced-motion : rien ne doit rester invisible
+// 6. reduced-motion : rien ne doit rester invisible
 const rm = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
 const rmPage = await rm.newPage();
 await rmPage.goto(BASE + "/", { waitUntil: "networkidle" });

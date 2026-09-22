@@ -21,9 +21,11 @@ src/
 ├── components/
 │   ├── ui/                     Primitives vendues : shadcn/ui + Magic UI
 │   ├── layout/                 Container, Section, SiteHeader, SiteFooter
+│   ├── motion/                 Bibliothèque d'animations (§6.7)
 │   ├── sections/               Blocs composés propres au projet
 │   └── theme-provider.tsx
 ├── lib/
+│   ├── motion.ts               Tokens de motion côté JS (miroir de motion.css)
 │   ├── nav.ts                  Source unique des pages et de leur état
 │   ├── stats.ts                Chiffres comptés sur le disque au build
 │   └── utils.ts                cn()
@@ -91,6 +93,16 @@ ne pas être refaits.
    68ch` posé sur un conteneur en 16 px laisse passer ~93 caractères d'un texte
    en 14 px. La mesure va sur le texte, jamais sur son conteneur.
 
-3. **Le point de rupture `md` (768 px) est une largeur réelle à tester.** À
+3. **Une plage `useTransform` liée au scroll doit tenir dans [0, 1].** Motion
+   confie ces valeurs à l'API d'animation du navigateur, qui refuse un offset
+   négatif ou supérieur à 1. Un fondu qui déborde de part et d'autre d'une
+   tranche (`[from - 0.08, …, to + 0.08]`) lève une erreur au montage sur la
+   première et la dernière étape. Le fondu se prend à l'intérieur de la tranche.
+
+4. **L'opacité n'est pas un signal d'état pour du texte.** Atténuer un bloc à
+   `opacity: 0.35` fait tomber son texte à 1,8:1. Le signal d'état passe par un
+   filet, une couleur d'accent ou une bordure — jamais par la lisibilité.
+
+5. **Le point de rupture `md` (768 px) est une largeur réelle à tester.** À
    exactement 768 px, l'en-tête affichait la navigation desktop complète : logo
    + 6 entrées + sélecteur de thème = 822 px. La navigation est passée à `lg`.
