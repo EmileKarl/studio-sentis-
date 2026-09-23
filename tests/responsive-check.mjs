@@ -21,6 +21,8 @@ const PAGES = [
   ["/design-system", "design-system"],
   ["/components", "composants"],
   ["/motion", "motion"],
+  ["/gallery", "gallery"],
+  ["/dashboard", "dashboard"],
 ];
 // §11 — les neuf largeurs imposées par le cahier des charges.
 const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];

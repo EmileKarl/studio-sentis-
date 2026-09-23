@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Section } from "@/components/layout/section";
 import { SpecBlock } from "@/components/sections/spec-block";
-import { ComponentsDemo } from "@/app/components/demo";
+import { ComponentsDemo } from "./demo";
 
 export const metadata: Metadata = {
   title: "Composants",

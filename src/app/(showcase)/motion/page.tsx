@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { MotionLab } from "@/app/motion/lab";
+import { MotionLab } from "./lab";
 import { Section } from "@/components/layout/section";
 import { TokenTable } from "@/components/sections/token-table";
 

@@ -1,3 +1,6 @@
+export { GridRecompose } from "@/components/motion/grid-recompose";
+export { InkBleed } from "@/components/motion/ink-bleed";
+export { WeightWave } from "@/components/motion/weight-wave";
 export { CursorFollow } from "@/components/motion/cursor-follow";
 export { Magnetic } from "@/components/motion/magnetic";
 export { Parallax } from "@/components/motion/parallax";

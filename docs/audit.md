@@ -1,8 +1,8 @@
-# Rapport d'audit — Niveau 1 + Motion Lab
+# Rapport d'audit — Niveau 1, Motion Lab, Gallery et Dashboard
 
 Établi selon le §13 phase 14 : comparaison du projet au cahier des charges.
-Portée auditée : les quatre pages construites (`/`, `/design-system`,
-`/components`, `/motion`).
+Portée auditée : les six pages construites (`/`, `/design-system`,
+`/components`, `/motion`, `/gallery`, `/dashboard`).
 
 ## 1. Ce qui est terminé
 
@@ -17,6 +17,10 @@ Portée auditée : les quatre pages construites (`/`, `/design-system`,
 | §9.4 Motion Lab | Faite |
 | §6.7 Composants de motion | Faite — Reveal, Stagger, TextReveal, Parallax, Magnetic, TiltCard, CursorFollow, PinnedSequence, HorizontalRail, Counter, transition de page |
 | §7 Architecture des animations | Faite sauf séquences GSAP |
+| §9.5 Gallery | Faite |
+| §9.6 Dashboard | Faite |
+| §3.1 G Patterns | Faite — quatre trames SVG en currentColor |
+| §3.1 H Grilles et compositions | Faite — cinq compositions, recomposition animée |
 | §10 Clair / sombre / système, avec persistance | Faite |
 | §11 Responsive sur les 9 largeurs | Faite et vérifiée |
 | §12 Architecture | Faite, avec `src/` en écart documenté |
@@ -29,7 +33,9 @@ Portée auditée : les quatre pages construites (`/`, `/design-system`,
 | Lint | `eslint` | 0 erreur, 0 avertissement |
 | Build production | `next build` | Succès, 0 avertissement |
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
-| Débordement horizontal | `npm run verify` — 4 pages × 9 largeurs × 2 thèmes | 0 |
+| Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
+| Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
+| Débordement horizontal | `npm run verify` — 6 pages × 9 largeurs × 2 thèmes | 0 |
 | Texte tronqué | idem | 0 |
 | Erreurs de console | idem | 0 |
 | Cibles tactiles ≥ 24 px | idem, à 375 px | 0 |
@@ -68,20 +74,41 @@ navigateur : seul le détecteur Impeccable calcule le contraste effectif à
 travers une pile d'opacités. Le n° 13 a été vu par le contrôle navigateur
 seul. Aucun des deux outils ne remplace l'autre.
 
+### Défauts propres à la Gallery et au Dashboard
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 16 | La palette de graphiques du projet échouait **trois contrôles sur cinq** : `--ink` sans chroma (se lit comme du gris), et ambre ↔ vert à ΔE 14,8 en vision normale, donc indiscernables même avec une vision des couleurs complète | Deux jeux re-déclinés et validés, clair et sombre séparément |
+| 17 | Texte fonctionnel à 10px, sous le plancher de 11px, en 16 endroits | Relevé à 11px dans tout le projet |
+| 18 | Hiérarchie typographique plate sur le Dashboard : h1 14px, corps 14px, h2 16px | Titre de page sorti de la barre supérieure ; corps 14 / h2 18 / h1 24 |
+| 19 | En-têtes collants translucides : le contenu défilant dessous faisait tomber le contraste du titre à 1,3:1 | En-têtes rendus opaques, séparés par un filet |
+| 20 | `setState` dans un effet et flash de mise en page dans le hook `use-mobile` livré par shadcn | Réécrit avec `useSyncExternalStore` |
+| 21 | Kicker en capitales espacées au-dessus d'un titre, **troisième occurrence** | Déplacé sous le titre, en casse normale |
+
+Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécuter le
+validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
+palette à l'œil.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 
 | Constat | Occurrences | Décision |
 | --- | --- | --- |
-| `nested-cards` — carte dans une carte | 13 sur Composants, 14 sur Motion Lab | **Inhérent.** Une galerie de composants ne peut pas montrer un composant `Card` sans l'encadrer dans un bloc de démonstration. À revoir si le motif apparaît hors galerie. |
+| `em-dash-overuse` — tirets cadratins | 3 pages | **Réel, partiellement traité.** Tic d'écriture qui fatigue la lecture. Une passe a été faite sur la page Design System ; les autres restent à relire. |
+| `nested-cards` — carte dans une carte | 34 sur Composants, Motion Lab et Dashboard | **Inhérent.** Une galerie de composants ne peut pas montrer un composant `Card` sans l'encadrer dans un bloc de démonstration. À revoir si le motif apparaît hors galerie. |
 | `cramped-padding` — enfants au ras d'une bordure | 7 | **Assumé.** Grilles à filet unique (`gap-px`) : les cellules ont leur padding, c'est la grille porteuse qui n'en a pas. C'est le procédé suisse recherché. |
 | `layout-transition` — `transition: height` | 3 | **Réel, non corrigé.** Vient de l'accordéon shadcn. Le passage à `grid-template-rows` demande de modifier un composant vendu ; à traiter avec la revue des primitives. |
 | `low-contrast` sur le bouton « Désactivé » | 1 | **Exemption assumée.** WCAG 1.4.3 exclut explicitement les composants d'interface inactifs. |
 
 ## 5. Ce qui n'est pas fait
 
-- **§9.5 à §9.8** : Gallery, Dashboard, Settings, Documentation.
+- **§9.7 et §9.8** : Settings et Documentation.
+- **21st.dev** : les deux récupérations de code du palier gratuit ont été
+  dépensées sans résultat — `Activity Feed` dépend d'une primitive shadcn
+  absente du style de registre `radix-nova`, et `Insight Cards` exige un
+  abonnement Marketplace. Aucun code 21st n'est donc entré dans le projet ; la
+  recherche contextuelle et `21st review` ont en revanche servi.
 - **§4 / §7.2** : GSAP et ScrollTrigger ne sont pas installés. Toutes les
   familles d'animation du §7 sont couvertes sans eux — les sections épinglées
   par `position: sticky`, le scroll horizontal en natif. C'est un écart assumé

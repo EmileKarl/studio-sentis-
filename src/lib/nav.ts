@@ -29,13 +29,13 @@ export const NAV: NavItem[] = [
     href: "/gallery",
     label: "Gallery",
     description: "Grilles, patterns, compositions, variantes de sections.",
-    status: "planned",
+    status: "live",
   },
   {
     href: "/dashboard",
     label: "Dashboard",
     description: "Sidebar, statistiques, graphiques, tableaux, filtres.",
-    status: "planned",
+    status: "live",
   },
   {
     href: "/docs",

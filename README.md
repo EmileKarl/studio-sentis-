@@ -21,7 +21,9 @@ et le Motion Lab (§9.4) existent. Le détail page par page est dans
 | Design System (`/design-system`) | Construite |
 | Composants (`/components`) | Construite |
 | Motion Lab (`/motion`) | Construite |
-| Gallery, Dashboard, Settings, Documentation | Prévues |
+| Gallery (`/gallery`) | Construite |
+| Dashboard (`/dashboard`) | Construite |
+| Settings, Documentation | Prévues |
 
 ## Prérequis
 
@@ -78,9 +80,12 @@ statiques ; aucune variable d'environnement n'est requise à ce stade.
 
 ```
 src/
-├── app/            Routes App Router (une page = un dossier)
+├── app/
+│   ├── (showcase)/ Pages vitrine : en-tête et pied de page du site
+│   └── (app)/      Enveloppe applicative : barre latérale, sans chrome vitrine
 ├── components/
 │   ├── ui/         Primitives shadcn/ui (Radix) + composants Magic UI
+│   ├── motion/     Bibliothèque d'animations et animations de signature
 │   ├── layout/     Container, Section, en-tête et pied de page
 │   └── sections/   Blocs de page composés
 ├── lib/            Navigation, utilitaires, statistiques de build
@@ -126,7 +131,12 @@ Ce dépôt embarque des skills et un serveur MCP dans `.claude/` et `.mcp.json`.
 Le serveur `21st` **exige une clé d'API** : créez-la sur
 <https://21st.dev/mcp>, puis exportez `API_KEY_21ST` dans votre environnement
 avant de lancer Claude Code. `.mcp.json` ne contient que le nom de la variable,
-jamais la clé.
+jamais la clé. Le serveur MCP demande en plus une autorisation interactive
+(`/mcp`) ; la CLI `@21st-dev/cli`, elle, fonctionne avec la seule variable.
+
+`.21st/` contient le contexte de design généré par `21st init --design-context`
+— il sert à rendre les recherches 21st conscientes des tokens et des composants
+déjà installés. Aucun secret n'y est écrit.
 
 Ils sont chargés au démarrage de Claude Code dans le dossier. `uupm-design` est
 le skill `design` de UI UX Pro Max, renommé : sous son nom d'origine il masquait

@@ -33,7 +33,7 @@ export function SpecBlock({
       </div>
       <footer className="border-rule border-t px-4 py-2.5">
         <p className="text-ink-muted max-w-(--content-max) text-xs text-pretty">
-          <span className="font-mono text-[10px] tracking-[0.18em] uppercase">
+          <span className="font-mono text-[11px] tracking-[0.18em] uppercase">
             A11y
           </span>{" "}
           — {a11y}

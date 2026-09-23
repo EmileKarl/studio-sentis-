@@ -39,7 +39,7 @@ export function SiteFooter() {
                 {item.status === "planned" ? (
                   <span className="text-ink-muted/60 inline-block py-1 text-sm">
                     {item.label}{" "}
-                    <span className="font-mono text-[10px]">(prévue)</span>
+                    <span className="font-mono text-[11px]">(prévue)</span>
                   </span>
                 ) : (
                   <Link

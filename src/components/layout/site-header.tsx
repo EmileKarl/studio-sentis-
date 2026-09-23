@@ -24,7 +24,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="border-rule bg-paper/85 sticky top-0 z-40 border-b backdrop-blur-sm">
+    <header className="border-rule bg-paper sticky top-0 z-40 border-b">
       <Container className="flex h-14 items-center justify-between gap-4">
         <Link
           href="/"
@@ -105,7 +105,7 @@ export function SiteHeader() {
                             <span className="text-ink-muted text-base">
                               {item.label}
                             </span>
-                            <Badge variant="outline" className="font-mono text-[10px]">
+                            <Badge variant="outline" className="font-mono text-[11px]">
                               prévue
                             </Badge>
                           </div>
