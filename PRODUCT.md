@@ -60,7 +60,7 @@ l'identité, le site et l'application » est précisément ce qu'une agence
 spécialisée ne peut pas promettre.
 
 **Concurrent de référence : les constructeurs en ligne** (Wix, Shopify,
-générateurs IA). C'est l'alternative que les clients visés envisagent
+générateurs IA), très répandus chez les petites entreprises québécoises. C'est l'alternative que les clients visés envisagent
 réellement, et la seule face à laquelle ces trois engagements gagnent au lieu
 d'égaliser. Le site doit répondre explicitement à : pourquoi payer quelqu'un
 plutôt qu'utiliser un outil à 15 €/mois.
@@ -98,14 +98,33 @@ Recommandés en complément, non encore confirmés :
 
 ## Operating Context
 
-**Zone — proposé, à valider.** Afficher une implantation locale, servir la
-France à distance. La proximité est le contre-argument le plus fort face aux
-constructeurs en ligne. L'international francophone n'est pas affiché à ce
-stade : sans référence, il dilue le propos.
+**Implantation : Châteauguay, Québec** (Montérégie, Rive-Sud de Montréal).
+Confirmé par le client.
 
-**Fait manquant et bloquant pour la rédaction : la ville ou le département
-d'implantation.** Aucune mention géographique ne doit être écrite avant de
-l'obtenir du client.
+**Marché visé — proposé, à valider.** Châteauguay et la Montérégie en priorité
+affichée, le Grand Montréal comme marché réel, le reste du Québec à distance.
+La proximité reste le contre-argument le plus fort face aux constructeurs en
+ligne.
+
+**Devise : dollar canadien (CAD).** Tout prix affiché doit l'être en CAD, taxes
+mentionnées selon l'usage québécois.
+
+**Contexte linguistique — spécifique au Québec, et déterminant.** Les
+communications commerciales, sites web compris, sont encadrées par la Charte de
+la langue française (renforcée par la Loi 96). Le français n'est donc pas une
+préférence éditoriale mais une obligation, et l'anglais représente une audience
+réelle dans le Grand Montréal, pas une hypothèse.
+
+Conséquences :
+
+1. Le site Sentis doit être bilingue dès la v1, français prioritaire.
+2. Tout site livré à un client québécois hérite de la même contrainte : c'est
+   un paramètre de conception, pas une option de fin de projet.
+3. **Cela constitue un avantage à part entière** (à valider) : un constructeur
+   en ligne ou une agence hors Québec ne connaît pas ces règles et n'aide pas
+   le client à s'y conformer. Les seuils exacts sont à vérifier auprès de
+   l'OQLF avant toute affirmation publique — ne rien écrire de juridique sans
+   cette vérification.
 
 Mode de prise de contact, modalités de devis et canaux d'acquisition restent à
 définir.
@@ -119,10 +138,10 @@ définir.
   l'internationalisation ne peut pas être ajoutée après coup.
   *État : non tenue sur NEXUS UI*, qui est en français seul sans infrastructure
   i18n — dette consignée dans `docs/audit.md`.
-  *Recommandation pour le site Sentis (à valider) :* poser l'infrastructure i18n
-  dès le départ, publier en français seul. Cela respecte la raison d'être de la
-  contrainte — l'i18n ne se rajoute pas après coup — sans traduire pour une
-  audience anglophone qui n'existe pas encore.
+  *Pour le site Sentis : bilingue dès la v1, français prioritaire.* Une
+  recommandation antérieure proposait de publier en français seul et de
+  différer l'anglais ; elle reposait sur un marché français supposé et tombe
+  avec l'implantation québécoise. Voir « Operating Context ».
 - Entreprise non encore ouverte : ni forme juridique, ni tarifs, ni délais, ni
   zone d'intervention confirmés.
 - Périmètre exact de chaque service non décidé.
