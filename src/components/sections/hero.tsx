@@ -42,10 +42,10 @@ export function Hero() {
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <Button asChild size="lg" className="rounded-xs">
-            <Link href="/design-system">Voir le design system</Link>
+            <Link href="/nexus/design-system">Voir le design system</Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="rounded-xs">
-            <Link href="/components">Parcourir les composants</Link>
+            <Link href="/nexus/components">Parcourir les composants</Link>
           </Button>
         </div>
 

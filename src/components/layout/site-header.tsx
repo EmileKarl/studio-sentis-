@@ -27,7 +27,7 @@ export function SiteHeader() {
     <header className="border-rule bg-paper sticky top-0 z-40 border-b">
       <Container className="flex h-14 items-center justify-between gap-4">
         <Link
-          href="/"
+          href="/nexus"
           className="focus-visible:ring-signal group -mx-1 flex items-baseline gap-2 rounded-xs px-1 py-1.5 focus-visible:ring-2 focus-visible:outline-none"
         >
           <span className="font-display text-ink text-sm font-bold tracking-[0.18em] uppercase">

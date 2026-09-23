@@ -17,12 +17,14 @@ import { mkdirSync } from "node:fs";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:3100";
 const PAGES = [
-  ["/", "accueil"],
-  ["/design-system", "design-system"],
-  ["/components", "composants"],
-  ["/motion", "motion"],
-  ["/gallery", "gallery"],
-  ["/dashboard", "dashboard"],
+  ["/fr", "sentis-fr"],
+  ["/en", "sentis-en"],
+  ["/nexus", "nexus-accueil"],
+  ["/nexus/design-system", "nexus-design-system"],
+  ["/nexus/components", "nexus-composants"],
+  ["/nexus/motion", "nexus-motion"],
+  ["/nexus/gallery", "nexus-gallery"],
+  ["/nexus/dashboard", "nexus-dashboard"],
 ];
 // §11 — les neuf largeurs imposées par le cahier des charges.
 const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];
@@ -50,9 +52,20 @@ for (const theme of ["light", "dark"]) {
       const page = await ctx.newPage();
       const consoleErrors = [];
       page.on("console", (m) => {
-        if (m.type() === "error") consoleErrors.push(m.text());
+        if (m.type() === "error" && !m.text().startsWith("Failed to load resource")) {
+          consoleErrors.push(m.text());
+        }
       });
       page.on("pageerror", (e) => consoleErrors.push(`pageerror: ${e.message}`));
+      // « Failed to load resource » sans l'URL n'est pas un diagnostic : on
+      // enregistre la requête qui a échoué, pas seulement le fait qu'elle a
+      // échoué.
+      page.on("response", (r) => {
+        if (r.status() >= 400) consoleErrors.push(`HTTP ${r.status()} ${r.url()}`);
+      });
+      page.on("requestfailed", (r) => {
+        consoleErrors.push(`requête échouée ${r.url()} (${r.failure()?.errorText})`);
+      });
 
       await page.goto(BASE + path, { waitUntil: "networkidle" });
       await page.waitForTimeout(350);
@@ -170,7 +183,7 @@ for (const [path, name] of PAGES) {
 // 5. zones tactiles < 24px sur mobile (§11)
 const ctx = await browser.newContext({ viewport: { width: 375, height: 800 }, hasTouch: true });
 const page = await ctx.newPage();
-await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await page.goto(BASE + "/fr", { waitUntil: "networkidle" });
 const small = await page.evaluate(() => {
   const out = [];
   for (const el of document.querySelectorAll("a,button,[role=button],[role=radio],input,select")) {
@@ -182,13 +195,13 @@ const small = await page.evaluate(() => {
   }
   return out.slice(0, 6);
 });
-for (const s of small) findings.push(`[touch-target] accueil @375px — ${s}`);
+for (const s of small) findings.push(`[touch-target] sentis-fr @375px — ${s}`);
 await ctx.close();
 
 // 6. reduced-motion : rien ne doit rester invisible
 const rm = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });
 const rmPage = await rm.newPage();
-await rmPage.goto(BASE + "/", { waitUntil: "networkidle" });
+await rmPage.goto(BASE + "/fr", { waitUntil: "networkidle" });
 await rmPage.waitForTimeout(400);
 const invisible = await rmPage.evaluate(() => {
   const h1 = document.querySelector("h1");
@@ -197,7 +210,7 @@ const invisible = await rmPage.evaluate(() => {
   const hidden = spans.filter((s) => parseFloat(getComputedStyle(s).opacity) < 0.9);
   return hidden.length ? `${hidden.length}/${spans.length} fragments du h1 restent sous opacity 0.9` : null;
 });
-if (invisible) findings.push(`[reduced-motion] accueil — ${invisible}`);
+if (invisible) findings.push(`[reduced-motion] sentis-fr — ${invisible}`);
 await rm.close();
 
 await browser.close();

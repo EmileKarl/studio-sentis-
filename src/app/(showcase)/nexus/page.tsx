@@ -164,10 +164,10 @@ export default function Home() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-xs">
-              <Link href="/design-system">Design system</Link>
+              <Link href="/nexus/design-system">Design system</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-xs">
-              <Link href="/components">Composants</Link>
+              <Link href="/nexus/components">Composants</Link>
             </Button>
           </div>
         </div>

@@ -165,7 +165,7 @@ export function ComponentsDemo() {
               <Breadcrumb className="mb-4">
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Accueil</BreadcrumbLink>
+                    <BreadcrumbLink href="/nexus">NEXUS UI</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>

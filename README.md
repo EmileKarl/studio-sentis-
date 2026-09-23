@@ -1,4 +1,26 @@
-# NEXUS UI — Digital Starter Kit
+# Studio Sentis
+
+Ce dépôt sert deux produits sur un seul déploiement :
+
+| Chemin | Produit |
+| --- | --- |
+| `/fr`, `/en` | **Site de Studio Sentis** — agence à Châteauguay, Québec |
+| `/nexus/**` | **NEXUS UI** — le starter kit, et la pièce de portfolio de l'agence |
+
+La racine `/` redirige vers `/fr` : le domaine appartient à l'agence, la
+vitrine technique en est une section.
+
+Les deux partagent une seule architecture de tokens et une seule bibliothèque
+de composants ; seule la peau change (`src/styles/sentis.css`, activée par
+`data-brand="sentis"`). C'est la démonstration la plus directe de ce que le
+starter kit sait faire : **un système, deux identités.**
+
+Contexte produit et positionnement : [`PRODUCT.md`](PRODUCT.md). Grille de
+prix proposée : [`docs/offre.md`](docs/offre.md).
+
+---
+
+## NEXUS UI — Digital Starter Kit
 
 Infrastructure de création numérique : un design system, une bibliothèque de
 composants et une bibliothèque d'animations, conçus pour être réutilisés d'un
@@ -17,12 +39,12 @@ et le Motion Lab (§9.4) existent. Le détail page par page est dans
 
 | Page | État |
 | --- | --- |
-| Landing (`/`) | Construite |
-| Design System (`/design-system`) | Construite |
-| Composants (`/components`) | Construite |
-| Motion Lab (`/motion`) | Construite |
-| Gallery (`/gallery`) | Construite |
-| Dashboard (`/dashboard`) | Construite |
+| Landing (`/nexus`) | Construite |
+| Design System (`/nexus/design-system`) | Construite |
+| Composants (`/nexus/components`) | Construite |
+| Motion Lab (`/nexus/motion`) | Construite |
+| Gallery (`/nexus/gallery`) | Construite |
+| Dashboard (`/nexus/dashboard`) | Construite |
 | Settings, Documentation | Prévues |
 
 ## Prérequis
@@ -54,8 +76,9 @@ npm run verify:tokens # les tokens de motion JS et CSS sont-ils identiques ?
 
 `npm run verify` demande un serveur déjà lancé. Il charge les trois pages aux
 **neuf largeurs imposées par le §11** (320 à 1440 px), dans les deux thèmes, et
-échoue s'il trouve un débordement horizontal, un texte tronqué, une erreur de
-console, une cible tactile sous 24 px, un titre invisible sous
+échoue s'il trouve un débordement horizontal, un texte tronqué, **une requête
+en 4xx avec son URL** (c'est ainsi que trois préchargements vers d'anciens
+chemins ont été trouvés), une cible tactile sous 24 px, un titre invisible sous
 `prefers-reduced-motion`, ou **un texte laissé transparent alors qu'il est dans
 le viewport** — la signature d'une entrée au scroll qui n'est jamais partie.
 
@@ -81,17 +104,21 @@ statiques ; aucune variable d'environnement n'est requise à ce stade.
 ```
 src/
 ├── app/
-│   ├── (showcase)/ Pages vitrine : en-tête et pied de page du site
-│   └── (app)/      Enveloppe applicative : barre latérale, sans chrome vitrine
+│   ├── page.tsx        Redirige / vers /fr
+│   ├── (sentis)/       Site de l'agence, segment [locale] : /fr et /en
+│   ├── (showcase)/     Vitrine NEXUS sous /nexus
+│   └── (app)/          Enveloppe applicative : /nexus/dashboard
 ├── components/
 │   ├── ui/         Primitives shadcn/ui (Radix) + composants Magic UI
 │   ├── motion/     Bibliothèque d'animations et animations de signature
+│   ├── sentis/     Chrome propre au site de l'agence
 │   ├── layout/     Container, Section, en-tête et pied de page
 │   └── sections/   Blocs de page composés
 ├── lib/            Navigation, utilitaires, statistiques de build
 └── styles/
     ├── tokens.css  Couleurs, espacements, rayons, ombres, grille
-    └── motion.css  Durées, courbes, délais, reduced-motion
+    ├── motion.css  Durées, courbes, délais, reduced-motion
+    └── sentis.css  Peau de la marque Studio Sentis
 tests/
 └── responsive-check.mjs
 ```

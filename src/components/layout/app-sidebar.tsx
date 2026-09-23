@@ -31,16 +31,16 @@ const SECTIONS = [
   {
     label: "Pilotage",
     items: [
-      { href: "/dashboard", label: "Vue d'ensemble", Icon: LayoutGrid, badge: null },
-      { href: "/dashboard#verifications", label: "Vérifications", Icon: ListChecks, badge: "4" },
-      { href: "/dashboard#activite", label: "Activité", Icon: Activity, badge: null },
+      { href: "/nexus/dashboard", label: "Vue d'ensemble", Icon: LayoutGrid, badge: null },
+      { href: "/nexus/dashboard#verifications", label: "Vérifications", Icon: ListChecks, badge: "4" },
+      { href: "/nexus/dashboard#activite", label: "Activité", Icon: Activity, badge: null },
     ],
   },
   {
     label: "Système",
     items: [
-      { href: "/design-system", label: "Design system", Icon: Palette, badge: null },
-      { href: "/components", label: "Composants", Icon: SlidersHorizontal, badge: "38" },
+      { href: "/nexus/design-system", label: "Design system", Icon: Palette, badge: null },
+      { href: "/nexus/components", label: "Composants", Icon: SlidersHorizontal, badge: "38" },
     ],
   },
 ];
@@ -52,7 +52,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-rule border-b">
         <Link
-          href="/"
+          href="/nexus"
           className="focus-visible:ring-signal flex items-baseline gap-2 px-2 py-1.5 focus-visible:ring-2 focus-visible:outline-none group-data-[collapsible=icon]:px-0"
         >
           <span className="font-display text-sidebar-foreground text-sm font-bold tracking-[0.18em] uppercase">
@@ -102,7 +102,7 @@ export function AppSidebar() {
         <div className="flex items-center justify-between gap-2 group-data-[collapsible=icon]:flex-col">
           <ThemeToggle />
           <Link
-            href="/"
+            href="/nexus"
             className="text-ink-muted hover:text-ink focus-visible:ring-signal flex items-center gap-1 rounded-xs px-1 py-1 font-mono text-[11px] transition-colors focus-visible:ring-2 focus-visible:outline-none group-data-[collapsible=icon]:hidden"
           >
             Vitrine <ArrowUpRight className="size-3" aria-hidden />

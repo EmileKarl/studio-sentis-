@@ -4,6 +4,7 @@
 @import "../styles/tokens.css";
 @import "../styles/motion.css";
 @import "../styles/scroll-driven.css";
+@import "../styles/sentis.css";
 
 @custom-variant dark (&:is(.dark *));
 
