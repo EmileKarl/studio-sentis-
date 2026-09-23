@@ -77,6 +77,16 @@ elles :
 L'informatique générale et le marketing restent dans le périmètre (voir
 « Product Purpose ») mais ne portent pas la communication.
 
+## Tarifs
+
+Une grille de forfaits est **proposée** dans [`docs/offre.md`](docs/offre.md),
+en dollars canadiens. Elle n'est ni validée par le client ni vérifiée contre le
+marché local, et ce document dit ce qu'il faut faire avant de l'afficher.
+
+Deux points de fond y sont tranchés : le sur-mesure passe par un **cadrage
+payant à prix fixe** plutôt que par un forfait impossible à tenir, et
+l'autonomie du client est **incluse** — décision encore à confirmer.
+
 ## Engagements
 
 Confirmés par le client, donc affichables :
