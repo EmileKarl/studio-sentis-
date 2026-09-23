@@ -39,17 +39,76 @@ vitrine d'une activité déjà en cours.
 
 ## Positioning
 
-**Non décidé.** Aucun mécanisme ou revendication distinctive n'a été établi à ce
-stade. Le périmètre de services seul ne constitue pas un positionnement — il est
-partagé par la plupart des agences généralistes.
+**Proposé, en attente de validation du client.** Recommandé par l'assistant ;
+rien n'est encore confirmé par le client. À valider avant toute rédaction
+définitive.
 
-À trancher avant tout travail de rédaction ou de mise en avant. Ne rien inventer
-ici en attendant.
+> Le prix et la date, dès le premier échange. Un seul interlocuteur, du logo à
+> l'application.
+
+**Mécanisme.** Les trois engagements retenus par le client — prix annoncé
+d'avance, interlocuteur unique, délai court et daté — forment une seule
+promesse : la suppression de l'incertitude. Le secteur répond « devis sur
+demande » ; l'inverse est une position tenable.
+
+Elle n'est crédible que parce qu'une base réutilisable existe déjà (NEXUS UI) :
+un prix ferme et un délai court reposent sur elle. C'est ce qu'un concurrent ne
+peut pas revendiquer sans l'avoir construite.
+
+**La largeur de l'offre devient l'argument.** « Un seul interlocuteur pour
+l'identité, le site et l'application » est précisément ce qu'une agence
+spécialisée ne peut pas promettre.
+
+**Concurrent de référence : les constructeurs en ligne** (Wix, Shopify,
+générateurs IA). C'est l'alternative que les clients visés envisagent
+réellement, et la seule face à laquelle ces trois engagements gagnent au lieu
+d'égaliser. Le site doit répondre explicitement à : pourquoi payer quelqu'un
+plutôt qu'utiliser un outil à 15 €/mois.
+
+## Offre
+
+Trois missions retenues comme prioritaires par le client, sans hiérarchie entre
+elles :
+
+1. Sites vitrines pour commerces et petites structures.
+2. Applications web et mobile sur mesure.
+3. Identité visuelle et design graphique.
+
+L'informatique générale et le marketing restent dans le périmètre (voir
+« Product Purpose ») mais ne portent pas la communication.
+
+## Engagements
+
+Confirmés par le client, donc affichables :
+
+- **Prix annoncé d'avance**, pas de « devis sur demande ».
+- **Un seul interlocuteur**, du premier contact à la livraison.
+- **Délai court et daté** dès le devis.
+
+Recommandés en complément, non encore confirmés :
+
+- **Autonomie du client** — site modifiable seul, avec prise en main. C'est la
+  réponse directe à la principale objection des constructeurs en ligne ; sans
+  elle, ils gagnent sur cet axe.
+- **Propriété du travail** — le client possède son code et son nom de domaine,
+  il n'est pas locataire d'une plateforme à abonnement croissant.
+- **Vérification systématique avant livraison** — contrastes, lisibilité, neuf
+  largeurs d'écran. Le pipeline existe déjà dans ce dépôt
+  (`npm run verify`), donc l'affirmation est démontrable et non déclarative.
 
 ## Operating Context
 
-Non établi. Zone géographique, mode de prise de contact, modalités de devis et
-canaux d'acquisition restent à définir.
+**Zone — proposé, à valider.** Afficher une implantation locale, servir la
+France à distance. La proximité est le contre-argument le plus fort face aux
+constructeurs en ligne. L'international francophone n'est pas affiché à ce
+stade : sans référence, il dilue le propos.
+
+**Fait manquant et bloquant pour la rédaction : la ville ou le département
+d'implantation.** Aucune mention géographique ne doit être écrite avant de
+l'obtenir du client.
+
+Mode de prise de contact, modalités de devis et canaux d'acquisition restent à
+définir.
 
 ## Capabilities and Constraints
 
@@ -58,9 +117,12 @@ canaux d'acquisition restent à définir.
 - **Bilingue français + anglais dès le départ.** Contrainte structurelle : la
   mise en page doit absorber les écarts de longueur entre les deux langues, et
   l'internationalisation ne peut pas être ajoutée après coup.
-  *État : non tenue.* NEXUS UI est en français uniquement et aucune
-  infrastructure i18n n'est posée — dette connue, consignée dans
-  `docs/audit.md`.
+  *État : non tenue sur NEXUS UI*, qui est en français seul sans infrastructure
+  i18n — dette consignée dans `docs/audit.md`.
+  *Recommandation pour le site Sentis (à valider) :* poser l'infrastructure i18n
+  dès le départ, publier en français seul. Cela respecte la raison d'être de la
+  contrainte — l'i18n ne se rajoute pas après coup — sans traduire pour une
+  audience anglophone qui n'existe pas encore.
 - Entreprise non encore ouverte : ni forme juridique, ni tarifs, ni délais, ni
   zone d'intervention confirmés.
 - Périmètre exact de chaque service non décidé.
