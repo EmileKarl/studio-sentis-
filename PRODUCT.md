@@ -136,8 +136,15 @@ Conséquences :
    l'OQLF avant toute affirmation publique — ne rien écrire de juridique sans
    cette vérification.
 
-Mode de prise de contact, modalités de devis et canaux d'acquisition restent à
-définir.
+**Contact : Emiletchesseu@gmail.com**, confirmé par le client. Le site propose
+aujourd'hui un lien courriel et non un formulaire ; un formulaire capterait les
+personnes qui n'ont pas de client de messagerie configuré, mais il exige un
+service d'envoi qui n'est pas encore choisi.
+
+**Nom de domaine : non choisi.** Il n'est écrit nulle part dans le code ; le
+site reste non indexable tant qu'il n'est pas fourni (voir README).
+
+Modalités de devis et canaux d'acquisition restent à définir.
 
 ## Capabilities and Constraints
 

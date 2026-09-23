@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DICT, isLocale } from "@/lib/i18n";
+import { LocalBusinessJsonLd } from "@/components/sentis/local-business";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 /** Section : l'unité de rythme du site. Plus d'air que sur NEXUS UI. */
 function Section({
@@ -54,6 +56,8 @@ export default async function SentisHome({
 
   return (
     <>
+      <LocalBusinessJsonLd locale={locale} />
+
       {/* ---------------------------------------------------------------- Hero */}
       <section className="py-20 sm:py-28 lg:py-36">
         <div className="mx-auto w-full max-w-(--container-page) px-5 sm:px-8">
@@ -227,7 +231,7 @@ export default async function SentisHome({
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <Button asChild size="lg" className="rounded-md text-base">
-            <a href="mailto:bonjour@studiosentis.ca">
+            <a href={`mailto:${CONTACT_EMAIL}`}>
               <Mail aria-hidden /> {d.contact.courriel}
             </a>
           </Button>

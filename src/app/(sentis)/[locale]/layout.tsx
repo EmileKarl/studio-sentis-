@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { SentisFooter } from "@/components/sentis/footer";
 import { SentisHeader } from "@/components/sentis/header";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
+import { SITE_URL, SITE_URL_IS_PLACEHOLDER } from "@/lib/site";
 
 /** Serif à contraste doux : un atelier, pas un outil. Fraunces est variable. */
 const fraunces = Fraunces({
@@ -33,12 +34,25 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const dict = DICT[locale];
   return {
+    metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
       canonical: `/${locale}`,
       languages: { fr: "/fr", en: "/en" },
     },
+    openGraph: {
+      type: "website",
+      locale: locale === "fr" ? "fr_CA" : "en_CA",
+      alternateLocale: locale === "fr" ? "en_CA" : "fr_CA",
+      url: `/${locale}`,
+      siteName: "Studio Sentis",
+      title: dict.meta.title,
+      description: dict.meta.description,
+    },
+    // Tant que le domaine n'est pas connu, on n'indexe pas : une adresse
+    // d'exemple indexée devrait ensuite être désindexée à la main.
+    robots: SITE_URL_IS_PLACEHOLDER ? { index: false, follow: false } : undefined,
   };
 }
 

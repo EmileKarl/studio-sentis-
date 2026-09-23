@@ -51,6 +51,20 @@ et le Motion Lab (§9.4) existent. Le détail page par page est dans
 
 Node.js 20+ et npm.
 
+## Configuration
+
+Une seule variable, documentée dans [`.env.example`](.env.example) :
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://votre-domaine.ca
+```
+
+**Tant qu'elle n'est pas définie, le site refuse d'être indexé** : `robots.txt`
+interdit tout, chaque page porte `noindex, nofollow`, et le sitemap pointe vers
+`example.invalid`. C'est délibéré — un site indexé sous une fausse adresse doit
+ensuite être désindexé à la main. Le domaine de Studio Sentis n'est pas encore
+choisi ; aucune adresse n'est écrite en dur dans le code.
+
 ## Installation
 
 ```bash
