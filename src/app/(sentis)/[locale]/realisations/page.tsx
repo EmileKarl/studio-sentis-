@@ -32,7 +32,7 @@ export default async function RealisationsPage({
 
   return (
     <>
-      <EnTetePage titre={p.titre} chapo={p.chapo} />
+      <EnTetePage titre={p.titre} chapo={p.chapo} scene="treillis" />
       <Travaux dict={d} />
     </>
   );

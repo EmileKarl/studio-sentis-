@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { Reveal3D, Scene3D, type Variante3D } from "@/components/motion";
+
 import { cn } from "@/lib/utils";
 
 /** Conteneur et rythme communs à toutes les pages du site. */
@@ -67,16 +69,34 @@ export function Section({
 export function EnTetePage({
   titre,
   chapo,
+  scene,
 }: {
   titre: string;
   chapo?: string;
+  /**
+   * Chaque page intérieure a son volume : c'est ce qui fait qu'on sait avoir
+   * changé de page avant même d'avoir lu le titre.
+   */
+  scene?: Variante3D;
 }) {
   return (
-    <section className="border-rule border-b py-16 sm:py-24">
-      <Zone>
-        <h1 className="font-display text-ink max-w-[18ch] text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl">
-          {titre}
-        </h1>
+    <section className="border-rule relative overflow-hidden border-b py-16 sm:py-24">
+      {scene ? (
+        <Scene3D
+          variante={scene}
+          alpha={0.6}
+          decalage={0.42}
+          zoom={0.82}
+          scroll={0.45}
+          className="[mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]"
+        />
+      ) : null}
+      <Zone className="relative">
+        <Reveal3D depuis="bas" distance={80} angle={10}>
+          <h1 className="font-display text-ink max-w-[18ch] text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl">
+            {titre}
+          </h1>
+        </Reveal3D>
         {chapo ? (
           <p className="text-ink-secondary mt-6 max-w-(--content-max) text-lg leading-relaxed text-pretty">
             {chapo}

@@ -19,6 +19,12 @@ Le site de l'agence tient en cinq pages, servies dans les deux langues :
 
 « Soumission » et non « devis » : c'est le terme employé au Québec.
 
+Chaque page porte un volume 3D qui lui est propre — treillis sur l'accueil,
+anneau sur les services, nuage sur À propos, onde sur le contact — tourné en
+continu **et** par le défilement. Ils sont rendus en WebGL, sans bibliothèque
+3D : le programme tient en une quarantaine de lignes de GLSL, là où Three.js
+coûterait environ 150 ko compressés à une agence qui vend des sites rapides.
+
 La racine `/` redirige vers `/fr` : le domaine appartient à l'agence, la
 vitrine technique en est une section.
 
@@ -100,6 +106,7 @@ npm run lint       # ESLint (doit sortir sans erreur ni avertissement)
 npm run typecheck  # TypeScript strict, sans émission
 npm run verify        # vérification navigateur : voir ci-dessous
 npm run verify:tokens # les tokens de motion JS et CSS sont-ils identiques ?
+npm run verify:scene  # le texte reste-t-il lisible devant les scènes 3D ?
 ```
 
 `npm run verify` demande un serveur déjà lancé. Il charge quatorze pages aux
@@ -115,6 +122,14 @@ npm run build && npm run start &
 npm run verify
 # Variables : BASE_URL, CHROME_PATH (Chromium déjà présent), SHOT_DIR
 ```
+
+`npm run verify:scene` photographie la boîte de chaque texte posé devant une
+scène 3D **titre masqué**, ce qui isole le fond réel — fil de fer compris — et
+compare la couleur CSS du texte au pire pixel de ce fond, à 1280 px et à 390 px,
+dans les deux thèmes. Aucun autre outil ne voit ces pixels : le détecteur lit le
+CSS calculé, où le fond reste la couleur de la section. C'est ce contrôle qui a
+imposé d'atténuer et de descendre les scènes sur téléphone, où le chapô des
+Services tombait à 4,11:1 en thème sombre.
 
 Le détecteur de design du skill Impeccable complète ces contrôles :
 
@@ -142,7 +157,7 @@ src/
 │   └── (app)/          Enveloppe applicative : /nexus/dashboard
 ├── components/
 │   ├── ui/         Primitives shadcn/ui (Radix) + composants Magic UI
-│   ├── motion/     Bibliothèque d'animations et animations de signature
+│   ├── motion/     Animations, dont les scènes WebGL et les objets CSS 3D
 │   ├── sentis/     Chrome propre au site de l'agence
 │   ├── layout/     Container, Section, en-tête et pied de page
 │   └── sections/   Blocs de page composés
@@ -152,7 +167,9 @@ src/
     ├── motion.css  Durées, courbes, délais, reduced-motion
     └── sentis.css  Peau de la marque Studio Sentis
 tests/
-└── responsive-check.mjs
+├── responsive-check.mjs
+├── motion-tokens-sync.mjs
+└── scene-contrast.mjs
 ```
 
 Détail et règles dans [`docs/architecture.md`](docs/architecture.md).

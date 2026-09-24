@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { HorizontalTrack } from "@/components/motion";
+import { HorizontalTrack, ObjetFlottant3D, Reveal3D, Scene3D } from "@/components/motion";
 import { DemoBoulangerie } from "@/components/sentis/demos";
 import { BrowserFrame } from "@/components/sentis/frames";
 import { HeroPleinEcran } from "@/components/sentis/hero-plein-ecran";
@@ -86,9 +86,11 @@ export default async function SentisHome({
             </Button>
           </div>
           <div className="order-1 min-w-0 lg:order-2">
-            <BrowserFrame url="lefournil.example">
-              <DemoBoulangerie />
-            </BrowserFrame>
+            <ObjetFlottant3D>
+              <BrowserFrame url="lefournil.example">
+                <DemoBoulangerie />
+              </BrowserFrame>
+            </ObjetFlottant3D>
           </div>
         </div>
       </Section>
@@ -124,11 +126,23 @@ export default async function SentisHome({
       </Section>
 
       {/* --- Appel final --- */}
-      <section className="bg-ink text-paper py-24 sm:py-32">
-        <Zone>
-          <h2 className="font-display max-w-[18ch] text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl">
-            {d.contact.titre}
-          </h2>
+      <section className="bg-ink text-paper relative overflow-hidden py-24 sm:py-32">
+        {/* L'onde est le seul décor de cette section : pas de filet, pas de
+            carte, rien qui concurrence le seul bouton de la page. */}
+        <Scene3D
+          variante="onde"
+          alpha={0.55}
+          vitesse={0.8}
+          decalage={0.3}
+          zoom={0.92}
+          className="text-rule-strong"
+        />
+        <Zone className="relative">
+          <Reveal3D depuis="bas" distance={70} angle={9}>
+            <h2 className="font-display max-w-[18ch] text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl">
+              {d.contact.titre}
+            </h2>
+          </Reveal3D>
           <p className="mt-6 max-w-(--content-max) text-lg leading-relaxed text-pretty">
             {d.contact.corps}
           </p>

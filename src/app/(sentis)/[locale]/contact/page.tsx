@@ -33,7 +33,7 @@ export default async function ContactPage({
 
   return (
     <>
-      <EnTetePage titre={p.titre} chapo={p.chapo} />
+      <EnTetePage titre={p.titre} chapo={p.chapo} scene="onde" />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">

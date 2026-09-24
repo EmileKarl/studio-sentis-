@@ -38,6 +38,7 @@ ses six sous-pages pour la vitrine.
 | Lint | `eslint` | 0 erreur, 0 avertissement |
 | Build production | `next build` | Succès, 0 avertissement |
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
+| Texte lisible devant les scènes 3D | `npm run verify:scene` — 6 pages × 2 largeurs × 2 thèmes, titre masqué | 0 constat (contrôle prouvé capable d'échouer : opacité poussée à 4, 8 constats) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
 | Débordement horizontal | `npm run verify` — 14 pages × 9 largeurs × 2 thèmes | 0 |
@@ -94,6 +95,20 @@ Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécut
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
 
+### Défauts des scènes 3D
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 36 | La couleur de la scène était lue avec `couleur / 255` quelle que soit l'écriture rendue par le navigateur. Dès qu'un modificateur d'opacité Tailwind passait par `color-mix`, `getComputedStyle` renvoyait `color(srgb 0.71 0.67 0.6 / 0.7)` : les trois valeurs, divisées par 255, donnaient du noir. L'onde de la section encre **assombrissait** le fond au lieu de l'éclaircir | Les deux écritures sont reconnues ; `color(...)` est lue en flottants |
+| 37 | L'anneau est tracé dans le plan XY, normale vers la caméra. Avec la part de défilement à plein, il arrivait déjà tourné de 69° et se lisait comme un tube, pas comme un tore | Assiette posée presque de face et part de défilement bornée à 0,45 sur les en-têtes |
+| 38 | Le prisme CSS débordait sa colonne : ses faces sont en position absolue, donc la boîte ne les mesurait pas, et la page entière partait hors du viewport en tournant | Largeur explicite de 1,7 × la taille |
+| 39 | Sur téléphone, l'anneau passait derrière le chapô. Mesuré : **4,11:1** sur les Services en thème sombre, sous le plancher de 4,5 | Sous 640 px la scène descend sous le bloc de texte et son opacité tombe à 35 % ; les deux valeurs sont celles qui font passer le contrôle |
+| 40 | La première version du contrôle de contraste mesurait des centiles de luminance dans la boîte du titre. Elle accusait « Services » à 1,65:1 alors que rien n'allait : dans une boîte large d'une mesure entière, les pixels de glyphe pèsent moins de 8 % | Le titre est rendu invisible avant la photo ; on compare sa couleur CSS au pire pixel du fond |
+
+Le n° 36 n'a été vu par aucun outil : ni le build, ni le lint, ni le détecteur,
+ni le contrôle responsive. Il a fallu regarder une capture de la section encre
+et trouver l'onde plus sombre que son fond.
+
 ### Défauts du site Sentis multipage
 
 | # | Problème | Correctif |
@@ -132,6 +147,7 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | `nested-cards` — carte dans une carte | 34 sur Composants, Motion Lab et Dashboard | **Inhérent.** Une galerie de composants ne peut pas montrer un composant `Card` sans l'encadrer dans un bloc de démonstration. À revoir si le motif apparaît hors galerie. |
 | `cramped-padding` — enfants au ras d'une bordure | 7 sur la vitrine, 9 sur le site de l'agence | **Assumé, mesuré.** Deux causes distinctes. Sur la vitrine : grilles à filet unique (`gap-px`), les cellules ont leur padding, c'est la grille porteuse qui n'en a pas — le procédé suisse recherché. Sur le site de l'agence : les boutons shadcn ont une hauteur fixe et zéro padding vertical ; mesuré au navigateur, le lien d'appel à l'action fait 32 px de haut pour 14 px de texte et le bouton d'envoi 36 px pour 16 px, soit 9 à 10 px de part et d'autre. La règle lit le padding, pas l'espace réel. |
 | `layout-transition` — `transition: height` | 3 sur la vitrine, 1 par page sur le site de l'agence | **Réel, non corrigé.** Vient de `transition-all` sur le bouton shadcn et de l'accordéon. Le passage à `grid-template-rows` demande de modifier un composant vendu ; à traiter avec la revue des primitives. |
+| `nested-cards` sur À propos | 3 | **Non reproduit.** Une sonde DOM cherchant une boîte à rayon, bordure ou fond dans une autre n'en trouve aucune sur cette page : les trois cartes de valeurs sont posées à plat sur le fond sable. Le constat est apparu avec le prisme et les entrées 3D, dont les enveloppes portent `perspective` et `transform-style` sans aucun décor. Laissé tel quel, faute de pouvoir localiser l'élément visé. |
 | `nested-cards` sur les pages de réalisations | 1 sur `/fr`, 3 sur `/fr/realisations` | **Inhérent, vérifié.** Sonde DOM à l'appui : les seules occurrences restantes sont les cartes produits de la démo boulangerie à l'intérieur du cadre de navigateur, et l'écran du téléphone à l'intérieur de son châssis. Un cadre d'appareil n'est pas une carte, mais il en a la forme calculée. |
 | `low-contrast` sur le bouton « Désactivé » | 1 | **Exemption assumée.** WCAG 1.4.3 exclut explicitement les composants d'interface inactifs. |
 
@@ -157,7 +173,13 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
   par `position: sticky`, le scroll horizontal en natif. C'est un écart assumé
   au §4, qui les nomme dans la stack ; il se referme dès qu'une séquence devra
   synchroniser plusieurs timelines sur une même piste.
-- **Lenis, Three.js** : non installés, aucune justification à ce jour.
+- **Three.js** : toujours pas installé, et c'est maintenant un choix motivé.
+  Les scènes 3D du site sont écrites en WebGL brut, une quarantaine de lignes de
+  GLSL et un nuage de points généré en JavaScript. Three.js coûterait environ
+  150 ko compressés au chargement pour un studio dont l'argument commercial est
+  de livrer des sites rapides. Il redeviendra justifié le jour où une scène
+  demandera des matériaux, des lumières ou un modèle importé.
+- **Lenis** : non installé, aucune justification à ce jour.
 - **§3.1** : le dossier de recherche visuelle n'est pas rédigé. La direction
   artistique a été choisie et justifiée, mais sans moodboard ni analyse de
   références écrite.

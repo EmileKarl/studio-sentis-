@@ -9,3 +9,6 @@ export { PinnedSequence, type PinnedStep } from "@/components/motion/pinned-sequ
 export { Reveal } from "@/components/motion/reveal";
 export { Stagger, StaggerItem } from "@/components/motion/stagger";
 export { TextReveal } from "@/components/motion/text-reveal";
+export { Scene3D, type Variante3D } from "@/components/motion/scene-3d";
+export { Reveal3D } from "@/components/motion/reveal-3d";
+export { ObjetFlottant3D, Prisme3D } from "@/components/motion/objets-3d";

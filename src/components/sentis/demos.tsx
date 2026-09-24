@@ -236,7 +236,7 @@ export function DemoIdentite() {
         <p className="mt-1 text-[28px] leading-none font-black tracking-[-0.04em]">
           Aa Bb Cc 0123
         </p>
-        <p className="mt-2 text-[13px] leading-relaxed text-[#4e5049]">
+        <p className="mt-2 max-w-[52ch] text-[13px] leading-relaxed text-[#4e5049]">
           Une graisse noire pour l&apos;enseigne et les plaques, une grasse
           normale pour les factures et la signalétique d&apos;atelier.
         </p>

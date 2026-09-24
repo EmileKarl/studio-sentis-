@@ -3,7 +3,7 @@
 import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { Reveal } from "@/components/motion";
+import { Reveal, Reveal3D, Scene3D } from "@/components/motion";
 import { Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import { GridPattern } from "@/components/ui/grid-pattern";
@@ -41,6 +41,17 @@ export function HeroPleinEcran({
         aria-hidden
       />
 
+      {/* Le treillis tourne en continu et suit le défilement : c'est la
+          première chose qui bouge, avant même que le visiteur ait lu le titre.
+          Il est masqué vers la gauche pour laisser la colonne de texte nette. */}
+      <Scene3D
+        variante="treillis"
+        alpha={0.6}
+        decalage={0.34}
+        zoom={1.22}
+        className="[mask-image:radial-gradient(ellipse_at_76%_48%,white,transparent_74%)]"
+      />
+
       <Zone className="relative flex flex-1 flex-col justify-center py-24">
         <Reveal direction="up" distance={12}>
           <p className="text-ink-muted flex items-center gap-2 text-sm">
@@ -49,11 +60,11 @@ export function HeroPleinEcran({
           </p>
         </Reveal>
 
-        <Reveal direction="up" distance={18} delay={0.08}>
+        <Reveal3D depuis="bas" distance={110} angle={10} delay={0.06}>
           <h1 className="font-display text-ink mt-8 max-w-[15ch] text-[2.5rem] leading-[0.98] font-semibold tracking-tight text-balance min-[360px]:text-5xl sm:text-6xl lg:text-7xl">
             {dict.hero.titre}
           </h1>
-        </Reveal>
+        </Reveal3D>
 
         <Reveal direction="up" distance={18} delay={0.16}>
           <p className="text-ink-secondary mt-8 max-w-(--content-max) text-lg leading-relaxed text-pretty sm:text-xl">

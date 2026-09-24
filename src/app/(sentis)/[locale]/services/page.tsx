@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Reveal, Stagger, StaggerItem } from "@/components/motion";
+import { Reveal3D, Stagger, StaggerItem } from "@/components/motion";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
@@ -35,12 +35,16 @@ export default async function ServicesPage({
 
   return (
     <>
-      <EnTetePage titre={p.titre} chapo={p.chapo} />
+      <EnTetePage titre={p.titre} chapo={p.chapo} scene="anneau" />
 
       <Section>
         <div className="space-y-20 sm:space-y-28">
           {p.items.map((item, i) => (
-            <Reveal key={item.nom} direction="up" distance={16}>
+            <Reveal3D
+              key={item.nom}
+              depuis={i % 2 === 0 ? "gauche" : "droite"}
+              distance={100}
+            >
               <article className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
                 <div>
                   <p className="text-ink-muted font-mono text-xs tracking-[0.2em] tabular-nums">
@@ -72,7 +76,7 @@ export default async function ServicesPage({
                   </Stagger>
                 </div>
               </article>
-            </Reveal>
+            </Reveal3D>
           ))}
         </div>
       </Section>

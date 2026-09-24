@@ -57,6 +57,9 @@ Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
 - [x] Page transitions fonctionnelles — 240ms, opacité + 8px, sans animation de sortie
 - [x] `reduced-motion` pris en compte — traité globalement dans `motion.css`
 - [x] Pas de layout shift important — aucune erreur de console, build statique
+- [x] Scènes 3D — WebGL sans bibliothèque, image fixe sous `reduced-motion`,
+      boucle arrêtée hors écran et en arrière-plan d'onglet, rien rendu sans WebGL
+- [x] Texte lisible devant les scènes — `npm run verify:scene`, pire pixel de fond
 
 ## Technique
 
