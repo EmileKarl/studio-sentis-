@@ -29,8 +29,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/nexus/design-system",
     "/nexus/components",
     "/nexus/motion",
+    "/nexus/scroll",
     "/nexus/gallery",
     "/nexus/dashboard",
+    "/nexus/docs",
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,

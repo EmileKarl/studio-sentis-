@@ -1,3 +1,4 @@
+export { HorizontalTrack } from "@/components/motion/horizontal-track";
 export { GridRecompose } from "@/components/motion/grid-recompose";
 export { InkBleed } from "@/components/motion/ink-bleed";
 export { WeightWave } from "@/components/motion/weight-wave";

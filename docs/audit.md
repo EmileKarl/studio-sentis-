@@ -20,6 +20,7 @@ l'agence, `/nexus` et ses six sous-pages pour la vitrine.
 | §9.5 Gallery | Faite |
 | §9.6 Dashboard | Faite |
 | §9.8 Documentation | Faite |
+| Défilement alterné (hors cahier des charges, demandé par le client) | Fait |
 | §9.7 Settings | **Écartée.** Elle démontrerait des formulaires et des préférences que la page Composants montre déjà ; le temps est allé au site de l'agence, qui ouvre la porte commerciale. |
 | §3.1 G Patterns | Faite — quatre trames SVG en currentColor |
 | §3.1 H Grilles et compositions | Faite — cinq compositions, recomposition animée |
@@ -37,7 +38,7 @@ l'agence, `/nexus` et ses six sous-pages pour la vitrine.
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
-| Débordement horizontal | `npm run verify` — 9 pages × 9 largeurs × 2 thèmes | 0 |
+| Débordement horizontal | `npm run verify` — 10 pages × 9 largeurs × 2 thèmes | 0 |
 | Texte tronqué | idem | 0 |
 | Erreurs de console | idem | 0 |
 | Cibles tactiles ≥ 24 px | idem, à 375 px | 0 |

@@ -20,6 +20,12 @@ export const NAV: NavItem[] = [
     status: "live",
   },
   {
+    href: "/nexus/scroll",
+    label: "Défilement",
+    description: "Séquences horizontales et verticales alternées, sans scroll détourné.",
+    status: "live",
+  },
+  {
     href: "/nexus/motion",
     label: "Motion Lab",
     description: "Fade, stagger, reveal, scroll, parallaxe, transitions de page.",

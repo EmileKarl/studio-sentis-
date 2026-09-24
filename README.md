@@ -43,6 +43,7 @@ et le Motion Lab (§9.4) existent. Le détail page par page est dans
 | Design System (`/nexus/design-system`) | Construite |
 | Composants (`/nexus/components`) | Construite |
 | Motion Lab (`/nexus/motion`) | Construite |
+| Défilement (`/nexus/scroll`) | Construite |
 | Gallery (`/nexus/gallery`) | Construite |
 | Dashboard (`/nexus/dashboard`) | Construite |
 | Documentation (`/nexus/docs`) | Construite |

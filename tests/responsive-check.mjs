@@ -23,6 +23,7 @@ const PAGES = [
   ["/nexus/design-system", "nexus-design-system"],
   ["/nexus/components", "nexus-composants"],
   ["/nexus/motion", "nexus-motion"],
+  ["/nexus/scroll", "nexus-scroll"],
   ["/nexus/gallery", "nexus-gallery"],
   ["/nexus/dashboard", "nexus-dashboard"],
   ["/nexus/docs", "nexus-docs"],
