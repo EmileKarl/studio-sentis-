@@ -133,11 +133,35 @@ export const DICT = {
         { n: "04", titre: "Je livre, et vous prenez la main", corps: "Le site est à vous. Une heure de prise en main pour que vous puissiez le modifier seul." },
       ],
     },
-    preuve: {
-      titre: "Ce que je peux montrer aujourd'hui",
-      corps:
-        "Studio Sentis démarre : je n'ai pas encore de projets clients à présenter, et je préfère l'écrire plutôt que d'afficher des logos empruntés ou des témoignages inventés. Ce que je peux montrer, c'est la base technique sur laquelle je construis — un système de design complet, sa bibliothèque de composants et d'animations, vérifié automatiquement sur neuf largeurs d'écran et sur les contrastes avant chaque livraison.",
-      lien: "Voir NEXUS UI, la base",
+    travaux: {
+      titre: "Ce que je sais faire",
+      intro:
+        "Trois pièces conçues pour montrer trois registres différents. Elles ne sont pas des captures d'écran : ce sont des interfaces réelles, rendues par votre navigateur en ce moment même.",
+      mention:
+        "Démonstrations réalisées par Studio Sentis. Ce ne sont pas des projets clients — le studio démarre et n'en a pas encore. Les entreprises citées sont fictives.",
+      items: [
+        {
+          etiquette: "Site vitrine",
+          titre: "Boulangerie Le Fournil",
+          corps:
+            "Un commerce de quartier : horaires lisibles d'un coup d'œil, produits et prix visibles sans cliquer, réservation en un bouton.",
+          meta: "Registre chaleureux · serif éditoriale · prix affichés",
+        },
+        {
+          etiquette: "Application mobile",
+          titre: "Salon Véra — prise de rendez-vous",
+          corps:
+            "Choisir un jour, choisir une heure, confirmer. Les créneaux déjà pris sont barrés plutôt que cachés : on comprend tout de suite ce qu'il reste.",
+          meta: "Registre calme · états visibles · une seule action par écran",
+        },
+        {
+          etiquette: "Identité visuelle",
+          titre: "Rive-Sud Mécanique",
+          corps:
+            "Monogramme, palette et caractère typographique, pensés pour tenir aussi bien sur une enseigne d'atelier que sur une facture.",
+          meta: "Registre franc · contraste élevé · lisible de loin",
+        },
+      ],
     },
     contact: {
       titre: "Parlons de votre projet",
@@ -233,11 +257,35 @@ export const DICT = {
         { n: "04", titre: "I hand it over", corps: "The site is yours. One hour of training so you can edit it on your own." },
       ],
     },
-    preuve: {
-      titre: "What I can show today",
-      corps:
-        "Studio Sentis is starting out: I have no client projects to show yet, and I'd rather write that than display borrowed logos or invented testimonials. What I can show is the technical base I build on — a complete design system with its component and animation libraries, checked automatically across nine screen widths and for colour contrast before every delivery.",
-      lien: "See NEXUS UI, the base",
+    travaux: {
+      titre: "What I can do",
+      intro:
+        "Three pieces built to show three different registers. They are not screenshots: these are real interfaces, rendered by your browser right now.",
+      mention:
+        "Demonstrations built by Studio Sentis. These are not client projects — the studio is starting out and has none yet. The businesses shown are fictional.",
+      items: [
+        {
+          etiquette: "Brochure site",
+          titre: "Le Fournil bakery",
+          corps:
+            "A neighbourhood shop: opening hours readable at a glance, products and prices visible without a click, booking in one button.",
+          meta: "Warm register · editorial serif · prices shown",
+        },
+        {
+          etiquette: "Mobile app",
+          titre: "Salon Véra — booking",
+          corps:
+            "Pick a day, pick a time, confirm. Taken slots are struck through rather than hidden, so what is left reads immediately.",
+          meta: "Calm register · visible states · one action per screen",
+        },
+        {
+          etiquette: "Visual identity",
+          titre: "Rive-Sud Mécanique",
+          corps:
+            "Monogram, palette and typeface, built to hold up on a workshop sign as well as on an invoice.",
+          meta: "Blunt register · high contrast · legible from a distance",
+        },
+      ],
     },
     contact: {
       titre: "Let's talk about your project",

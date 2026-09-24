@@ -18,6 +18,7 @@ import type { Dict, Locale } from "@/lib/i18n";
 export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
   const [open, setOpen] = useState(false);
   const liens = [
+    { href: "#travaux", label: dict.travaux.titre },
     { href: "#offre", label: dict.nav.offre },
     { href: "#prix", label: dict.nav.prix },
     { href: "#methode", label: dict.nav.methode },

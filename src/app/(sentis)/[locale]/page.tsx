@@ -1,10 +1,10 @@
 import { ArrowRight, Check, Mail, MapPin } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { DICT, isLocale } from "@/lib/i18n";
 import { LocalBusinessJsonLd } from "@/components/sentis/local-business";
+import { Travaux } from "@/components/sentis/travaux";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 /** Section : l'unité de rythme du site. Plus d'air que sur NEXUS UI. */
@@ -90,6 +90,8 @@ export default async function SentisHome({
           </div>
         </div>
       </section>
+
+      <Travaux dict={d} />
 
       {/* ------------------------------------------------------------ Problème */}
       <Section id="probleme" title={d.probleme.titre} lead={d.probleme.intro} tone="sand">
@@ -210,18 +212,6 @@ export default async function SentisHome({
             </li>
           ))}
         </ol>
-      </Section>
-
-      {/* -------------------------------------------------------------- Preuve */}
-      <Section title={d.preuve.titre} tone="sand">
-        <p className="text-ink-secondary max-w-(--content-max) text-lg leading-relaxed text-pretty">
-          {d.preuve.corps}
-        </p>
-        <Button asChild variant="outline" size="lg" className="mt-8 rounded-md text-base">
-          <Link href="/nexus">
-            {d.preuve.lien} <ArrowRight aria-hidden />
-          </Link>
-        </Button>
       </Section>
 
       {/* ------------------------------------------------------------- Contact */}
