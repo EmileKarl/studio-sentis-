@@ -30,16 +30,15 @@ export function Travaux({ dict }: { dict: Dict }) {
         <article className="mt-14">
           <div className="grid gap-8 lg:grid-cols-[1fr_1.35fr] lg:items-center lg:gap-12">
             <div className="order-2 lg:order-1">
-              <p className="text-signal-aa font-mono text-xs tracking-[0.18em] uppercase">
-                {web.etiquette}
-              </p>
-              <h3 className="font-display text-ink mt-3 text-2xl font-semibold tracking-tight text-balance">
+              <h3 className="font-display text-ink text-2xl font-semibold tracking-tight text-balance">
                 {web.titre}
               </h3>
               <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
                 {web.corps}
               </p>
-              <p className="text-ink-muted mt-4 font-mono text-xs">{web.meta}</p>
+              <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
+                {web.etiquette} · {web.meta}
+              </p>
             </div>
             <div className="order-1 min-w-0 lg:order-2">
               <BrowserFrame url="lefournil.example">
@@ -52,39 +51,37 @@ export function Travaux({ dict }: { dict: Dict }) {
         {/* --- Pièces 2 et 3 côte à côte : registres opposés, comparaison directe */}
         <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-10">
           <article>
-            <div className="bg-paper border-rule rounded-lg border p-4 sm:p-8">
+            <div className="flex justify-center py-2">
               <PhoneFrame>
                 <DemoReservation />
               </PhoneFrame>
             </div>
-            <p className="text-signal-aa mt-6 font-mono text-xs tracking-[0.18em] uppercase">
-              {mobile.etiquette}
-            </p>
-            <h3 className="font-display text-ink mt-3 text-2xl font-semibold tracking-tight text-balance">
+            <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
               {mobile.titre}
             </h3>
             <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
               {mobile.corps}
             </p>
-            <p className="text-ink-muted mt-4 font-mono text-xs">{mobile.meta}</p>
+            <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
+              {mobile.etiquette} · {mobile.meta}
+            </p>
           </article>
 
           <article>
-            <div className="bg-paper border-rule flex min-h-[19rem] items-center rounded-lg border p-4 sm:p-8">
+            <div className="flex min-h-[19rem] items-center py-2">
               <div className="border-rule w-full overflow-hidden rounded-md border shadow-sm">
                 <DemoIdentite />
               </div>
             </div>
-            <p className="text-signal-aa mt-6 font-mono text-xs tracking-[0.18em] uppercase">
-              {identite.etiquette}
-            </p>
-            <h3 className="font-display text-ink mt-3 text-2xl font-semibold tracking-tight text-balance">
+            <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
               {identite.titre}
             </h3>
             <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
               {identite.corps}
             </p>
-            <p className="text-ink-muted mt-4 font-mono text-xs">{identite.meta}</p>
+            <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
+              {identite.etiquette} · {identite.meta}
+            </p>
           </article>
         </div>
 

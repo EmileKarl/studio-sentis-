@@ -85,7 +85,7 @@ export default async function SentisLayout({
       <main id="contenu" className="flex-1">
         {children}
       </main>
-      <SentisFooter dict={dict} />
+      <SentisFooter dict={dict} locale={locale} />
     </div>
   );
 }

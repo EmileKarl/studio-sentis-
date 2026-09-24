@@ -12,17 +12,21 @@ import { SITE_URL } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const sentis = LOCALES.map((locale) => ({
-    url: `${SITE_URL}/${locale}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 1,
-    alternates: {
-      languages: Object.fromEntries(
-        LOCALES.map((l) => [l, `${SITE_URL}/${l}`]),
-      ),
-    },
-  }));
+  const pagesSentis = ["", "/services", "/realisations", "/a-propos", "/contact"];
+
+  const sentis = LOCALES.flatMap((locale) =>
+    pagesSentis.map((chemin) => ({
+      url: `${SITE_URL}/${locale}${chemin}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: chemin === "" ? 1 : 0.8,
+      alternates: {
+        languages: Object.fromEntries(
+          LOCALES.map((l) => [l, `${SITE_URL}/${l}${chemin}`]),
+        ),
+      },
+    })),
+  );
 
   const nexus = [
     "/nexus",

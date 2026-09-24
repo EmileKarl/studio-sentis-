@@ -1,8 +1,10 @@
 # Rapport d'audit — NEXUS UI et site Studio Sentis
 
 Établi selon le §13 phase 14 : comparaison du projet au cahier des charges.
-Portée auditée : les neuf pages construites — `/fr` et `/en` pour le site de
-l'agence, `/nexus` et ses six sous-pages pour la vitrine.
+Portée auditée : les dix-sept pages construites — le site de l'agence sur cinq
+pages en deux langues (`/fr`, `/fr/services`, `/fr/realisations`,
+`/fr/a-propos`, `/fr/contact`, et leurs équivalents `/en`), plus `/nexus` et
+ses six sous-pages pour la vitrine.
 
 ## 1. Ce qui est terminé
 
@@ -38,14 +40,14 @@ l'agence, `/nexus` et ses six sous-pages pour la vitrine.
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
-| Débordement horizontal | `npm run verify` — 10 pages × 9 largeurs × 2 thèmes | 0 |
+| Débordement horizontal | `npm run verify` — 14 pages × 9 largeurs × 2 thèmes | 0 |
 | Texte tronqué | idem | 0 |
 | Erreurs de console | idem | 0 |
 | Cibles tactiles ≥ 24 px | idem, à 375 px | 0 |
 | `prefers-reduced-motion` | idem | Titre entièrement visible |
 | Texte transparent dans le viewport | idem, page descendue par écrans | 0 |
 | Contraste des tokens | Détecteur Impeccable, par paire | Toutes les paires ≥ 4,5:1 |
-| Anti-patterns de design | Détecteur Impeccable, 61 règles, sur pages rendues | 28 constats, triés en §4 |
+| Anti-patterns de design | Détecteur Impeccable, 61 règles, sur pages rendues | 28 constats sur la vitrine et 39 sur le site de l'agence, triés en §4 ; il en reste 13 sur le site de l'agence, tous assumés |
 
 ## 3. Problèmes trouvés et corrigés
 
@@ -92,7 +94,26 @@ Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécut
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
 
-### Défauts du site Sentis et de la Documentation
+### Défauts du site Sentis multipage
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 26 | `setState` appelé dans un effet pour refermer le tiroir mobile à la navigation — la règle `react-hooks/set-state-in-effect` la refuse, et le rendu se faisait en deux passes | Le tiroir se referme depuis le `onClick` du lien lui-même |
+| 27 | Le titre anglais du héros débordait la page de 21 px à 320 px : « conversation. » mesure 301 px à 48 px de corps, pour 280 px disponibles | Un cran de corps en dessous de 360 px |
+| 28 | `Reveal` ne se déclenchait qu'au quart visible (`amount: 0.25`) : un bloc de texte plus haut que l'écran occupait le viewport à opacité 0, et restait blanc tant qu'on n'avait pas descendu | Déclenchement dès l'entrée du bloc (`amount: "some"`) |
+| 29 | Surtitre en capitales espacées répétant le h1 mot pour mot (« Réalisations » au-dessus de « Réalisations ») sur les quatre pages intérieures — **quatrième occurrence** du motif | `EnTetePage` n'accepte plus de surtitre ; l'état actif du menu dit déjà où l'on est |
+| 30 | Les panneaux de séquence horizontale étaient des `h3` juste après le `h1` : plan du document troué, navigation par titres cassée pour un lecteur d'écran | Panneaux passés en `h2` |
+| 31 | Étiquette de pièce (« Site vitrine ») posée en capitales au-dessus du titre de chaque réalisation — le même tic, en cinquième occurrence | Fondue dans la ligne de méta, sous le texte |
+| 32 | Horaires d'ouverture en capitales espacées au-dessus du titre, à l'intérieur même de la démo boulangerie | Descendus sous les boutons, en casse normale |
+| 33 | Ligne de méta à 98 caractères après fusion de l'étiquette et de la méta | Mesure bornée à `--content-max` |
+| 34 | Bouton « Confirmer » de la démo de réservation sans padding horizontal : le texte touchait le bord du bouton dès que l'écran rétrécissait | `px-4` |
+| 35 | Cadre d'appareil posé dans une carte (bordure + rayon + ombre autour d'une bordure + rayon) : deux boîtes pour un seul objet | Cartes de présentation supprimées, la section sable sert de plateau |
+
+Le n° 29 est la quatrième fois que le surtitre en capitales revient dans ce
+projet, et le n° 31 la cinquième. Le motif ne revient pas par accident : c'est
+le réflexe par défaut quand on compose un en-tête. Seul le détecteur l'attrape.
+
+### Défauts du site Sentis (version une page) et de la Documentation
 
 | # | Problème | Correctif |
 | --- | --- | --- |
@@ -109,16 +130,18 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | --- | --- | --- |
 | `em-dash-overuse` — tirets cadratins | 3 pages | **Réel, partiellement traité.** Tic d'écriture qui fatigue la lecture. Une passe a été faite sur la page Design System ; les autres restent à relire. |
 | `nested-cards` — carte dans une carte | 34 sur Composants, Motion Lab et Dashboard | **Inhérent.** Une galerie de composants ne peut pas montrer un composant `Card` sans l'encadrer dans un bloc de démonstration. À revoir si le motif apparaît hors galerie. |
-| `cramped-padding` — enfants au ras d'une bordure | 7 | **Assumé.** Grilles à filet unique (`gap-px`) : les cellules ont leur padding, c'est la grille porteuse qui n'en a pas. C'est le procédé suisse recherché. |
-| `layout-transition` — `transition: height` | 3 | **Réel, non corrigé.** Vient de l'accordéon shadcn. Le passage à `grid-template-rows` demande de modifier un composant vendu ; à traiter avec la revue des primitives. |
+| `cramped-padding` — enfants au ras d'une bordure | 7 sur la vitrine, 9 sur le site de l'agence | **Assumé, mesuré.** Deux causes distinctes. Sur la vitrine : grilles à filet unique (`gap-px`), les cellules ont leur padding, c'est la grille porteuse qui n'en a pas — le procédé suisse recherché. Sur le site de l'agence : les boutons shadcn ont une hauteur fixe et zéro padding vertical ; mesuré au navigateur, le lien d'appel à l'action fait 32 px de haut pour 14 px de texte et le bouton d'envoi 36 px pour 16 px, soit 9 à 10 px de part et d'autre. La règle lit le padding, pas l'espace réel. |
+| `layout-transition` — `transition: height` | 3 sur la vitrine, 1 par page sur le site de l'agence | **Réel, non corrigé.** Vient de `transition-all` sur le bouton shadcn et de l'accordéon. Le passage à `grid-template-rows` demande de modifier un composant vendu ; à traiter avec la revue des primitives. |
+| `nested-cards` sur les pages de réalisations | 1 sur `/fr`, 3 sur `/fr/realisations` | **Inhérent, vérifié.** Sonde DOM à l'appui : les seules occurrences restantes sont les cartes produits de la démo boulangerie à l'intérieur du cadre de navigateur, et l'écran du téléphone à l'intérieur de son châssis. Un cadre d'appareil n'est pas une carte, mais il en a la forme calculée. |
 | `low-contrast` sur le bouton « Désactivé » | 1 | **Exemption assumée.** WCAG 1.4.3 exclut explicitement les composants d'interface inactifs. |
 
 ## 5. Ce qui n'est pas fait
 
 - **§9.7 Settings** : écartée délibérément (voir plus haut).
-- **Formulaire de contact** : le site propose un lien courriel. Un formulaire
-  capterait les visiteurs sans client de messagerie configuré, mais il exige un
-  service d'envoi que le client n'a pas encore choisi.
+- **Envoi du formulaire de contact** : le formulaire existe, valide ses champs
+  et compose un courriel prérempli, faute de service d'envoi choisi. Un visiteur
+  sans client de messagerie configuré reste donc sans chemin — c'est écrit
+  sous le formulaire, ce n'est pas réglé.
 - **Nom de domaine** : non fourni. Le site reste non indexable tant qu'il
   manque — garde-fou vérifié dans les deux états.
 - **Grille de prix** : affichée sur le site mais **non validée** contre le
@@ -142,8 +165,9 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
   display (graphiques, flux d'activité, filtres) non couvertes.
 - **§12** : `tests/components/`, `tests/pages/`, `tests/accessibility/` — seul
   le contrôle responsive et accessibilité existe.
-- **Bilinguisme FR + EN** exigé par `PRODUCT.md` : le projet est en français
-  uniquement. Aucune infrastructure i18n n'est posée.
+- **Bilinguisme FR + EN** exigé par `PRODUCT.md` : fait pour le site de
+  l'agence — segment `[locale]`, dictionnaire typé, `hreflang`. La vitrine
+  `/nexus` reste en français uniquement.
 
 ## 6. Fichiers importants
 
@@ -155,6 +179,9 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | `src/lib/stats.ts` | Chiffres comptés au build |
 | `src/lib/motion.ts` | Tokens de motion côté JS, miroir de `motion.css` |
 | `src/components/motion/` | Bibliothèque d'animations (§6.7) |
+| `src/lib/i18n.ts` | Tout le texte du site de l'agence, FR et EN |
+| `src/components/sentis/parts.tsx` | Zone, Section, en-tête de page, panneau de séquence |
+| `src/components/sentis/formulaire.tsx` | Demande de soumission |
 | `tests/responsive-check.mjs` | Contrôle des 9 largeurs × 2 thèmes |
 | `tests/motion-tokens-sync.mjs` | Empêche `motion.css` et `motion.ts` de diverger |
 

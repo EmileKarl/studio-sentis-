@@ -49,7 +49,7 @@ export function Reveal({
         ...offsetFor(direction, distance),
       }}
       whileInView={{ opacity: 1, filter: blur ? "blur(0px)" : undefined, x: 0, y: 0 }}
-      viewport={{ once: !repeat, amount: 0.25, margin: "0px 0px -10% 0px" }}
+      viewport={{ once: !repeat, amount: "some", margin: "0px 0px -10% 0px" }}
       transition={{ duration: DURATION.slow, ease: EASE.out, delay }}
     >
       {children}

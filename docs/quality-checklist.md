@@ -5,7 +5,7 @@
 
 ## Design
 
-- [x] Direction artistique cohérente — Swiss editorial, tenue sur les 3 pages
+- [x] Direction artistique cohérente — Swiss editorial, tenue sur les dix-sept pages
 - [x] Palette cohérente — 141 tokens, une seule source
 - [x] Typographie cohérente — Archivo / IBM Plex Sans / IBM Plex Mono
 - [x] Grilles cohérentes — une gouttière, un `Container`
@@ -32,7 +32,7 @@
 ## Responsive
 
 Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
-1440 px, dans les deux thèmes, sur les neuf pages.
+1440 px, dans les deux thèmes, sur quatorze pages.
 
 - [x] Desktop testé
 - [x] Tablette testée
@@ -63,10 +63,10 @@ Vérifié par `npm run verify` sur 320, 375, 390, 430, 768, 834, 1024, 1280 et
 - [x] TypeScript valide — `tsc --noEmit`, 0 erreur
 - [x] Lint valide — 0 erreur, 0 avertissement
 - [x] Build valide — 0 avertissement
-- [x] Console propre — 0 erreur sur 162 chargements
+- [x] Console propre — 0 erreur sur 252 chargements
 - [x] Pas d'imports inutiles — vérifié par le lint
 - [x] Pas de composants inutilisés — 2 composants retirés à ce titre
-- [x] Performance acceptable — 3 pages entièrement statiques
+- [x] Performance acceptable — dix-sept pages entièrement statiques
 - [x] Accessibilité vérifiée — contraste, focus, cibles tactiles, `reduced-motion`
 - [ ] Images optimisées — sans objet
 - [x] Documentation présente — `docs/` et la page `/nexus/docs`

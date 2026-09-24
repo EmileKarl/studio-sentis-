@@ -41,10 +41,7 @@ export function DemoBoulangerie() {
 
       <div className="mt-6 grid gap-5 sm:grid-cols-[1.1fr_1fr] sm:items-end">
         <div>
-          <p className="text-[11px] tracking-[0.22em] text-[var(--c-soft)] uppercase">
-            Ouvert du mardi au dimanche
-          </p>
-          <h3 className="mt-2 font-serif text-[28px] leading-[1.05] font-bold tracking-tight sm:text-[36px]">
+          <h3 className="font-serif text-[28px] leading-[1.05] font-bold tracking-tight sm:text-[36px]">
             Le pain sort du four à&nbsp;6&nbsp;h&nbsp;30.
           </h3>
           <p className="mt-3 max-w-[34ch] text-[14px] leading-relaxed text-[var(--c-soft)]">
@@ -59,6 +56,9 @@ export function DemoBoulangerie() {
               Nous trouver
             </span>
           </div>
+          <p className="mt-3 text-[12px] text-[var(--c-soft)]">
+            Ouvert du mardi au dimanche, 6&nbsp;h&nbsp;30 – 18&nbsp;h.
+          </p>
         </div>
 
         <div className="grid grid-cols-3 gap-2">
@@ -175,7 +175,7 @@ export function DemoReservation() {
         Les heures barrées sont déjà réservées.
       </p>
 
-      <div className="mt-4 rounded-xl bg-[var(--c-ink)] py-3 text-center text-[12px] font-semibold text-white">
+      <div className="mt-4 rounded-xl bg-[var(--c-ink)] px-4 py-3 text-center text-[12px] font-semibold text-white">
         Confirmer · mercredi 13 h 30
       </div>
     </div>

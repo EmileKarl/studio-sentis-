@@ -20,12 +20,135 @@ export const DICT = {
         "Le prix et la date dès le premier échange. Un seul interlocuteur, du logo à l'application. Châteauguay, Montérégie et Grand Montréal.",
     },
     nav: {
+      accueil: "Accueil",
+      services: "Services",
+      realisations: "Réalisations",
+      apropos: "À propos",
+      contactCourt: "Contact",
+      soumission: "Demander une soumission",
       offre: "Ce que je fais",
       prix: "Prix",
       methode: "Comment ça se passe",
       contact: "Parler du projet",
       langue: "English",
       autre: "en",
+      menu: "Menu",
+      fermer: "Fermer",
+    },
+    pages: {
+      accueil: {
+        manifeste: [
+          {
+            titre: "Le prix. La date. Dès le premier échange.",
+            corps: "Pas de « soumission sur demande » pour un site vitrine. Les montants sont affichés, et la date est au contrat.",
+          },
+          {
+            titre: "Une seule personne, du logo à l'application.",
+            corps: "Celle à qui vous parlez est celle qui travaille. Pas de vendeur, pas de chef de projet, pas de version déformée de votre demande.",
+          },
+          {
+            titre: "Le site vous appartient.",
+            corps: "Le code et le nom de domaine sont à vous. Vous n'êtes locataire d'aucune plateforme dont l'abonnement grimpe.",
+          },
+          {
+            titre: "Châteauguay. On peut se rencontrer.",
+            corps: "Montérégie et Grand Montréal. Quelqu'un à appeler, qui connaît votre projet, et qui répond.",
+          },
+        ],
+        etapesTitre: "Quatre étapes, et vous savez où vous allez",
+      },
+      services: {
+        titre: "Nos services",
+        chapo: "Quatre métiers, un seul interlocuteur. Chaque service peut être commandé seul ou combiné aux autres — c'est là qu'il devient intéressant.",
+        items: [
+          {
+            nom: "Sites web",
+            resume: "Du site une page au site vitrine complet.",
+            detail: "Présenter votre activité, être trouvé par les gens qui vous cherchent, être joint sans friction. Bilingue français-anglais dès la conception, parce qu'au Québec ce n'est pas une option.",
+            livrables: ["Conception et intégration", "Bilingue FR/EN", "Fiche Google Business", "Vous modifiez le contenu vous-même", "Hébergement et suivi"],
+          },
+          {
+            nom: "Applications web et mobile",
+            resume: "Un outil sur mesure quand l'existant ne suit pas.",
+            detail: "Quand un logiciel du commerce ne correspond pas à votre façon de travailler et qu'il vous impose la sienne. On commence par un cadrage payant à prix fixe : périmètre écrit, maquette cliquable, soumission ferme.",
+            livrables: ["Cadrage et maquette cliquable", "Développement web ou mobile", "Reprise de vos données", "Formation à l'usage", "Évolutions au fil de l'eau"],
+          },
+          {
+            nom: "Identité visuelle",
+            resume: "Logo, couleurs, typographie et déclinaisons.",
+            detail: "Une identité qui tient aussi bien sur une enseigne d'atelier que sur une facture, un camion ou un fil Instagram. Livrée avec son guide d'usage, pour que vous puissiez la confier à quelqu'un d'autre sans qu'elle se déforme.",
+            livrables: ["Logo et monogramme", "Palette et typographie", "Carte, enseigne, réseaux sociaux", "Guide d'usage", "Fichiers sources"],
+          },
+          {
+            nom: "Informatique et marketing",
+            resume: "Dépannage, maintenance, accompagnement.",
+            detail: "Le reste : un poste qui ne démarre plus, une boîte courriel à configurer, une campagne à lancer, un référencement local à redresser. Facturé à l'heure ou au forfait mensuel, jamais à l'aveugle.",
+            livrables: ["Dépannage sur place ou à distance", "Configuration courriel et postes", "Référencement local", "Campagnes et publications", "Suivi mensuel"],
+          },
+        ],
+        ctaTitre: "Une idée du budget avant d'appeler ?",
+        ctaCorps: "Les forfaits sont affichés, en dollars canadiens. Vous saurez à quoi vous attendre avant même de m'écrire.",
+        ctaLien: "Voir les prix",
+      },
+      realisations: {
+        titre: "Réalisations",
+        chapo: "Studio Sentis démarre. Plutôt que d'emprunter des logos ou d'inventer des témoignages, voici trois pièces conçues pour montrer trois registres — rendues en direct par votre navigateur, pas exportées en image.",
+      },
+      apropos: {
+        titre: "À propos",
+        chapo: "Un studio de Châteauguay, qui commence, et qui préfère le dire.",
+        histoire: [
+          {
+            titre: "Pourquoi un studio de plus",
+            corps: "Parce que la plupart des petites entreprises d'ici renoncent à leur projet numérique pour trois raisons qui n'ont rien à voir avec le numérique : elles ne savent pas combien ça va coûter, à qui elles parlent, ni quand ce sera fini. Ce sont trois problèmes de méthode, pas de technologie.",
+          },
+          {
+            titre: "Ce que ça change concrètement",
+            corps: "Les prix sont affichés. Vous parlez à la personne qui fait le travail. La date est au contrat. Ces trois engagements ne tiennent que parce que je travaille sur une base technique que j'ai construite et que je réutilise d'un projet à l'autre — sans elle, un prix ferme serait une promesse en l'air.",
+          },
+          {
+            titre: "Ce que je ne prétends pas",
+            corps: "Pas de clients à citer pour l'instant, pas d'années d'expérience à afficher, pas de récompenses. Vous jugerez sur ce site, sur les pièces de démonstration et sur notre premier échange. C'est moins confortable qu'un mur de logos, mais c'est vérifiable.",
+          },
+        ],
+        valeursTitre: "Trois principes de travail",
+        valeurs: [
+          { titre: "Rien d'inventé", corps: "Aucun faux témoignage, aucun logo client emprunté, aucun compteur décoratif. Ce qui est écrit est vrai ou n'est pas écrit." },
+          { titre: "Vous restez autonome", corps: "Le site livré se modifie sans moi, et vous apprenez à le faire. Un prestataire dont on dépend à vie n'est pas un partenaire." },
+          { titre: "Vérifié, pas supposé", corps: "Contrastes, lisibilité, téléphone et grand écran : chaque livraison passe des contrôles automatiques avant d'arriver chez vous." },
+        ],
+      },
+      contact: {
+        titre: "Demander une soumission",
+        chapo: "Décrivez votre projet en quelques lignes. Je réponds sous 48 heures avec un prix et une date, ou avec les questions qui me manquent pour les donner.",
+        champs: {
+          nom: "Votre nom",
+          entreprise: "Entreprise",
+          courriel: "Courriel",
+          telephone: "Téléphone",
+          service: "Ce qui vous intéresse",
+          budget: "Budget envisagé",
+          message: "Votre projet en quelques lignes",
+          optionnel: "facultatif",
+        },
+        services: ["Site web", "Application web ou mobile", "Identité visuelle", "Informatique ou marketing", "Je ne sais pas encore"],
+        budgets: ["Moins de 2 000 $", "2 000 $ à 5 000 $", "5 000 $ à 15 000 $", "Plus de 15 000 $", "À déterminer"],
+        envoyer: "Envoyer la demande",
+        erreurs: {
+          nom: "Indiquez votre nom.",
+          courriel: "Indiquez une adresse courriel valide.",
+          message: "Décrivez votre projet, même brièvement.",
+        },
+        ouverture: "Votre logiciel de courriel va s'ouvrir avec le message pré-rempli. Vérifiez-le, puis envoyez.",
+        direct: "Ou écrivez directement à",
+        infosTitre: "Coordonnées",
+        infos: [
+          ["Courriel", "Emiletchesseu@gmail.com"],
+          ["Secteur", "Châteauguay, Montérégie, Grand Montréal"],
+          ["Langues", "Français et anglais"],
+          ["Réponse", "Sous 48 heures, jours ouvrables"],
+        ],
+      },
     },
     hero: {
       lieu: "Châteauguay · Montérégie · Grand Montréal",
@@ -183,12 +306,135 @@ export const DICT = {
         "A price and a date from the first conversation. One person, from logo to application. Châteauguay, Montérégie and Greater Montreal.",
     },
     nav: {
+      accueil: "Home",
+      services: "Services",
+      realisations: "Work",
+      apropos: "About",
+      contactCourt: "Contact",
+      soumission: "Request a quote",
       offre: "What I do",
       prix: "Pricing",
       methode: "How it works",
       contact: "Discuss your project",
       langue: "Français",
       autre: "fr",
+      menu: "Menu",
+      fermer: "Close",
+    },
+    pages: {
+      accueil: {
+        manifeste: [
+          {
+            titre: "The price. The date. From the first conversation.",
+            corps: "No \"quote on request\" for a brochure site. The amounts are published, and the date is in the contract.",
+          },
+          {
+            titre: "One person, from logo to application.",
+            corps: "The person you talk to is the person doing the work. No salesperson, no project manager, no distorted version of your request.",
+          },
+          {
+            titre: "The site belongs to you.",
+            corps: "The code and the domain name are yours. You are not renting from a platform whose subscription keeps climbing.",
+          },
+          {
+            titre: "Châteauguay. We can meet.",
+            corps: "Montérégie and Greater Montreal. Someone to call, who knows your project, and who answers.",
+          },
+        ],
+        etapesTitre: "Four steps, and you know where you stand",
+      },
+      services: {
+        titre: "Services",
+        chapo: "Four crafts, one point of contact. Each service stands alone or combines with the others — which is where it gets interesting.",
+        items: [
+          {
+            nom: "Websites",
+            resume: "From a one-page site to a full brochure site.",
+            detail: "Present your business, get found by the people looking for you, get reached without friction. Bilingual French and English from the design stage, because in Quebec that is not optional.",
+            livrables: ["Design and build", "Bilingual FR/EN", "Google Business listing", "You edit the content yourself", "Hosting and care"],
+          },
+          {
+            nom: "Web and mobile applications",
+            resume: "A custom tool when off-the-shelf software doesn't fit.",
+            detail: "For when commercial software doesn't match how you work and imposes its own way instead. We start with a paid fixed-price scoping: written scope, clickable mockup, firm quote.",
+            livrables: ["Scoping and clickable mockup", "Web or mobile build", "Data migration", "Training", "Ongoing changes"],
+          },
+          {
+            nom: "Visual identity",
+            resume: "Logo, colours, typography and applications.",
+            detail: "An identity that holds up on a workshop sign as well as on an invoice, a van or an Instagram feed. Delivered with its usage guide, so you can hand it to someone else without it falling apart.",
+            livrables: ["Logo and monogram", "Palette and typography", "Card, signage, social media", "Usage guide", "Source files"],
+          },
+          {
+            nom: "IT and marketing",
+            resume: "Support, maintenance, day-to-day help.",
+            detail: "The rest: a machine that won't boot, an email account to set up, a campaign to launch, local search to straighten out. Billed hourly or on a monthly package, never blind.",
+            livrables: ["On-site or remote support", "Email and workstation setup", "Local search", "Campaigns and posts", "Monthly care"],
+          },
+        ],
+        ctaTitre: "Want a sense of the budget first?",
+        ctaCorps: "The packages are published, in Canadian dollars. You will know what to expect before you even write to me.",
+        ctaLien: "See pricing",
+      },
+      realisations: {
+        titre: "Work",
+        chapo: "Studio Sentis is starting out. Rather than borrow logos or invent testimonials, here are three pieces built to show three registers — rendered live by your browser, not exported as images.",
+      },
+      apropos: {
+        titre: "About",
+        chapo: "A studio in Châteauguay, starting out, and saying so.",
+        histoire: [
+          {
+            titre: "Why one more studio",
+            corps: "Because most small businesses here give up on their digital project for three reasons that have nothing to do with technology: they don't know what it will cost, who they are talking to, or when it will be done. Those are method problems, not technical ones.",
+          },
+          {
+            titre: "What actually changes",
+            corps: "Prices are published. You talk to the person doing the work. The date is in the contract. Those three commitments only hold because I work from a technical base I built and reuse from one project to the next — without it, a firm price would be an empty promise.",
+          },
+          {
+            titre: "What I don't claim",
+            corps: "No clients to name yet, no years of experience to display, no awards. You will judge on this site, on the demonstration pieces, and on our first conversation. That is less comfortable than a wall of logos, but it can be checked.",
+          },
+        ],
+        valeursTitre: "Three working principles",
+        valeurs: [
+          { titre: "Nothing invented", corps: "No fake testimonials, no borrowed client logos, no decorative counters. What is written is true or it isn't written." },
+          { titre: "You stay independent", corps: "The site you receive can be edited without me, and you learn how. A supplier you depend on for life is not a partner." },
+          { titre: "Checked, not assumed", corps: "Contrast, legibility, phone and wide screen: every delivery passes automated checks before it reaches you." },
+        ],
+      },
+      contact: {
+        titre: "Request a quote",
+        chapo: "Describe your project in a few lines. I reply within 48 hours with a price and a date, or with the questions I need answered to give them.",
+        champs: {
+          nom: "Your name",
+          entreprise: "Company",
+          courriel: "Email",
+          telephone: "Phone",
+          service: "What you're interested in",
+          budget: "Budget in mind",
+          message: "Your project in a few lines",
+          optionnel: "optional",
+        },
+        services: ["Website", "Web or mobile app", "Visual identity", "IT or marketing", "Not sure yet"],
+        budgets: ["Under $2,000", "$2,000 to $5,000", "$5,000 to $15,000", "Over $15,000", "To be determined"],
+        envoyer: "Send the request",
+        erreurs: {
+          nom: "Please enter your name.",
+          courriel: "Please enter a valid email address.",
+          message: "Describe your project, even briefly.",
+        },
+        ouverture: "Your email program will open with the message pre-filled. Check it, then send.",
+        direct: "Or write directly to",
+        infosTitre: "Details",
+        infos: [
+          ["Email", "Emiletchesseu@gmail.com"],
+          ["Area", "Châteauguay, Montérégie, Greater Montreal"],
+          ["Languages", "French and English"],
+          ["Response", "Within 48 hours, business days"],
+        ],
+      },
     },
     hero: {
       lieu: "Châteauguay · Montérégie · Greater Montreal",

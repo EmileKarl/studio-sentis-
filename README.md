@@ -4,8 +4,20 @@ Ce dépôt sert deux produits sur un seul déploiement :
 
 | Chemin | Produit |
 | --- | --- |
-| `/fr`, `/en` | **Site de Studio Sentis** — agence à Châteauguay, Québec |
+| `/fr`, `/en` et leurs quatre sous-pages | **Site de Studio Sentis** — agence à Châteauguay, Québec |
 | `/nexus/**` | **NEXUS UI** — le starter kit, et la pièce de portfolio de l'agence |
+
+Le site de l'agence tient en cinq pages, servies dans les deux langues :
+
+| Page | Rôle |
+| --- | --- |
+| `/[locale]` | Accueil. Héros plein écran, puis alternance de séquences horizontales et de sections verticales |
+| `/[locale]/services` | Les quatre offres, avec ce qui est livré dans chacune |
+| `/[locale]/realisations` | Les trois pièces de démonstration, rendues vivantes dans leurs cadres d'appareil |
+| `/[locale]/a-propos` | D'où vient le studio et ce que ça change pour le client |
+| `/[locale]/contact` | Demande de soumission |
+
+« Soumission » et non « devis » : c'est le terme employé au Québec.
 
 La racine `/` redirige vers `/fr` : le domaine appartient à l'agence, la
 vitrine technique en est une section.
@@ -90,7 +102,7 @@ npm run verify        # vérification navigateur : voir ci-dessous
 npm run verify:tokens # les tokens de motion JS et CSS sont-ils identiques ?
 ```
 
-`npm run verify` demande un serveur déjà lancé. Il charge les trois pages aux
+`npm run verify` demande un serveur déjà lancé. Il charge quatorze pages aux
 **neuf largeurs imposées par le §11** (320 à 1440 px), dans les deux thèmes, et
 échoue s'il trouve un débordement horizontal, un texte tronqué, **une requête
 en 4xx avec son URL** (c'est ainsi que trois préchargements vers d'anciens
@@ -112,8 +124,11 @@ Le détecteur de design du skill Impeccable complète ces contrôles :
 
 ## Déploiement
 
-Cible prévue : Vercel. `npm run build` produit trois pages entièrement
-statiques ; aucune variable d'environnement n'est requise à ce stade.
+Cible prévue : Vercel. `npm run build` produit vingt-quatre routes
+entièrement statiques, dont dix-sept pages de contenu. Aucune variable
+d'environnement n'est requise pour construire, mais sans
+`NEXT_PUBLIC_SITE_URL` le site se sert lui-même en `noindex` avec un
+`Disallow: /` — le garde-fou est volontaire, le domaine n'étant pas choisi.
 
 ## Architecture
 
@@ -122,6 +137,7 @@ src/
 ├── app/
 │   ├── page.tsx        Redirige / vers /fr
 │   ├── (sentis)/       Site de l'agence, segment [locale] : /fr et /en
+│   │                   + services, realisations, a-propos, contact
 │   ├── (showcase)/     Vitrine NEXUS sous /nexus
 │   └── (app)/          Enveloppe applicative : /nexus/dashboard
 ├── components/
@@ -130,7 +146,7 @@ src/
 │   ├── sentis/     Chrome propre au site de l'agence
 │   ├── layout/     Container, Section, en-tête et pied de page
 │   └── sections/   Blocs de page composés
-├── lib/            Navigation, utilitaires, statistiques de build
+├── lib/            i18n (tout le texte du site), navigation, utilitaires
 └── styles/
     ├── tokens.css  Couleurs, espacements, rayons, ombres, grille
     ├── motion.css  Durées, courbes, délais, reduced-motion

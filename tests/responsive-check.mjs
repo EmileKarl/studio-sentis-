@@ -19,6 +19,10 @@ const BASE = process.env.BASE_URL ?? "http://localhost:3100";
 const PAGES = [
   ["/fr", "sentis-fr"],
   ["/en", "sentis-en"],
+  ["/fr/services", "sentis-services"],
+  ["/fr/realisations", "sentis-realisations"],
+  ["/fr/a-propos", "sentis-apropos"],
+  ["/fr/contact", "sentis-contact"],
   ["/nexus", "nexus-accueil"],
   ["/nexus/design-system", "nexus-design-system"],
   ["/nexus/components", "nexus-composants"],
