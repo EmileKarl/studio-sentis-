@@ -58,7 +58,7 @@ export const DICT = {
         etapesTitre: "Quatre étapes, et vous savez où vous allez",
       },
       services: {
-        titre: "Nos services",
+        titre: "Services",
         chapo: "Quatre métiers, un seul interlocuteur. Chaque service peut être commandé seul ou combiné aux autres — c'est là qu'il devient intéressant.",
         items: [
           {
