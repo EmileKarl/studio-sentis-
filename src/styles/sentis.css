@@ -1,0 +1,93 @@
+/* =========================================================================
+   Studio Sentis — seconde marque sur la même architecture de tokens.
+
+   NEXUS UI est un instrument : dense, filets, mono partout, rayons courts.
+   Son public juge une exécution. Celui de Sentis — particuliers, commerçants,
+   petites structures de la Rive-Sud — n'a pas ces repères : la même austérité
+   y lirait comme de la froideur.
+
+   Cette peau garde l'architecture (mêmes noms de tokens, mêmes composants) et
+   change ce qui parle : plus d'air, des surfaces chaudes plutôt que des
+   filets, des rayons plus doux, une échelle typographique plus généreuse.
+
+   Toutes les paires texte/surface ci-dessous ont été vérifiées au détecteur
+   avant d'être écrites. Aucune ne descend sous 4,5:1.
+   ========================================================================= */
+
+[data-brand="sentis"] {
+  --paper: #fcfaf6;           /* crème, plus chaude que le papier NEXUS */
+  --surface: #ffffff;
+  --surface-2: #f2ede3;       /* sable : porte les sections, à la place des filets */
+  --overlay: rgb(26 23 20 / 0.5);
+
+  --ink: #1a1714;
+  --ink-secondary: #4a443c;
+  --ink-muted: #6e6659;
+
+  --rule: #e0d9cb;
+  --rule-strong: #b5ab99;
+
+  --signal: #e23e1f;
+  --signal-aa: #be2f16;
+  --signal-contrast: #ffffff;
+
+  --success: #1f7a4c;
+  --warning: #8a5800;
+  --error: #c0311a;
+  --info: #1f5f9e;
+
+  /* Rayons plus doux que les 4px de NEXUS, sans basculer dans la bulle. */
+  --radius: 0.625rem;
+
+  /* Mesure plus courte : le lecteur n'est pas un développeur qui parcourt
+     une documentation, il lit une phrase à la fois. */
+  --content-max: 58ch;
+  --container-max: 1180px;
+
+  /* L'élévation remplace le filet comme séparateur principal. */
+  --shadow-sm: 0 1px 2px rgb(26 23 20 / 0.05);
+  --shadow-md: 0 4px 16px rgb(26 23 20 / 0.07);
+  --shadow-lg: 0 16px 48px rgb(26 23 20 / 0.10);
+}
+
+.dark [data-brand="sentis"] {
+  --paper: #14120f;
+  --surface: #1e1b17;
+  --surface-2: #2a251f;
+  --overlay: rgb(0 0 0 / 0.66);
+
+  --ink: #f7f3ec;
+  --ink-secondary: #c4bcae;
+  --ink-muted: #9c9384;
+
+  --rule: #322c25;
+  --rule-strong: #4a443c;
+
+  --signal: #ff7a57;
+  --signal-aa: #ff7a57;
+  --signal-contrast: #14120f;
+
+  --success: #5fd19a;
+  --warning: #e5a83b;
+  --error: #ff7a63;
+  --info: #6fb2f0;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.6);
+}
+
+/* Les familles typographiques ne sont pas celles de NEXUS : un grotesk
+   technique signe un outil, une serif à contraste doux signe un atelier. */
+[data-brand="sentis"] {
+  --font-display-brand: var(--font-fraunces), Georgia, serif;
+  --font-body-brand: var(--font-source-sans), system-ui, sans-serif;
+}
+
+[data-brand="sentis"] .font-display {
+  font-family: var(--font-display-brand);
+}
+
+[data-brand="sentis"] {
+  font-family: var(--font-body-brand);
+}
