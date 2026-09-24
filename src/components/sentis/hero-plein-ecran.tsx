@@ -16,6 +16,11 @@ import { cn } from "@/lib/utils";
  * `min-h` plutôt que `h` : sur un téléphone en paysage, ou avec une taille de
  * police augmentée, un héros à hauteur fixe coupe son propre contenu. La
  * hauteur de viewport est un minimum, pas un plafond.
+ *
+ * On retranche la hauteur de l'en-tête, qui est collant mais reste dans le
+ * flux : sans cela « plein écran » vaut un écran plus 64 px, et l'invitation à
+ * descendre tombe sous la ligne de flottaison — exactement l'élément qui ne
+ * doit pas s'y trouver.
  */
 export function HeroPleinEcran({
   dict,
@@ -25,7 +30,7 @@ export function HeroPleinEcran({
   locale: Locale;
 }) {
   return (
-    <section className="border-rule relative flex min-h-[100dvh] flex-col justify-center overflow-hidden border-b py-24">
+    <section className="border-rule relative flex min-h-[calc(100dvh-4rem)] flex-col overflow-hidden border-b">
       <GridPattern
         width={56}
         height={56}
@@ -36,7 +41,7 @@ export function HeroPleinEcran({
         aria-hidden
       />
 
-      <Zone className="relative">
+      <Zone className="relative flex flex-1 flex-col justify-center py-24">
         <Reveal direction="up" distance={12}>
           <p className="text-ink-muted flex items-center gap-2 text-sm">
             <MapPin className="size-4" aria-hidden />
@@ -70,9 +75,9 @@ export function HeroPleinEcran({
         </Reveal>
       </Zone>
 
-      <Zone className="relative">
+      <Zone className="relative pb-10">
         <p
-          className="text-ink-muted mt-16 flex items-center gap-2 font-mono text-xs tracking-[0.18em] uppercase"
+          className="text-ink-muted flex items-center gap-2 font-mono text-xs tracking-[0.18em] uppercase"
           aria-hidden
         >
           <ArrowDown className="size-3.5" />
