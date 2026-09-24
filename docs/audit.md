@@ -1,8 +1,8 @@
-# Rapport d'audit — Niveau 1, Motion Lab, Gallery et Dashboard
+# Rapport d'audit — NEXUS UI et site Studio Sentis
 
 Établi selon le §13 phase 14 : comparaison du projet au cahier des charges.
-Portée auditée : les six pages construites (`/`, `/design-system`,
-`/components`, `/motion`, `/gallery`, `/dashboard`).
+Portée auditée : les neuf pages construites — `/fr` et `/en` pour le site de
+l'agence, `/nexus` et ses six sous-pages pour la vitrine.
 
 ## 1. Ce qui est terminé
 
@@ -19,6 +19,8 @@ Portée auditée : les six pages construites (`/`, `/design-system`,
 | §7 Architecture des animations | Faite sauf séquences GSAP |
 | §9.5 Gallery | Faite |
 | §9.6 Dashboard | Faite |
+| §9.8 Documentation | Faite |
+| §9.7 Settings | **Écartée.** Elle démontrerait des formulaires et des préférences que la page Composants montre déjà ; le temps est allé au site de l'agence, qui ouvre la porte commerciale. |
 | §3.1 G Patterns | Faite — quatre trames SVG en currentColor |
 | §3.1 H Grilles et compositions | Faite — cinq compositions, recomposition animée |
 | §10 Clair / sombre / système, avec persistance | Faite |
@@ -35,7 +37,7 @@ Portée auditée : les six pages construites (`/`, `/design-system`,
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
-| Débordement horizontal | `npm run verify` — 6 pages × 9 largeurs × 2 thèmes | 0 |
+| Débordement horizontal | `npm run verify` — 9 pages × 9 largeurs × 2 thèmes | 0 |
 | Texte tronqué | idem | 0 |
 | Erreurs de console | idem | 0 |
 | Cibles tactiles ≥ 24 px | idem, à 375 px | 0 |
@@ -89,6 +91,15 @@ Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécut
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
 
+### Défauts du site Sentis et de la Documentation
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 22 | Titre anglais de 48 caractères contre 43 en français : 28 % de la hauteur d'écran à 72 px | Taille maximale calée sur la langue la plus longue |
+| 23 | Le contrôle navigateur signalait « Failed to load resource » sans dire laquelle | Il rapporte désormais l'URL et le code, ce qui a immédiatement révélé trois préchargements vers d'anciens chemins |
+| 24 | Quatre composants vendus installés et jamais utilisés | Retirés — deux portaient de vrais défauts, deux ne servaient à rien |
+| 25 | Un `<code>` en ligne contenant un chemin long poussait la page entière hors du viewport sous 430 px | Règle globale `:not(pre) > code { overflow-wrap: anywhere }` |
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
@@ -103,7 +114,15 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 
 ## 5. Ce qui n'est pas fait
 
-- **§9.7 et §9.8** : Settings et Documentation.
+- **§9.7 Settings** : écartée délibérément (voir plus haut).
+- **Formulaire de contact** : le site propose un lien courriel. Un formulaire
+  capterait les visiteurs sans client de messagerie configuré, mais il exige un
+  service d'envoi que le client n'a pas encore choisi.
+- **Nom de domaine** : non fourni. Le site reste non indexable tant qu'il
+  manque — garde-fou vérifié dans les deux états.
+- **Grille de prix** : affichée sur le site mais **non validée** contre le
+  marché local, et le temps réel de livraison n'a pas été mesuré. Voir
+  `docs/offre.md`.
 - **21st.dev** : les deux récupérations de code du palier gratuit ont été
   dépensées sans résultat — `Activity Feed` dépend d'une primitive shadcn
   absente du style de registre `radix-nova`, et `Insight Cards` exige un

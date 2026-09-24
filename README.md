@@ -45,7 +45,8 @@ et le Motion Lab (§9.4) existent. Le détail page par page est dans
 | Motion Lab (`/nexus/motion`) | Construite |
 | Gallery (`/nexus/gallery`) | Construite |
 | Dashboard (`/nexus/dashboard`) | Construite |
-| Settings, Documentation | Prévues |
+| Documentation (`/nexus/docs`) | Construite |
+| Settings | Écartée, voir `docs/audit.md` |
 
 ## Prérequis
 

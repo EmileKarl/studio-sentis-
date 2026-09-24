@@ -25,6 +25,7 @@ const PAGES = [
   ["/nexus/motion", "nexus-motion"],
   ["/nexus/gallery", "nexus-gallery"],
   ["/nexus/dashboard", "nexus-dashboard"],
+  ["/nexus/docs", "nexus-docs"],
 ];
 // §11 — les neuf largeurs imposées par le cahier des charges.
 const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];

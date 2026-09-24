@@ -82,4 +82,11 @@
   html {
     @apply font-sans;
   }
+  /* Un identifiant ou un chemin en ligne n'a pas d'espace où se couper : sans
+     cette règle, un seul <code> long pousse la page entière au-delà du
+     viewport sous 430px. <pre> est exclu — il a son propre défilement
+     horizontal, où couper le code nuirait à sa lecture. */
+  :not(pre) > code {
+    overflow-wrap: anywhere;
+  }
 }

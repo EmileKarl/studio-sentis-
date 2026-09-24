@@ -41,7 +41,7 @@ export const NAV: NavItem[] = [
     href: "/nexus/docs",
     label: "Documentation",
     description: "Installation, architecture, conventions, contribution.",
-    status: "planned",
+    status: "live",
   },
 ];
 
