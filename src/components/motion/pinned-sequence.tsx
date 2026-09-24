@@ -43,6 +43,8 @@ export function PinnedSequence({ steps }: { steps: PinnedStep[] }) {
               progress={scrollYProgress}
               from={i / steps.length}
               to={(i + 1) / steps.length}
+              isFirst={i === 0}
+              isLast={i === steps.length - 1}
               reduced={Boolean(reduced)}
             />
           ))}
@@ -57,12 +59,16 @@ function PinnedStepRow({
   progress,
   from,
   to,
+  isFirst,
+  isLast,
   reduced,
 }: {
   step: PinnedStep;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
   from: number;
   to: number;
+  isFirst: boolean;
+  isLast: boolean;
   reduced: boolean;
 }) {
   // Chaque étape s'éclaire sur sa tranche de progression puis se retire.
@@ -79,8 +85,16 @@ function PinnedStepRow({
   // l'étape tombait à 1,8:1, très en dessous du minimum de 4,5:1. Le signal
   // est porté par un filet d'accent qui se déploie sur la tranche de l'étape,
   // pendant que le texte reste entièrement lisible du début à la fin.
-  const scaleY = useTransform(progress, [from, from + pad, to - pad, to], [0, 1, 1, 0]);
-  const x = useTransform(progress, [from, from + pad], [8, 0]);
+  // La première étape est déjà allumée à progression 0, et la dernière le
+  // reste jusqu'à 1. Sans cela, aucune étape n'est active aux deux extrémités
+  // de la piste — et on stationne précisément à la fin, où la section est
+  // encore épinglée mais où plus rien ne signale où l'on en est.
+  const scaleY = useTransform(
+    progress,
+    [from, from + pad, to - pad, to],
+    [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0],
+  );
+  const x = useTransform(progress, [from, from + pad], [isFirst ? 0 : 8, 0]);
 
   return (
     <motion.li
