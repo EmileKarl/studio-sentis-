@@ -161,12 +161,29 @@ cette même lettre, rendue par le même moteur que le site :
 node scripts/generer-images-marque.mjs   # → src/app/icon.png, apple-icon.png, public/og.png
 ```
 
-Le site tenait sur deux fonds, crème et sable. Quatre **teintes de section**
-très pâles s'y ajoutent — sauge, ciel, argile, ocre — pour qu'une page ne soit
-pas cinq fois le même papier. Aucune n'est saturée, et aucune n'est choisie à
-l'œil : `npm run verify:teintes` lit les valeurs dans `sentis.css` et refuse
-celles qui feraient passer une couleur de texte sous 4,5:1 (la plus serrée
-aujourd'hui, `--ink-muted` sur le ciel, donne 4,85:1).
+Le site tenait sur deux fonds, crème et sable. Il porte maintenant une palette
+franche en quatre couleurs — **bleu électrique, cyan, violet, vert** — déclinée
+en deux familles :
+
+| Famille | Rôle |
+| --- | --- |
+| `--teinte-*` | Fonds de section : clairs, mais on voit la couleur |
+| `--accent-*` | La même couleur à pleine force : pictogrammes, scènes 3D, panneaux pleins |
+
+Un troisième token, `--accent-contrast`, porte le texte posé **sur** un aplat
+d'accent. Il ne pouvait pas être figé à blanc : en thème sombre les accents
+s'éclaircissent, et le contrôle a mesuré du blanc sur le cyan clair à 1,82:1.
+
+Aucune valeur n'est choisie à l'œil. `npm run verify:teintes` lit les tokens
+dans `sentis.css` et mesure, dans les deux thèmes, chaque teinte contre les
+quatre couleurs de texte, puis chaque accent sur le papier, sur son propre fond
+et sous sa couleur de contraste. Deux valeurs ont été corrigées par ce calcul :
+le vert ne donnait que 4,30:1 sur son propre fond et le cyan 4,52:1 ; les deux
+ont été assombris.
+
+Chaque page porte une couleur : bleu sur l'accueil, cyan sur les services,
+violet sur les réalisations, vert sur À propos. La scène 3D de la page est de
+cette couleur, et ses pictogrammes aussi.
 
 Les illustrations sont dessinées en SVG, pas photographiées : quatre
 pictogrammes de métier qui se tracent au défilement

@@ -14,10 +14,15 @@
 
   /* Repli neutre : la vitrine NEXUS n'utilise pas les teintes de section, mais
      un utilitaire qui ne rend rien serait un piège pour la suite. */
-  --teinte-sauge: #eef0ee;
-  --teinte-ciel: #ecf0f3;
-  --teinte-argile: #f4eeec;
-  --teinte-ocre: #f3f0e8;
+  --teinte-bleu: #e8eef8;
+  --teinte-cyan: #e2eff2;
+  --teinte-violet: #eee9f8;
+  --teinte-vert: #e5f1e9;
+  --accent-bleu: #1d4ed8;
+  --accent-cyan: #0b6379;
+  --accent-violet: #6d28d9;
+  --accent-vert: #13692f;
+  --accent-contrast: #ffffff;
   --overlay: rgb(20 18 15 / 0.55);
 
   /* --- Ink ------------------------------------------------------------- */
@@ -190,10 +195,15 @@
   --color-ink: var(--ink);
   --color-ink-secondary: var(--ink-secondary);
   --color-ink-muted: var(--ink-muted);
-  --color-teinte-sauge: var(--teinte-sauge);
-  --color-teinte-ciel: var(--teinte-ciel);
-  --color-teinte-argile: var(--teinte-argile);
-  --color-teinte-ocre: var(--teinte-ocre);
+  --color-teinte-bleu: var(--teinte-bleu);
+  --color-teinte-cyan: var(--teinte-cyan);
+  --color-teinte-violet: var(--teinte-violet);
+  --color-teinte-vert: var(--teinte-vert);
+  --color-accent-bleu: var(--accent-bleu);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-vert: var(--accent-vert);
+  --color-accent-contrast: var(--accent-contrast);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
   --color-signal: var(--signal);

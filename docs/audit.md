@@ -39,7 +39,7 @@ ses six sous-pages pour la vitrine.
 | Build production | `next build` | Succès, 0 avertissement |
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Page lisible sans JavaScript | `npm run verify` — 6 pages chargées JS désactivé | 0 constat (contrôle prouvé capable d'échouer : règle `<noscript>` retirée, 12 constats) |
-| Contraste des teintes de section | `npm run verify:teintes` — 4 teintes × 4 couleurs de texte × 2 thèmes | 0 constat, le plus serré à 4,85:1 (contrôle prouvé capable d'échouer : teinte assombrie, 2 constats) |
+| Contraste de la palette | `npm run verify:teintes` — 4 teintes × 4 couleurs de texte, plus 4 accents × 3 situations, × 2 thèmes | 0 constat (contrôle prouvé capable d'échouer : teinte assombrie, 2 constats). Il a corrigé quatre valeurs avant livraison, voir ci-dessous |
 | Texte lisible devant les scènes 3D | `npm run verify:scene` — 6 pages × 2 largeurs × 2 thèmes, titre masqué | 0 constat (contrôle prouvé capable d'échouer : opacité poussée à 4, 8 constats) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
@@ -96,6 +96,14 @@ seul. Aucun des deux outils ne remplace l'autre.
 Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécuter le
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
+
+### Défauts de la palette vive
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 42 | Le vert #15803d ne donnait que **4,30:1** sur son propre fond de section, et le cyan #0e7490 passait de justesse à 4,52:1 | Les deux assombris, à 6,52:1 et 6,55:1 sur le papier |
+| 43 | Du blanc posé sur un aplat d'accent tombait à **1,82:1 en thème sombre** : les accents s'y éclaircissent, le blanc ne suit pas. Une classe `text-white` écrite en dur sur un panneau plein aurait livré cela tel quel | Token `--accent-contrast`, qui bascule du blanc au presque-noir selon le thème ; le contrôle mesure cette paire et non « du blanc » |
+| 44 | Sur téléphone en thème sombre, le tore cyan ramenait le chapô des Services à **4,27:1** : une couleur vive éclaire bien plus le fond qu'un gris, à opacité égale | Opacité des scènes sur écran étroit descendue de 35 % à 24 % |
 
 ### Défauts des scènes 3D
 

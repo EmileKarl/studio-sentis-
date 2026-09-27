@@ -59,13 +59,15 @@ function Trace({
   );
 }
 
-function Cadre({ children }: { children: React.ReactNode }) {
+function Cadre({
+  children,
+  couleur,
+}: {
+  children: React.ReactNode;
+  couleur: string;
+}) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      aria-hidden
-      className="text-signal-aa size-14 shrink-0"
-    >
+    <svg viewBox="0 0 40 40" aria-hidden className={`${couleur} size-14 shrink-0`}>
       {children}
     </svg>
   );
@@ -74,7 +76,7 @@ function Cadre({ children }: { children: React.ReactNode }) {
 /** Site web : une fenêtre de navigateur et deux lignes de texte. */
 export function PictoSite() {
   return (
-    <Cadre>
+    <Cadre couleur="text-accent-bleu">
       <Trace d="M3 7 H37 V33 H3 Z" />
       <Trace d="M3 14 H37" delay={0.12} />
       <Trace d="M8 21 H24" delay={0.2} />
@@ -86,7 +88,7 @@ export function PictoSite() {
 /** Application : un téléphone et le point du doigt. */
 export function PictoApplication() {
   return (
-    <Cadre>
+    <Cadre couleur="text-accent-cyan">
       <Trace d="M11 3 H29 V37 H11 Z" />
       <Trace d="M11 9 H29" delay={0.12} />
       <Trace d="M11 31 H29" delay={0.16} />
@@ -98,7 +100,7 @@ export function PictoApplication() {
 /** Identité : un bloc d'impression, la lettre réservée dedans. */
 export function PictoIdentite() {
   return (
-    <Cadre>
+    <Cadre couleur="text-accent-violet">
       <Trace d="M4 4 H36 V36 H4 Z" />
       <Trace d="M13 29 L20 12 L27 29" delay={0.14} />
       <Trace d="M16 23 H24" delay={0.26} />
@@ -109,7 +111,7 @@ export function PictoIdentite() {
 /** Informatique et marketing : trois machines empilées, et la courbe qui monte. */
 export function PictoSuivi() {
   return (
-    <Cadre>
+    <Cadre couleur="text-accent-vert">
       <Trace d="M4 5 H28 V13 H4 Z" />
       <Trace d="M4 16 H28 V24 H4 Z" delay={0.12} />
       <Trace d="M4 27 H28 V35 H4 Z" delay={0.2} />

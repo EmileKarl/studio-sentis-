@@ -83,7 +83,7 @@ export default async function ServicesPage({
         </div>
       </Section>
 
-      <section className="bg-teinte-ciel border-rule border-t py-20 sm:py-24">
+      <section className="bg-teinte-bleu border-rule border-t py-20 sm:py-24">
         <Zone>
           <h2 className="font-display text-ink max-w-[20ch] text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             {p.ctaTitre}

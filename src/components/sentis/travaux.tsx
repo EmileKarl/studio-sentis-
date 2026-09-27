@@ -15,7 +15,7 @@ export function Travaux({ dict }: { dict: Dict }) {
   return (
     <section
       id="travaux"
-      className="bg-teinte-argile border-rule border-y py-20 sm:py-28"
+      className="bg-teinte-violet border-rule border-y py-20 sm:py-28"
     >
       <div className="mx-auto w-full max-w-(--container-page) px-5 sm:px-8">
         <header className="max-w-(--content-max)">

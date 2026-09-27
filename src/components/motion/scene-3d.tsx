@@ -339,7 +339,7 @@ export function Scene3D({
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const r = canvas.getBoundingClientRect();
       const etroit = r.width < 640;
-      facteurAlpha = etroit ? 0.35 : 1;
+      facteurAlpha = etroit ? 0.24 : 1;
       gl.uniform2f(u.offset, etroit ? decalage * 0.2 : decalage, etroit ? -0.72 : 0);
       l = Math.max(1, Math.round(r.width * dpr));
       h = Math.max(1, Math.round(r.height * dpr));

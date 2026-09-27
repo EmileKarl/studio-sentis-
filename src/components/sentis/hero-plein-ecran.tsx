@@ -49,7 +49,7 @@ export function HeroPleinEcran({
         alpha={0.6}
         decalage={0.34}
         zoom={1.22}
-        className="[mask-image:radial-gradient(ellipse_at_76%_48%,white,transparent_74%)]"
+        className="text-accent-bleu [mask-image:radial-gradient(ellipse_at_76%_48%,white,transparent_74%)]"
       />
 
       <Zone className="relative flex flex-1 flex-col justify-center py-24">

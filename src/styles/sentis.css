@@ -46,22 +46,37 @@
 
 
   /* ---------------------------------------------------------------------
-     Teintes de section.
+     Couleurs de section, version franche.
 
-     Le site tenait sur deux fonds : crème et sable. Juste, mais sévère — à
-     force, tout se ressemble et l'œil n'a nulle part où se poser. Ces quatre
-     teintes très pâles donnent une couleur à chaque section sans rien crier :
-     aucune n'est saturée, toutes restent dans la famille chaude du papier.
+     Une première version très lavée (vert-de-gris, bleu pâle, terre cuite,
+     ocre) a été écartée : trop délavée, et pas « tech ». Celle-ci assume la
+     chroma. Deux familles, deux usages :
 
-     Elles ne sont pas choisies à l'œil. Chaque teinte a été mesurée contre les
-     quatre couleurs de texte du site avant d'entrer ici, et la plus serrée —
-     `--ink-muted` sur le ciel — donne 4,85:1, au-dessus du plancher de 4,5.
-     `tests/teintes-contraste.mjs` refait le calcul à chaque exécution.
+     - `--teinte-*` : des fonds de section encore clairs, mais dont on voit la
+       couleur. Ils portent le texte du site tel quel.
+     - `--accent-*` : les mêmes couleurs à pleine force, pour ce qui doit
+       trancher — pictogrammes, filets, scènes 3D, panneaux pleins.
+
+     Aucune valeur n'est choisie à l'œil. Deux ont été corrigées après mesure :
+     le vert #15803d ne donnait que 4,30:1 sur son propre fond, et le cyan
+     #0e7490 passait de justesse à 4,52:1 ; tous deux ont été assombris.
+     `npm run verify:teintes` refait le calcul complet — teintes et accents,
+     sur papier, sur leur fond, et blanc par-dessus — à chaque exécution.
      --------------------------------------------------------------------- */
-  --teinte-sauge: #edf0ea;    /* vert-de-gris, le plus calme */
-  --teinte-ciel: #e9eef2;     /* bleu très pâle, le plus frais */
-  --teinte-argile: #f7ece6;   /* terre cuite lavée, le plus proche du vermillon */
-  --teinte-ocre: #f6efdf;     /* ocre pâle, le plus chaud */
+  --teinte-bleu: #e2ecff;
+  --teinte-cyan: #d9f0f4;
+  --teinte-violet: #ece4fb;
+  --teinte-vert: #ddf3e4;
+
+  --accent-bleu: #1d4ed8;     /* bleu électrique, l'accent principal */
+  --accent-cyan: #0b6379;     /* cyan profond, assombri après mesure */
+  --accent-violet: #6d28d9;
+  --accent-vert: #13692f;     /* vert assombri après mesure */
+
+  /* La couleur du texte posé SUR un aplat d'accent. Elle ne peut pas être
+     figée à blanc : en thème sombre les accents s'éclaircissent, et le
+     contrôle a mesuré du blanc sur le cyan clair à 1,82:1. */
+  --accent-contrast: #ffffff;
 
   /* L'élévation remplace le filet comme séparateur principal. */
   --shadow-sm: 0 1px 2px rgb(26 23 20 / 0.05);
@@ -92,14 +107,20 @@
   --info: #6fb2f0;
 
 
-  /* Les teintes sombres ne sont pas les claires inversées : une inversion
-     mécanique donne quatre gris identiques. Chacune garde une pointe de sa
-     couleur, assez pour qu'on distingue une section de la suivante, pas assez
-     pour éclairer la page. Mesurées elles aussi : 5,68:1 au pire. */
-  --teinte-sauge: #181c19;
-  --teinte-ciel: #161a1f;
-  --teinte-argile: #1f1815;
-  --teinte-ocre: #1d1a13;
+  /* Les fonds sombres ne sont pas les clairs inversés : une inversion
+     mécanique donne quatre gris identiques. Chacun garde sa couleur, assez
+     pour qu'on distingue une section de la suivante. Les accents, eux, sont
+     remontés : un bleu à #1d4ed8 sur fond encre tomberait à 2,5:1. */
+  --teinte-bleu: #101a2e;
+  --teinte-cyan: #0c1d21;
+  --teinte-violet: #191330;
+  --teinte-vert: #0e1f16;
+
+  --accent-bleu: #7aa7ff;
+  --accent-cyan: #4fd1e0;
+  --accent-violet: #b794ff;
+  --accent-vert: #5fd19a;
+  --accent-contrast: #14120f;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);

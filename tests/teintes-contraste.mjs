@@ -8,8 +8,12 @@
  * visite pas les pages qui n'existent pas encore.
  *
  * Ce contrôle lit les tokens dans le CSS — la source, pas une copie — et
- * mesure chaque teinte contre chaque couleur de texte, dans les deux thèmes.
- * Il échoue sous 4,5:1.
+ * mesure, dans les deux thèmes : chaque teinte contre chaque couleur de texte,
+ * puis chaque accent sur le papier, sur son propre fond de section, et sous du
+ * blanc en aplat. Il échoue sous 4,5:1.
+ *
+ * C'est la troisième de ces situations qui a fait assombrir le vert (#15803d
+ * ne donnait que 4,30:1 sur son propre fond) et le cyan (4,52:1, de justesse).
  *
  * Il ne demande ni serveur ni navigateur : `node tests/teintes-contraste.mjs`.
  */
@@ -48,7 +52,8 @@ const contraste = (a, b) => {
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 };
 
-const TEINTES = ["teinte-sauge", "teinte-ciel", "teinte-argile", "teinte-ocre"];
+const COULEURS = ["bleu", "cyan", "violet", "vert"];
+const TEINTES = COULEURS.map((c) => `teinte-${c}`);
 const TEXTES = ["ink", "ink-secondary", "ink-muted", "signal-aa"];
 const PLANCHER = 4.5;
 
@@ -76,11 +81,43 @@ for (const [theme, source] of Object.entries(blocs())) {
   }
 }
 
+// Les accents, eux, servent de trait et de fond plein. Trois situations à
+// couvrir : l'accent posé sur le papier de la page, l'accent posé sur son
+// propre fond de section (le cas qui a fait assombrir le vert et le cyan), et
+// le texte posé sur l'accent en aplat. Ce dernier ne peut pas être « blanc » :
+// en thème sombre les accents s'éclaircissent et le contrôle mesurait du blanc
+// sur le cyan à 1,82:1. D'où le token `--accent-contrast`, qui bascule.
+for (const [theme, source] of Object.entries(blocs())) {
+  const papier = token(source, "paper");
+  const contrasteTexte = token(source, "accent-contrast");
+  for (const c of COULEURS) {
+    const accent = token(source, `accent-${c}`);
+    const teinte = token(source, `teinte-${c}`);
+    if (!accent) {
+      constats.push(`[accent-manquant] ${theme} — --accent-${c} introuvable`);
+      continue;
+    }
+    const paires = [
+      [`--accent-${c} sur le papier`, papier && contraste(accent, papier)],
+      [`--accent-${c} sur --teinte-${c}`, teinte && contraste(accent, teinte)],
+      [
+        `--accent-contrast sur --accent-${c}`,
+        contrasteTexte && contraste(contrasteTexte, accent),
+      ],
+    ];
+    for (const [quoi, r] of paires) {
+      if (typeof r === "number" && r < PLANCHER) {
+        constats.push(`[contraste-accent] ${theme} — ${quoi} à ${r.toFixed(2)}:1`);
+      }
+    }
+  }
+}
+
 if (constats.length) {
   for (const c of constats) console.log(c);
   console.log(`\n--- ${constats.length} constat(s) ---`);
   process.exit(1);
 }
 console.log(
-  `Les ${TEINTES.length} teintes portent les ${TEXTES.length} couleurs de texte au-dessus de ${PLANCHER}:1, dans les deux thèmes.`,
+  `Les ${TEINTES.length} teintes portent les ${TEXTES.length} couleurs de texte, et les ${COULEURS.length} accents tiennent sur le papier, sur leur fond et sous leur couleur de contraste — tout au-dessus de ${PLANCHER}:1, dans les deux thèmes.`,
 );

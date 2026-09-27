@@ -31,10 +31,10 @@ export function Zone({
 const FONDS = {
   paper: "",
   sand: "bg-surface-2 border-rule border-y",
-  sauge: "bg-teinte-sauge border-rule border-y",
-  ciel: "bg-teinte-ciel border-rule border-y",
-  argile: "bg-teinte-argile border-rule border-y",
-  ocre: "bg-teinte-ocre border-rule border-y",
+  bleu: "bg-teinte-bleu border-rule border-y",
+  cyan: "bg-teinte-cyan border-rule border-y",
+  violet: "bg-teinte-violet border-rule border-y",
+  vert: "bg-teinte-vert border-rule border-y",
 } as const;
 
 export type Fond = keyof typeof FONDS;
@@ -73,6 +73,17 @@ export function Section({
   );
 }
 
+/** Le volume de chaque page, et sa couleur. */
+const COULEUR_SCENE: Record<Variante3D, string> = {
+  treillis:
+    "text-accent-violet [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
+  anneau:
+    "text-accent-cyan [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
+  poussiere:
+    "text-accent-vert [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
+  onde: "text-accent-bleu [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
+};
+
 /**
  * En-tête de page intérieure : plus court qu'un héros, mais pas plat.
  *
@@ -98,11 +109,15 @@ export function EnTetePage({
       {scene ? (
         <Scene3D
           variante={scene}
+          // Une couleur par volume, donc une par page : c'est ce qui fait
+          // qu'on sait avoir changé de page avant d'avoir lu le titre.
+          // La scène lit sa couleur sur son propre style calculé, il suffit
+          // donc de lui donner la classe du token.
+          className={COULEUR_SCENE[scene]}
           alpha={0.6}
           decalage={0.42}
           zoom={0.82}
           scroll={0.45}
-          className="[mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]"
         />
       ) : null}
       <Zone className="relative">
@@ -127,22 +142,37 @@ export function PanneauSentis({
   titre,
   corps,
 }: {
-  tone?: Fond | "ink" | "signal";
+  tone?:
+    | Fond
+    | "ink"
+    | "signal"
+    | "bleuPlein"
+    | "cyanPlein"
+    | "violetPlein"
+    | "vertPlein";
   titre: string;
   corps: string;
 }) {
   // Les deux fonds soutenus renversent le texte ; les teintes pâles le gardent
   // en encre, exactement comme le reste du site.
-  const soutenu = tone === "ink" || tone === "signal";
+  const soutenu =
+    tone === "ink" || tone === "signal" || String(tone).endsWith("Plein");
   const fondsPanneau: Record<string, string> = {
     ink: "bg-ink text-paper",
     signal: "bg-signal-aa text-white",
     paper: "bg-paper text-ink",
     sand: "bg-surface-2 text-ink",
-    sauge: "bg-teinte-sauge text-ink",
-    ciel: "bg-teinte-ciel text-ink",
-    argile: "bg-teinte-argile text-ink",
-    ocre: "bg-teinte-ocre text-ink",
+    bleu: "bg-teinte-bleu text-ink",
+    cyan: "bg-teinte-cyan text-ink",
+    violet: "bg-teinte-violet text-ink",
+    vert: "bg-teinte-vert text-ink",
+    // Les aplats : le texte y passe sur `--accent-contrast`, qui bascule du
+    // blanc au presque-noir selon le thème. Écrire `text-white` en dur aurait
+    // donné 1,8:1 en thème sombre.
+    bleuPlein: "bg-accent-bleu text-accent-contrast",
+    cyanPlein: "bg-accent-cyan text-accent-contrast",
+    violetPlein: "bg-accent-violet text-accent-contrast",
+    vertPlein: "bg-accent-vert text-accent-contrast",
   };
   return (
     <div
