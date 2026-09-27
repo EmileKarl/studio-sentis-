@@ -77,15 +77,63 @@ export function HorizontalTrack({
       <div className="sticky top-0 h-dvh overflow-hidden">
         <motion.div style={{ x }} className="flex h-full">
           {panels.map((panel, i) => (
-            <div key={i} className="h-full w-screen shrink-0">
+            <Panneau key={i} progress={scrollYProgress} index={i} count={count}>
               {panel}
-            </div>
+            </Panneau>
           ))}
         </motion.div>
 
         <TrackProgress progress={scrollYProgress} count={count} />
       </div>
     </section>
+  );
+}
+
+/**
+ * Chaque panneau pivote en passant : incliné en arrivant, d'aplomb au centre,
+ * incliné en repartant. C'est ce qui fait lire la séquence comme des plans qui
+ * défilent devant le regard plutôt que comme une bande qui glisse.
+ *
+ * L'angle est plafonné à 10°. Ces panneaux portent un titre en grand corps ;
+ * au-delà, le rendu sous-pixel du texte se brouille pendant tout le mouvement.
+ * La rotation revient exactement à zéro au centre, donc le panneau qu'on lit
+ * est toujours d'aplomb.
+ *
+ * Le débordement causé par la rotation est coupé par le cadre collant, qui est
+ * en `overflow: hidden` : la page, elle, ne s'élargit pas.
+ */
+function Panneau({
+  progress,
+  index,
+  count,
+  children,
+}: {
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  index: number;
+  count: number;
+  children: ReactNode;
+}) {
+  const step = 1 / (count - 1 || 1);
+  const centre = index * step;
+  // Même serrage que les pastilles : la plage doit rester dans [0, 1] et
+  // strictement croissante, sinon l'API d'animation du navigateur la refuse.
+  const debut = Math.max(0, centre - step);
+  const fin = Math.min(1, centre + step);
+  const pivot = Math.min(Math.max(centre, debut + 0.001), fin - 0.001);
+  const plage = [debut, pivot, fin];
+
+  const rotateY = useTransform(progress, plage, [10, 0, -10]);
+  const z = useTransform(progress, plage, [-140, 0, -140]);
+
+  return (
+    <div className="h-full w-screen shrink-0" style={{ perspective: 1600 }}>
+      <motion.div
+        className="h-full w-full"
+        style={{ rotateY, z, transformStyle: "preserve-3d" }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
 

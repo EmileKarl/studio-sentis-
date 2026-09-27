@@ -32,6 +32,7 @@ export function Stagger({
 
   return (
     <MotionTag
+      data-entree-animee
       className={className}
       initial="hidden"
       whileInView="shown"
@@ -68,6 +69,7 @@ export function StaggerItem({
 
   return (
     <MotionTag
+      data-entree-animee
       className={className}
       variants={{
         hidden: { opacity: 0, ...offsetFor(direction, distance) },

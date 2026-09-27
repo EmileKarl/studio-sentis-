@@ -42,6 +42,7 @@ export function Reveal({
 
   return (
     <motion.div
+      data-entree-animee
       className={className}
       initial={{
         opacity: 0,

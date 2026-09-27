@@ -51,6 +51,7 @@ export function TextReveal({
           // overflow-hidden : le masque d'où le fragment monte.
           <span key={`${part}-${i}`} className="inline-block overflow-hidden align-bottom">
             <motion.span
+              data-entree-animee
               className="inline-block"
               variants={{
                 hidden: { y: "105%" },

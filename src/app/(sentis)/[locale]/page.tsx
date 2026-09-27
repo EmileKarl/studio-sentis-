@@ -40,14 +40,26 @@ export default async function SentisHome({
       {/* --- Retour au vertical : on s'arrête, on lit --- */}
       <Section titre={d.probleme.titre} chapo={d.probleme.intro} tone="sand">
         <ul className="grid gap-6 md:grid-cols-3">
-          {d.probleme.items.map((item) => (
-            <li key={item.titre} className="bg-paper rounded-lg p-6 shadow-sm">
-              <h3 className="font-display text-ink text-xl leading-snug font-semibold text-balance">
-                {item.titre}
-              </h3>
-              <p className="text-ink-secondary mt-3 leading-relaxed text-pretty">
-                {item.corps}
-              </p>
+          {d.probleme.items.map((item, i) => (
+            // Le Reveal3D est dans le <li> : un <div> entre <ul> et <li>
+            // casserait le comptage de la liste pour un lecteur d'écran.
+            <li key={item.titre}>
+              <Reveal3D
+                depuis={i === 0 ? "gauche" : i === 1 ? "bas" : "droite"}
+                distance={110}
+                delay={i * 0.06}
+                className="h-full"
+                classeAnimee="bg-paper h-full rounded-lg p-6 shadow-sm"
+              >
+                <>
+                  <h3 className="font-display text-ink text-xl leading-snug font-semibold text-balance">
+                    {item.titre}
+                  </h3>
+                  <p className="text-ink-secondary mt-3 leading-relaxed text-pretty">
+                    {item.corps}
+                  </p>
+                </>
+              </Reveal3D>
             </li>
           ))}
         </ul>
@@ -97,7 +109,8 @@ export default async function SentisHome({
 
       {/* --- Vertical : les prix, argument central --- */}
       <Section titre={d.prix.titre} chapo={d.prix.intro} tone="sand">
-        <div className="border-rule bg-paper overflow-hidden rounded-lg border">
+        <Reveal3D depuis="droite" distance={120}>
+          <div className="border-rule bg-paper overflow-hidden rounded-lg border">
           <ul className="divide-rule divide-y">
             {d.prix.forfaits.map((f) => (
               <li
@@ -117,9 +130,10 @@ export default async function SentisHome({
                   <p className="text-ink-muted mt-0.5 text-sm">{f.delai}</p>
                 </div>
               </li>
-            ))}
-          </ul>
-        </div>
+              ))}
+            </ul>
+          </div>
+        </Reveal3D>
         <p className="text-ink-secondary mt-8 max-w-(--content-max) leading-relaxed text-pretty">
           {d.prix.note}
         </p>

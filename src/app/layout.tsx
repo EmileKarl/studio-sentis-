@@ -54,6 +54,17 @@ export default function RootLayout({
       className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="bg-paper text-ink min-h-full">
+        {/*
+          Les entrées au scroll sont rendues côté serveur à `opacity: 0` — c'est
+          ce qui leur permet d'apparaître sans clignoter. Sans JavaScript, elles
+          ne réapparaîtraient jamais : le titre du héros, les cartes, la grille
+          de prix resteraient invisibles sur une page pourtant entièrement
+          rendue. Cette règle ne s'applique que dans ce cas précis, et ne coûte
+          rien aux autres visiteurs.
+        */}
+        <noscript>
+          <style>{`[data-entree-animee]{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+        </noscript>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

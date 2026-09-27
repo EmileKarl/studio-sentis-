@@ -85,15 +85,16 @@ export default async function AProposPage({
                 distance={110}
                 delay={i * 0.06}
                 className="h-full"
+                classeAnimee="bg-paper h-full rounded-lg p-6 shadow-sm"
               >
-                <div className="bg-paper h-full rounded-lg p-6 shadow-sm">
+                <>
                   <h3 className="font-display text-ink text-xl font-semibold text-balance">
                     {v.titre}
                   </h3>
                   <p className="text-ink-secondary mt-3 leading-relaxed text-pretty">
                     {v.corps}
                   </p>
-                </div>
+                </>
               </Reveal3D>
             </li>
           ))}

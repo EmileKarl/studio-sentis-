@@ -26,6 +26,7 @@ export function Reveal3D({
   angle = 12,
   delay = 0,
   className,
+  classeAnimee,
 }: {
   children: ReactNode;
   depuis?: "bas" | "gauche" | "droite" | "face";
@@ -35,11 +36,22 @@ export function Reveal3D({
   angle?: number;
   delay?: number;
   className?: string;
+  /**
+   * Classes portées par l'élément animé lui-même, plutôt que par un enfant.
+   * Une carte posée à l'intérieur de l'enveloppe ajoute un niveau de boîtes
+   * pour rien. (Cela n'a pas fait taire le constat `nested-cards` du
+   * détecteur, qui vise autre chose — voir `docs/audit.md`.)
+   */
+  classeAnimee?: string;
 }) {
   const reduced = useReducedMotion();
 
   if (reduced) {
-    return <div className={className}>{children}</div>;
+    return (
+      <div className={className}>
+        <div className={classeAnimee}>{children}</div>
+      </div>
+    );
   }
 
   const depart = {
@@ -52,6 +64,8 @@ export function Reveal3D({
   return (
     <div className={className} style={{ perspective: 1100 }}>
       <motion.div
+        data-entree-animee
+        className={classeAnimee}
         style={{ transformStyle: "preserve-3d" }}
         initial={{ opacity: 0, z: -distance, ...depart }}
         whileInView={{ opacity: 1, z: 0, rotateX: 0, rotateY: 0, x: 0, y: 0 }}

@@ -219,6 +219,34 @@ const invisible = await rmPage.evaluate(() => {
 if (invisible) findings.push(`[reduced-motion] sentis-fr — ${invisible}`);
 await rm.close();
 
+// 7. Sans JavaScript : une page rendue au serveur doit rester lisible.
+//    Les entrées au scroll sont livrées à `opacity: 0` pour ne pas clignoter ;
+//    sans JS elles ne repasseraient jamais à 1, et la page entière — titre du
+//    héros compris — resterait blanche alors que tout son texte est là.
+const sansJs = await browser.newContext({
+  viewport: { width: 1280, height: 900 },
+  javaScriptEnabled: false,
+});
+for (const [path, name] of PAGES) {
+  const page = await sansJs.newPage();
+  await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
+  const caches = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll("[data-entree-animee]")) {
+      const cs = getComputedStyle(el);
+      const texte = (el.textContent || "").trim();
+      if (!texte) continue;
+      if (parseFloat(cs.opacity) < 0.9 || (cs.transform && cs.transform !== "none")) {
+        out.push(`${texte.slice(0, 30)} (opacity ${cs.opacity}, transform ${cs.transform})`);
+      }
+    }
+    return out.slice(0, 3);
+  });
+  for (const c of caches) findings.push(`[sans-js] ${name} — ${c}`);
+  await page.close();
+}
+await sansJs.close();
+
 await browser.close();
 
 console.log(findings.length ? findings.join("\n") : "AUCUN PROBLEME DETECTE");

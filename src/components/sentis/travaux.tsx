@@ -59,15 +59,17 @@ export function Travaux({ dict }: { dict: Dict }) {
                 <DemoReservation />
               </PhoneFrame>
             </ObjetFlottant3D>
-            <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
-              {mobile.titre}
-            </h3>
-            <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
-              {mobile.corps}
-            </p>
-            <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
-              {mobile.etiquette} · {mobile.meta}
-            </p>
+            <Reveal3D depuis="gauche" distance={90}>
+              <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
+                {mobile.titre}
+              </h3>
+              <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
+                {mobile.corps}
+              </p>
+              <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
+                {mobile.etiquette} · {mobile.meta}
+              </p>
+            </Reveal3D>
           </article>
 
           <article>
@@ -76,15 +78,17 @@ export function Travaux({ dict }: { dict: Dict }) {
                 <DemoIdentite />
               </div>
             </ObjetFlottant3D>
-            <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
-              {identite.titre}
-            </h3>
-            <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
-              {identite.corps}
-            </p>
-            <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
-              {identite.etiquette} · {identite.meta}
-            </p>
+            <Reveal3D depuis="droite" distance={90}>
+              <h3 className="font-display text-ink mt-8 text-2xl font-semibold tracking-tight text-balance">
+                {identite.titre}
+              </h3>
+              <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
+                {identite.corps}
+              </p>
+              <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
+                {identite.etiquette} · {identite.meta}
+              </p>
+            </Reveal3D>
           </article>
         </div>
 

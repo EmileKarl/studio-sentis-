@@ -19,6 +19,12 @@ Le site de l'agence tient en cinq pages, servies dans les deux langues :
 
 « Soumission » et non « devis » : c'est le terme employé au Québec.
 
+Le changement de page a sa propre animation : la page arrivante bascule depuis
+l'arrière et se remet d'aplomb en 240 ms. Elle ne se joue qu'à la navigation,
+jamais au premier chargement, et sa transformation est effacée à la fin — un
+`transform` résiduel ferait de cet élément le bloc conteneur de ses descendants
+et les séquences horizontales cesseraient de coller.
+
 Chaque page porte un volume 3D qui lui est propre — treillis sur l'accueil,
 anneau sur les services, nuage sur À propos, onde sur le contact — tourné en
 continu **et** par le défilement. Ils sont rendus en WebGL, sans bibliothèque
@@ -111,8 +117,10 @@ npm run verify:scene  # le texte reste-t-il lisible devant les scènes 3D ?
 
 `npm run verify` demande un serveur déjà lancé. Il charge quatorze pages aux
 **neuf largeurs imposées par le §11** (320 à 1440 px), dans les deux thèmes, et
-échoue s'il trouve un débordement horizontal, un texte tronqué, **une requête
-en 4xx avec son URL** (c'est ainsi que trois préchargements vers d'anciens
+échoue s'il trouve un débordement horizontal, un texte tronqué, **du texte
+resté invisible une fois JavaScript désactivé** (les entrées au scroll sont
+livrées à `opacity: 0` ; une règle sous `<noscript>` les remet à plat, et ce
+contrôle vérifie qu'elle est bien là), **une requête en 4xx avec son URL** (c'est ainsi que trois préchargements vers d'anciens
 chemins ont été trouvés), une cible tactile sous 24 px, un titre invisible sous
 `prefers-reduced-motion`, ou **un texte laissé transparent alors qu'il est dans
 le viewport** — la signature d'une entrée au scroll qui n'est jamais partie.
