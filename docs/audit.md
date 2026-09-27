@@ -39,6 +39,7 @@ ses six sous-pages pour la vitrine.
 | Build production | `next build` | Succès, 0 avertissement |
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Page lisible sans JavaScript | `npm run verify` — 6 pages chargées JS désactivé | 0 constat (contrôle prouvé capable d'échouer : règle `<noscript>` retirée, 12 constats) |
+| Contraste des teintes de section | `npm run verify:teintes` — 4 teintes × 4 couleurs de texte × 2 thèmes | 0 constat, le plus serré à 4,85:1 (contrôle prouvé capable d'échouer : teinte assombrie, 2 constats) |
 | Texte lisible devant les scènes 3D | `npm run verify:scene` — 6 pages × 2 largeurs × 2 thèmes, titre masqué | 0 constat (contrôle prouvé capable d'échouer : opacité poussée à 4, 8 constats) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
 | Revue UI 21st | `21st review` | 7 fichiers, 0 constat |
@@ -160,6 +161,14 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
   et compose un courriel prérempli, faute de service d'envoi choisi. Un visiteur
   sans client de messagerie configuré reste donc sans chemin — c'est écrit
   sous le formulaire, ce n'est pas réglé.
+- **Photographies** : aucune. Le studio n'a pas encore les siennes, et le site
+  n'en emprunte pas. Les emplacements existent (les cadres d'appareil des
+  réalisations), le jour où il y en aura.
+- **Logo** : c'est un logotype typographique, pas une marque dessinée. Choisi
+  comme solution la plus simple, à remplacer quand le studio aura tranché.
+- **Pages légales** : ni mentions légales ni politique de confidentialité, alors
+  que le formulaire collecte un nom, un courriel et un téléphone. **La Loi 25
+  québécoise l'exige.** C'est le manque le plus sérieux du projet à ce jour.
 - **Nom de domaine** : non fourni. Le site reste non indexable tant qu'il
   manque — garde-fou vérifié dans les deux états.
 - **Grille de prix** : affichée sur le site mais **non validée** contre le

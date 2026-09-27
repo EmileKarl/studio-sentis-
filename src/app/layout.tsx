@@ -63,7 +63,7 @@ export default function RootLayout({
           rien aux autres visiteurs.
         */}
         <noscript>
-          <style>{`[data-entree-animee]{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+          <style>{`[data-entree-animee]{opacity:1!important;transform:none!important;filter:none!important;stroke-dasharray:none!important;stroke-dashoffset:0!important}`}</style>
         </noscript>
         <ThemeProvider
           attribute="class"

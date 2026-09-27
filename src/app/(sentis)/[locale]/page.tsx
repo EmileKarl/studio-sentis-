@@ -11,7 +11,9 @@ import { Button } from "@/components/ui/button";
 import { DICT, isLocale } from "@/lib/i18n";
 import { LocalBusinessJsonLd } from "@/components/sentis/local-business";
 
-const TONS = ["ink", "paper", "signal", "sand"] as const;
+// Les quatre panneaux du manifeste alternent deux fonds soutenus et deux
+// teintes pâles : sans cela la séquence était noire, crème, rouge, crème.
+const TONS = ["ink", "ocre", "signal", "sauge"] as const;
 
 export default async function SentisHome({
   params,
@@ -38,7 +40,7 @@ export default async function SentisHome({
       />
 
       {/* --- Retour au vertical : on s'arrête, on lit --- */}
-      <Section titre={d.probleme.titre} chapo={d.probleme.intro} tone="sand">
+      <Section titre={d.probleme.titre} chapo={d.probleme.intro} tone="sauge">
         <ul className="grid gap-6 md:grid-cols-3">
           {d.probleme.items.map((item, i) => (
             // Le Reveal3D est dans le <li> : un <div> entre <ul> et <li>
@@ -79,7 +81,7 @@ export default async function SentisHome({
       />
 
       {/* --- Vertical : un aperçu des réalisations, le reste sur sa page --- */}
-      <Section titre={d.travaux.titre} chapo={d.travaux.intro}>
+      <Section titre={d.travaux.titre} chapo={d.travaux.intro} tone="argile">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-12">
           <div className="order-2 lg:order-1">
             <h3 className="font-display text-ink text-2xl font-semibold tracking-tight text-balance">
@@ -108,7 +110,7 @@ export default async function SentisHome({
       </Section>
 
       {/* --- Vertical : les prix, argument central --- */}
-      <Section titre={d.prix.titre} chapo={d.prix.intro} tone="sand">
+      <Section titre={d.prix.titre} chapo={d.prix.intro} tone="ocre">
         <Reveal3D depuis="droite" distance={120}>
           <div className="border-rule bg-paper overflow-hidden rounded-lg border">
           <ul className="divide-rule divide-y">

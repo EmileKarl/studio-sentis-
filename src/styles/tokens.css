@@ -11,6 +11,13 @@
   --paper: #faf9f7;           /* page background, warm off-white */
   --surface: #ffffff;         /* raised card */
   --surface-2: #f2f0ec;       /* inset / sunken */
+
+  /* Repli neutre : la vitrine NEXUS n'utilise pas les teintes de section, mais
+     un utilitaire qui ne rend rien serait un piège pour la suite. */
+  --teinte-sauge: #eef0ee;
+  --teinte-ciel: #ecf0f3;
+  --teinte-argile: #f4eeec;
+  --teinte-ocre: #f3f0e8;
   --overlay: rgb(20 18 15 / 0.55);
 
   /* --- Ink ------------------------------------------------------------- */
@@ -183,6 +190,10 @@
   --color-ink: var(--ink);
   --color-ink-secondary: var(--ink-secondary);
   --color-ink-muted: var(--ink-muted);
+  --color-teinte-sauge: var(--teinte-sauge);
+  --color-teinte-ciel: var(--teinte-ciel);
+  --color-teinte-argile: var(--teinte-argile);
+  --color-teinte-ocre: var(--teinte-ocre);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
   --color-signal: var(--signal);

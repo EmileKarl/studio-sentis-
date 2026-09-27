@@ -59,7 +59,7 @@ export default async function AProposPage({
         </div>
       </Section>
 
-      <Section tone="sand">
+      <Section tone="ciel">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
           <h2 className="font-display text-ink max-w-(--content-max) text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
             {p.valeursTitre}

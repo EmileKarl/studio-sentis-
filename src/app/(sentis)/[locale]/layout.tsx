@@ -49,6 +49,16 @@ export async function generateMetadata({
       siteName: "Studio Sentis",
       title: dict.meta.title,
       description: dict.meta.description,
+      // Une seule image pour les deux langues : elle ne porte que le nom, le
+      // métier et le lieu, qui sont vrais dans les deux. Elle est fabriquée
+      // par `scripts/generer-images-marque.mjs`.
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: "Studio Sentis" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: dict.meta.title,
+      description: dict.meta.description,
+      images: ["/og.png"],
     },
     // Tant que le domaine n'est pas connu, on n'indexe pas : une adresse
     // d'exemple indexée devrait ensuite être désindexée à la main.

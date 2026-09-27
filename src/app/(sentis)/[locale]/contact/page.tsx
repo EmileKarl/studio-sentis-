@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FormulaireSoumission } from "@/components/sentis/formulaire";
+import { CarteTerritoire } from "@/components/sentis/carte-territoire";
 import { EnTetePage, Section } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/lib/site";
@@ -66,6 +67,8 @@ export default async function ContactPage({
                 </div>
               ))}
             </dl>
+
+            <CarteTerritoire className="border-rule mt-8 w-full rounded-lg border" />
 
             <p className="border-rule text-ink-secondary mt-8 border-t pt-6 text-sm leading-relaxed text-pretty">
               {p.direct}{" "}

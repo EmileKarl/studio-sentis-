@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { Reveal3D, Stagger, StaggerItem } from "@/components/motion";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
+import { PictoService } from "@/components/sentis/pictos";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 
@@ -47,7 +48,8 @@ export default async function ServicesPage({
             >
               <article className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
                 <div>
-                  <p className="text-ink-muted font-mono text-xs tracking-[0.2em] tabular-nums">
+                  <PictoService index={i} />
+                  <p className="text-ink-muted mt-5 font-mono text-xs tracking-[0.2em] tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </p>
                   <h2 className="font-display text-ink mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
@@ -81,7 +83,7 @@ export default async function ServicesPage({
         </div>
       </Section>
 
-      <section className="bg-surface-2 border-rule border-t py-20 sm:py-24">
+      <section className="bg-teinte-ciel border-rule border-t py-20 sm:py-24">
         <Zone>
           <h2 className="font-display text-ink max-w-[20ch] text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             {p.ctaTitre}

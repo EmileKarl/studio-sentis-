@@ -111,8 +111,9 @@ npm run start    # sert le build de production
 npm run lint       # ESLint (doit sortir sans erreur ni avertissement)
 npm run typecheck  # TypeScript strict, sans émission
 npm run verify        # vérification navigateur : voir ci-dessous
-npm run verify:tokens # les tokens de motion JS et CSS sont-ils identiques ?
-npm run verify:scene  # le texte reste-t-il lisible devant les scènes 3D ?
+npm run verify:tokens  # les tokens de motion JS et CSS sont-ils identiques ?
+npm run verify:scene   # le texte reste-t-il lisible devant les scènes 3D ?
+npm run verify:teintes # les teintes de section portent-elles le texte à 4,5:1 ?
 ```
 
 `npm run verify` demande un serveur déjà lancé. Il charge quatorze pages aux
@@ -144,6 +145,40 @@ Le détecteur de design du skill Impeccable complète ces contrôles :
 ```bash
 .claude/skills/impeccable/scripts/impeccable detect http://localhost:3000/
 ```
+
+## Marque, couleurs et illustrations
+
+Le logotype est **du texte**, pas une image : le nom dans la serif du site avec
+« Sentis » souligné de vermillon. Un seul fichier le définit,
+[`src/components/sentis/logotype.tsx`](src/components/sentis/logotype.tsx), et
+les trois endroits où il apparaît passent par lui — en changer revient à
+modifier ce fichier.
+
+L'icône d'onglet, l'icône iOS et l'image de partage sont fabriquées à partir de
+cette même lettre, rendue par le même moteur que le site :
+
+```bash
+node scripts/generer-images-marque.mjs   # → src/app/icon.png, apple-icon.png, public/og.png
+```
+
+Le site tenait sur deux fonds, crème et sable. Quatre **teintes de section**
+très pâles s'y ajoutent — sauge, ciel, argile, ocre — pour qu'une page ne soit
+pas cinq fois le même papier. Aucune n'est saturée, et aucune n'est choisie à
+l'œil : `npm run verify:teintes` lit les valeurs dans `sentis.css` et refuse
+celles qui feraient passer une couleur de texte sous 4,5:1 (la plus serrée
+aujourd'hui, `--ink-muted` sur le ciel, donne 4,85:1).
+
+Les illustrations sont dessinées en SVG, pas photographiées : quatre
+pictogrammes de métier qui se tracent au défilement
+([`pictos.tsx`](src/components/sentis/pictos.tsx)) et un schéma du territoire
+desservi ([`carte-territoire.tsx`](src/components/sentis/carte-territoire.tsx)).
+Ce dernier porte la mention « schéma — pas à l'échelle » : aucune côte n'y est
+exacte, et un site dont l'argument est de ne rien inventer ne présente pas une
+approximation comme une carte.
+
+**Il n'y a aucune photographie dans le projet.** C'est un choix assumé tant que
+le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
+sien, ni équipe qui n'existe pas.
 
 ## Déploiement
 

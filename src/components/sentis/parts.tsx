@@ -19,6 +19,26 @@ export function Zone({
   );
 }
 
+/**
+ * Fonds de section.
+ *
+ * Le site n'avait que deux fonds, crème et sable : juste, mais monotone sur
+ * cinq pages. Ces teintes très pâles donnent une couleur propre à chaque
+ * section. Elles sont définies et mesurées dans `src/styles/sentis.css`, et
+ * `npm run verify:teintes` refuse toute valeur qui ferait passer une couleur de
+ * texte sous 4,5:1.
+ */
+const FONDS = {
+  paper: "",
+  sand: "bg-surface-2 border-rule border-y",
+  sauge: "bg-teinte-sauge border-rule border-y",
+  ciel: "bg-teinte-ciel border-rule border-y",
+  argile: "bg-teinte-argile border-rule border-y",
+  ocre: "bg-teinte-ocre border-rule border-y",
+} as const;
+
+export type Fond = keyof typeof FONDS;
+
 export function Section({
   id,
   titre,
@@ -29,17 +49,11 @@ export function Section({
   id?: string;
   titre?: string;
   chapo?: string;
-  tone?: "paper" | "sand";
+  tone?: Fond;
   children: ReactNode;
 }) {
   return (
-    <section
-      id={id}
-      className={cn(
-        "py-20 sm:py-28",
-        tone === "sand" && "bg-surface-2 border-rule border-y",
-      )}
-    >
+    <section id={id} className={cn("py-20 sm:py-28", FONDS[tone])}>
       <Zone>
         {titre ? (
           <header className="mb-12 max-w-(--content-max)">
@@ -113,19 +127,28 @@ export function PanneauSentis({
   titre,
   corps,
 }: {
-  tone?: "paper" | "ink" | "signal" | "sand";
+  tone?: Fond | "ink" | "signal";
   titre: string;
   corps: string;
 }) {
+  // Les deux fonds soutenus renversent le texte ; les teintes pâles le gardent
+  // en encre, exactement comme le reste du site.
   const soutenu = tone === "ink" || tone === "signal";
+  const fondsPanneau: Record<string, string> = {
+    ink: "bg-ink text-paper",
+    signal: "bg-signal-aa text-white",
+    paper: "bg-paper text-ink",
+    sand: "bg-surface-2 text-ink",
+    sauge: "bg-teinte-sauge text-ink",
+    ciel: "bg-teinte-ciel text-ink",
+    argile: "bg-teinte-argile text-ink",
+    ocre: "bg-teinte-ocre text-ink",
+  };
   return (
     <div
       className={cn(
         "flex h-full w-full flex-col justify-center px-6 sm:px-12 lg:px-20",
-        tone === "ink" && "bg-ink text-paper",
-        tone === "signal" && "bg-signal-aa text-white",
-        tone === "sand" && "bg-surface-2 text-ink",
-        tone === "paper" && "bg-paper text-ink",
+        fondsPanneau[tone],
       )}
     >
       <h2

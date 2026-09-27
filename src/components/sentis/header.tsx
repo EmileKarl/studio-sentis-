@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { Logotype } from "@/components/sentis/logotype";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,9 +43,7 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
           href={base}
           className="focus-visible:ring-signal -mx-1 shrink-0 rounded-md px-1 py-1.5 focus-visible:ring-2 focus-visible:outline-none"
         >
-          <span className="font-display text-ink text-xl font-semibold tracking-tight">
-            Studio Sentis
-          </span>
+          <Logotype className="font-display text-ink text-xl font-semibold tracking-tight" />
         </Link>
 
         <nav aria-label={dict.nav.menu} className="hidden lg:block">
@@ -104,7 +103,7 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
             <SheetContent side="right" className="w-[86vw] max-w-sm">
               <SheetHeader>
                 <SheetTitle className="font-display text-xl">
-                  Studio Sentis
+                  <Logotype />
                 </SheetTitle>
               </SheetHeader>
               <nav aria-label={dict.nav.menu} className="px-4 pb-8">

@@ -44,6 +44,25 @@
   --content-max: 58ch;
   --container-max: 1180px;
 
+
+  /* ---------------------------------------------------------------------
+     Teintes de section.
+
+     Le site tenait sur deux fonds : crème et sable. Juste, mais sévère — à
+     force, tout se ressemble et l'œil n'a nulle part où se poser. Ces quatre
+     teintes très pâles donnent une couleur à chaque section sans rien crier :
+     aucune n'est saturée, toutes restent dans la famille chaude du papier.
+
+     Elles ne sont pas choisies à l'œil. Chaque teinte a été mesurée contre les
+     quatre couleurs de texte du site avant d'entrer ici, et la plus serrée —
+     `--ink-muted` sur le ciel — donne 4,85:1, au-dessus du plancher de 4,5.
+     `tests/teintes-contraste.mjs` refait le calcul à chaque exécution.
+     --------------------------------------------------------------------- */
+  --teinte-sauge: #edf0ea;    /* vert-de-gris, le plus calme */
+  --teinte-ciel: #e9eef2;     /* bleu très pâle, le plus frais */
+  --teinte-argile: #f7ece6;   /* terre cuite lavée, le plus proche du vermillon */
+  --teinte-ocre: #f6efdf;     /* ocre pâle, le plus chaud */
+
   /* L'élévation remplace le filet comme séparateur principal. */
   --shadow-sm: 0 1px 2px rgb(26 23 20 / 0.05);
   --shadow-md: 0 4px 16px rgb(26 23 20 / 0.07);
@@ -71,6 +90,16 @@
   --warning: #e5a83b;
   --error: #ff7a63;
   --info: #6fb2f0;
+
+
+  /* Les teintes sombres ne sont pas les claires inversées : une inversion
+     mécanique donne quatre gris identiques. Chacune garde une pointe de sa
+     couleur, assez pour qu'on distingue une section de la suivante, pas assez
+     pour éclairer la page. Mesurées elles aussi : 5,68:1 au pire. */
+  --teinte-sauge: #181c19;
+  --teinte-ciel: #161a1f;
+  --teinte-argile: #1f1815;
+  --teinte-ocre: #1d1a13;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);

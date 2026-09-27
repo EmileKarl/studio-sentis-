@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import type { Dict, Locale } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { Logotype } from "@/components/sentis/logotype";
 
 export function SentisFooter({ dict, locale }: { dict: Dict; locale: Locale }) {
   const base = `/${locale}`;
@@ -18,7 +19,7 @@ export function SentisFooter({ dict, locale }: { dict: Dict; locale: Locale }) {
       <div className="mx-auto grid w-full max-w-(--container-page) gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <p className="font-display text-ink text-xl font-semibold tracking-tight">
-            Studio Sentis
+            <Logotype />
           </p>
           <p className="text-ink-secondary mt-3 max-w-(--content-max) text-sm leading-relaxed text-pretty">
             {dict.meta.description}
