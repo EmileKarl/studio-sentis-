@@ -210,7 +210,7 @@ export function MotionLab() {
 
         <div className="border-rule mt-8 grid grid-cols-1 gap-px border md:grid-cols-3">
           {[
-            ["Ce qui est retiré", "Toutes les transitions, tous les décalages, tous les stagger. motion.css met les durées à 0,01ms et les distances à 0px en un seul endroit."],
+            ["Ce qui est retiré", "Toutes les transitions, tous les décalages, tous les stagger. m.css met les durées à 0,01ms et les distances à 0px en un seul endroit."],
             ["Ce qui est préservé", "L'état final. Un composant ne rend jamais une version raccourcie de son animation : il rend le résultat."],
             ["Comment c'est vérifié", "npm run verify charge la page avec reducedMotion: reduce et échoue si un titre reste sous une opacité de 0,9."],
           ].map(([title, body]) => (

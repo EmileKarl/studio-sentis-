@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, type ReactNode } from "react";
 
 /**
@@ -31,7 +32,7 @@ export function TiltCard({
 
   return (
     <div style={{ perspective: 900 }}>
-      <motion.div
+      <m.div
         ref={ref}
         className={className}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
@@ -48,7 +49,7 @@ export function TiltCard({
         }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

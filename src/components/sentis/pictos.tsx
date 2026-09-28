@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 
 import { DURATION, EASE } from "@/lib/motion";
 
@@ -43,7 +44,7 @@ function Trace({
   if (reduced) return <path {...commun} />;
 
   return (
-    <motion.path
+    <m.path
       {...commun}
       // Le même marqueur que les entrées au scroll : sans JavaScript, la règle
       // sous <noscript> remet le tracé à plat au lieu de laisser un cadre vide.

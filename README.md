@@ -114,6 +114,7 @@ npm run verify        # vérification navigateur : voir ci-dessous
 npm run verify:tokens  # les tokens de motion JS et CSS sont-ils identiques ?
 npm run verify:scene   # le texte reste-t-il lisible devant les scènes 3D ?
 npm run verify:teintes # les teintes de section portent-elles le texte à 4,5:1 ?
+npm run verify:poids   # chaque page tient-elle dans son budget d'octets ?
 ```
 
 `npm run verify` demande un serveur déjà lancé. Il charge quatorze pages aux
@@ -205,6 +206,54 @@ pas.
 **Il n'y a aucune photographie dans le projet.** C'est un choix assumé tant que
 le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
 sien, ni équipe qui n'existe pas.
+
+## Référencement et poids
+
+**Référencement.** Chaque page pose sa propre balise canonique, ses `hreflang`
+(`fr`, `en`, `x-default` sur le français) et ses balises Open Graph, via
+[`src/lib/seo.ts`](src/lib/seo.ts). Passer par une fonction n'est pas de
+l'élégance : les quatre pages intérieures se contentaient auparavant d'un titre
+et d'une description, **héritaient donc de la canonique de la mise en page**, et
+déclaraient chacune `rel="canonical"` vers l'accueil — c'est-à-dire « je suis un
+doublon de l'accueil, ne m'indexez pas ». Une fonction partagée est la seule
+façon qu'une page nouvelle ne puisse pas l'oublier.
+
+S'y ajoutent un fil d'Ariane structuré par page intérieure, les données
+`ProfessionalService` de l'accueil, le `sitemap.xml` avec ses alternates et le
+garde-fou `noindex` tant que le domaine n'est pas choisi.
+
+**Poids.** Trois mesures, protocole identique avant et après (médiane de cinq
+chargements pour le LCP, octets non compressés) :
+
+| | avant | après |
+| --- | --- | --- |
+| JavaScript, par page | 889 ko | 840 ko |
+| CSS | 172 ko | 157 ko |
+| Polices | 192 ko (7 fichiers) | 89 ko (2 fichiers) |
+| **Total par page** | **1 253 ko** | **1 086 ko** |
+| LCP `/fr` | 1 252 ms | 1 108 ms |
+| LCP `/fr/a-propos` | 1 052 ms | 244 ms |
+
+Ce qui a produit ces chiffres :
+
+- les **polices de la vitrine NEXUS** étaient déclarées dans la mise en page
+  racine, donc préchargées sur toutes les pages du déploiement — trois familles
+  que le site de l'agence n'affiche jamais. Elles vivent maintenant dans
+  [`src/lib/polices-nexus.ts`](src/lib/polices-nexus.ts), posées par les seules
+  mises en page qui s'en servent ;
+- **Motion** passe par `LazyMotion` et le composant mince `m` : le site de
+  l'agence charge `domAnimation` (le jeu léger), la vitrine `domMax` (elle a des
+  animations de mise en page). Les deux jeux sont dans deux fichiers séparés,
+  parce qu'un seul module qui importait les deux les mettait dans le même
+  morceau ;
+- **le décor est différé** : scènes WebGL et globe passent par
+  [`differe.tsx`](src/components/motion/differe.tsx), montés à l'inactivité du
+  navigateur, et le globe seulement quand son cadre approche. Découper sans
+  différer le montage ne change rien — `next/dynamic` va chercher le morceau au
+  montage, c'est mesuré.
+
+`npm run verify:poids` fige ces gains : il échoue si une page dépasse son
+budget. C'est le seul contrôle du projet qui regarde ce qu'une page coûte.
 
 ## Déploiement
 

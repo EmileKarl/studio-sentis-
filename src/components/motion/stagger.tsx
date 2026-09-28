@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { DURATION, EASE, STAGGER, TRAVEL, offsetFor, type Direction } from "@/lib/motion";
@@ -24,7 +25,7 @@ export function Stagger({
   as?: "div" | "ul" | "ol" | "dl";
 }) {
   const reduced = useReducedMotion();
-  const MotionTag = motion[Tag];
+  const MotionTag = m[Tag];
 
   if (reduced) {
     return <Tag className={className}>{children}</Tag>;
@@ -61,7 +62,7 @@ export function StaggerItem({
   as?: "div" | "li";
 }) {
   const reduced = useReducedMotion();
-  const MotionTag = motion[Tag];
+  const MotionTag = m[Tag];
 
   if (reduced) {
     return <Tag className={className}>{children}</Tag>;

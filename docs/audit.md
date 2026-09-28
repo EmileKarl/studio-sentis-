@@ -39,6 +39,7 @@ ses six sous-pages pour la vitrine.
 | Build production | `next build` | Succès, 0 avertissement |
 | Tokens de motion synchronisés | `npm run verify:tokens` | Identiques (contrôle prouvé capable d'échouer) |
 | Page lisible sans JavaScript | `npm run verify` — 6 pages chargées JS désactivé | 0 constat (contrôle prouvé capable d'échouer : règle `<noscript>` retirée, 12 constats) |
+| Budget de poids par page | `npm run verify:poids` — 6 pages, JS + CSS + polices | 0 constat (contrôle prouvé capable d'échouer : budget abaissé à 700 ko, 1 constat) |
 | Contraste de la palette | `npm run verify:teintes` — 4 teintes × 4 couleurs de texte, plus 4 accents × 3 situations, × 2 thèmes | 0 constat (contrôle prouvé capable d'échouer : teinte assombrie, 2 constats). Il a corrigé quatre valeurs avant livraison, voir ci-dessous |
 | Texte lisible devant les scènes 3D | `npm run verify:scene` — 6 pages × 2 largeurs × 2 thèmes, titre masqué | 0 constat (contrôle prouvé capable d'échouer : opacité poussée à 4, 8 constats) |
 | Palette de graphiques | Validateur dataviz, modes clair et sombre | 5 contrôles sur 5, dans les deux thèmes |
@@ -96,6 +97,23 @@ seul. Aucun des deux outils ne remplace l'autre.
 Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécuter le
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
+
+### Défauts de référencement et de poids
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 48 | **Les quatre pages intérieures se désindexaient elles-mêmes.** Ne définissant que leur titre et leur description, elles héritaient de la canonique de la mise en page : `/fr/services` déclarait `rel="canonical"` vers `/fr`. Traduction pour un moteur : « cette page est un doublon de l'accueil » | `src/lib/seo.ts` : une fonction que toute page nouvelle doit appeler, qui pose canonique, `hreflang` et Open Graph propres à la page |
+| 49 | Même cause, mêmes effets sur les balises Open Graph : partagées, les quatre pages annonçaient le titre et l'URL de l'accueil | idem |
+| 50 | `<html lang="fr">` sur **tout le site anglais** : la mise en page racine sert /fr et /en et ne connaît pas la langue | Le conteneur du site porte `lang`, et un script le corrige sur le document avant la peinture. **Compromis assumé** : la solution propre est une mise en page racine par groupe de routes, ce qui demande de déplacer la redirection de `/`, le 404 et les conventions d'icônes |
+| 51 | Le site de l'agence préchargeait les **trois familles de polices de la vitrine** — sept fichiers, 188 ko sur chaque page, pour des familles qu'il n'affiche jamais | Polices isolées dans leur module, posées par les seules mises en page concernées : 2 fichiers, 89 ko |
+| 52 | Premier essai d'isolation : `not-found.tsx` importait ces polices. Or il fait partie de l'arbre de **toutes** les routes — elles étaient de nouveau préchargées partout, et la mesure n'a pas bougé d'un octet | Le 404 compose avec les polices du système |
+| 53 | Un module unique important `domAnimation` **et** `domMax` de Motion les plaçait dans le même morceau : le site de l'agence payait le jeu complet. Chemin critique passé de 889 à 932 ko | Deux fichiers, un par jeu |
+| 54 | `next/dynamic` seul n'a rien changé : le morceau est cherché au **montage** du composant, c'est-à-dire tout de suite | Montage repoussé à `requestIdleCallback` ; le globe attend en plus que son cadre approche |
+| 55 | L'initialiseur paresseux de « monter quand visible » testait `IntersectionObserver`, absent au serveur et présent au client : premier rendu divergent, **erreur React #418**, 18 constats au contrôle navigateur | `useSyncExternalStore`, fait exactement pour cela |
+
+Les n° 48 et 50 ne pouvaient être trouvés qu'en lisant le HTML servi. Aucun des
+outils du projet ne regardait les balises de référencement, et aucun ne
+regardait ce qu'une page coûte — d'où `npm run verify:poids`.
 
 ### Globe de la page contact
 

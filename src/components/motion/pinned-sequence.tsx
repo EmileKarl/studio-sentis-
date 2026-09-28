@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useReducedMotion, useScroll, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef } from "react";
 
 export type PinnedStep = { index: string; title: string; body: string };
@@ -97,11 +98,11 @@ function PinnedStepRow({
   const x = useTransform(progress, [from, from + pad], [isFirst ? 0 : 8, 0]);
 
   return (
-    <motion.li
+    <m.li
       style={reduced ? undefined : { x }}
       className="border-rule bg-surface relative flex gap-4 border p-5"
     >
-      <motion.span
+      <m.span
         aria-hidden
         className="bg-signal absolute top-0 bottom-0 left-0 w-0.5 origin-center"
         style={reduced ? { transform: "scaleY(1)" } : { scaleY }}
@@ -115,6 +116,6 @@ function PinnedStepRow({
           {step.body}
         </p>
       </div>
-    </motion.li>
+    </m.li>
   );
 }

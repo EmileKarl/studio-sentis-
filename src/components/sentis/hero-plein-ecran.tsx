@@ -3,7 +3,8 @@
 import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { Reveal, Reveal3D, Scene3D } from "@/components/motion";
+import { Reveal, Reveal3D } from "@/components/motion";
+import { Scene3DDifferee } from "@/components/motion/differe";
 import { Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import { GridPattern } from "@/components/ui/grid-pattern";
@@ -44,7 +45,7 @@ export function HeroPleinEcran({
       {/* Le treillis tourne en continu et suit le défilement : c'est la
           première chose qui bouge, avant même que le visiteur ait lu le titre.
           Il est masqué vers la gauche pour laisser la colonne de texte nette. */}
-      <Scene3D
+      <Scene3DDifferee
         variante="treillis"
         alpha={0.6}
         decalage={0.34}

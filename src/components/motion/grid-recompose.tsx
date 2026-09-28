@@ -1,6 +1,7 @@
 "use client";
 
-import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { LayoutGroup, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -129,7 +130,7 @@ export function GridRecompose() {
         <div className="grid auto-rows-[3.5rem] grid-cols-12 gap-2">
           {placement.map((span, i) =>
             span === null ? null : (
-              <motion.div
+              <m.div
                 key={i}
                 layout={!reduced}
                 layoutId={reduced ? undefined : `tile-${i}`}
@@ -142,7 +143,7 @@ export function GridRecompose() {
                 <span className="text-ink-muted font-mono text-[11px] tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-              </motion.div>
+              </m.div>
             ),
           )}
         </div>

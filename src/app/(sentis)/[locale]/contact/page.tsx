@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FormulaireSoumission } from "@/components/sentis/formulaire";
-import { GlobeTerritoire } from "@/components/sentis/globe-territoire";
+import { GlobeDiffere } from "@/components/motion/differe";
 import { EnTetePage, Section } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
+import { filAriane, metadonneesPage } from "@/lib/seo";
+import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -19,7 +21,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const p = DICT[locale].pages.contact;
-  return { title: p.titre, description: p.chapo };
+  return metadonneesPage({
+    locale,
+    chemin: "/contact",
+    titre: p.titre,
+    description: p.chapo,
+  });
 }
 
 export default async function ContactPage({
@@ -34,6 +41,8 @@ export default async function ContactPage({
 
   return (
     <>
+      <DonneesStructurees data={filAriane(locale, "/contact", p.titre)} />
+
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="onde" />
 
       <Section>
@@ -72,7 +81,7 @@ export default async function ContactPage({
                 d'où l'on travaille et jusqu'où ça porte, le texte dit qui est
                 couvert. À l'échelle d'un globe, la liste ne tiendrait pas. */}
             <div className="border-rule bg-paper mt-8 overflow-hidden rounded-lg border">
-              <GlobeTerritoire legende={p.couvertureLegende} />
+              <GlobeDiffere legende={p.couvertureLegende} />
             </div>
 
             <dl className="mt-6 space-y-5">

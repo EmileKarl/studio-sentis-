@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import { useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, type ReactNode } from "react";
 
 /**
@@ -38,7 +39,7 @@ export function Magnetic({
   const clamp = (value: number) => Math.max(-max, Math.min(max, value));
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       style={{ x, y }}
@@ -55,6 +56,6 @@ export function Magnetic({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

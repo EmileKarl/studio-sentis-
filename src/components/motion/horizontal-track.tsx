@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
+import { useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -75,13 +70,13 @@ export function HorizontalTrack({
       style={{ height: `${count * 90 + 10}vh` }}
     >
       <div className="sticky top-0 h-dvh overflow-hidden">
-        <motion.div style={{ x }} className="flex h-full">
+        <m.div style={{ x }} className="flex h-full">
           {panels.map((panel, i) => (
             <Panneau key={i} progress={scrollYProgress} index={i} count={count}>
               {panel}
             </Panneau>
           ))}
-        </motion.div>
+        </m.div>
 
         <TrackProgress progress={scrollYProgress} count={count} />
       </div>
@@ -127,12 +122,12 @@ function Panneau({
 
   return (
     <div className="h-full w-screen shrink-0" style={{ perspective: 1600 }}>
-      <motion.div
+      <m.div
         className="h-full w-full"
         style={{ rotateY, z, transformStyle: "preserve-3d" }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -204,7 +199,7 @@ function Pip({
   const scale = useTransform(progress, plage, [1, 1.6, 1]);
 
   return (
-    <motion.span
+    <m.span
       style={{ opacity, scale }}
       className="bg-signal block size-1.5 rounded-full"
     />

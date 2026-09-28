@@ -8,6 +8,8 @@ import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { PictoService } from "@/components/sentis/pictos";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
+import { filAriane, metadonneesPage } from "@/lib/seo";
+import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -21,7 +23,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const p = DICT[locale].pages.services;
-  return { title: p.titre, description: p.chapo };
+  return metadonneesPage({
+    locale,
+    chemin: "/services",
+    titre: p.titre,
+    description: p.chapo,
+  });
 }
 
 export default async function ServicesPage({
@@ -36,6 +43,8 @@ export default async function ServicesPage({
 
   return (
     <>
+      <DonneesStructurees data={filAriane(locale, "/services", p.titre)} />
+
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="anneau" />
 
       <Section>

@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -63,7 +57,7 @@ export function ObjetFlottant3D({
 
   return (
     <div ref={ref} className={className} style={{ perspective: 1400 }}>
-      <motion.div
+      <m.div
         style={{ rotateX, rotateY: pointeurY, transformStyle: "preserve-3d" }}
         onPointerMove={(event) => {
           if (event.pointerType !== "mouse") return;
@@ -77,7 +71,7 @@ export function ObjetFlottant3D({
         }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -127,7 +121,7 @@ export function Prisme3D({
       // et pousse la page entière hors du viewport.
       style={{ perspective: 900, width: taille * 1.7, height: taille * 1.5 }}
     >
-      <motion.div
+      <m.div
         className="relative"
         style={{
           width: taille,
@@ -153,7 +147,7 @@ export function Prisme3D({
             </span>
           </div>
         ))}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

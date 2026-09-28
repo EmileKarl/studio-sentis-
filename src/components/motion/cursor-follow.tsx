@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import { useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, useState, type ReactNode } from "react";
 
 /**
@@ -44,7 +45,7 @@ export function CursorFollow({
     >
       {children}
       {reduced ? null : (
-        <motion.span
+        <m.span
           aria-hidden
           className="bg-signal pointer-events-none absolute top-0 left-0 size-16 -translate-x-1/2 -translate-y-1/2 rounded-full mix-blend-multiply dark:mix-blend-screen"
           style={{ x, y, opacity: visible ? 0.22 : 0 }}

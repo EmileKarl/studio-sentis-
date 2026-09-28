@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-import { Reveal3D, Scene3D, type Variante3D } from "@/components/motion";
+import { Reveal3D, type Variante3D } from "@/components/motion";
+import { Scene3DDifferee } from "@/components/motion/differe";
 
 import { cn } from "@/lib/utils";
 
@@ -107,7 +108,7 @@ export function EnTetePage({
   return (
     <section className="border-rule relative overflow-hidden border-b py-16 sm:py-24">
       {scene ? (
-        <Scene3D
+        <Scene3DDifferee
           variante={scene}
           // Une couleur par volume, donc une par page : c'est ce qui fait
           // qu'on sait avoir changé de page avant d'avoir lu le titre.

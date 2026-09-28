@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { DURATION, EASE, TRAVEL, offsetFor, type Direction } from "@/lib/motion";
@@ -41,7 +42,7 @@ export function Reveal({
   }
 
   return (
-    <motion.div
+    <m.div
       data-entree-animee
       className={className}
       initial={{
@@ -54,6 +55,6 @@ export function Reveal({
       transition={{ duration: DURATION.slow, ease: EASE.out, delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

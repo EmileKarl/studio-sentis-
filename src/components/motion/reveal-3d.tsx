@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { DURATION, EASE } from "@/lib/motion";
@@ -63,7 +64,7 @@ export function Reveal3D({
 
   return (
     <div className={className} style={{ perspective: 1100 }}>
-      <motion.div
+      <m.div
         data-entree-animee
         className={classeAnimee}
         style={{ transformStyle: "preserve-3d" }}
@@ -73,7 +74,7 @@ export function Reveal3D({
         transition={{ duration: DURATION.slower, ease: EASE.out, delay }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

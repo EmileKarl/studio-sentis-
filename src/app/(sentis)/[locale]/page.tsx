@@ -2,19 +2,37 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { HorizontalTrack, ObjetFlottant3D, Reveal3D, Scene3D } from "@/components/motion";
+import { HorizontalTrack, ObjetFlottant3D, Reveal3D } from "@/components/motion";
+import { Scene3DDifferee } from "@/components/motion/differe";
 import { DemoBoulangerie } from "@/components/sentis/demos";
 import { BrowserFrame } from "@/components/sentis/frames";
 import { HeroPleinEcran } from "@/components/sentis/hero-plein-ecran";
 import { PanneauSentis, Section, Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import { DICT, isLocale } from "@/lib/i18n";
+import { metadonneesPage } from "@/lib/seo";
 import { LocalBusinessJsonLd } from "@/components/sentis/local-business";
 
 // Les quatre panneaux du manifeste alternent quatre aplats francs. La
 // version précédente en posait deux en teintes pâles : sur un plein écran,
 // un fond presque blanc ne se distinguait pas de la page.
 const TONS = ["ink", "bleuPlein", "signal", "violetPlein"] as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const d = DICT[locale];
+  return metadonneesPage({
+    locale,
+    chemin: "",
+    titre: d.meta.title,
+    description: d.meta.description,
+  });
+}
 
 export default async function SentisHome({
   params,
@@ -146,7 +164,7 @@ export default async function SentisHome({
       <section className="bg-ink text-paper relative overflow-hidden py-24 sm:py-32">
         {/* L'onde est le seul décor de cette section : pas de filet, pas de
             carte, rien qui concurrence le seul bouton de la page. */}
-        <Scene3D
+        <Scene3DDifferee
           variante="onde"
           alpha={0.55}
           vitesse={0.8}

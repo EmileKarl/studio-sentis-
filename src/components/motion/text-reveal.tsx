@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 
 import { DURATION, EASE, STAGGER } from "@/lib/motion";
 
@@ -32,7 +33,7 @@ export function TextReveal({
   }
 
   const parts = by === "word" ? text.split(" ") : text.split(/(?<=\.)\s+/);
-  const MotionTag = motion[Tag];
+  const MotionTag = m[Tag];
 
   return (
     <MotionTag
@@ -50,7 +51,7 @@ export function TextReveal({
         {parts.map((part, i) => (
           // overflow-hidden : le masque d'où le fragment monte.
           <span key={`${part}-${i}`} className="inline-block overflow-hidden align-bottom">
-            <motion.span
+            <m.span
               data-entree-animee
               className="inline-block"
               variants={{
@@ -61,7 +62,7 @@ export function TextReveal({
             >
               {part}
               {i < parts.length - 1 ? " " : ""}
-            </motion.span>
+            </m.span>
           </span>
         ))}
       </span>

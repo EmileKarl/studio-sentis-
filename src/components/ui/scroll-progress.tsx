@@ -1,6 +1,7 @@
 "use client"
 
-import { motion, useScroll, type MotionProps } from "motion/react"
+import { useScroll, type MotionProps } from "motion/react"
+import * as m from "motion/react-m"
 
 import { cn } from "@/lib/utils"
 
@@ -19,7 +20,7 @@ export function ScrollProgress({
   const { scrollYProgress } = useScroll()
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={cn(
         // Le dégradé violet/rose/orange d'origine (Magic UI) est le tell le plus
