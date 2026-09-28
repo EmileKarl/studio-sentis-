@@ -97,6 +97,14 @@ Le n° 16 n'aurait été trouvé par aucun contrôle visuel : il fallait exécut
 validateur. C'est la raison pour laquelle le skill dataviz interdit de juger une
 palette à l'œil.
 
+### Globe de la page contact
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 45 | Le schéma plat qu'il remplace inventait sa géographie — fleuve et île dessinés à main levée. Il portait la mention « pas à l'échelle », mais un site qui refuse d'inventer n'avait pas à dessiner un continent approximatif | Trait de côte réel (Natural Earth, domaine public), Châteauguay à ses coordonnées, et la seule approximation restante — le halo local — nommée sur le dessin |
+| 46 | L'étiquette « Châteauguay » se posait à 12 px du point, donc par-dessus ses propres anneaux, et traversait les côtes au fil de la rotation | Reculée au-delà du halo, sur un fond opaque |
+| 47 | TypeScript perdait le rétrécissement de type du contexte de canvas dans la fonction de tracé, remontée à la compilation | Contexte recopié dans une constante |
+
 ### Défauts de la palette vive
 
 | # | Problème | Correctif |

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FormulaireSoumission } from "@/components/sentis/formulaire";
-import { CarteTerritoire } from "@/components/sentis/carte-territoire";
+import { GlobeTerritoire } from "@/components/sentis/globe-territoire";
 import { EnTetePage, Section } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/lib/site";
@@ -68,7 +68,31 @@ export default async function ContactPage({
               ))}
             </dl>
 
-            <CarteTerritoire className="border-rule mt-8 w-full rounded-lg border" />
+            {/* Le globe, puis les villes en toutes lettres : le dessin montre
+                d'où l'on travaille et jusqu'où ça porte, le texte dit qui est
+                couvert. À l'échelle d'un globe, la liste ne tiendrait pas. */}
+            <div className="border-rule bg-paper mt-8 overflow-hidden rounded-lg border">
+              <GlobeTerritoire legende={p.couvertureLegende} />
+            </div>
+
+            <dl className="mt-6 space-y-5">
+              <div>
+                <dt className="text-ink-muted font-mono text-[11px] tracking-[0.18em] uppercase">
+                  {p.couvertureTitre}
+                </dt>
+                <dd className="text-ink-secondary mt-1 text-sm leading-relaxed text-pretty">
+                  {p.couvertureVilles}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-ink-muted font-mono text-[11px] tracking-[0.18em] uppercase">
+                  {p.couvertureEnLigneTitre}
+                </dt>
+                <dd className="text-ink-secondary mt-1 text-sm leading-relaxed text-pretty">
+                  {p.couvertureEnLigne}
+                </dd>
+              </div>
+            </dl>
 
             <p className="border-rule text-ink-secondary mt-8 border-t pt-6 text-sm leading-relaxed text-pretty">
               {p.direct}{" "}

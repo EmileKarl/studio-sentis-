@@ -185,13 +185,22 @@ Chaque page porte une couleur : bleu sur l'accueil, cyan sur les services,
 violet sur les réalisations, vert sur À propos. La scène 3D de la page est de
 cette couleur, et ses pictogrammes aussi.
 
-Les illustrations sont dessinées en SVG, pas photographiées : quatre
-pictogrammes de métier qui se tracent au défilement
-([`pictos.tsx`](src/components/sentis/pictos.tsx)) et un schéma du territoire
-desservi ([`carte-territoire.tsx`](src/components/sentis/carte-territoire.tsx)).
-Ce dernier porte la mention « schéma — pas à l'échelle » : aucune côte n'y est
-exacte, et un site dont l'argument est de ne rien inventer ne présente pas une
-approximation comme une carte.
+Les illustrations sont dessinées, pas photographiées : quatre pictogrammes de
+métier qui se tracent au défilement
+([`pictos.tsx`](src/components/sentis/pictos.tsx)) et, sur la page contact, un
+**globe terrestre** qui tourne
+([`globe-territoire.tsx`](src/components/sentis/globe-territoire.tsx)).
+
+Le globe est en canvas 2D — une projection orthographique tient en quatre
+lignes de trigonométrie, WebGL serait de la machinerie pour rien. Tout ce qui
+peut y être exact l'est : le trait de côte vient de **Natural Earth** (domaine
+public, via `world-atlas`, décodé et simplifié dans
+[`src/lib/cotes.ts`](src/lib/cotes.ts) — 14 ko, 5,7 ko compressés) et
+Châteauguay est à ses vraies coordonnées. Une seule chose ne l'est pas, et
+c'est écrit sous le dessin : **le halo local est symbolique**, parce qu'à cette
+échelle la Montérégie mesurerait deux pixels. Les villes desservies sont
+listées en toutes lettres à côté, en texte — sur un globe, elles ne tiendraient
+pas.
 
 **Il n'y a aucune photographie dans le projet.** C'est un choix assumé tant que
 le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le

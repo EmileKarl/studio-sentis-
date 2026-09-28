@@ -148,6 +148,16 @@ export const DICT = {
           ["Langues", "Français et anglais"],
           ["Réponse", "Sous 48 heures, jours ouvrables"],
         ],
+        // La liste des villes est du texte, pas un dessin : sur un globe, la
+        // Montérégie entière tient dans deux pixels. Le globe montre d'où l'on
+        // travaille et jusqu'où ça porte ; ces lignes disent qui est couvert.
+        couvertureTitre: "Sur place",
+        couvertureVilles:
+          "Châteauguay, Mercier, Léry, Sainte-Catherine, Saint-Constant, Candiac, La Prairie, Delson, Kahnawà:ke, Beauharnois, Salaberry-de-Valleyfield — et l'île de Montréal, Longueuil, Brossard.",
+        couvertureEnLigneTitre: "Ailleurs",
+        couvertureEnLigne:
+          "En ligne, partout. Un site ou une application se conçoit et se livre à distance ; seules les rencontres demandent d'être du coin.",
+        couvertureLegende: "Châteauguay",
       },
     },
     hero: {
@@ -434,6 +444,13 @@ export const DICT = {
           ["Languages", "French and English"],
           ["Response", "Within 48 hours, business days"],
         ],
+        couvertureTitre: "On site",
+        couvertureVilles:
+          "Châteauguay, Mercier, Léry, Sainte-Catherine, Saint-Constant, Candiac, La Prairie, Delson, Kahnawà:ke, Beauharnois, Salaberry-de-Valleyfield — plus the island of Montréal, Longueuil and Brossard.",
+        couvertureEnLigneTitre: "Everywhere else",
+        couvertureEnLigne:
+          "Online. A website or an application is designed and delivered remotely; only meeting in person needs someone nearby.",
+        couvertureLegende: "Châteauguay",
       },
     },
     hero: {
