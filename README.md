@@ -255,6 +255,38 @@ Ce qui a produit ces chiffres :
 `npm run verify:poids` fige ces gains : il échoue si une page dépasse son
 budget. C'est le seul contrôle du projet qui regarde ce qu'une page coûte.
 
+## Dépannage
+
+**`SyntaxError: Unexpected non-whitespace character after JSON` au lancement,
+avec un `page: '/fr/…'`**
+
+Ce n'est pas le code du site : cette erreur vient de `JSON.parse`, et rien ici
+n'appelle `JSON.parse`. C'est un manifeste de Next, dans `.next/`, qui contient
+**deux documents JSON collés** — le message le dit littéralement : du JSON
+valide s'arrête à une position donnée, et d'autres octets suivent.
+
+Cela arrive quand deux processus Next écrivent le même dossier `.next` : un
+serveur de développement resté ouvert dans un autre terminal, ou un
+`npm run build` lancé pendant qu'un `npm run dev` tourne. Un `307` inattendu sur
+une page qui existe est le second symptôme du même dossier périmé.
+
+D'abord constater, plutôt que d'effacer à l'aveugle :
+
+```bash
+node -e "const {readdirSync,readFileSync}=require('fs');const {join}=require('path');
+(function w(d){for(const e of readdirSync(d,{withFileTypes:true})){const p=join(d,e.name);
+if(e.isDirectory())w(p);else if(e.name.endsWith('.json')){try{JSON.parse(readFileSync(p,'utf8'))}
+catch(err){console.log('CORROMPU',p,err.message)}}}})('.next')"
+```
+
+Puis :
+
+```bash
+pkill -f "next dev"; pkill -f next-server   # ou fermer les autres terminaux
+rm -rf .next
+npm run dev
+```
+
 ## Déploiement
 
 Cible prévue : Vercel. `npm run build` produit vingt-quatre routes
