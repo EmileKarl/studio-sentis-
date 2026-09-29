@@ -305,6 +305,56 @@ export const DICT = {
       courriel: "Écrire un courriel",
       note: "Châteauguay, Québec · Français et anglais",
     },
+    /**
+     * Titres et descriptions destinés aux moteurs, par chemin.
+     *
+     * Ils sont séparés des titres affichés pour une raison mesurée : le h1 de
+     * la page Services dit « Services », ce qui est juste à l'écran, où le
+     * menu et le logo disent déjà le reste — et absurde dans une page de
+     * résultats, où il apparaissait seul, sans marque, sans métier et sans
+     * ville. Les quatre pages intérieures avaient ce défaut.
+     *
+     * Règles : 50 à 60 caractères pour le titre, 150 à 160 pour la
+     * description, et la ville sur les pages commerciales. `npm run verify:seo`
+     * échoue au-delà.
+     */
+    seo: {
+      "": {
+        titre: "Studio Sentis — sites web et identité visuelle à Châteauguay",
+        description:
+          "Sites web, applications et identité visuelle à Châteauguay. Le prix et la date dès le premier échange, un seul interlocuteur du logo à la livraison.",
+      },
+      "/services": {
+        titre: "Site web, application, identité — Studio Sentis",
+        description:
+          "Quatre métiers, un interlocuteur : sites web bilingues, applications sur mesure, identité visuelle, suivi mensuel. Prix affichés. Châteauguay et Montérégie.",
+      },
+      "/realisations": {
+        titre: "Réalisations et démonstrations — Studio Sentis",
+        description:
+          "Trois pièces conçues par le studio pour montrer trois registres, rendues en direct par votre navigateur. Pas de logos empruntés, pas de témoignages inventés.",
+      },
+      "/a-propos": {
+        titre: "À propos du studio, à Châteauguay — Studio Sentis",
+        description:
+          "Un studio de Châteauguay qui commence et qui préfère le dire : pourquoi il existe, comment il travaille, et ce qu'il refuse de promettre avant de l'avoir fait.",
+      },
+      "/contact": {
+        titre: "Demander une soumission — Studio Sentis",
+        description:
+          "Décrivez votre projet en quelques lignes. Réponse sous 48 heures avec un prix et une date. Châteauguay, Montérégie, Grand Montréal et à distance.",
+      },
+      "/mentions-legales": {
+        titre: "Mentions légales — Studio Sentis",
+        description:
+          "Qui édite ce site, ce que présentent les réalisations, ce que les prix affichés engagent, et le droit applicable au Québec.",
+      },
+      "/confidentialite": {
+        titre: "Politique de confidentialité — Studio Sentis",
+        description:
+          "Ce site ne mesure rien, ne suit personne et ne reçoit aucune donnée. Comment le vérifier, et ce qu'il advient des renseignements envoyés par courriel.",
+      },
+    },
     pied: {
       droits: "Studio Sentis — Châteauguay, Québec",
       mention: "Site construit sur NEXUS UI.",
@@ -563,6 +613,43 @@ export const DICT = {
         "Describe in two lines what you want to build. I reply within 48 hours with a price and a date, or with the questions I need answered to give them.",
       courriel: "Send an email",
       note: "Châteauguay, Quebec · French and English",
+    },
+    seo: {
+      "": {
+        titre: "Studio Sentis — websites and branding in Châteauguay",
+        description:
+          "Websites, applications and visual identity in Châteauguay. A price and a date from the first conversation, one person from logo to delivery.",
+      },
+      "/services": {
+        titre: "Websites, apps and branding — Studio Sentis",
+        description:
+          "Four crafts, one person: bilingual websites, custom applications, visual identity and monthly care. Prices published. Châteauguay and Montérégie, Quebec.",
+      },
+      "/realisations": {
+        titre: "Work and demonstrations — Studio Sentis",
+        description:
+          "Three pieces built by the studio to show three registers, rendered live by your browser. No borrowed logos, no invented testimonials.",
+      },
+      "/a-propos": {
+        titre: "About the studio, in Châteauguay — Studio Sentis",
+        description:
+          "A Châteauguay studio that is starting out and would rather say so: why it exists, how it works, and what it refuses to promise before having done it.",
+      },
+      "/contact": {
+        titre: "Request a quote — Studio Sentis",
+        description:
+          "Describe your project in a few lines. A reply within 48 hours with a price and a date. Châteauguay, Montérégie, Greater Montreal and remote.",
+      },
+      "/mentions-legales": {
+        titre: "Legal notice — Studio Sentis",
+        description:
+          "Who publishes this site, what the work section shows, what the published prices commit anyone to, and the law that applies in Quebec.",
+      },
+      "/confidentialite": {
+        titre: "Privacy policy — Studio Sentis",
+        description:
+          "This site measures nothing, tracks no one and receives no data. How to check that, and what happens to information sent by email.",
+      },
     },
     pied: {
       droits: "Studio Sentis — Châteauguay, Quebec",

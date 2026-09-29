@@ -25,12 +25,9 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const d = DICT[locale];
   return metadonneesPage({
     locale,
     chemin: "",
-    titre: d.meta.title,
-    description: d.meta.description,
   });
 }
 

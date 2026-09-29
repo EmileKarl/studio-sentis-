@@ -12,7 +12,8 @@
     "verify:tokens": "node tests/motion-tokens-sync.mjs",
     "verify:scene": "node tests/scene-contrast.mjs",
     "verify:teintes": "node tests/teintes-contraste.mjs",
-    "verify:poids": "node tests/budget-poids.mjs"
+    "verify:poids": "node tests/budget-poids.mjs",
+    "verify:seo": "node tests/seo-meta.mjs"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -45,5 +46,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "NEXUS UI \u2014 Digital Starter Kit"
+  "description": "NEXUS UI — Digital Starter Kit"
 }

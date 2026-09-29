@@ -5,7 +5,7 @@ import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 import { PageLegale } from "@/components/sentis/page-legale";
 import { LOCALES, isLocale } from "@/lib/i18n";
 import { TEXTES_LEGAUX } from "@/lib/legal";
-import { filAriane, metadonneesPage } from "@/lib/seo";
+import { donneesPage, metadonneesPage } from "@/lib/seo";
 
 const CHEMIN = "/confidentialite";
 
@@ -20,12 +20,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = TEXTES_LEGAUX[locale].confidentialite;
   return metadonneesPage({
     locale,
     chemin: CHEMIN,
-    titre: t.titre,
-    description: t.chapo,
   });
 }
 
@@ -40,7 +37,7 @@ export default async function ConfidentialitePage({
 
   return (
     <>
-      <DonneesStructurees data={filAriane(locale, CHEMIN, t.titre)} />
+      <DonneesStructurees data={donneesPage(locale, CHEMIN, t.titre)} />
 
       <PageLegale
         locale={locale}

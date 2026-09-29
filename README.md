@@ -270,6 +270,86 @@ Ce qui a produit ces chiffres :
 `npm run verify:poids` fige ces gains : il échoue si une page dépasse son
 budget. C'est le seul contrôle du projet qui regarde ce qu'une page coûte.
 
+## Balises de recherche
+
+Les titres et descriptions destinés aux moteurs ne sont **pas** ceux affichés à
+l'écran. Ils vivent dans `DICT[locale].seo`, par chemin
+([`src/lib/i18n.ts`](src/lib/i18n.ts)), et `metadonneesPage`
+([`src/lib/seo.ts`](src/lib/seo.ts)) les pose.
+
+Cette séparation vient d'un défaut mesuré. Le h1 de la page Services dit
+« Services » : juste à l'écran, où le menu et le logo disent déjà le reste, et
+absurde dans une page de résultats, où le titre apparaissait seul —
+`<title>Services</title>`, sans marque, sans métier, sans ville. Les quatre
+pages intérieures avaient ce défaut. Les deux accueils, eux, s'annonçaient
+« … — NEXUS UI » : le nom du gabarit technique, hérité du `template` de la mise
+en page racine.
+
+Le titre est donc posé en `title: { absolute }`, forme qui ignore explicitement
+tout `template` ancestral.
+
+`npm run verify:seo` fige tout cela. Sur les neuf pages du site, il vérifie :
+
+| Contrôle | Règle |
+| --- | --- |
+| Titre | 25 à 60 caractères, unique, nomme la marque, ne nomme pas le gabarit |
+| Description | 110 à 160 caractères, unique |
+| Canonique | pointe sur la page elle-même |
+| Alternates | `fr`, `en` et `x-default` présents |
+| Partage | `og:title` identique au titre, `og:image` présente |
+| Structure | exactement un `h1` |
+| Données structurées | JSON valide, chaque nœud a son `@type`, chaque bloc son `@context` |
+
+Le plafond de 60 caractères correspond à une troncature réelle dans les
+résultats ; le plancher de 25 est plus bas que les 50 recommandés parce que
+« Mentions légales — Studio Sentis » en fait 32 et que le rallonger reviendrait
+à suivre une règle de pouce contre son intention.
+
+Le contrôle a été **vérifié capable d'échouer** : servi le `<head>` tel qu'il
+était avant correction, il remonte 132 constats et sort en erreur.
+
+## Données structurées
+
+Un seul `@graph` par page, dont les nœuds se rattachent par `@id` :
+
+- l'accueil décrit l'entreprise (`ProfessionalService`, `@id` `…/#studio`) et le
+  site (`WebSite`, `…/#site`) ;
+- chaque page intérieure pose un `WebPage` — ou `AboutPage`, `ContactPage`,
+  `CollectionPage` — qui renvoie à ces deux `@id` au lieu de redéclarer
+  l'entreprise. Deux déclarations indépendantes du même commerce, si elles
+  divergent d'un caractère, valent moins qu'une seule ;
+- la page Services ajoute un nœud `Service` par métier, avec son `provider` et
+  sa zone.
+
+Trois corrections y ont été faites, chacune sur un fait vérifiable :
+
+- **le forfait mensuel mentait.** La page affiche « 85 $ / mois » ; le balisage
+  réduisait ce texte à ses chiffres et annonçait un prix unique de 85 $. Un prix
+  récurrent se déclare avec une `UnitPriceSpecification` ;
+- **`areaServed` nommait des lieux sans les identifier.** « Châteauguay »
+  désigne aussi une rivière et une circonscription. Chaque zone porte désormais
+  ses `sameAs` Wikipédia et Wikidata, **vérifiés contre l'API de Wikipédia**, pas
+  écrits de mémoire ;
+- l'entité porte enfin son `image`, son `logo` et son `priceRange`.
+
+## Robots d'IA et llms.txt
+
+[`src/app/robots.ts`](src/app/robots.ts) nomme les robots d'IA au lieu de les
+laisser au groupe fourre-tout, et les sépare en deux familles : ceux qui lisent
+pour **citer** avec un lien (OAI-SearchBot, Claude-SearchBot, PerplexityBot) et
+ceux qui lisent pour **entraîner** sans lien retour (GPTBot, ClaudeBot, CCBot,
+Google-Extended, Applebot-Extended). Les deux sont autorisés ; la constante
+`ENTRAINEMENT` suffit à fermer la seconde famille le jour où cette réponse
+change.
+
+[`/llms.txt`](src/app/llms.txt/route.ts) est publié, **et ce n'est pas un levier
+de référencement.** Google écrit dans sa documentation que sa recherche ignore
+ces fichiers ; une étude de journaux de serveur mesure 0,1 % du trafic des
+robots d'IA dessus. Il est là parce que la catégorie « Agentic Browsing » de
+Lighthouse le vérifie et qu'un agent à qui l'on donne l'adresse du studio y
+trouve en quinze lignes ce qu'il devrait sinon deviner. Il est régénéré depuis
+le dictionnaire, donc il ne peut pas diverger du site.
+
 ## Pages légales
 
 Deux pages, [`/mentions-legales`](src/app/(sentis)/[locale]/mentions-legales) et

@@ -187,6 +187,41 @@ le réflexe par défaut quand on compose un en-tête. Seul le détecteur l'attra
 | 61 | `.env.example` était exclu par `.gitignore` (`.env*`) alors que le README y renvoie : lien mort pour quiconque clone, et aucune trace des variables attendues | Exception `!.env.example` ; le gabarit est versionné, il ne contient que des exemples |
 | 62 | Une année de copyright au pied de page serait figée au jour de la construction, ces pages étant statiques : « © 2026 » affiché en 2028 | Pas d'année du tout. Mieux vaut ne rien dater que dater faux |
 
+### Défauts trouvés en repassant le site à la grille de `AgriciDaniel/claude-seo`
+
+Le dépôt a été cloné et ses contrôles exécutés contre le site servi en local
+(`agentic_check.py`, `parse_html.py`, plus les seuils de `skills/seo-page`).
+Aucun de ces défauts n'est visible à l'écran : ils vivent tous dans le `<head>`
+ou dans le balisage, que ni le contrôle navigateur, ni le lint, ni la
+construction ne regardaient.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 63 | Les deux accueils s'annonçaient « … — NEXUS UI » : le nom du gabarit technique dans le titre de recherche de l'agence, hérité du `template` de la mise en page racine. 92 caractères pour `/fr`, tronqué au tiers | `title: { absolute }`, forme qui ignore tout `template` ancestral, et titres réécrits à 60 caractères ou moins |
+| 64 | Les quatre pages intérieures reprenaient leur titre affiché : `<title>Services</title>`, seul, sans marque, sans métier, sans ville. Même défaut sur `og:title` | Titres de recherche séparés des titres affichés, dans `DICT[locale].seo`, par chemin |
+| 65 | Description de `/fr/realisations` à 226 caractères — tronquée aux deux tiers — et celle de `/fr/a-propos` à 66, soit la moitié de la place laissée vide. Aucune description intérieure ne nommait la ville | Descriptions dédiées, 110 à 160 caractères, ville sur les pages commerciales |
+| 66 | L'entité d'entreprise n'existait que sur l'accueil : les pages intérieures ne portaient qu'un `BreadcrumbList`. Un moteur arrivant sur `/fr/services` depuis une recherche n'y trouvait rien sur l'entreprise | `@graph` avec `@id` stables (`…/#studio`, `…/#site`) ; chaque page pose un `WebPage`/`AboutPage`/`ContactPage`/`CollectionPage` qui s'y rattache au lieu de redéclarer l'entreprise |
+| 67 | **Le balisage contredisait la page** : « 85 $ / mois » à l'écran, `price: "85"` dans les données structurées, soit un prix unique | `UnitPriceSpecification` avec `unitCode: "MON"` ; le texte affiché reste la source |
+| 68 | `areaServed` nommait quatre lieux sans les identifier — « Châteauguay » désigne aussi une rivière et une circonscription | `sameAs` Wikipédia et Wikidata, chaque identifiant vérifié contre l'API de Wikipédia avant d'être écrit (le premier que j'avais supposé, Q140130, n'était pas la bonne ville) |
+| 69 | L'entité n'avait ni `image`, ni `logo`, ni `priceRange`, et la page Services aucun nœud `Service` | Ajoutés ; un `Service` par métier, avec `provider` et zone |
+| 70 | Aucune politique explicite envers les robots d'IA : tout reposait sur le groupe `*`, qui confond les robots qui citent avec un lien et ceux qui entraînent sans retour | Groupes nommés dans `robots.ts`, séparés en deux familles, les deux autorisées, avec une constante pour fermer la seconde |
+| 71 | `/llms.txt` absent — vérifié par la catégorie « Agentic Browsing » de Lighthouse | Publié, régénéré depuis le dictionnaire. **Sans lui prêter de valeur de référencement** : Google documente que sa recherche l'ignore |
+
+Le contrôle `npm run verify:seo` fige l'ensemble. Il a été vérifié capable
+d'échouer : servi le `<head>` d'avant correction, il remonte 132 constats.
+
+Il a aussi attrapé, dès sa première exécution, une description que je venais
+d'écrire à 163 caractères. C'est le genre de défaut qu'on ne voit pas en se
+relisant.
+
+### Mesuré et laissé tel quel
+
+| Constat | Décision |
+| --- | --- |
+| Les intitulés de section du pied de page sont des `h2` (« Menu », « Châteauguay, Québec · Français et anglais ») | **Gardé.** Ils gonflent la liste des `h2` du document, mais ils donnent à un lecteur d'écran un titre pour chaque bloc du pied. Google ne classe pas sur le nombre de `h2` ; l'échange serait perdant. |
+| La vitrine `/nexus` est indexable et occupe neuf entrées du plan du site | **Laissé au client.** C'est une démonstration de capacité, donc du contenu de portfolio légitime ; c'est aussi neuf pages hors sujet pour une agence locale. Le trancher relève du positionnement, pas de la technique. |
+| Livraison Markdown par négociation de contenu (`Accept: text/markdown`), en-tête `Content-Signal` | **Non fait.** Le dépôt d'audit note lui-même qu'aucun agent consommateur n'est confirmé les demander. |
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
@@ -264,6 +299,8 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | `src/components/motion/` | Bibliothèque d'animations (§6.7) |
 | `src/lib/i18n.ts` | Tout le texte du site de l'agence, FR et EN |
 | `src/lib/legal.ts` | Textes des deux pages légales, FR et EN, typés à la main |
+| `src/lib/seo.ts` | Titres, descriptions, canoniques, hreflang et `@graph` de chaque page |
+| `tests/seo-meta.mjs` | Contrôle des balises de recherche sur les 9 pages |
 | `src/lib/site.ts` | Identité publique, identité de l'exploitant, `LEGAL_MAJ` |
 | `src/components/sentis/parts.tsx` | Zone, Section, en-tête de page, panneau de séquence |
 | `src/components/sentis/formulaire.tsx` | Demande de soumission |
@@ -284,4 +321,5 @@ npm run verify:tokens
 npm run verify:scene
 npm run verify:teintes
 npm run verify:poids
+npm run verify:seo
 ```

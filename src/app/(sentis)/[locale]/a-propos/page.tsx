@@ -7,7 +7,7 @@ import { Prisme3D, Reveal3D } from "@/components/motion";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
-import { filAriane, metadonneesPage } from "@/lib/seo";
+import { donneesPage, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 
 export function generateStaticParams() {
@@ -21,12 +21,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const p = DICT[locale].pages.apropos;
   return metadonneesPage({
     locale,
     chemin: "/a-propos",
-    titre: p.titre,
-    description: p.chapo,
   });
 }
 
@@ -42,7 +39,7 @@ export default async function AProposPage({
 
   return (
     <>
-      <DonneesStructurees data={filAriane(locale, "/a-propos", p.titre)} />
+      <DonneesStructurees data={donneesPage(locale, "/a-propos", p.titre, "AboutPage")} />
 
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="poussiere" />
 

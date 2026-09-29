@@ -5,7 +5,7 @@ import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 import { PageLegale } from "@/components/sentis/page-legale";
 import { LOCALES, isLocale } from "@/lib/i18n";
 import { TEXTES_LEGAUX } from "@/lib/legal";
-import { filAriane, metadonneesPage } from "@/lib/seo";
+import { donneesPage, metadonneesPage } from "@/lib/seo";
 import {
   BUSINESS,
   CONTACT_EMAIL,
@@ -26,12 +26,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = TEXTES_LEGAUX[locale].mentions;
   return metadonneesPage({
     locale,
     chemin: CHEMIN,
-    titre: t.titre,
-    description: t.chapo,
     // Tant qu'il manque le nom légal, le NEQ, l'adresse ou l'hébergeur, cette
     // page reste hors des moteurs : elle affiche des trous, et un document
     // d'identité incomplet indexé est pire qu'un document absent.
@@ -71,7 +68,7 @@ export default async function MentionsLegalesPage({
 
   return (
     <>
-      <DonneesStructurees data={filAriane(locale, CHEMIN, t.titre)} />
+      <DonneesStructurees data={donneesPage(locale, CHEMIN, t.titre)} />
 
       <PageLegale
         locale={locale}

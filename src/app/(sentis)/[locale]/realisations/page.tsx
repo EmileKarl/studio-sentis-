@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Travaux } from "@/components/sentis/travaux";
 import { EnTetePage } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
-import { filAriane, metadonneesPage } from "@/lib/seo";
+import { donneesPage, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 
 export function generateStaticParams() {
@@ -18,12 +18,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const p = DICT[locale].pages.realisations;
   return metadonneesPage({
     locale,
     chemin: "/realisations",
-    titre: p.titre,
-    description: p.chapo,
   });
 }
 
@@ -39,7 +36,7 @@ export default async function RealisationsPage({
 
   return (
     <>
-      <DonneesStructurees data={filAriane(locale, "/realisations", p.titre)} />
+      <DonneesStructurees data={donneesPage(locale, "/realisations", p.titre, "CollectionPage")} />
 
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="treillis" />
       <Travaux dict={d} />

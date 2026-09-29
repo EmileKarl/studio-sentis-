@@ -6,7 +6,7 @@ import { FormulaireSoumission } from "@/components/sentis/formulaire";
 import { GlobeDiffere } from "@/components/motion/differe";
 import { EnTetePage, Section } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
-import { filAriane, metadonneesPage } from "@/lib/seo";
+import { donneesPage, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -21,12 +21,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const p = DICT[locale].pages.contact;
   return metadonneesPage({
     locale,
     chemin: "/contact",
-    titre: p.titre,
-    description: p.chapo,
   });
 }
 
@@ -42,7 +39,7 @@ export default async function ContactPage({
 
   return (
     <>
-      <DonneesStructurees data={filAriane(locale, "/contact", p.titre)} />
+      <DonneesStructurees data={donneesPage(locale, "/contact", p.titre, "ContactPage")} />
 
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="onde" />
 

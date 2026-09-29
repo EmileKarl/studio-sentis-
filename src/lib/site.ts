@@ -62,3 +62,14 @@ export const IDENTITE_INCOMPLETE = Object.values(EXPLOITANT).some((v) => !v);
  * vérifier, et une date périmée les décrédibilise entièrement.
  */
 export const LEGAL_MAJ = "2026-09-29";
+
+/**
+ * Identifiants d'entité pour les données structurées.
+ *
+ * Ils vivent ici plutôt que dans le composant qui les émet, parce que les
+ * pages intérieures doivent pouvoir s'y rattacher sans importer un composant
+ * — et parce qu'un identifiant d'entité est de la configuration du site au
+ * même titre que son domaine.
+ */
+export const ID_ENTREPRISE = `${SITE_URL}/#studio`;
+export const ID_SITE = `${SITE_URL}/#site`;

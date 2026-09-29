@@ -36,8 +36,13 @@ export async function generateMetadata({
   const dict = DICT[locale];
   return {
     metadataBase: new URL(SITE_URL),
-    title: dict.meta.title,
-    description: dict.meta.description,
+    // `absolute` et non une simple chaîne : la mise en page racine déclare
+    // `template: "%s — NEXUS UI"`, le nom du gabarit technique, qui se
+    // retrouvait dans le titre de recherche du site de l'agence. Chaque page
+    // pose de toute façon le sien via `metadonneesPage` ; ceci ne sert que de
+    // repli, mais un repli faux est un défaut qui attend son tour.
+    title: { absolute: dict.seo[""].titre },
+    description: dict.seo[""].description,
     alternates: {
       canonical: `/${locale}`,
       languages: { fr: "/fr", en: "/en" },
@@ -48,8 +53,8 @@ export async function generateMetadata({
       alternateLocale: locale === "fr" ? "en_CA" : "fr_CA",
       url: `/${locale}`,
       siteName: "Studio Sentis",
-      title: dict.meta.title,
-      description: dict.meta.description,
+      title: dict.seo[""].titre,
+      description: dict.seo[""].description,
       // Une seule image pour les deux langues : elle ne porte que le nom, le
       // métier et le lieu, qui sont vrais dans les deux. Elle est fabriquée
       // par `scripts/generer-images-marque.mjs`.
@@ -57,8 +62,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: dict.meta.title,
-      description: dict.meta.description,
+      title: dict.seo[""].titre,
+      description: dict.seo[""].description,
       images: ["/og.png"],
     },
     // Tant que le domaine n'est pas connu, on n'indexe pas : une adresse
