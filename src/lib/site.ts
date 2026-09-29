@@ -23,3 +23,42 @@ export const BUSINESS = {
   /** Zone réellement desservie, telle que consignée dans PRODUCT.md. */
   areaServed: ["Châteauguay", "Montérégie", "Grand Montréal", "Québec"],
 } as const;
+
+/**
+ * Identité de l'exploitant, telle qu'elle doit figurer dans les mentions
+ * légales.
+ *
+ * Rien n'est inventé ici. Le nom légal, le NEQ, l'adresse et l'hébergeur sont
+ * des faits administratifs : les écrire au jugé dans un document qui engage
+ * l'entreprise serait pire que de ne rien écrire. Tant qu'une valeur manque,
+ * la page l'affiche comme un trou visible — « à compléter » — et se met en
+ * `noindex`, exactement comme le site entier tant que le domaine n'est pas
+ * choisi. Un document légal à moitié faux ne doit pas pouvoir se retrouver
+ * dans un moteur de recherche sans que quelqu'un s'en aperçoive.
+ *
+ * Elles se remplissent par variables d'environnement, sans toucher au code.
+ */
+export const EXPLOITANT = {
+  /** Nom légal sous lequel l'entreprise est immatriculée au Québec. */
+  nomLegal: process.env.NEXT_PUBLIC_NOM_LEGAL ?? "",
+  /** Numéro d'entreprise du Québec (Registraire des entreprises). */
+  neq: process.env.NEXT_PUBLIC_NEQ ?? "",
+  /** Adresse de l'établissement, telle qu'inscrite au registre. */
+  adresse: process.env.NEXT_PUBLIC_ADRESSE ?? "",
+  /** Hébergeur du site, une fois le déploiement arrêté. */
+  hebergeur: process.env.NEXT_PUBLIC_HEBERGEUR ?? "",
+} as const;
+
+/** Vrai tant qu'un des champs ci-dessus manque. */
+export const IDENTITE_INCOMPLETE = Object.values(EXPLOITANT).some((v) => !v);
+
+/**
+ * Date de dernière révision des textes légaux, au format ISO.
+ *
+ * Elle est ici et non dans les traductions pour qu'il n'y ait qu'un endroit à
+ * changer, et pour qu'on ne puisse pas la laisser diverger entre le français
+ * et l'anglais. **À relever chaque fois que le texte des pages légales
+ * change** — c'est la seule information de ces pages qu'un visiteur peut
+ * vérifier, et une date périmée les décrédibilise entièrement.
+ */
+export const LEGAL_MAJ = "2026-09-29";

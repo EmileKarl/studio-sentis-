@@ -35,12 +35,20 @@ export function metadonneesPage({
   chemin,
   titre,
   description,
+  noindex = false,
 }: {
   locale: Locale;
   /** Chemin sous la langue, `""` pour l'accueil, `"/services"` sinon. */
   chemin: string;
   titre: string;
   description: string;
+  /**
+   * Retire la page des moteurs, en plus du garde-fou global sur le domaine.
+   * Les pages légales s'en servent tant que l'identité de l'exploitant n'est
+   * pas renseignée : un document qui engage l'entreprise et qui comporte des
+   * trous ne doit pas pouvoir être indexé par inadvertance.
+   */
+  noindex?: boolean;
 }): Metadata {
   const url = `/${locale}${chemin}`;
 
@@ -75,7 +83,10 @@ export function metadonneesPage({
       description,
       images: ["/og.png"],
     },
-    robots: SITE_URL_IS_PLACEHOLDER ? { index: false, follow: false } : undefined,
+    robots:
+      SITE_URL_IS_PLACEHOLDER || noindex
+        ? { index: false, follow: false }
+        : undefined,
   };
 }
 

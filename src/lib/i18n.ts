@@ -140,6 +140,8 @@ export const DICT = {
           message: "Décrivez votre projet, même brièvement.",
         },
         ouverture: "Votre logiciel de courriel va s'ouvrir avec le message pré-rempli. Vérifiez-le, puis envoyez.",
+        viePrivee: "Ce formulaire n'envoie rien à ce site : il prépare un courriel dans votre logiciel, et rien ne me parvient tant que vous ne l'avez pas envoyé vous-même.",
+        viePriveeLien: "Ce que je fais des renseignements reçus",
         direct: "Ou écrivez directement à",
         infosTitre: "Coordonnées",
         infos: [
@@ -306,6 +308,9 @@ export const DICT = {
     pied: {
       droits: "Studio Sentis — Châteauguay, Québec",
       mention: "Site construit sur NEXUS UI.",
+      legal: "Informations légales",
+      mentions: "Mentions légales",
+      confidentialite: "Politique de confidentialité",
     },
   },
 
@@ -436,6 +441,8 @@ export const DICT = {
           message: "Describe your project, even briefly.",
         },
         ouverture: "Your email program will open with the message pre-filled. Check it, then send.",
+        viePrivee: "This form sends nothing to this site: it prepares an email in your own software, and nothing reaches me until you send it yourself.",
+        viePriveeLien: "What I do with the information I receive",
         direct: "Or write directly to",
         infosTitre: "Details",
         infos: [
@@ -560,6 +567,9 @@ export const DICT = {
     pied: {
       droits: "Studio Sentis — Châteauguay, Quebec",
       mention: "Built on NEXUS UI.",
+      legal: "Legal",
+      mentions: "Legal notice",
+      confidentialite: "Privacy policy",
     },
   },
 } as const;

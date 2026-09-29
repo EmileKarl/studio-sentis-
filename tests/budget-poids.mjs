@@ -37,6 +37,11 @@ const BUDGETS = [
   // La page contact porte le globe et son trait de côte : 40 ko de plus, et
   // c'est voulu — ils ne sont chargés que là.
   { chemin: "/fr/contact", js: 940, css: 175, polices: 100 },
+  // Les pages légales n'ont ni scène, ni globe, ni animation d'entrée :
+  // elles doivent être les plus légères du site, et le budget est posé pour
+  // le dire si un jour quelque chose y revenait.
+  { chemin: "/fr/mentions-legales", js: 900, css: 175, polices: 100 },
+  { chemin: "/fr/confidentialite", js: 900, css: 175, polices: 100 },
 ];
 
 const navigateur = await chromium.launch(

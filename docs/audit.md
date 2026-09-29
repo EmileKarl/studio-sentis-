@@ -29,6 +29,7 @@ ses six sous-pages pour la vitrine.
 | §10 Clair / sombre / système, avec persistance | Faite |
 | §11 Responsive sur les 9 largeurs | Faite et vérifiée |
 | §12 Architecture | Faite, avec `src/` en écart documenté |
+| Pages légales (Loi 25, Charte de la langue française) | Faites — mentions légales et politique de confidentialité, FR et EN, avis au point de collecte sous le formulaire |
 
 ## 2. Ce qui a été testé
 
@@ -174,6 +175,18 @@ le réflexe par défaut quand on compose un en-tête. Seul le détecteur l'attra
 | 24 | Quatre composants vendus installés et jamais utilisés | Retirés — deux portaient de vrais défauts, deux ne servaient à rien |
 | 25 | Un `<code>` en ligne contenant un chemin long poussait la page entière hors du viewport sous 430 px | Règle globale `:not(pre) > code { overflow-wrap: anywhere }` |
 
+### Défauts trouvés en construisant les pages légales
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 56 | Une page d'identité d'entreprise ne peut pas être remplie au jugé, et une page à moitié fausse indexée est pire qu'une page absente | `EXPLOITANT` lu depuis l'environnement ; chaque valeur absente s'affiche « à compléter », la page se déclare `noindex` à elle seule et sort du sitemap. Vérifié dans les deux sens : reconstruit avec les quatre variables, le `noindex` disparaît, la page entre au sitemap et les valeurs remplacent les trous |
+| 57 | Déclarer dans le sitemap une page qu'on demande par ailleurs de ne pas indexer — contradiction que la Search Console remonte en erreur | `sitemap.ts` n'ajoute `/mentions-legales` que si l'identité est complète |
+| 58 | 750 px de vide à droite sur 1216 : la colonne de texte fait 464 px, et ces pages n'ont ni scène, ni carte, ni colonne d'informations pour remplir le reste comme partout ailleurs | Sommaire collant à partir de `lg`, colonne de texte plafonnée à 36rem pour qu'il ne reste pas un demi-écran entre les deux. Ancres nues : il fonctionne sans JavaScript, ce qui est vérifié au navigateur |
+| 59 | `LEGAL_MAJ` est une date sans heure, donc minuit UTC : un serveur à Montréal aurait daté la politique de la veille | `toLocaleDateString` avec `timeZone: "UTC"` explicite |
+| 60 | Crédit de polices écrit de mémoire — « Fraunces et Inter » — alors que le site compose en Fraunces et Source Sans 3 | Vérifié dans les imports `next/font` avant publication ; la liste porte les quatre familles réellement chargées plus Lucide |
+| 61 | `.env.example` était exclu par `.gitignore` (`.env*`) alors que le README y renvoie : lien mort pour quiconque clone, et aucune trace des variables attendues | Exception `!.env.example` ; le gabarit est versionné, il ne contient que des exemples |
+| 62 | Une année de copyright au pied de page serait figée au jour de la construction, ces pages étant statiques : « © 2026 » affiché en 2028 | Pas d'année du tout. Mieux vaut ne rien dater que dater faux |
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
@@ -200,9 +213,12 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
   réalisations), le jour où il y en aura.
 - **Logo** : c'est un logotype typographique, pas une marque dessinée. Choisi
   comme solution la plus simple, à remplacer quand le studio aura tranché.
-- **Pages légales** : ni mentions légales ni politique de confidentialité, alors
-  que le formulaire collecte un nom, un courriel et un téléphone. **La Loi 25
-  québécoise l'exige.** C'est le manque le plus sérieux du projet à ce jour.
+- ~~**Pages légales**~~ : **fait.** `/mentions-legales` et `/confidentialite`
+  existent dans les deux langues, l'avis au point de collecte est sous le
+  formulaire, et le texte décrit ce que le site fait réellement plutôt qu'un
+  formulaire recopié. Ce qui reste manquant n'est pas du code mais des faits
+  administratifs : nom légal, NEQ, adresse, hébergeur. Tant qu'ils manquent, la
+  page les affiche comme des trous et se retire des moteurs (voir §3, n° 56).
 - **Nom de domaine** : non fourni. Le site reste non indexable tant qu'il
   manque — garde-fou vérifié dans les deux états.
 - **Grille de prix** : affichée sur le site mais **non validée** contre le
@@ -247,6 +263,8 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | `src/lib/motion.ts` | Tokens de motion côté JS, miroir de `motion.css` |
 | `src/components/motion/` | Bibliothèque d'animations (§6.7) |
 | `src/lib/i18n.ts` | Tout le texte du site de l'agence, FR et EN |
+| `src/lib/legal.ts` | Textes des deux pages légales, FR et EN, typés à la main |
+| `src/lib/site.ts` | Identité publique, identité de l'exploitant, `LEGAL_MAJ` |
 | `src/components/sentis/parts.tsx` | Zone, Section, en-tête de page, panneau de séquence |
 | `src/components/sentis/formulaire.tsx` | Demande de soumission |
 | `tests/responsive-check.mjs` | Contrôle des 9 largeurs × 2 thèmes |
@@ -263,4 +281,7 @@ npm run lint
 npm run typecheck
 npm run verify        # serveur devant tourner
 npm run verify:tokens
+npm run verify:scene
+npm run verify:teintes
+npm run verify:poids
 ```

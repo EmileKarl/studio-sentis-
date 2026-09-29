@@ -68,6 +68,36 @@ export function SentisFooter({ dict, locale }: { dict: Dict; locale: Locale }) {
           </p>
         </div>
       </div>
+
+      {/* Barre légale.
+          Elle est séparée de la navigation du dessus parce qu'elle ne s'adresse
+          pas au même moment : on parcourt le menu pour choisir, on descend
+          jusqu'ici pour vérifier. Les mettre dans la même liste aurait donné
+          sept liens de même poids, dont deux que presque personne ne suit.
+
+          Pas d'année de copyright : ces pages sont générées à la construction,
+          donc `new Date().getFullYear()` y serait figé au jour du déploiement.
+          Un site qui affiche « © 2026 » en 2028 a l'air abandonné — mieux vaut
+          ne rien dater du tout que dater faux. */}
+      <div className="border-rule border-t">
+        <nav
+          aria-label={dict.pied.legal}
+          className="mx-auto flex w-full max-w-(--container-page) flex-wrap items-center gap-x-6 gap-y-1 px-5 py-5 sm:px-8"
+        >
+          <Link
+            href={`${base}/mentions-legales`}
+            className="text-ink-secondary hover:text-ink inline-block py-1 text-sm transition-colors"
+          >
+            {dict.pied.mentions}
+          </Link>
+          <Link
+            href={`${base}/confidentialite`}
+            className="text-ink-secondary hover:text-ink inline-block py-1 text-sm transition-colors"
+          >
+            {dict.pied.confidentialite}
+          </Link>
+        </nav>
+      </div>
     </footer>
   );
 }

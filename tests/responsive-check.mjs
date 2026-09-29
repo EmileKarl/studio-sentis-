@@ -23,6 +23,8 @@ const PAGES = [
   ["/fr/realisations", "sentis-realisations"],
   ["/fr/a-propos", "sentis-apropos"],
   ["/fr/contact", "sentis-contact"],
+  ["/fr/mentions-legales", "sentis-mentions"],
+  ["/fr/confidentialite", "sentis-confidentialite"],
   ["/nexus", "nexus-accueil"],
   ["/nexus/design-system", "nexus-design-system"],
   ["/nexus/components", "nexus-composants"],

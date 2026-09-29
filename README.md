@@ -79,17 +79,32 @@ Node.js 20+ et npm.
 
 ## Configuration
 
-Une seule variable, documentée dans [`.env.example`](.env.example) :
+Variables documentées dans [`.env.example`](.env.example) :
 
 ```bash
 NEXT_PUBLIC_SITE_URL=https://votre-domaine.ca
+
+# Identité de l'exploitant, affichée dans les mentions légales
+NEXT_PUBLIC_NOM_LEGAL="Raison sociale telle qu'immatriculée"
+NEXT_PUBLIC_NEQ=1234567890
+NEXT_PUBLIC_ADRESSE="123 rue Exemple, Châteauguay (Québec) J6J 0A0"
+NEXT_PUBLIC_HEBERGEUR="Nom de l'hébergeur"
 ```
 
-**Tant qu'elle n'est pas définie, le site refuse d'être indexé** : `robots.txt`
-interdit tout, chaque page porte `noindex, nofollow`, et le sitemap pointe vers
-`example.invalid`. C'est délibéré — un site indexé sous une fausse adresse doit
-ensuite être désindexé à la main. Le domaine de Studio Sentis n'est pas encore
-choisi ; aucune adresse n'est écrite en dur dans le code.
+**Tant que `NEXT_PUBLIC_SITE_URL` n'est pas définie, le site refuse d'être
+indexé** : `robots.txt` interdit tout, chaque page porte `noindex, nofollow`, et
+le sitemap pointe vers `example.invalid`. C'est délibéré — un site indexé sous
+une fausse adresse doit ensuite être désindexé à la main. Le domaine de Studio
+Sentis n'est pas encore choisi ; aucune adresse n'est écrite en dur dans le
+code.
+
+Les quatre variables d'identité obéissent au même principe. Tant qu'il en manque
+une, `/mentions-legales` affiche le champ correspondant comme un trou explicite
+(« à compléter »), porte `noindex` **à elle seule**, et sort du sitemap. Un
+document qui engage l'entreprise ne doit pas pouvoir être indexé à moitié faux,
+et un nom légal ou un NEQ ne s'invente pas. Le comportement est vérifié dans les
+deux sens : construit avec les quatre variables, la page perd son `noindex`,
+entre au sitemap et affiche les valeurs.
 
 ## Installation
 
@@ -254,6 +269,50 @@ Ce qui a produit ces chiffres :
 
 `npm run verify:poids` fige ces gains : il échoue si une page dépasse son
 budget. C'est le seul contrôle du projet qui regarde ce qu'une page coûte.
+
+## Pages légales
+
+Deux pages, [`/mentions-legales`](src/app/(sentis)/[locale]/mentions-legales) et
+[`/confidentialite`](src/app/(sentis)/[locale]/confidentialite), dont le texte
+vit dans [`src/lib/legal.ts`](src/lib/legal.ts).
+
+La politique de confidentialité n'est pas un formulaire recopié : elle décrit ce
+que ce site fait réellement, ce qui se trouve être remarquablement peu.
+
+- **Aucune mesure d'audience, aucun témoin de suivi, aucun pixel.** Vérifiable :
+  `grep -rn "gtag\|analytics\|fbq\|plausible" src/` ne renvoie rien.
+- **Le formulaire n'envoie rien à un serveur.** Il compose un message et le
+  remet au logiciel de courrier du visiteur — voir
+  [`formulaire.tsx`](src/components/sentis/formulaire.tsx). Rien n'est stocké
+  entre-temps, rien ne part tant que le visiteur n'a pas envoyé lui-même.
+- **La seule écriture sur l'appareil** est la préférence de thème, posée par le
+  visiteur via le sélecteur du menu (`next-themes`, `localStorage`).
+- **La communication hors Québec est dite**, parce qu'elle existe : l'adresse de
+  contact est une adresse Gmail, donc les messages reposent sur des serveurs de
+  Google hors de la province. La Loi 25 demande que ce soit écrit clairement
+  plutôt qu'enfoui.
+
+L'avis au point de collecte est sous le formulaire, pas seulement dans la page
+dédiée : la loi vise le moment où la personne remplit le champ.
+
+Trois détails de construction, chacun réglant un défaut précis :
+
+- **Pas d'animation d'entrée** sur ces deux pages. On y vient pour vérifier un
+  point, souvent parce qu'on hésite à faire confiance ; faire attendre le texte
+  derrière une animation est, à cet endroit, le mauvais signal. Elles sont donc
+  aussi imprimables et lisibles sans JavaScript sans passer par le filet
+  `data-entree-animee`.
+- **Des ancres stables** (`#section-3`), indépendantes de la langue et du
+  libellé : un point cité dans un courriel reste atteignable après une
+  reformulation. Le sommaire latéral est fait d'ancres nues — il fonctionne sans
+  JavaScript, ce qui est vérifié.
+- **La date de révision** vit dans `LEGAL_MAJ`
+  ([`src/lib/site.ts`](src/lib/site.ts)), à un seul endroit pour les deux
+  langues. Elle est formatée en UTC explicite : sans cela, un serveur à Montréal
+  daterait la politique de la veille.
+
+**À relever `LEGAL_MAJ` chaque fois que le texte change.** C'est la seule
+information de ces pages qu'un visiteur peut vérifier.
 
 ## Dépannage
 

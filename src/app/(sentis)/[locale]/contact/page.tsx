@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FormulaireSoumission } from "@/components/sentis/formulaire";
@@ -49,6 +50,25 @@ export default async function ContactPage({
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <div className="min-w-0">
             <FormulaireSoumission dict={d} />
+
+            {/* Avis au point de collecte.
+                La Loi 25 demande que la personne sache, au moment où elle
+                remplit le champ, ce qu'il advient de ce qu'elle écrit — pas
+                dans une page qu'il faut penser à aller chercher. Il est ici et
+                non dans le formulaire pour une raison prosaïque : le
+                formulaire est un composant client, et lui passer la langue
+                pour construire un lien aurait alourdi le paquet JavaScript de
+                la page pour deux lignes de texte. */}
+            <p className="text-ink-muted border-rule mt-8 max-w-(--content-max) border-t pt-6 text-sm leading-relaxed text-pretty">
+              {p.viePrivee}{" "}
+              <Link
+                href={`/${locale}/confidentialite`}
+                className="text-ink-secondary hover:text-ink focus-visible:ring-signal rounded-sm underline underline-offset-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              >
+                {p.viePriveeLien}
+              </Link>
+              .
+            </p>
           </div>
 
           <aside className="lg:border-rule lg:border-l lg:pl-10">

@@ -41,6 +41,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...sauf le gabarit, auquel le README renvoie : sans cette exception le
+# lien est mort pour quiconque clone le dépôt, et personne ne sait quelles
+# variables le site attend. Il ne contient que des exemples.
+!.env.example
 
 # vercel
 .vercel
