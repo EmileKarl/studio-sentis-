@@ -222,6 +222,42 @@ pas.
 le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
 sien, ni équipe qui n'existe pas.
 
+## Logotype et police de marque
+
+Le logotype est composé, pas dessiné : « studio sentis » en bas de casse dans
+**Outfit Light**, approche ouverte, sans accent de couleur. Un seul fichier à
+toucher pour changer de marque — [`logotype.tsx`](src/components/sentis/logotype.tsx).
+
+La police est **auto-hébergée et réduite à ses dix glyphes** : 1 088 octets au
+lieu d'environ quinze kilo-octets pour un jeu latin complet. Cette version de
+Next n'expose pas l'option `text` du chargeur Google ; sans elle, six lettres
+auraient fait sauter le budget de polices. Régénération et licence dans
+[`src/fonts/README.md`](src/fonts/README.md).
+
+`node scripts/generer-images-marque.mjs` refabrique l'icône d'onglet, l'icône
+iOS et l'image de partage à partir du même mot-symbole. Le script **lit les
+polices sur le disque** et **s'arrête** si l'une manque : la version précédente
+les demandait à Google et, quand cette requête échouait, produisait en silence
+des images dans une police de repli. Les icônes livrées jusqu'ici n'étaient pas
+dans la police du site.
+
+## Couleurs
+
+La palette de section vient de la **combinaison n° 347** de *A Dictionary of
+Color Combinations* de Sanzo Wada (1933-34) : Olive Yellow, Sea Green, Helvetia
+Blue, Lilac.
+
+Une couleur de 1933 est un pigment, pas un token : trois des quatre tombent
+dans la zone médiane où ni le texte sombre ni le blanc ne passent. La règle
+appliquée : **la valeur du livre est gardée telle quelle partout où elle franchit
+déjà 4,5:1**, et seulement ré-éclairée ailleurs — teinte et chroma OKLCH
+conservées, dérive mesurée sous 2°. Quatre des huit accents sont la valeur du
+livre non retouchée.
+
+`npm run verify:teintes` passe, seuil intact. Le pire couple est passé de
+**4,60:1 à 4,79:1** : la marge a été gagnée, pas dépensée. Le détail des
+mesures est dans [`src/styles/sentis.css`](src/styles/sentis.css).
+
 ## Référencement et poids
 
 **Référencement.** Chaque page pose sa propre balise canonique, ses `hreflang`
@@ -307,6 +343,25 @@ résultats ; le plancher de 25 est plus bas que les 50 recommandés parce que
 
 Le contrôle a été **vérifié capable d'échouer** : servi le `<head>` tel qu'il
 était avant correction, il remonte 132 constats et sort en erreur.
+
+## Performance
+
+Deux mesures, faites au navigateur sur un gabarit de téléphone :
+
+- **LCP de l'accueil : 1 148 → 920 ms.** Le titre de la page en était l'élément
+  le plus grand, et il était animé en opacité : le navigateur n'enregistre le
+  LCP qu'au moment où l'élément devient réellement visible, donc l'animation
+  repoussait la mesure de toute sa durée. L'option `sansFondu` de `Reveal3D`
+  anime la position sans l'opacité. À réserver à l'élément LCP d'une page.
+- **Pré-navigation.** `next/link` préchargeait la charge utile React ; les
+  règles de spéculation demandent le **rendu complet** de la page suivante.
+  `eagerness: "moderate"` et non `eager` : au survol, donc sur un geste
+  d'intention, plutôt que les cinq pages dès l'arrivée — un studio qui vend des
+  sites légers ne peut pas faire télécharger cinq pages à qui n'en lira qu'une.
+
+Ce que l'outil d'audit recommandait et qui **ne s'applique pas ici** :
+`fetchpriority="high"` sur l'image LCP. Mesure à l'appui, le LCP est du texte
+sur les trois pages testées ; le site n'a aucune image dans la zone visible.
 
 ## Données structurées
 

@@ -43,20 +43,25 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
           href={base}
           className="focus-visible:ring-signal -mx-1 shrink-0 rounded-md px-1 py-1.5 focus-visible:ring-2 focus-visible:outline-none"
         >
-          <Logotype className="font-display text-ink text-xl font-semibold tracking-tight" />
+          <Logotype className="text-ink text-xl" />
         </Link>
 
-        <nav aria-label={dict.nav.menu} className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+        {/* La barre de page active se pose sur le filet du bas de l'en-tête,
+            pas à mi-hauteur : c'est le filet qui sépare l'en-tête de la page,
+            donc c'est là que se lit « vous êtes sur cette page ». Pour cela il
+            faut que le lien occupe toute la hauteur de la barre — d'où
+            `h-16` et `items-stretch` ici plutôt que `items-center`. */}
+        <nav aria-label={dict.nav.menu} className="hidden h-16 lg:block">
+          <ul className="flex h-full items-stretch gap-1">
             {liens.map((lien) => {
               const actif = pathname === lien.href;
               return (
-                <li key={lien.href}>
+                <li key={lien.href} className="flex">
                   <Link
                     href={lien.href}
                     aria-current={actif ? "page" : undefined}
                     className={cn(
-                      "focus-visible:ring-signal relative rounded-md px-3 py-2 transition-colors focus-visible:ring-2 focus-visible:outline-none",
+                      "focus-visible:ring-signal relative flex items-center rounded-md px-3 transition-colors focus-visible:ring-2 focus-visible:outline-none",
                       actif
                         ? "text-ink font-medium"
                         : "text-ink-secondary hover:text-ink",
@@ -66,7 +71,9 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
                     {actif ? (
                       <span
                         aria-hidden
-                        className="bg-signal absolute inset-x-3 -bottom-0.5 block h-0.5 rounded-full"
+                        // `-bottom-px` : la barre recouvre le filet d'un
+                        // pixel de l'en-tête au lieu de flotter au-dessus.
+                        className="bg-signal absolute inset-x-3 -bottom-px block h-0.5"
                       />
                     ) : null}
                   </Link>

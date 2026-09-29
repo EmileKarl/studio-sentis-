@@ -46,32 +46,84 @@
 
 
   /* ---------------------------------------------------------------------
-     Couleurs de section, version franche.
+     Couleurs de section, version Sanzo Wada.
 
-     Une première version très lavée (vert-de-gris, bleu pâle, terre cuite,
-     ocre) a été écartée : trop délavée, et pas « tech ». Celle-ci assume la
-     chroma. Deux familles, deux usages :
+     Historique. Une première version très lavée (vert-de-gris, bleu pâle,
+     terre cuite, ocre) a été écartée : trop délavée, et pas « tech ». La
+     deuxième — bleu #1d4ed8, cyan #0b6379, violet #6d28d9, vert #13692f —
+     assumait la chroma, mais c'était la palette par défaut de n'importe quel
+     produit : quatre couleurs d'utilitaire, sans provenance.
+
+     Celle-ci garde cette franchise et lui donne une origine : la combinaison
+     n° 347 de « A Dictionary of Color Combinations » de Sanzo Wada
+     (1933-34), quatre couleurs —
+
+         Olive Yellow    #a6a159
+         Sea Green       #00b49b
+         Helvetia Blue   #005b8d
+         Lilac           #b984af
+
+     Relevée sur deux publications numériques qui concordent au hex près : le
+     jeu de données de mattdesl, fork corrigé de celui de Dain M. Blodorn Kim
+     qui fait tourner sanzo-wada.dmbk.io
+     (https://github.com/mattdesl/dictionary-of-colour-combinations), et la
+     version interactive https://colors.elwyn.co/ (Combination #347).
+     Réserve honnête : ces deux relevés descendent probablement de la même
+     numérisation d'origine, celle de Blodorn Kim. Leur accord confirme qu'on
+     n'a pas mal recopié, pas que le livre imprimé dise exactement cela.
+
+     Pourquoi le n° 347. Les 348 combinaisons du livre ont été passées en
+     revue : aucune ne couvre d'un coup les quatre familles du site (bleu,
+     cyan, violet, vert). Le n° 347 est celle qui en tient le plus — un bleu
+     franc, un vert-bleu franc, un mauve — sans faire entrer un rouge dans le
+     jeu. La quatrième place revient donc à `Olive Yellow` : un vert olive, et
+     non l'émeraude qu'il remplace. C'est un décalage assumé, et c'est
+     exactement la chaleur qu'on cherchait sur le papier crème.
+
+     Ce que valent les valeurs ci-dessous. Une couleur de 1933 est un pigment,
+     pas un token : trois des quatre tombent en pleine zone médiane, là où ni
+     texte sombre ni blanc ne passent — Sea Green est à 2,62:1 sous du blanc,
+     Olive Yellow à 2,67:1, Lilac à 3,01:1. Les mêmes couleurs, posées sur
+     l'encre du thème sombre, donnent 7,12:1, 7,00:1 et 6,22:1. Elles ne sont
+     pas mauvaises : elles sont faites pour l'autre fond.
+
+     D'où la règle appliquée ici : la valeur du livre est gardée telle quelle
+     partout où elle franchit déjà 4,5:1, et seulement ré-éclairée ailleurs —
+     même teinte et même chroma en OKLCH, clarté déplacée, dérive de teinte
+     sous 2°. Rien n'est choisi à l'œil, rien n'est inventé.
+
+     En thème clair, seul `Helvetia Blue` passe littéralement : il est déjà
+     assez sombre pour porter du blanc (7,29:1). Les trois autres descendent
+     en clarté. En thème sombre, c'est l'inverse : les trois autres tiennent
+     telles quelles et c'est `Helvetia Blue` qu'il faut remonter.
+
+     Deux familles, deux usages :
 
      - `--teinte-*` : des fonds de section encore clairs, mais dont on voit la
        couleur. Ils portent le texte du site tel quel.
      - `--accent-*` : les mêmes couleurs à pleine force, pour ce qui doit
        trancher — pictogrammes, filets, scènes 3D, panneaux pleins.
 
-     Aucune valeur n'est choisie à l'œil. Deux ont été corrigées après mesure :
-     le vert #15803d ne donnait que 4,30:1 sur son propre fond, et le cyan
-     #0e7490 passait de justesse à 4,52:1 ; tous deux ont été assombris.
      `npm run verify:teintes` refait le calcul complet — teintes et accents,
-     sur papier, sur leur fond, et blanc par-dessus — à chaque exécution.
+     sur papier, sur leur fond, et la couleur de contraste par-dessus — à
+     chaque exécution. Le pire couple de cette palette est à 4,79:1
+     (`--ink-muted` sur `--teinte-cyan`), contre 4,60:1 dans la version
+     précédente (`--ink-muted` sur `--teinte-violet`) : la marge a été
+     gagnée, pas perdue.
      --------------------------------------------------------------------- */
-  --teinte-bleu: #e2ecff;
-  --teinte-cyan: #d9f0f4;
-  --teinte-violet: #ece4fb;
-  --teinte-vert: #ddf3e4;
 
-  --accent-bleu: #1d4ed8;     /* bleu électrique, l'accent principal */
-  --accent-cyan: #0b6379;     /* cyan profond, assombri après mesure */
-  --accent-violet: #6d28d9;
-  --accent-vert: #13692f;     /* vert assombri après mesure */
+  /* Les quatre couleurs du livre, éclaircies en fonds de section. La chroma
+     est plafonnée à 0,036 (OKLCH) pour qu'elles portent `--ink-muted` sans
+     descendre sous le plancher. */
+  --teinte-bleu: #daefff;     /* Helvetia Blue éclairci */
+  --teinte-cyan: #d2f3eb;     /* Sea Green éclairci */
+  --teinte-violet: #fee5f8;   /* Lilac éclairci — un lilas pâle tire au rose */
+  --teinte-vert: #efeed2;     /* Olive Yellow éclairci */
+
+  --accent-bleu: #005b8d;     /* Helvetia Blue, valeur du livre, non retouchée */
+  --accent-cyan: #016e5e;     /* Sea Green assombri (l'original est à 2,62:1 sous blanc) */
+  --accent-violet: #825079;   /* Lilac assombri (3,01:1 sous blanc) */
+  --accent-vert: #686316;     /* Olive Yellow assombri (2,67:1 sous blanc) */
 
   /* La couleur du texte posé SUR un aplat d'accent. Elle ne peut pas être
      figée à blanc : en thème sombre les accents s'éclaircissent, et le
@@ -108,18 +160,23 @@
 
 
   /* Les fonds sombres ne sont pas les clairs inversés : une inversion
-     mécanique donne quatre gris identiques. Chacun garde sa couleur, assez
-     pour qu'on distingue une section de la suivante. Les accents, eux, sont
-     remontés : un bleu à #1d4ed8 sur fond encre tomberait à 2,5:1. */
-  --teinte-bleu: #101a2e;
-  --teinte-cyan: #0c1d21;
-  --teinte-violet: #191330;
-  --teinte-vert: #0e1f16;
+     mécanique donne quatre gris identiques. Chacun garde la teinte de sa
+     couleur Wada, assez pour qu'on distingue une section de la suivante.
 
-  --accent-bleu: #7aa7ff;
-  --accent-cyan: #4fd1e0;
-  --accent-violet: #b794ff;
-  --accent-vert: #5fd19a;
+     C'est ici que le livre se lit sans retouche : `Sea Green`, `Lilac` et
+     `Olive Yellow` sont recopiés tels quels — leur clarté médiane, celle qui
+     ne passait pas sur le crème, donne 7,12:1, 6,22:1 et 7,00:1 sur l'encre.
+     Seul `Helvetia Blue` doit être remonté : à #005b8d il tomberait à 2,57:1
+     sur ce fond. */
+  --teinte-bleu: #0e2638;
+  --teinte-cyan: #032a23;
+  --teinte-violet: #331d2f;
+  --teinte-vert: #282509;
+
+  --accent-bleu: #529cd2;     /* Helvetia Blue remonté en clarté */
+  --accent-cyan: #00b49b;     /* Sea Green, valeur du livre, non retouchée */
+  --accent-violet: #b984af;   /* Lilac, valeur du livre, non retouchée */
+  --accent-vert: #a6a159;     /* Olive Yellow, valeur du livre, non retouchée */
   --accent-contrast: #14120f;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);

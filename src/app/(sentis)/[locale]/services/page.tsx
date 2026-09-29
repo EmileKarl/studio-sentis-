@@ -83,6 +83,15 @@ export default async function ServicesPage({
                       </StaggerItem>
                     ))}
                   </Stagger>
+                  {/* Ce que la prestation ne couvre pas, sous les livrables et
+                      dans le même bloc. Annoncer une limite au même endroit
+                      qu'une promesse est ce qui la rend crédible ; la reléguer
+                      en bas de page reviendrait à l'enterrer, ce que le studio
+                      dit ne pas faire ailleurs sur le site. Elle écarte aussi
+                      les demandes hors sujet avant le premier courriel. */}
+                  <p className="text-ink-muted border-rule mt-6 max-w-(--content-max) border-l-2 pl-4 text-sm leading-relaxed text-pretty">
+                    {item.horsPerimetre}
+                  </p>
                 </div>
               </article>
             </Reveal3D>

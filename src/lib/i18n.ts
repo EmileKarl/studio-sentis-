@@ -66,25 +66,29 @@ export const DICT = {
             resume: "Du site une page au site vitrine complet.",
             detail: "Présenter votre activité, être trouvé par les gens qui vous cherchent, être joint sans friction. Bilingue français-anglais dès la conception, parce qu'au Québec ce n'est pas une option.",
             livrables: ["Conception et intégration", "Bilingue FR/EN", "Fiche Google Business", "Vous modifiez le contenu vous-même", "Hébergement et suivi"],
-          },
+
+            horsPerimetre: "Ne couvre pas la rédaction de vos textes ni la photographie. Je vous oriente, mais le contenu reste le vôtre — et c'est lui qui vous distingue.",          },
           {
             nom: "Applications web et mobile",
             resume: "Un outil sur mesure quand l'existant ne suit pas.",
             detail: "Quand un logiciel du commerce ne correspond pas à votre façon de travailler et qu'il vous impose la sienne. On commence par un cadrage payant à prix fixe : périmètre écrit, maquette cliquable, soumission ferme.",
             livrables: ["Cadrage et maquette cliquable", "Développement web ou mobile", "Reprise de vos données", "Formation à l'usage", "Évolutions au fil de l'eau"],
-          },
+
+            horsPerimetre: "Ne couvre pas la reprise d'un code existant que je n'ai pas écrit, ni les données réglementées — santé, paiement — sans un cadrage séparé.",          },
           {
             nom: "Identité visuelle",
             resume: "Logo, couleurs, typographie et déclinaisons.",
             detail: "Une identité qui tient aussi bien sur une enseigne d'atelier que sur une facture, un camion ou un fil Instagram. Livrée avec son guide d'usage, pour que vous puissiez la confier à quelqu'un d'autre sans qu'elle se déforme.",
             livrables: ["Logo et monogramme", "Palette et typographie", "Carte, enseigne, réseaux sociaux", "Guide d'usage", "Fichiers sources"],
-          },
+
+            horsPerimetre: "Ne couvre ni le dépôt de marque, ni l'impression. Je livre les fichiers sources ; vous choisissez votre imprimeur et votre agent de marques.",          },
           {
             nom: "Informatique et marketing",
             resume: "Dépannage, maintenance, accompagnement.",
             detail: "Le reste : un poste qui ne démarre plus, une boîte courriel à configurer, une campagne à lancer, un référencement local à redresser. Facturé à l'heure ou au forfait mensuel, jamais à l'aveugle.",
             livrables: ["Dépannage sur place ou à distance", "Configuration courriel et postes", "Référencement local", "Campagnes et publications", "Suivi mensuel"],
-          },
+
+            horsPerimetre: "Ne couvre pas la gestion de vos réseaux sociaux au quotidien, ni l'achat de publicité en votre nom.",          },
         ],
         ctaTitre: "Une idée du budget avant d'appeler ?",
         ctaCorps: "Les forfaits sont affichés, en dollars canadiens. Vous saurez à quoi vous attendre avant même de m'écrire.",
@@ -92,7 +96,60 @@ export const DICT = {
       },
       realisations: {
         titre: "Réalisations",
-        chapo: "Studio Sentis démarre. Plutôt que d'emprunter des logos ou d'inventer des témoignages, voici trois pièces conçues pour montrer trois registres — rendues en direct par votre navigateur, pas exportées en image.",
+        chapo: "Il n'y en a aucune. Studio Sentis ouvre ses portes, et cette page restera vide jusqu'à ce que dix vraies entreprises la remplissent. Vous pouvez être l'une d'elles, et ça se paie moins cher.",
+        vide: {
+          titre: "Une page vide, et c'est voulu",
+          corps: [
+            "J'aurais pu mettre trois maquettes inventées, un logo de boulangerie qui n'existe pas et deux témoignages écrits par moi. C'est ce que font la plupart des studios qui commencent, et tout le monde le sait.",
+            "Vous liriez « Marie L., cliente satisfaite » et vous penseriez, à raison, que Marie L. n'existe pas. Alors autant le dire : je commence, et cette page attend son premier vrai nom.",
+            "Les démonstrations que vous voyez ailleurs sur ce site sont des exercices de ma main, annoncés comme tels. Elles montrent ce que je sais construire. Elles ne prétendent pas être des mandats.",
+          ],
+        },
+        offre: {
+          surtitre: "Offre de lancement",
+          titre: "Les dix premières places",
+          corps: "Les dix premiers projets sont à −25 %. Ce n'est pas un rabais de vitrine : c'est un échange, et le voici en entier.",
+          libelleRabais: "Rabais sur le prix affiché",
+          libellePlaces: "Places, dans l'ordre d'arrivée",
+          jeDonne: {
+            titre: "Ce que je donne",
+            items: [
+              "25 % de moins sur le prix affiché, appliqué à la soumission écrite",
+              "Le même travail, le même délai daté, le même contrat",
+              "Le code et le nom de domaine à vous, comme pour tout le monde",
+              "Un interlocuteur unique, du premier message à la livraison",
+            ],
+          },
+          jeDemande: {
+            titre: "Ce que je demande",
+            items: [
+              "Le droit de montrer votre projet sur cette page",
+              "Deux ou trois phrases sur la façon dont ça s'est passé, si vous êtes satisfait — et rien si vous ne l'êtes pas",
+              "Rien d'autre : ni exclusivité, ni engagement de durée, ni droit sur votre marque",
+            ],
+          },
+          conditions: {
+            titre: "Les conditions, en entier",
+            items: [
+              "Offre réservée aux dix premiers projets acceptés, une par entreprise.",
+              "Elle s'applique aux forfaits affichés sur la page Prix, hors suivi mensuel.",
+              "Le rabais figure sur la soumission écrite ; sans soumission signée, il n'y a pas d'engagement, ni du studio ni de vous.",
+              "L'autorisation de publier votre projet peut être retirée à tout moment, par simple courriel, sans que le prix change rétroactivement.",
+              "Ce n'est pas un concours : il n'y a ni tirage, ni hasard, ni prix à gagner. C'est un rabais commercial, accordé dans l'ordre d'arrivée.",
+            ],
+          },
+          compteARebours: {
+            titre: "L'offre se termine dans",
+            jours: "jours",
+            heures: "heures",
+            minutes: "minutes",
+            secondes: "secondes",
+            terminee: "L'offre de lancement est terminée. Les prix affichés sur la page Prix restent valables.",
+            sansDate: "La date de fin sera annoncée ici dès qu'elle sera arrêtée.",
+          },
+          cta: "Prendre une des dix places",
+          ctaNote: "Décrivez votre projet en deux lignes. Réponse sous 48 heures, avec un prix et une date.",
+        },
       },
       apropos: {
         titre: "À propos",
@@ -111,6 +168,16 @@ export const DICT = {
             corps: "Pas de clients à citer pour l'instant, pas d'années d'expérience à afficher, pas de récompenses. Vous jugerez sur ce site, sur les pièces de démonstration et sur notre premier échange. C'est moins confortable qu'un mur de logos, mais c'est vérifiable.",
           },
         ],
+        limites: {
+          titre: "Ce que je ne fais pas",
+          chapo: "Le dire d'avance fait gagner du temps à tout le monde, et évite la conversation gênante au troisième rendez-vous.",
+          items: [
+            { titre: "Je ne prends pas un mandat que je ne peux pas tenir", corps: "Si votre projet demande une équipe, je le dis au premier échange et je vous oriente ailleurs. Un studio d'une personne qui accepte tout livre en retard, ou mal." },
+            { titre: "Je ne facture pas à l'heure", corps: "Un taux horaire vous fait payer ma lenteur et me punit d'aller vite. Le prix est fixé avant, sur un périmètre écrit." },
+            { titre: "Je ne garde pas vos accès en otage", corps: "Le code, le domaine et les comptes d'hébergement sont à votre nom dès la livraison. Vous pouvez partir chez quelqu'un d'autre sans rien me redemander." },
+            { titre: "Je ne promets pas la première place sur Google", corps: "Personne ne peut la promettre. Je construis un site techniquement propre et je vous montre ce qui est mesuré ; le reste dépend de votre marché." },
+          ],
+        },
         valeursTitre: "Trois principes de travail",
         valeurs: [
           { titre: "Rien d'inventé", corps: "Aucun faux témoignage, aucun logo client emprunté, aucun compteur décoratif. Ce qui est écrit est vrai ou n'est pas écrit." },
@@ -330,9 +397,9 @@ export const DICT = {
           "Quatre métiers, un interlocuteur : sites web bilingues, applications sur mesure, identité visuelle, suivi mensuel. Prix affichés. Châteauguay et Montérégie.",
       },
       "/realisations": {
-        titre: "Réalisations et démonstrations — Studio Sentis",
+        titre: "Offre de lancement : 10 places — Studio Sentis",
         description:
-          "Trois pièces conçues par le studio pour montrer trois registres, rendues en direct par votre navigateur. Pas de logos empruntés, pas de témoignages inventés.",
+          "Aucune réalisation à montrer, et le studio préfère le dire. Les dix premiers projets sont à −25 %, en échange du droit de les publier. Conditions en entier.",
       },
       "/a-propos": {
         titre: "À propos du studio, à Châteauguay — Studio Sentis",
@@ -417,25 +484,29 @@ export const DICT = {
             resume: "From a one-page site to a full brochure site.",
             detail: "Present your business, get found by the people looking for you, get reached without friction. Bilingual French and English from the design stage, because in Quebec that is not optional.",
             livrables: ["Design and build", "Bilingual FR/EN", "Google Business listing", "You edit the content yourself", "Hosting and care"],
-          },
+
+            horsPerimetre: "Does not cover writing your copy or photography. I can point you in the right direction, but the content stays yours — and it is what sets you apart.",          },
           {
             nom: "Web and mobile applications",
             resume: "A custom tool when off-the-shelf software doesn't fit.",
             detail: "For when commercial software doesn't match how you work and imposes its own way instead. We start with a paid fixed-price scoping: written scope, clickable mockup, firm quote.",
             livrables: ["Scoping and clickable mockup", "Web or mobile build", "Data migration", "Training", "Ongoing changes"],
-          },
+
+            horsPerimetre: "Does not cover taking over existing code I did not write, nor regulated data — health, payments — without separate scoping.",          },
           {
             nom: "Visual identity",
             resume: "Logo, colours, typography and applications.",
             detail: "An identity that holds up on a workshop sign as well as on an invoice, a van or an Instagram feed. Delivered with its usage guide, so you can hand it to someone else without it falling apart.",
             livrables: ["Logo and monogram", "Palette and typography", "Card, signage, social media", "Usage guide", "Source files"],
-          },
+
+            horsPerimetre: "Covers neither trademark filing nor printing. I deliver the source files; you choose your printer and your trademark agent.",          },
           {
             nom: "IT and marketing",
             resume: "Support, maintenance, day-to-day help.",
             detail: "The rest: a machine that won't boot, an email account to set up, a campaign to launch, local search to straighten out. Billed hourly or on a monthly package, never blind.",
             livrables: ["On-site or remote support", "Email and workstation setup", "Local search", "Campaigns and posts", "Monthly care"],
-          },
+
+            horsPerimetre: "Does not cover running your social media day to day, nor buying advertising on your behalf.",          },
         ],
         ctaTitre: "Want a sense of the budget first?",
         ctaCorps: "The packages are published, in Canadian dollars. You will know what to expect before you even write to me.",
@@ -443,7 +514,60 @@ export const DICT = {
       },
       realisations: {
         titre: "Work",
-        chapo: "Studio Sentis is starting out. Rather than borrow logos or invent testimonials, here are three pieces built to show three registers — rendered live by your browser, not exported as images.",
+        chapo: "There is none. Studio Sentis is opening its doors, and this page stays empty until ten real businesses fill it. You can be one of them, and it costs you less.",
+        vide: {
+          titre: "An empty page, on purpose",
+          corps: [
+            "I could have put up three invented mockups, a logo for a bakery that does not exist and two testimonials written by me. That is what most studios do when they start, and everyone knows it.",
+            "You would read “Marie L., happy client” and think, rightly, that Marie L. does not exist. So I would rather say it plainly: I am starting out, and this page is waiting for its first real name.",
+            "The demonstrations elsewhere on this site are exercises of my own, announced as such. They show what I can build. They do not claim to be client work.",
+          ],
+        },
+        offre: {
+          surtitre: "Launch offer",
+          titre: "The first ten places",
+          corps: "The first ten projects are 25% off. This is not a shop-window discount: it is a trade, and here it is in full.",
+          libelleRabais: "Off the published price",
+          libellePlaces: "Places, in order of arrival",
+          jeDonne: {
+            titre: "What I give",
+            items: [
+              "25% off the published price, applied to the written quote",
+              "The same work, the same dated deadline, the same contract",
+              "The code and the domain name yours, as for everyone else",
+              "One person to talk to, from the first message to delivery",
+            ],
+          },
+          jeDemande: {
+            titre: "What I ask",
+            items: [
+              "Permission to show your project on this page",
+              "Two or three sentences on how it went, if you are satisfied — and nothing if you are not",
+              "Nothing else: no exclusivity, no minimum term, no rights over your brand",
+            ],
+          },
+          conditions: {
+            titre: "The conditions, in full",
+            items: [
+              "Limited to the first ten accepted projects, one per business.",
+              "It applies to the packages published on the Pricing page, excluding monthly care.",
+              "The discount appears on the written quote; without a signed quote there is no commitment, from the studio or from you.",
+              "Permission to publish your project can be withdrawn at any time, by email, without the price changing retroactively.",
+              "This is not a contest: there is no draw, no chance and no prize. It is a commercial discount, granted in order of arrival.",
+            ],
+          },
+          compteARebours: {
+            titre: "The offer ends in",
+            jours: "days",
+            heures: "hours",
+            minutes: "minutes",
+            secondes: "seconds",
+            terminee: "The launch offer has ended. The prices published on the Pricing page still stand.",
+            sansDate: "The closing date will be announced here as soon as it is set.",
+          },
+          cta: "Take one of the ten places",
+          ctaNote: "Describe your project in two lines. A reply within 48 hours, with a price and a date.",
+        },
       },
       apropos: {
         titre: "About",
@@ -462,6 +586,16 @@ export const DICT = {
             corps: "No clients to name yet, no years of experience to display, no awards. You will judge on this site, on the demonstration pieces, and on our first conversation. That is less comfortable than a wall of logos, but it can be checked.",
           },
         ],
+        limites: {
+          titre: "What I do not do",
+          chapo: "Saying it up front saves everyone time, and avoids the awkward conversation at the third meeting.",
+          items: [
+            { titre: "I do not take on work I cannot deliver", corps: "If your project needs a team, I say so in the first conversation and point you elsewhere. A one-person studio that accepts everything delivers late, or badly." },
+            { titre: "I do not bill by the hour", corps: "An hourly rate makes you pay for my slowness and punishes me for being quick. The price is set beforehand, against a written scope." },
+            { titre: "I do not hold your accounts hostage", corps: "The code, the domain and the hosting accounts are in your name from delivery. You can move to someone else without asking me for anything." },
+            { titre: "I do not promise first place on Google", corps: "Nobody can promise that. I build a technically clean site and show you what is measured; the rest depends on your market." },
+          ],
+        },
         valeursTitre: "Three working principles",
         valeurs: [
           { titre: "Nothing invented", corps: "No fake testimonials, no borrowed client logos, no decorative counters. What is written is true or it isn't written." },
@@ -626,9 +760,9 @@ export const DICT = {
           "Four crafts, one person: bilingual websites, custom applications, visual identity and monthly care. Prices published. Châteauguay and Montérégie, Quebec.",
       },
       "/realisations": {
-        titre: "Work and demonstrations — Studio Sentis",
+        titre: "Launch offer: ten places — Studio Sentis",
         description:
-          "Three pieces built by the studio to show three registers, rendered live by your browser. No borrowed logos, no invented testimonials.",
+          "No work to show, and the studio would rather say so. The first ten projects are 25% off, in exchange for the right to publish them. Full conditions.",
       },
       "/a-propos": {
         titre: "About the studio, in Châteauguay — Studio Sentis",

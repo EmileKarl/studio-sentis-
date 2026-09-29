@@ -3,6 +3,7 @@ import { Fraunces, Source_Sans_3 } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { SentisFooter } from "@/components/sentis/footer";
+import { PreNavigation } from "@/components/sentis/pre-navigation";
 import { MotionLeger } from "@/components/motion/fournisseur-leger";
 import { SentisHeader } from "@/components/sentis/header";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
@@ -111,6 +112,7 @@ export default async function SentisLayout({
           __html: `document.documentElement.lang=${JSON.stringify(locale)}`,
         }}
       />
+      <PreNavigation locale={locale} />
       <a
         href="#contenu"
         className="focus-visible:ring-signal bg-ink text-paper sr-only rounded-md px-4 py-2 focus-visible:not-sr-only focus-visible:absolute focus-visible:top-3 focus-visible:left-3 focus-visible:z-50 focus-visible:ring-2"

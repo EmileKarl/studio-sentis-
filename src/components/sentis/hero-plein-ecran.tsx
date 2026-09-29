@@ -61,7 +61,10 @@ export function HeroPleinEcran({
           </p>
         </Reveal>
 
-        <Reveal3D depuis="bas" distance={110} angle={10} delay={0.06}>
+        {/* `sansFondu` : ce titre est l'élément LCP de la page d'accueil. Animé
+            en opacité, il repoussait la mesure à 1 148 ms sur un téléphone.
+            Voir le commentaire de l'option dans `Reveal3D`. */}
+        <Reveal3D depuis="bas" distance={110} angle={10} delay={0.06} sansFondu>
           <h1 className="font-display text-ink mt-8 max-w-[15ch] text-[2.5rem] leading-[0.98] font-semibold tracking-tight text-balance min-[360px]:text-5xl sm:text-6xl lg:text-7xl">
             {dict.hero.titre}
           </h1>

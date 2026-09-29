@@ -73,3 +73,23 @@ export const LEGAL_MAJ = "2026-09-29";
  */
 export const ID_ENTREPRISE = `${SITE_URL}/#studio`;
 export const ID_SITE = `${SITE_URL}/#site`;
+
+/**
+ * Fin de l'offre de lancement, au format ISO (`2026-12-31T23:59:59-05:00`).
+ *
+ * Le fuseau doit être écrit explicitement. Sans lui, `2026-12-31` est lue à
+ * minuit UTC, soit dix-neuf heures le 30 décembre à Châteauguay : le compte à
+ * rebours s'éteindrait un jour trop tôt, sur la seule page du site qui promet
+ * une date.
+ *
+ * Tant qu'elle n'est pas définie, la page annonce l'offre **sans** compte à
+ * rebours et dit que la date sera publiée dès qu'elle sera arrêtée. C'est le
+ * même principe que le domaine : rien d'inventé, et le manque est visible.
+ */
+export const FIN_OFFRE = process.env.NEXT_PUBLIC_FIN_OFFRE ?? "";
+
+/** Nombre de places de l'offre de lancement. */
+export const PLACES_LANCEMENT = 10;
+
+/** Rabais consenti, en pourcentage. */
+export const RABAIS_LANCEMENT = 25;

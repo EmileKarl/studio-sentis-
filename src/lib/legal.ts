@@ -93,7 +93,8 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "Ce que présente ce site",
           corps: [
-            "La section Réalisations présente des travaux conçus par le studio pour démontrer sa manière de faire. Ce ne sont pas des mandats livrés à des clients, et aucune entreprise réelle n'y est présentée comme cliente. Le studio est récent : plutôt que d'emprunter des références, il montre ce qu'il sait construire, et ce site en est lui-même la première pièce.",
+            "La section Réalisations est vide, et c'est délibéré : le studio n'a pas encore livré de mandat, et n'emprunte ni logo ni témoignage pour faire croire le contraire. Elle porte à la place une offre de lancement dont les conditions y figurent en entier.",
+            "Les démonstrations visibles ailleurs sur ce site — notamment sur la page d'accueil — sont des exercices conçus par le studio pour montrer ce qu'il sait construire. Ce ne sont pas des mandats livrés, et aucune entreprise réelle n'y est présentée comme cliente. Ce site est lui-même la première pièce du studio.",
             "Les noms d'entreprises qui apparaissent dans ces démonstrations sont fictifs. Toute ressemblance avec une entreprise existante serait fortuite ; signalez-la et elle sera corrigée.",
           ],
         },
@@ -121,7 +122,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
             "Tailwind CSS, sous licence MIT",
             "Motion, sous licence MIT",
             "Radix UI et shadcn/ui, sous licence MIT",
-            "Les polices Fraunces, Source Sans 3, Archivo et IBM Plex, sous licence SIL Open Font License",
+            "Les polices Fraunces, Source Sans 3, Outfit, Archivo et IBM Plex, sous licence SIL Open Font License",
             "Les pictogrammes Lucide, sous licence ISC",
             "Le trait de côte du globe, dérivé des données Natural Earth, dans le domaine public",
           ],
@@ -281,7 +282,8 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "What this site shows",
           corps: [
-            "The Work section shows pieces built by the studio to demonstrate how it works. They are not client deliveries, and no real company is presented as a client. The studio is new: rather than borrow references, it shows what it can build — and this site is the first exhibit.",
+            "The Work section is empty, and deliberately so: the studio has not yet delivered a mandate, and borrows neither logos nor testimonials to suggest otherwise. It carries a launch offer instead, whose conditions are set out there in full.",
+            "The demonstrations visible elsewhere on this site — on the home page in particular — are exercises built by the studio to show what it can build. They are not delivered mandates, and no real company is presented as a client. This site is the studio's first exhibit.",
             "Company names appearing in those demonstrations are fictional. Any resemblance to a real business would be accidental; point it out and it will be corrected.",
           ],
         },
@@ -309,7 +311,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
             "Tailwind CSS, MIT licence",
             "Motion, MIT licence",
             "Radix UI and shadcn/ui, MIT licence",
-            "The Fraunces, Source Sans 3, Archivo and IBM Plex typefaces, SIL Open Font License",
+            "The Fraunces, Source Sans 3, Outfit, Archivo and IBM Plex typefaces, SIL Open Font License",
             "The Lucide icons, ISC licence",
             "The globe's coastline, derived from Natural Earth data, public domain",
           ],

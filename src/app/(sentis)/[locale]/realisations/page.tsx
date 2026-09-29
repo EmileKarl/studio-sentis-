@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { Travaux } from "@/components/sentis/travaux";
+import { Lancement } from "@/components/sentis/lancement";
 import { EnTetePage } from "@/components/sentis/parts";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { donneesPage, metadonneesPage } from "@/lib/seo";
@@ -39,7 +39,7 @@ export default async function RealisationsPage({
       <DonneesStructurees data={donneesPage(locale, "/realisations", p.titre, "CollectionPage")} />
 
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="treillis" />
-      <Travaux dict={d} />
+      <Lancement dict={d} locale={locale} />
     </>
   );
 }

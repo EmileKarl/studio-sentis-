@@ -65,6 +65,35 @@ export default async function AProposPage({
         </div>
       </Section>
 
+      {/* Ce que le studio refuse, avant ce qu'il promet.
+          Pour une entreprise sans références, une limite énoncée vaut plus
+          qu'un principe : n'importe qui peut écrire « rigueur », personne ne
+          s'interdit publiquement de facturer à l'heure sans le penser. */}
+      <Section tone="cyan" titre={p.limites.titre} chapo={p.limites.chapo}>
+        <ul className="grid gap-6 md:grid-cols-2">
+          {p.limites.items.map((item, i) => (
+            <li key={item.titre}>
+              <Reveal3D
+                depuis={i % 2 === 0 ? "gauche" : "droite"}
+                distance={90}
+                delay={(i % 2) * 0.06}
+                className="h-full"
+                classeAnimee="bg-paper h-full rounded-lg p-6 shadow-sm"
+              >
+                <>
+                  <h3 className="font-display text-ink text-xl font-semibold text-balance">
+                    {item.titre}
+                  </h3>
+                  <p className="text-ink-secondary mt-3 leading-relaxed text-pretty">
+                    {item.corps}
+                  </p>
+                </>
+              </Reveal3D>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
       <Section tone="vert">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
           <h2 className="font-display text-ink max-w-(--content-max) text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">

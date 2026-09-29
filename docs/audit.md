@@ -222,6 +222,28 @@ relisant.
 | La vitrine `/nexus` est indexable et occupe neuf entrées du plan du site | **Laissé au client.** C'est une démonstration de capacité, donc du contenu de portfolio légitime ; c'est aussi neuf pages hors sujet pour une agence locale. Le trancher relève du positionnement, pas de la technique. |
 | Livraison Markdown par négociation de contenu (`Accept: text/markdown`), en-tête `Content-Signal` | **Non fait.** Le dépôt d'audit note lui-même qu'aucun agent consommateur n'est confirmé les demander. |
 
+### Marque, page de lancement et suite du SEO
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 72 | **Le générateur d'images de marque tombait en silence sur une police de repli.** Il chargeait Fraunces par `<link>` vers fonts.googleapis.com ; dans un environnement où cette requête échoue — proxy dont le certificat n'est pas reconnu par Chromium — `document.fonts.ready` se résout quand même et la capture part. Les icônes et l'image de partage livrées jusqu'ici **n'étaient pas dans la police du site**, et rien ne pouvait le montrer sans comparer les lettres | Polices lues sur le disque et encodées en base64 dans la page ; `document.fonts.check` interrogé avant chaque capture, et le script s'arrête si une police manque |
+| 73 | La barre de page active flottait à mi-hauteur de l'en-tête au lieu de se poser sur son filet | Lien à pleine hauteur (`h-16`, `items-stretch`) et barre à `-bottom-px`. Écart mesuré au navigateur : 0 px |
+| 74 | Le nouveau logotype posait « studio » à `opacity-55`. Le contrôle navigateur a levé 20 constats : sa règle attrape tout texte sous 90 % d'opacité, parce que c'est ainsi que se manifeste une entrée au défilement restée bloquée | `text-ink-muted`, un token mesuré par `verify:teintes`, au lieu d'une opacité qui échappe aux barrières de contraste |
+| 75 | La date de fin de l'offre s'affichait « 1 janvier 2027 » pour le 31 décembre 23 h 59 heure de l'Est : la page est construite sur un serveur en UTC. **Défaut déjà corrigé sur la date des pages légales, et réintroduit ici** | `timeZone: "America/Toronto"` explicite |
+| 76 | Le titre de l'accueil, élément LCP de la page, était animé en opacité : le navigateur n'enregistre le LCP qu'à la visibilité réelle, donc l'animation repoussait la mesure. 1 148 ms sur un téléphone, contre 148 ms sur une page intérieure | Option `sansFondu` de `Reveal3D` : la position s'anime, l'opacité non. Mesuré à 920 ms après |
+| 77 | Aucune pré-navigation : `next/link` préchargeait la charge utile React, pas le rendu | Règles de spéculation en `eagerness: "moderate"` — au survol, donc sur un geste d'intention, et non les cinq pages dès l'arrivée |
+| 78 | La page Réalisations présentait trois démonstrations comme des pièces de portfolio | Remplacées par l'offre de lancement, à la demande du client. Les textes qui en dépendaient ont suivi : mentions légales, `llms.txt`, description de recherche |
+
+### Vérifié et non retenu
+
+| Constat de l'outil | Décision |
+| --- | --- |
+| `preload_check.py` : « marquer l'image LCP en `fetchpriority="high"` » | **Sans objet, mesuré.** Le LCP est du texte sur les trois pages testées — `H1` sur l'accueil, `P` ailleurs. Le site n'a aucune image dans la zone visible. |
+| `content_quality.py` : seuil à 60 | **Passé partout.** Accueil 89, Services 94, À propos 86, Réalisations 86. Vider la page Réalisations ne l'a pas rendue maigre. |
+| `--teinte-vert` (Olive Yellow) se détache mal du papier crème | **Laissé tel quel, et c'est un jugement, pas un défaut.** Les quatre teintes sont à la même distance de luminance du papier — 1,130 à 1,134:1. L'olive ne se distingue pas moins ; elle partage seulement la famille de teinte du crème. L'écraser par une valeur inventée reviendrait à sortir de la combinaison Wada que le client a demandée. |
+| `--teinte-violet` (Lilac) lit comme un rose plutôt qu'un lavande | **Laissé tel quel.** C'est la teinte de `Lilac` dans le livre. Un choix de direction, à trancher par le client, pas par le contraste. |
+| Livraison Markdown, en-tête `Content-Signal` | **Toujours non fait.** Le dépôt d'audit note lui-même qu'aucun agent consommateur n'est confirmé les demander. |
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.

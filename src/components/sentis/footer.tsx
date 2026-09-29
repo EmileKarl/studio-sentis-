@@ -18,7 +18,7 @@ export function SentisFooter({ dict, locale }: { dict: Dict; locale: Locale }) {
     <footer className="border-rule border-t">
       <div className="mx-auto grid w-full max-w-(--container-page) gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p className="font-display text-ink text-xl font-semibold tracking-tight">
+          <p className="text-ink text-xl">
             <Logotype />
           </p>
           <p className="text-ink-secondary mt-3 max-w-(--content-max) text-sm leading-relaxed text-pretty">
