@@ -82,12 +82,11 @@ export function Section({
  * monochrome ; celle qui pose en plus `--scene-2` et `--scene-3` obtient un
  * dégradé qui traverse le nuage.
  *
- * Seule **À propos** en profite pour l'instant, à la demande du client : sa
- * poussière était la plus discrète des quatre depuis le passage à la palette
- * Sanzo Wada, où le vert est devenu un olive proche du papier. Les trois
- * autres gardent leur couleur unique — c'est ce qui fait qu'on sait avoir
- * changé de page avant d'avoir lu le titre, et il suffit de leur ajouter les
- * deux propriétés pour étendre le procédé.
+ * **À propos** et **Réalisations** en profitent ; l'accueil et Contact gardent
+ * leur couleur unique. Ce n'est pas une inconséquence : la couleur dominante
+ * reste celle de la page — cyan pour Services, violet pour Réalisations — et
+ * c'est elle qui dit qu'on a changé de page avant d'avoir lu le titre. Le
+ * dégradé ne fait que l'enrichir.
  */
 const MASQUE =
   "[mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]";
@@ -110,11 +109,10 @@ const ALPHA_SCENE: Record<Variante3D, number> = {
   anneau: 0.6,
   poussiere: 1,
   onde: 0.6,
-  // Proposés, pas encore câblés sur une page : mêmes réglages de départ que
-  // les volumes à arêtes, à ajuster quand l'un d'eux sera retenu.
   helice: 0.6,
+  // Comme la poussière, la constellation est surtout faite de points, et le
+  // moteur leur applique un facteur que les lignes n'ont pas.
   constellation: 0.85,
-  ruban: 0.75,
 };
 
 const COULEUR_SCENE: Record<Variante3D, string> = {
@@ -124,9 +122,11 @@ const COULEUR_SCENE: Record<Variante3D, string> = {
   // l'emmène vers les deux teintes les plus franches de la palette.
   poussiere: `text-accent-vert [--scene-2:var(--accent-cyan)] [--scene-3:var(--accent-violet)] ${MASQUE}`,
   onde: `text-accent-bleu ${MASQUE}`,
+  // Services garde son cyan et Réalisations son violet : les volumes changent,
+  // la couleur de la page ne bouge pas. C'est elle qui dit qu'on a changé de
+  // page avant d'avoir lu le titre.
   helice: `text-accent-cyan ${MASQUE}`,
   constellation: `text-accent-violet [--scene-2:var(--accent-bleu)] [--scene-3:var(--accent-cyan)] ${MASQUE}`,
-  ruban: `text-accent-bleu ${MASQUE}`,
 };
 
 /**

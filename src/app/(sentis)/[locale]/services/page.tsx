@@ -43,7 +43,7 @@ export default async function ServicesPage({
       <DonneesStructurees data={donneesPage(locale, "/services", p.titre, "CollectionPage")} />
       <DonneesStructurees data={donneesServices(locale)} />
 
-      <EnTetePage titre={p.titre} chapo={p.chapo} scene="anneau" />
+      <EnTetePage titre={p.titre} chapo={p.chapo} scene="helice" />
 
       <Section>
         <div className="space-y-20 sm:space-y-28">

@@ -38,7 +38,7 @@ export default async function RealisationsPage({
     <>
       <DonneesStructurees data={donneesPage(locale, "/realisations", p.titre, "CollectionPage")} />
 
-      <EnTetePage titre={p.titre} chapo={p.chapo} scene="treillis" />
+      <EnTetePage titre={p.titre} chapo={p.chapo} scene="constellation" />
       <Lancement dict={d} locale={locale} />
     </>
   );

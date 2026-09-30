@@ -255,15 +255,25 @@ relisant.
 | 83 | Le bloc « Une page vide, et c'est voulu » porte l'argument central de la page Réalisations et devait être lu jusqu'au bout ; rien n'y incitait | `TexteProgressif` : les mots s'allument au défilement. **Ce qui s'anime est la couleur, pas l'opacité** — un fondu ferait échouer la règle `invisible-in-view`, et à juste titre, puisqu'une opacité arbitraire échappe aux mesures de contraste. Les deux bornes sont des tokens mesurés (`--ink-muted` 4,8:1, `--ink` 15:1), donc aucune image de l'animation n'est illisible |
 | 84 | Première plage de défilement trop courte : le bloc était entièrement allumé après sept cents pixels, soit moins d'un écran. L'effet existait mais ne durait pas assez pour tenir le lecteur — toute sa raison d'être | Plage élargie à `start 0.95 → end 0.42` |
 
-### En attente de décision du client
+### Décision rendue
 
-Trois volumes sont proposés pour remplacer les en-têtes de Services et de
-Réalisations : `helice`, `constellation`, `ruban`. Ils sont dans le moteur mais
-**câblés sur aucune page**, et visibles en mouvement sur `/fr/apercu-scenes`,
-une page hors moteurs et hors plan du site.
+Trois volumes ont été comparés en mouvement sur une page d'aperçu temporaire.
+Le client a retenu **A (double hélice) et B (constellation)** ; le ruban de
+Möbius est écarté et il n'en reste rien dans le code.
 
-Dès qu'une variante est retenue, il reste à la poser sur la page voulue et à
-supprimer les deux autres ainsi que la page d'aperçu.
+| Page | Avant | Après |
+| --- | --- | --- |
+| Services | `anneau` | `helice` |
+| Réalisations | `treillis` | `constellation` |
+
+La couleur dominante de chaque page **ne change pas** — cyan pour Services,
+violet pour Réalisations : c'est elle qui dit qu'on a changé de page avant
+d'avoir lu le titre, et elle survit au changement de volume.
+
+La page d'aperçu est supprimée. `anneau` reste dans le moteur sans être posé
+sur aucune page : il fait partie du jeu de base (treillis, onde, anneau,
+poussière) que la bibliothèque de mouvement documente, et `treillis` sert
+toujours au héros de l'accueil.
 
 ## 4. Problèmes restants
 

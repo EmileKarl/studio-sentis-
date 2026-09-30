@@ -32,12 +32,10 @@ export type Variante3D =
   | "onde"
   | "anneau"
   | "poussiere"
-  // Trois volumes proposés au client pour remplacer les en-têtes de Services
-  // et de Réalisations. Tant qu'aucun n'est retenu, ils ne sont câblés sur
-  // aucune page : ils existent pour être regardés, pas pour être servis.
+  // Ajoutés après comparaison en mouvement de trois candidats. Le troisième,
+  // un ruban de Möbius, a été écarté ; il ne reste rien de lui.
   | "helice"
-  | "constellation"
-  | "ruban";
+  | "constellation";
 
 const VS = `
 attribute vec3 aPos;
@@ -243,32 +241,6 @@ function nuage(variante: Variante3D): {
         const dz = points[i][2] - points[j][2];
         if (dx * dx + dy * dy + dz * dz < seuil * seuil) arete(points[i], points[j]);
       }
-  } else if (variante === "ruban") {
-    // Ruban de Möbius : une bande qui se retourne sur elle-même.
-    //
-    // Une seule surface, un seul bord, et pourtant l'œil cherche l'endroit et
-    // l'envers. C'est le plus « objet » des trois : il ne ressemble ni à une
-    // grille ni à un nuage, et sa torsion se lit même à faible opacité.
-    const long = 96;
-    const large = 5;
-    // Plus large et plus grand que la version d'essai : à R = 1,9 et l = 0,62
-    // le ruban occupait moins du tiers de la place des deux autres volumes, ce
-    // qui faussait la comparaison plus qu'il ne la servait.
-    const R = 2.5;
-    const l = 1.05;
-    const at = (i: number, j: number) => {
-      const u = (i / long) * Math.PI * 2;
-      const v = (j / (large - 1) - 0.5) * 2 * l;
-      const demi = u / 2;
-      const rayon = R + v * Math.cos(demi);
-      return [rayon * Math.cos(u), rayon * Math.sin(u), v * Math.sin(demi)];
-    };
-    for (let i = 0; i < long; i++)
-      for (let j = 0; j < large; j++) {
-        pts.push(...at(i, j));
-        arete(at(i, j), at((i + 1) % long, j));
-        if (j < large - 1) arete(at(i, j), at(i, j + 1));
-      }
   } else {
     // Poussière : pas d'arêtes. Le volume vient de la taille des points et de
     // leur dérive à des rythmes différents.
@@ -398,16 +370,15 @@ export function Scene3D({
       point: gl.getUniformLocation(prog, "uPoint"),
     };
 
-    // Les trois nouveaux volumes réutilisent les modes de déplacement
-    // existants plutôt que d'en ajouter au shader : l'hélice et le ruban
-    // respirent comme le treillis, la constellation dérive comme la poussière.
+    // Les deux nouveaux volumes réutilisent les modes de déplacement existants
+    // plutôt que d'en ajouter au shader : l'hélice respire comme le treillis,
+    // la constellation dérive comme la poussière.
     const modeNum = {
       treillis: 0,
       onde: 1,
       anneau: 2,
       poussiere: 3,
       helice: 0,
-      ruban: 0,
       constellation: 3,
     }[variante];
     // L'anneau est tracé dans le plan XY, normale vers la caméra : c'est un
@@ -419,9 +390,6 @@ export function Scene3D({
       anneau: 0.2,
       poussiere: 0.24,
       helice: 0.34,
-      // Le ruban pris de face se lit comme un simple trait : il lui faut une
-      // assiette franche pour que la torsion se voie.
-      ruban: 0.55,
       constellation: 0.26,
     }[variante];
     gl.uniform1i(u.mode, modeNum);
