@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { CompteARebours } from "@/components/sentis/compte-a-rebours";
 import { Reveal3D } from "@/components/motion";
+import { TexteProgressif } from "@/components/motion/texte-progressif";
 import { Section, Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import type { Dict, Locale } from "@/lib/i18n";
@@ -59,14 +60,11 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
           <h2 className="font-display text-ink text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
             {p.vide.titre}
           </h2>
-          {p.vide.corps.map((paragraphe) => (
-            <p
-              key={paragraphe}
-              className="text-ink-secondary mt-5 text-lg leading-relaxed text-pretty"
-            >
-              {paragraphe}
-            </p>
-          ))}
+          {/* Les trois paragraphes s'allument mot à mot au défilement. C'est
+              l'argument central de la page — pourquoi elle est vide — et il
+              doit être lu jusqu'au bout ; voir `TexteProgressif` pour ce que
+              cela implique en contraste. */}
+          <TexteProgressif texte={[...p.vide.corps]} />
         </div>
       </Section>
 

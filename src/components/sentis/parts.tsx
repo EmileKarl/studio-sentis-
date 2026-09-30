@@ -74,15 +74,59 @@ export function Section({
   );
 }
 
-/** Le volume de chaque page, et sa couleur. */
+/**
+ * Le volume de chaque page, et sa couleur.
+ *
+ * La scène sait mélanger trois couleurs, réparties sur la graine de chaque
+ * sommet (voir `scene-3d.tsx`). Une page qui ne pose que `text-*` reste
+ * monochrome ; celle qui pose en plus `--scene-2` et `--scene-3` obtient un
+ * dégradé qui traverse le nuage.
+ *
+ * Seule **À propos** en profite pour l'instant, à la demande du client : sa
+ * poussière était la plus discrète des quatre depuis le passage à la palette
+ * Sanzo Wada, où le vert est devenu un olive proche du papier. Les trois
+ * autres gardent leur couleur unique — c'est ce qui fait qu'on sait avoir
+ * changé de page avant d'avoir lu le titre, et il suffit de leur ajouter les
+ * deux propriétés pour étendre le procédé.
+ */
+const MASQUE =
+  "[mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]";
+
+/**
+ * Opacité par volume.
+ *
+ * Elle n'est pas uniforme parce que les volumes ne se valent pas à l'écran :
+ * `poussiere` n'a **aucune arête**, seulement des points, et le moteur
+ * applique aux points un facteur 0,62 que les lignes n'ont pas. À opacité
+ * égale, la poussière sortait donc à 0,37 quand le treillis sortait à 0,60 —
+ * c'est ce qui la rendait presque invisible, et ce que le client a vu.
+ *
+ * Le plafond n'est pas choisi à l'œil : `npm run verify:scene` mesure le
+ * contraste du texte devant chaque scène, en 1280 et en 390 px, dans les deux
+ * thèmes, et refuse toute valeur qui ferait passer un texte sous 4,5:1.
+ */
+const ALPHA_SCENE: Record<Variante3D, number> = {
+  treillis: 0.6,
+  anneau: 0.6,
+  poussiere: 1,
+  onde: 0.6,
+  // Proposés, pas encore câblés sur une page : mêmes réglages de départ que
+  // les volumes à arêtes, à ajuster quand l'un d'eux sera retenu.
+  helice: 0.6,
+  constellation: 0.85,
+  ruban: 0.75,
+};
+
 const COULEUR_SCENE: Record<Variante3D, string> = {
-  treillis:
-    "text-accent-violet [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
-  anneau:
-    "text-accent-cyan [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
-  poussiere:
-    "text-accent-vert [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
-  onde: "text-accent-bleu [mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]",
+  treillis: `text-accent-violet ${MASQUE}`,
+  anneau: `text-accent-cyan ${MASQUE}`,
+  // Vert → cyan → violet : l'olive part du plus proche du papier et le dégradé
+  // l'emmène vers les deux teintes les plus franches de la palette.
+  poussiere: `text-accent-vert [--scene-2:var(--accent-cyan)] [--scene-3:var(--accent-violet)] ${MASQUE}`,
+  onde: `text-accent-bleu ${MASQUE}`,
+  helice: `text-accent-cyan ${MASQUE}`,
+  constellation: `text-accent-violet [--scene-2:var(--accent-bleu)] [--scene-3:var(--accent-cyan)] ${MASQUE}`,
+  ruban: `text-accent-bleu ${MASQUE}`,
 };
 
 /**
@@ -115,7 +159,7 @@ export function EnTetePage({
           // La scène lit sa couleur sur son propre style calculé, il suffit
           // donc de lui donner la classe du token.
           className={COULEUR_SCENE[scene]}
-          alpha={0.6}
+          alpha={ALPHA_SCENE[scene]}
           decalage={0.42}
           zoom={0.82}
           scroll={0.45}

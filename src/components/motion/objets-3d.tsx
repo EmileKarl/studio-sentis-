@@ -84,14 +84,37 @@ export function ObjetFlottant3D({
  * jamais un objet dont les faces sont, pour lui, quatre blocs de texte sans
  * ordre.
  */
+/**
+ * Une couleur de fond par face, prise dans les quatre teintes de section.
+ *
+ * Les teintes et non les accents : ce sont les seules valeurs de la palette
+ * mesurées pour porter du texte — `npm run verify:teintes` vérifie que chacune
+ * tient au-dessus de 4,5:1 avec `--ink`, dans les deux thèmes. Prendre les
+ * accents à pleine force aurait demandé du texte en réserve, donc une seconde
+ * série de mesures pour un objet décoratif.
+ */
+const FACES_TEINTEES = [
+  "bg-teinte-bleu",
+  "bg-teinte-cyan",
+  "bg-teinte-violet",
+  "bg-teinte-vert",
+];
+
 export function Prisme3D({
   faces,
   taille = 190,
+  colore = false,
   className,
 }: {
   /** Quatre faces, dans l'ordre de rotation. */
   faces: string[];
   taille?: number;
+  /**
+   * Une couleur de fond par face plutôt qu'un papier translucide uniforme.
+   * En tournant, l'objet fait alors défiler la palette du site au lieu d'un
+   * seul ton — c'est ce que le client demandait sur la page À propos.
+   */
+  colore?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -136,7 +159,10 @@ export function Prisme3D({
         {cotes.map((face, i) => (
           <div
             key={face}
-            className="border-rule-strong bg-paper/70 text-ink absolute inset-0 flex items-center justify-center border text-center"
+            className={cn(
+              "border-rule-strong text-ink absolute inset-0 flex items-center justify-center border text-center",
+              colore ? FACES_TEINTEES[i % FACES_TEINTEES.length] : "bg-paper/70",
+            )}
             style={{
               transform: `rotateY(${i * 90}deg) translateZ(${demi}px)`,
               backfaceVisibility: "hidden",

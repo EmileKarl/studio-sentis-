@@ -105,6 +105,7 @@ export default async function AProposPage({
           <Prisme3D
             faces={[...p.valeurs.map((v) => v.titre), "Studio Sentis"]}
             taille={170}
+            colore
             className="hidden lg:flex"
           />
         </div>

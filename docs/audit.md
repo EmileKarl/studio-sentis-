@@ -244,6 +244,27 @@ relisant.
 | `--teinte-violet` (Lilac) lit comme un rose plutôt qu'un lavande | **Laissé tel quel.** C'est la teinte de `Lilac` dans le livre. Un choix de direction, à trancher par le client, pas par le contraste. |
 | Livraison Markdown, en-tête `Content-Signal` | **Toujours non fait.** Le dépôt d'audit note lui-même qu'aucun agent consommateur n'est confirmé les demander. |
 
+### Couleur des animations et lecture guidée
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 79 | La scène de chaque page était **monochrome**, et la poussière d'À propos est devenue presque invisible au passage à la palette Sanzo Wada : sa couleur, l'olive, est la plus proche du papier crème | Le nuancier du shader passe à trois couleurs, réparties sur la graine déjà portée par chaque sommet. Aucune géométrie ni attribut de plus. Une page qui ne déclare qu'une couleur voit les trois uniformes prendre la même valeur : le mélange est alors un no-op et les autres scènes ne bougent pas d'un pixel |
+| 80 | **La lecture des couleurs supplémentaires échouait en silence.** `color` est une vraie propriété CSS, donc toujours sérialisée en `rgb(...)` ; une **propriété personnalisée** garde le flux de jetons écrit à la source, donc `#016e5e` sort tel quel. L'expression numérique y trouvait « 016 » et « 5 » — deux nombres — et la scène retombait sur sa couleur unique sans que rien ne le signale | Lecture de l'hexadécimal ajoutée, prouvée sur les quatre écritures (`#rgb`, `#rrggbb`, `rgb()`, `color(srgb …)`) |
+| 81 | À opacité égale, `poussiere` sortait à 0,37 quand `treillis` sortait à 0,60 : le moteur applique aux points un facteur 0,62 que les lignes n'ont pas, et cette variante n'a **aucune arête** | Opacité par volume plutôt qu'uniforme. Le plafond n'est pas choisi à l'œil : `verify:scene` mesure le texte devant chaque scène, en 1280 et 390 px, dans les deux thèmes |
+| 82 | Les faces du prisme d'À propos étaient toutes du même papier translucide : en tournant, l'objet ne faisait défiler aucune couleur | Une teinte de section par face. Les **teintes** et non les accents : ce sont les seules valeurs de la palette mesurées pour porter du texte |
+| 83 | Le bloc « Une page vide, et c'est voulu » porte l'argument central de la page Réalisations et devait être lu jusqu'au bout ; rien n'y incitait | `TexteProgressif` : les mots s'allument au défilement. **Ce qui s'anime est la couleur, pas l'opacité** — un fondu ferait échouer la règle `invisible-in-view`, et à juste titre, puisqu'une opacité arbitraire échappe aux mesures de contraste. Les deux bornes sont des tokens mesurés (`--ink-muted` 4,8:1, `--ink` 15:1), donc aucune image de l'animation n'est illisible |
+| 84 | Première plage de défilement trop courte : le bloc était entièrement allumé après sept cents pixels, soit moins d'un écran. L'effet existait mais ne durait pas assez pour tenir le lecteur — toute sa raison d'être | Plage élargie à `start 0.95 → end 0.42` |
+
+### En attente de décision du client
+
+Trois volumes sont proposés pour remplacer les en-têtes de Services et de
+Réalisations : `helice`, `constellation`, `ruban`. Ils sont dans le moteur mais
+**câblés sur aucune page**, et visibles en mouvement sur `/fr/apercu-scenes`,
+une page hors moteurs et hors plan du site.
+
+Dès qu'une variante est retenue, il reste à la poser sur la page voulue et à
+supprimer les deux autres ainsi que la page d'aperçu.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.

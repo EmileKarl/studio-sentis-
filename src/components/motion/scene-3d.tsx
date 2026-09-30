@@ -27,7 +27,17 @@ import { cn } from "@/lib/utils";
  * d'onglet, et à la perte de contexte WebGL.
  */
 
-export type Variante3D = "treillis" | "onde" | "anneau" | "poussiere";
+export type Variante3D =
+  | "treillis"
+  | "onde"
+  | "anneau"
+  | "poussiere"
+  // Trois volumes proposés au client pour remplacer les en-têtes de Services
+  // et de Réalisations. Tant qu'aucun n'est retenu, ils ne sont câblés sur
+  // aucune page : ils existent pour être regardés, pas pour être servis.
+  | "helice"
+  | "constellation"
+  | "ruban";
 
 const VS = `
 attribute vec3 aPos;
@@ -73,6 +83,8 @@ void main() {
 const FS = `
 precision mediump float;
 uniform vec3 uColor;
+uniform vec3 uColor2;
+uniform vec3 uColor3;
 uniform float uAlpha;
 uniform float uPoint;
 varying float vDepth;
@@ -89,7 +101,20 @@ void main() {
     bord = smoothstep(0.25, 0.04, r2);
   }
   float a = uAlpha * vDepth * bord * (0.55 + 0.45 * vSeed);
-  gl_FragColor = vec4(uColor * a, a);
+
+  // Trois couleurs réparties sur la graine du sommet, déjà tirée entre 0 et 1
+  // pour moduler l'opacité. Aucune géométrie ni aucun attribut de plus : le
+  // dégradé traverse le nuage, deux points voisins ne sont donc pas de la même
+  // couleur et le volume gagne en profondeur sans gagner en densité.
+  //
+  // Quand la page ne déclare qu'une couleur, les trois uniformes valent la
+  // même valeur et le mélange est un no-op : les autres scènes du site ne
+  // changent pas d'un pixel.
+  vec3 teinte = vSeed < 0.5
+    ? mix(uColor, uColor2, vSeed * 2.0)
+    : mix(uColor2, uColor3, (vSeed - 0.5) * 2.0);
+
+  gl_FragColor = vec4(teinte * a, a);
 }
 `;
 
@@ -169,6 +194,80 @@ function nuage(variante: Variante3D): {
         pts.push(...at(i, j));
         arete(at(i, j), at((i + 1) % grand, j));
         arete(at(i, j), at(i, (j + 1) % petit));
+      }
+  } else if (variante === "helice") {
+    // Double hélice : deux spirales entrelacées, reliées par des barreaux.
+    //
+    // Sa silhouette est **verticale et ouverte**, là où l'anneau est fermé et
+    // le treillis cubique : c'est ce qui la distingue d'un coup d'œil. Elle se
+    // lit comme un déroulement, un enchaînement d'étapes — d'où sa place
+    // naturelle sur Services, qui décrit une méthode.
+    const tours = 3.2;
+    const pas = 34;
+    const n = Math.round(tours * pas);
+    const R = 1.5;
+    const hauteur = 5.4;
+    const brin = (i: number, phase: number) => {
+      const u = (i / pas) * Math.PI * 2 + phase;
+      return [R * Math.cos(u), (i / n - 0.5) * hauteur, R * Math.sin(u)];
+    };
+    for (let i = 0; i < n; i++) {
+      for (const phase of [0, Math.PI]) {
+        pts.push(...brin(i, phase));
+        if (i < n - 1) arete(brin(i, phase), brin(i + 1, phase));
+      }
+      // Un barreau sur quatre : tous, le volume se remplit et redevient un
+      // cylindre plein ; aucun, les deux brins ne se lisent plus comme un
+      // même objet.
+      if (i % 4 === 0) arete(brin(i, 0), brin(i, Math.PI));
+    }
+  } else if (variante === "constellation") {
+    // Constellation : un nuage clairsemé dont seuls les points **proches**
+    // sont reliés.
+    //
+    // Le graphe est calculé une fois, à la génération ; c'est la dérive du
+    // shader qui donne ensuite l'impression que les liens respirent. Elle se
+    // lit comme un réseau de relations — ce qu'une page Réalisations raconte
+    // quand elle n'a pas encore de réalisations : des liens à établir.
+    const n = 150;
+    const points: number[][] = [];
+    for (let i = 0; i < n; i++) {
+      points.push([(rnd() - 0.5) * 6.4, (rnd() - 0.5) * 4.2, (rnd() - 0.5) * 3]);
+      pts.push(...points[i]);
+    }
+    const seuil = 1.15;
+    for (let i = 0; i < n; i++)
+      for (let j = i + 1; j < n; j++) {
+        const dx = points[i][0] - points[j][0];
+        const dy = points[i][1] - points[j][1];
+        const dz = points[i][2] - points[j][2];
+        if (dx * dx + dy * dy + dz * dz < seuil * seuil) arete(points[i], points[j]);
+      }
+  } else if (variante === "ruban") {
+    // Ruban de Möbius : une bande qui se retourne sur elle-même.
+    //
+    // Une seule surface, un seul bord, et pourtant l'œil cherche l'endroit et
+    // l'envers. C'est le plus « objet » des trois : il ne ressemble ni à une
+    // grille ni à un nuage, et sa torsion se lit même à faible opacité.
+    const long = 96;
+    const large = 5;
+    // Plus large et plus grand que la version d'essai : à R = 1,9 et l = 0,62
+    // le ruban occupait moins du tiers de la place des deux autres volumes, ce
+    // qui faussait la comparaison plus qu'il ne la servait.
+    const R = 2.5;
+    const l = 1.05;
+    const at = (i: number, j: number) => {
+      const u = (i / long) * Math.PI * 2;
+      const v = (j / (large - 1) - 0.5) * 2 * l;
+      const demi = u / 2;
+      const rayon = R + v * Math.cos(demi);
+      return [rayon * Math.cos(u), rayon * Math.sin(u), v * Math.sin(demi)];
+    };
+    for (let i = 0; i < long; i++)
+      for (let j = 0; j < large; j++) {
+        pts.push(...at(i, j));
+        arete(at(i, j), at((i + 1) % long, j));
+        if (j < large - 1) arete(at(i, j), at(i, j + 1));
       }
   } else {
     // Poussière : pas d'arêtes. Le volume vient de la taille des points et de
@@ -293,15 +392,38 @@ export function Scene3D({
       offset: gl.getUniformLocation(prog, "uOffset"),
       mode: gl.getUniformLocation(prog, "uMode"),
       color: gl.getUniformLocation(prog, "uColor"),
+      color2: gl.getUniformLocation(prog, "uColor2"),
+      color3: gl.getUniformLocation(prog, "uColor3"),
       alpha: gl.getUniformLocation(prog, "uAlpha"),
       point: gl.getUniformLocation(prog, "uPoint"),
     };
 
-    const modeNum = { treillis: 0, onde: 1, anneau: 2, poussiere: 3 }[variante];
+    // Les trois nouveaux volumes réutilisent les modes de déplacement
+    // existants plutôt que d'en ajouter au shader : l'hélice et le ruban
+    // respirent comme le treillis, la constellation dérive comme la poussière.
+    const modeNum = {
+      treillis: 0,
+      onde: 1,
+      anneau: 2,
+      poussiere: 3,
+      helice: 0,
+      ruban: 0,
+      constellation: 3,
+    }[variante];
     // L'anneau est tracé dans le plan XY, normale vers la caméra : c'est un
     // lacet important qui le met de chant et le fait lire comme un tube. On le
     // pose donc presque de face et on borne sa part de défilement à l'usage.
-    const assiette = { treillis: 0.3, onde: 0.52, anneau: 0.2, poussiere: 0.24 }[variante];
+    const assiette = {
+      treillis: 0.3,
+      onde: 0.52,
+      anneau: 0.2,
+      poussiere: 0.24,
+      helice: 0.34,
+      // Le ruban pris de face se lit comme un simple trait : il lui faut une
+      // assiette franche pour que la torsion se voie.
+      ruban: 0.55,
+      constellation: 0.26,
+    }[variante];
     gl.uniform1i(u.mode, modeNum);
     gl.uniform1f(u.cam, 5.6 * zoom);
     gl.enable(gl.BLEND);
@@ -309,21 +431,58 @@ export function Scene3D({
     // liserés sombres autour des points sur fond crème.
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-    // La couleur est lue sur le canvas lui-même, qui porte la classe du token.
-    // Changer de thème change `color`, donc la scène suit sans recompilation.
-    let couleur: [number, number, number] = [0.5, 0.5, 0.5];
-    const lireCouleur = () => {
-      const brut = getComputedStyle(canvas).color;
+    // Les couleurs sont lues sur le canvas lui-même, qui porte la classe du
+    // token. Changer de thème les change, donc la scène suit sans
+    // recompilation.
+    //
+    // La première vient de `color`. Les deux autres, facultatives, de deux
+    // propriétés personnalisées : une page qui veut une scène multicolore pose
+    // `--scene-2` et `--scene-3`, une page qui n'en veut pas ne pose rien et
+    // hérite de la couleur unique. Passer par des propriétés plutôt que par des
+    // props évite de faire traverser trois couleurs à la frontière client d'un
+    // composant chargé en différé, et laisse le thème sombre les basculer tout
+    // seul.
+    const lire = (brut: string): [number, number, number] | null => {
+      // Trois écritures à couvrir, et la troisième a coûté une itération.
+      //
+      // `color` est une vraie propriété CSS : le navigateur la sérialise
+      // toujours en `rgb(...)` ou en `color(srgb ...)`. Une **propriété
+      // personnalisée**, non : sa valeur calculée reste le flux de jetons
+      // écrit à la source, donc `#016e5e` sort tel quel. L'expression
+      // numérique y trouvait « 016 » et « 5 » — deux nombres au lieu de trois
+      // — et la lecture échouait en silence, si bien que la scène retombait
+      // sur sa couleur unique sans que rien ne le signale.
+      const hex = brut.trim().match(/^#([\da-f]{3}|[\da-f]{6})$/i);
+      if (hex) {
+        const h = hex[1];
+        const p3 = h.length === 3;
+        const canal = (i: number) =>
+          parseInt(p3 ? h[i] + h[i] : h.slice(i * 2, i * 2 + 2), 16) / 255;
+        return [canal(0), canal(1), canal(2)];
+      }
       const m = brut.match(/-?\d+(\.\d+)?/g);
-      if (!m || m.length < 3) return;
+      if (!m || m.length < 3) return null;
       // Deux écritures cohabitent : `rgb(181, 171, 153)` et, dès qu'un modificateur
       // d'opacité passe par color-mix, `color(srgb 0.71 0.67 0.6 / 0.7)`. Diviser
       // les secondes par 255 rendait la scène noire — c'est exactement ce qui est
       // arrivé sur la section encre, où l'onde s'est mise à assombrir le fond au
       // lieu de l'éclaircir.
-      const flottants = brut.startsWith("color(");
-      const d = flottants ? 1 : 255;
-      couleur = [Number(m[0]) / d, Number(m[1]) / d, Number(m[2]) / d];
+      const d = brut.startsWith("color(") ? 1 : 255;
+      return [Number(m[0]) / d, Number(m[1]) / d, Number(m[2]) / d];
+    };
+
+    let couleur: [number, number, number] = [0.5, 0.5, 0.5];
+    let couleur2: [number, number, number] = couleur;
+    let couleur3: [number, number, number] = couleur;
+    const lireCouleur = () => {
+      const style = getComputedStyle(canvas);
+      const principale = lire(style.color);
+      if (!principale) return;
+      couleur = principale;
+      // Repli sur la principale : une page qui ne déclare rien garde
+      // exactement l'apparence qu'elle avait.
+      couleur2 = lire(style.getPropertyValue("--scene-2").trim()) ?? principale;
+      couleur3 = lire(style.getPropertyValue("--scene-3").trim()) ?? principale;
     };
     lireCouleur();
 
@@ -360,6 +519,8 @@ export function Scene3D({
     const dessiner = (t: number, defilement: number) => {
       lireCouleur();
       gl.uniform3f(u.color, couleur[0], couleur[1], couleur[2]);
+      gl.uniform3f(u.color2, couleur2[0], couleur2[1], couleur2[2]);
+      gl.uniform3f(u.color3, couleur3[0], couleur3[1], couleur3[2]);
       gl.uniform1f(u.time, t);
       const yaw = t * 0.12 * vitesse + defilement * 1.4 * scroll;
       const pitch = assiette + Math.sin(t * 0.09 * vitesse) * 0.14 + defilement * 0.45 * scroll;
