@@ -39,6 +39,7 @@ function Mot({
   fin,
   progression,
   depart,
+  front,
   arrivee,
 }: {
   mot: string;
@@ -46,9 +47,25 @@ function Mot({
   fin: number;
   progression: MotionValue<number>;
   depart: string;
+  /** Couleur du front de vague, traversée au passage. */
+  front: string;
   arrivee: string;
 }) {
-  const couleur = useTransform(progression, [debut, fin], [depart, arrivee]);
+  // Trois arrêts et non deux. Avec deux — gris ardoise vers encre — l'effet
+  // existait et se mesurait, mais ne se **voyait** pas : les deux tokens sont
+  // proches sur un fond crème, et le client, qui l'avait demandé, ne l'a pas
+  // trouvé sur la page. Le passage par l'accent donne au front de vague une
+  // couleur franche : on voit alors où en est la lecture, ce qui est toute la
+  // fonction de l'effet.
+  //
+  // Les trois arrêts sont des tokens mesurés — `--ink-muted` 4,8:1, l'accent
+  // 5,9:1 sur le papier, `--ink` 15:1 — donc aucune image de l'animation n'est
+  // illisible, y compris en plein passage de la vague.
+  const couleur = useTransform(
+    progression,
+    [debut, (debut + fin) / 2, fin],
+    [depart, front, arrivee],
+  );
   // `m.span` par mot : chaque mot a sa propre plage de défilement, donc son
   // propre `useTransform`. Un composant par mot est la seule façon d'appeler
   // le hook un nombre variable de fois sans enfreindre les règles des hooks.
@@ -65,7 +82,7 @@ export function TexteProgressif({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  const [couleurs, setCouleurs] = useState<[string, string] | null>(null);
+  const [couleurs, setCouleurs] = useState<[string, string, string] | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -89,8 +106,9 @@ export function TexteProgressif({
     const lire = () => {
       const s = getComputedStyle(el);
       const eteint = s.getPropertyValue("--ink-muted").trim();
+      const front = s.getPropertyValue("--accent-violet").trim();
       const allume = s.getPropertyValue("--ink").trim();
-      if (eteint && allume) setCouleurs([eteint, allume]);
+      if (eteint && front && allume) setCouleurs([eteint, front, allume]);
     };
     lire();
     // Le thème se change sur `<html>` : on relit les deux couleurs quand sa
@@ -131,7 +149,10 @@ export function TexteProgressif({
             // voisins : sans chevauchement, les mots s'allumeraient un par un
             // comme un métronome, ce qui se remarque au lieu de se lire.
             const debut = rang / total;
-            const fin = Math.min(1, (rang + 6) / total);
+            // Douze mots de chevauchement et non six : le front de vague doit
+            // rester visible assez longtemps pour être lu comme un mouvement,
+            // pas comme un scintillement.
+            const fin = Math.min(1, (rang + 12) / total);
             return (
               <Mot
                 key={`${rang}-${mot}`}
@@ -140,7 +161,8 @@ export function TexteProgressif({
                 fin={fin}
                 progression={scrollYProgress}
                 depart={couleurs[0]}
-                arrivee={couleurs[1]}
+                front={couleurs[1]}
+                arrivee={couleurs[2]}
               />
             );
           })}

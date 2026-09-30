@@ -255,6 +255,9 @@ relisant.
 | 83 | Le bloc « Une page vide, et c'est voulu » porte l'argument central de la page Réalisations et devait être lu jusqu'au bout ; rien n'y incitait | `TexteProgressif` : les mots s'allument au défilement. **Ce qui s'anime est la couleur, pas l'opacité** — un fondu ferait échouer la règle `invisible-in-view`, et à juste titre, puisqu'une opacité arbitraire échappe aux mesures de contraste. Les deux bornes sont des tokens mesurés (`--ink-muted` 4,8:1, `--ink` 15:1), donc aucune image de l'animation n'est illisible |
 | 84 | Première plage de défilement trop courte : le bloc était entièrement allumé après sept cents pixels, soit moins d'un écran. L'effet existait mais ne durait pas assez pour tenir le lecteur — toute sa raison d'être | Plage élargie à `start 0.95 → end 0.42` |
 
+| 85 | **L'effet du texte progressif ne se voyait pas.** Il fonctionnait — sonde à l'appui, les mots passaient bien de `rgb(110,102,89)` à `rgb(26,23,20)` au fil du défilement — mais les deux tokens sont trop proches sur un fond crème. Le client, qui l'avait demandé, ne l'a pas trouvé sur la page : un effet qu'on doit chercher n'existe pas | Trois arrêts au lieu de deux : le front de vague passe par l'accent de la page. Les trois sont des tokens mesurés (4,8:1, 5,9:1, 15:1), donc aucune image de l'animation n'est illisible. Fenêtre par mot élargie de six à douze mots, pour que le front se lise comme un mouvement et non comme un scintillement |
+| 86 | Ma première sonde concluait à tort que « tous les mots sont à l'encre à toutes les positions » : elle lisait `p span`, ce qui attrapait aussi le logotype du pied de page, et `ps[ps.length-1]` désignait un paragraphe non animé | Sonde reprise sur des index explicites. Noté ici parce qu'une mesure fausse coûte plus cher qu'une absence de mesure : elle a failli faire réécrire un composant qui marchait |
+
 ### Décision rendue
 
 Trois volumes ont été comparés en mouvement sur une page d'aperçu temporaire.
