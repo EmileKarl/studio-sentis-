@@ -60,11 +60,11 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
           <h2 className="font-display text-ink text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
             {p.vide.titre}
           </h2>
-          {/* Les trois paragraphes s'allument mot à mot au défilement. C'est
-              l'argument central de la page — pourquoi elle est vide — et il
-              doit être lu jusqu'au bout ; voir `TexteProgressif` pour ce que
-              cela implique en contraste. */}
-          <TexteProgressif texte={[...p.vide.corps]} />
+          {/* Les lignes s'allument une à une au défilement, à la manière des
+              paroles sur un lecteur de musique. C'est l'argument central de la
+              page — pourquoi elle est vide — et il doit être lu jusqu'au bout ;
+              voir `TexteProgressif` pour ce que cela implique en contraste. */}
+          <TexteProgressif texte={p.vide.corps.map((l) => [...l])} />
         </div>
       </Section>
 

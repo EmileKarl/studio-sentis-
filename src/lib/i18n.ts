@@ -99,10 +99,30 @@ export const DICT = {
         chapo: "Il n'y en a aucune. Studio Sentis ouvre ses portes, et cette page restera vide jusqu'à ce que dix vraies entreprises la remplissent. Vous pouvez être l'une d'elles, et ça se paie moins cher.",
         vide: {
           titre: "Une page vide, et c'est voulu",
+          // Découpé en lignes à la main, pas par une expression régulière : « Marie
+          // L. » et « : » piègent tout découpage automatique, et c'est surtout le
+          // rythme de lecture qui décide d'une coupe, pas la ponctuation. Chaque
+          // ligne s'allume seule au défilement — voir `TexteProgressif`.
           corps: [
-            "J'aurais pu mettre trois maquettes inventées, un logo de boulangerie qui n'existe pas et deux témoignages écrits par moi. C'est ce que font la plupart des studios qui commencent, et tout le monde le sait.",
-            "Vous liriez « Marie L., cliente satisfaite » et vous penseriez, à raison, que Marie L. n'existe pas. Alors autant le dire : je commence, et cette page attend son premier vrai nom.",
-            "Les démonstrations que vous voyez ailleurs sur ce site sont des exercices de ma main, annoncés comme tels. Elles montrent ce que je sais construire. Elles ne prétendent pas être des mandats.",
+            [
+              "J'aurais pu mettre trois maquettes inventées,",
+              "un logo de boulangerie qui n'existe pas",
+              "et deux témoignages écrits par moi.",
+              "C'est ce que font la plupart des studios qui commencent,",
+              "et tout le monde le sait.",
+            ],
+            [
+              "Vous liriez « Marie L., cliente satisfaite »",
+              "et vous penseriez, à raison, que Marie L. n'existe pas.",
+              "Alors autant le dire : je commence,",
+              "et cette page attend son premier vrai nom.",
+            ],
+            [
+              "Les démonstrations que vous voyez ailleurs sur ce site",
+              "sont des exercices de ma main, annoncés comme tels.",
+              "Elles montrent ce que je sais construire.",
+              "Elles ne prétendent pas être des mandats.",
+            ],
           ],
         },
         offre: {
@@ -518,9 +538,25 @@ export const DICT = {
         vide: {
           titre: "An empty page, on purpose",
           corps: [
-            "I could have put up three invented mockups, a logo for a bakery that does not exist and two testimonials written by me. That is what most studios do when they start, and everyone knows it.",
-            "You would read “Marie L., happy client” and think, rightly, that Marie L. does not exist. So I would rather say it plainly: I am starting out, and this page is waiting for its first real name.",
-            "The demonstrations elsewhere on this site are exercises of my own, announced as such. They show what I can build. They do not claim to be client work.",
+            [
+              "I could have put up three invented mockups,",
+              "a logo for a bakery that does not exist",
+              "and two testimonials written by me.",
+              "That is what most studios do when they start,",
+              "and everyone knows it.",
+            ],
+            [
+              "You would read “Marie L., happy client”",
+              "and think, rightly, that Marie L. does not exist.",
+              "So I would rather say it plainly: I am starting out,",
+              "and this page is waiting for its first real name.",
+            ],
+            [
+              "The demonstrations elsewhere on this site",
+              "are exercises of my own, announced as such.",
+              "They show what I can build.",
+              "They do not claim to be client work.",
+            ],
           ],
         },
         offre: {

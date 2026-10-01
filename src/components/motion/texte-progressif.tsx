@@ -1,102 +1,121 @@
 "use client";
 
-import { useScroll, useTransform, useReducedMotion, type MotionValue } from "motion/react";
+import {
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Texte qui s'allume mot à mot au défilement.
+ * Texte qui se lit ligne à ligne au défilement, comme les paroles d'une
+ * chanson.
  *
- * Le but n'est pas décoratif : ce bloc porte l'argument central de la page
- * Réalisations — pourquoi elle est vide — et il doit être lu **jusqu'au
- * bout**. Un texte dont les mots s'éclairent au fil du défilement donne au
- * lecteur une raison mécanique de continuer : il voit où il en est, et il voit
- * qu'il reste quelque chose.
+ * **Deuxième version, et le premier essai est instructif.** Il allumait le
+ * texte *mot à mot*, avec un front de couleur qui traversait les phrases. Il
+ * fonctionnait, il était mesuré, et il était mauvais : une vague qui passe au
+ * milieu d'une phrase coupe la lecture au lieu de la porter. Le client l'a dit
+ * en un mot — « trop distrait » — et il avait raison. Un effet de lecture qui
+ * attire l'œil sur lui-même a échoué, quelle que soit sa justesse technique.
  *
- * **Ce qui s'anime est la couleur, pas l'opacité.** C'est une contrainte du
- * projet, et elle est bonne : le contrôle navigateur signale tout texte
- * au-dessous de 90 % d'opacité, parce que c'est ainsi que se manifeste une
- * animation d'entrée restée bloquée — il a déjà attrapé le logotype pour cette
- * raison. Un fondu progressif ferait donc échouer la barrière, et à juste
- * titre : une opacité arbitraire échappe aux mesures de contraste.
+ * Le principe retenu est celui des paroles défilantes : **une ligne à la fois
+ * est allumée, les autres sont en retrait.** Ce qui change, ce n'est plus la
+ * couleur à l'intérieur d'une phrase mais le rapport entre les lignes. L'œil
+ * n'a plus à suivre un front : il lui suffit de voir laquelle est nette.
  *
- * Ici les deux bornes sont des tokens **mesurés** : `--ink-muted` (4,8:1 sur
- * chaque fond du site) et `--ink` (15:1). Toute valeur intermédiaire se trouve
- * entre les deux, donc **aucune image de l'animation n'est illisible**. Le
- * texte non encore atteint est du texte gris, pas du texte effacé.
+ * Trois choses rendent cela calme plutôt qu'agité :
  *
- * Les deux couleurs sont résolues au navigateur plutôt qu'écrites en dur :
- * Motion interpole des couleurs, pas des `var()`. C'est le même procédé que le
- * globe de la page contact. Un changement de thème les relit.
+ * - **L'unité est la ligne, pas le mot.** Une ligne s'allume d'un coup et le
+ *   reste le temps qu'on la lise. Rien ne bouge à l'intérieur.
+ * - **Un plateau, pas un pic.** La courbe monte, *tient*, puis redescend. Sans
+ *   ce palier, la ligne active clignoterait au moindre mouvement de molette.
+ * - **Les lignes déjà lues retombent en retrait**, comme sur un lecteur de
+ *   musique. C'est ce qui pousse vers la suite, et c'était la demande
+ *   d'origine : tenir le lecteur jusqu'au bout du texte.
  *
- * Sans JavaScript, ou avec « animations réduites » activé, le texte s'affiche
- * entièrement en `--ink` : la page ne perd rien, elle perd le mouvement.
+ * **Ce qui s'anime est la couleur, pas l'opacité.** Le contrôle navigateur du
+ * projet signale tout texte sous 90 % d'opacité — c'est ainsi qu'on repère une
+ * animation d'entrée restée bloquée, et il a déjà attrapé le logotype pour
+ * cette raison. Les deux bornes sont donc des tokens **mesurés** :
+ * `--ink-muted` (4,8:1 sur chaque fond du site) et `--ink` (15:1). Une ligne en
+ * retrait est du texte gris, parfaitement lisible ; elle n'est jamais effacée.
+ * Plus d'accent coloré : c'est lui qui distrayait.
+ *
+ * Les couleurs sont résolues au navigateur plutôt qu'écrites en dur, Motion
+ * interpolant des couleurs et non des `var()`. C'est le procédé du globe de la
+ * page contact. Un changement de thème les relit.
+ *
+ * Sans JavaScript, ou avec « animations réduites », tout le texte s'affiche en
+ * `--ink` : la page ne perd rien, elle perd le mouvement.
  */
 
-function Mot({
-  mot,
-  debut,
-  fin,
+function Ligne({
+  texte,
+  centre,
+  demiPlateau,
+  fondu,
   progression,
-  depart,
-  front,
-  arrivee,
+  eteinte,
+  allumee,
 }: {
-  mot: string;
-  debut: number;
-  fin: number;
+  texte: string;
+  /** Position de la ligne dans la course, entre 0 et 1. */
+  centre: number;
+  /** Demi-largeur du palier où la ligne reste pleinement allumée. */
+  demiPlateau: number;
+  /** Largeur de la montée et de la descente. */
+  fondu: number;
   progression: MotionValue<number>;
-  depart: string;
-  /** Couleur du front de vague, traversée au passage. */
-  front: string;
-  arrivee: string;
+  eteinte: string;
+  allumee: string;
 }) {
-  // Trois arrêts et non deux. Avec deux — gris ardoise vers encre — l'effet
-  // existait et se mesurait, mais ne se **voyait** pas : les deux tokens sont
-  // proches sur un fond crème, et le client, qui l'avait demandé, ne l'a pas
-  // trouvé sur la page. Le passage par l'accent donne au front de vague une
-  // couleur franche : on voit alors où en est la lecture, ce qui est toute la
-  // fonction de l'effet.
-  //
-  // Les trois arrêts sont des tokens mesurés — `--ink-muted` 4,8:1, l'accent
-  // 5,9:1 sur le papier, `--ink` 15:1 — donc aucune image de l'animation n'est
-  // illisible, y compris en plein passage de la vague.
-  const couleur = useTransform(
-    progression,
-    [debut, (debut + fin) / 2, fin],
-    [depart, front, arrivee],
+  const bornes = [
+    centre - demiPlateau - fondu,
+    centre - demiPlateau,
+    centre + demiPlateau,
+    centre + demiPlateau + fondu,
+  ];
+  const couleur = useTransform(progression, bornes, [
+    eteinte,
+    allumee,
+    allumee,
+    eteinte,
+  ]);
+  // Une respiration de deux pour cent, pas davantage : à l'échelle d'une ligne
+  // de texte, c'est ce qui se sent sans se voir. Au-delà, le texte se met à
+  // sauter et on retombe dans le défaut qu'on vient de corriger.
+  const echelle = useTransform(progression, bornes, [1, 1.02, 1.02, 1]);
+
+  return (
+    <m.span
+      className="block origin-left"
+      style={{ color: couleur, scale: echelle }}
+    >
+      {texte}
+    </m.span>
   );
-  // `m.span` par mot : chaque mot a sa propre plage de défilement, donc son
-  // propre `useTransform`. Un composant par mot est la seule façon d'appeler
-  // le hook un nombre variable de fois sans enfreindre les règles des hooks.
-  return <m.span style={{ color: couleur }}>{mot} </m.span>;
 }
 
 export function TexteProgressif({
   texte,
   className,
 }: {
-  /** Les paragraphes, dans l'ordre. */
-  texte: string[];
+  /** Les paragraphes, chacun découpé en lignes. */
+  texte: string[][];
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  const [couleurs, setCouleurs] = useState<[string, string, string] | null>(null);
+  const [couleurs, setCouleurs] = useState<[string, string] | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    // Le bloc commence à s'allumer dès que son haut entre par le bas de
-    // l'écran, et finit quand son bas remonte à 42 % de la hauteur : la fin du
-    // texte est donc atteinte **avant** que le bloc ne sorte de l'écran. Caler
-    // la fin sur la sortie ferait disparaître le dernier mot au moment où il
-    // s'allume.
-    //
-    // La plage a été élargie après mesure : avec « start 0.8 → end 0.55 », ce
-    // bloc de trois paragraphes était entièrement allumé après sept cents
-    // pixels de défilement, soit moins d'un écran. L'effet existait mais ne
-    // durait pas assez pour tenir le lecteur, ce qui est toute sa raison
-    // d'être.
+    // La course commence quand le bloc entre par le bas de l'écran et se
+    // termine quand son bas remonte à 42 % de la hauteur : la dernière ligne
+    // s'allume donc **avant** que le bloc ne sorte, et non au moment où il
+    // disparaît.
     offset: ["start 0.95", "end 0.42"],
   });
 
@@ -105,14 +124,13 @@ export function TexteProgressif({
     if (!el) return;
     const lire = () => {
       const s = getComputedStyle(el);
-      const eteint = s.getPropertyValue("--ink-muted").trim();
-      const front = s.getPropertyValue("--accent-violet").trim();
-      const allume = s.getPropertyValue("--ink").trim();
-      if (eteint && front && allume) setCouleurs([eteint, front, allume]);
+      const eteinte = s.getPropertyValue("--ink-muted").trim();
+      const allumee = s.getPropertyValue("--ink").trim();
+      if (eteinte && allumee) setCouleurs([eteinte, allumee]);
     };
     lire();
-    // Le thème se change sur `<html>` : on relit les deux couleurs quand sa
-    // classe bouge, sans quoi le texte garderait les valeurs du thème clair.
+    // Le thème se change sur `<html>` : sans cet observateur, le texte
+    // garderait les couleurs du thème clair après une bascule.
     const obs = new MutationObserver(lire);
     obs.observe(document.documentElement, {
       attributes: true,
@@ -121,48 +139,47 @@ export function TexteProgressif({
     return () => obs.disconnect();
   }, []);
 
-  const mots = texte.map((p) => p.split(" "));
-  const total = mots.reduce((n, p) => n + p.length, 0);
+  const total = texte.reduce((n, p) => n + p.length, 0);
 
-  // Sans mouvement ou avant que les couleurs soient lues : le texte complet,
-  // en encre pleine. C'est aussi ce que voit un visiteur sans JavaScript.
   if (reduced || !couleurs) {
     return (
       <div ref={ref} className={className}>
-        {texte.map((p) => (
-          <p key={p} className="text-ink mt-5 text-lg leading-relaxed text-pretty">
-            {p}
+        {texte.map((paragraphe) => (
+          <p
+            key={paragraphe.join(" ")}
+            className="text-ink mt-5 text-lg leading-relaxed text-pretty"
+          >
+            {paragraphe.join(" ")}
           </p>
         ))}
       </div>
     );
   }
 
-  let curseur = 0;
+  // Le palier couvre une ligne entière et le fondu une demi-ligne : une ligne
+  // reste donc nette pendant tout le temps qu'il faut pour la lire, et deux
+  // lignes voisines ne sont jamais allumées ensemble à pleine force.
+  const pas = 1 / total;
+  const demiPlateau = pas * 0.5;
+  const fondu = pas * 0.5;
+
+  let rang = 0;
   return (
     <div ref={ref} className={className}>
-      {texte.map((paragraphe, iP) => (
-        <p key={paragraphe} className="mt-5 text-lg leading-relaxed text-pretty">
-          {mots[iP].map((mot) => {
-            const rang = curseur++;
-            // Chaque mot s'allume sur une fenêtre qui chevauche celle de ses
-            // voisins : sans chevauchement, les mots s'allumeraient un par un
-            // comme un métronome, ce qui se remarque au lieu de se lire.
-            const debut = rang / total;
-            // Douze mots de chevauchement et non six : le front de vague doit
-            // rester visible assez longtemps pour être lu comme un mouvement,
-            // pas comme un scintillement.
-            const fin = Math.min(1, (rang + 12) / total);
+      {texte.map((paragraphe) => (
+        <p key={paragraphe.join(" ")} className="mt-5 text-lg leading-relaxed">
+          {paragraphe.map((ligne) => {
+            const centre = (rang++ + 0.5) * pas;
             return (
-              <Mot
-                key={`${rang}-${mot}`}
-                mot={mot}
-                debut={debut}
-                fin={fin}
+              <Ligne
+                key={ligne}
+                texte={ligne}
+                centre={centre}
+                demiPlateau={demiPlateau}
+                fondu={fondu}
                 progression={scrollYProgress}
-                depart={couleurs[0]}
-                front={couleurs[1]}
-                arrivee={couleurs[2]}
+                eteinte={couleurs[0]}
+                allumee={couleurs[1]}
               />
             );
           })}
