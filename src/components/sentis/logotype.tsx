@@ -9,7 +9,8 @@
  *
  * - **un symbole** — un carré aux angles très arrondis contenant un sourire —
  *   tracé au filet, dans l'accent terre ;
- * - **un mot-symbole** en capitales, sur deux lignes, en Inter.
+ * - **un mot-symbole** en capitales, en Inter, sur une ligne dans l'en-tête
+ *   et empilé là où la largeur manque.
  *
  * Trois décisions de mise en œuvre, toutes dictées par l'usage réel :
  *
@@ -21,10 +22,12 @@
  *    pour tout le site, le mot-symbole est composé dans la police que la page
  *    charge déjà : mille kilo-octets d'économie deviennent un fichier de moins
  *    à régénérer quand le nom change.
- * 3. **Le mot-symbole est sur deux lignes**, comme le verrouillage principal
- *    de la planche. Sur une seule, « STUDIO SENTIS » en capitales espacées
- *    occupe deux cent quarante pixels dans un en-tête qui en fait mille deux
- *    cents : il écrase la navigation.
+ 3. **Le mot-symbole est sur une ligne dans l'en-tête.** Le verrouillage
+ *    empilé de la planche y faisait une boîte plus haute que les liens de
+ *    navigation et que le bouton : le logo flottait au-dessus d'une rangée
+ *    dont il devrait faire partie. Les tailles sont réglées pour que
+ *    l'ensemble tienne dans la même bande optique que le reste — c'est
+ *    mesuré au navigateur, pas estimé.
  *
  * Pour changer de marque plus tard, il n'y a toujours que ce fichier à
  * toucher : les trois endroits où le nom apparaît — en-tête, tiroir mobile,
@@ -70,16 +73,45 @@ export function Symbole({ className }: { className?: string }) {
   );
 }
 
-export function Logotype({ className }: { className?: string }) {
+export function Logotype({
+  className,
+  empile = false,
+}: {
+  className?: string;
+  /**
+   * Mot-symbole sur deux lignes, comme le verrouillage empilé de la planche.
+   *
+   * Par défaut il est **sur une seule ligne**. Les deux existent sur la
+   * planche, mais dans un en-tête le verrouillage empilé est le mauvais choix :
+   * deux lignes de capitales font une boîte plus haute que les liens de
+   * navigation et que le bouton, et le logo se met à flotter au-dessus d'une
+   * rangée dont il devrait faire partie. Sur une ligne, l'ensemble tient dans
+   * la même bande optique que le reste de l'en-tête.
+   *
+   * L'empilé reste disponible pour les surfaces où la largeur manque — une
+   * colonne étroite de pied de page, un carré — et c'est là qu'il sert.
+   */
+  empile?: boolean;
+}) {
   return (
-    <span className={`inline-flex items-center gap-[0.55em] ${className ?? ""}`}>
-      <Symbole className="text-signal-aa size-[2.1em] shrink-0" />
-      {/* `leading-[0.98]` : deux lignes de capitales n'ont ni jambage ni
-          hampe, donc l'interligne normal y creuse un trou que l'œil lit comme
-          une séparation entre deux mots sans rapport. */}
-      <span className="block text-[0.52em] leading-[0.98] font-bold tracking-[0.07em] uppercase">
-        <span className="block">Studio</span>
-        <span className="block">Sentis</span>
+    <span className={`inline-flex items-center gap-[0.45em] ${className ?? ""}`}>
+      {/* Le symbole est dimensionné en `em`, donc il suit la taille du texte
+          qui l'accompagne : une seule valeur à régler pour que le verrouillage
+          grandisse ou rétrécisse d'un bloc. */}
+      <Symbole className="text-signal-aa size-[1.55em] shrink-0" />
+      <span
+        className={
+          empile
+            ? // `leading-[0.98]` : deux lignes de capitales n'ont ni jambage ni
+              // hampe, donc l'interligne normal y creuse un trou que l'œil lit
+              // comme une séparation entre deux mots sans rapport.
+              "block text-[0.56em] leading-[0.98] font-bold tracking-[0.07em] uppercase"
+            : "block text-[0.78em] leading-none font-bold tracking-[0.055em] uppercase whitespace-nowrap"
+        }
+      >
+        <span className={empile ? "block" : undefined}>Studio</span>
+        {empile ? null : " "}
+        <span className={empile ? "block" : undefined}>Sentis</span>
       </span>
     </span>
   );

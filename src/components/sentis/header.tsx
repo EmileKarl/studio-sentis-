@@ -38,12 +38,27 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
 
   return (
     <header className="border-rule bg-paper sticky top-0 z-40 border-b">
-      <div className="mx-auto flex h-16 w-full max-w-(--container-page) items-center justify-between gap-4 px-5 sm:px-8">
+      {/* `gap-3` et non `gap-4` : le verrouillage sur une ligne est plus large
+          que l'empilé qu'il remplace, et à 1024 px — la largeur où la
+          navigation complète apparaît — l'en-tête débordait de 22 px. La
+          place est reprise sur les écarts et sur l'interlettrage du
+          mot-symbole, pas sur les points de rupture : repousser la
+          navigation à `xl` aurait privé les tablettes en paysage du menu
+          déployé et du sélecteur de langue. */}
+      <div className="mx-auto flex h-16 w-full max-w-(--container-page) items-center justify-between gap-3 px-5 sm:px-8">
+        {/* `flex items-center` sur le lien lui-même, et non sur le seul
+            logotype : un `inline-flex` est une boîte en ligne, donc posée sur
+            la ligne de base de son parent. Mesuré au navigateur, le
+            verrouillage se centrait à 29 px quand la navigation et le bouton
+            se centraient à 32 — trois pixels trop haut, assez pour que l'œil
+            voie le logo flotter au-dessus de sa rangée sans savoir dire
+            pourquoi. En faisant du lien un conteneur flex, le centrage devient
+            géométrique et non typographique. */}
         <Link
           href={base}
-          className="focus-visible:ring-signal -mx-1 shrink-0 rounded-md px-1 py-1.5 focus-visible:ring-2 focus-visible:outline-none"
+          className="focus-visible:ring-signal -mx-1 flex h-full shrink-0 items-center rounded-md px-1 focus-visible:ring-2 focus-visible:outline-none"
         >
-          <Logotype className="text-ink text-xl" />
+          <Logotype className="text-ink text-base" />
         </Link>
 
         {/* La barre de page active se pose sur le filet du bas de l'en-tête,
@@ -61,7 +76,7 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
                     href={lien.href}
                     aria-current={actif ? "page" : undefined}
                     className={cn(
-                      "focus-visible:ring-signal relative flex items-center rounded-md px-3 transition-colors focus-visible:ring-2 focus-visible:outline-none",
+                      "focus-visible:ring-signal relative flex items-center rounded-md px-2.5 transition-colors focus-visible:ring-2 focus-visible:outline-none",
                       actif
                         ? "text-ink font-medium"
                         : "text-ink-secondary hover:text-ink",

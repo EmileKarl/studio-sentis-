@@ -281,6 +281,14 @@ sur aucune page : il fait partie du jeu de base (treillis, onde, anneau,
 poussière) que la bibliothèque de mouvement documente, et `treillis` sert
 toujours au héros de l'accueil.
 
+### Verrouillage du logo sur une ligne
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 94 | Le verrouillage **empilé** de la planche faisait dans l'en-tête une boîte plus haute que les liens de navigation et que le bouton : le logo flottait au-dessus d'une rangée dont il devait faire partie | Mot-symbole sur une ligne par défaut ; l'empilé reste disponible pour les surfaces étroites |
+| 95 | Le verrouillage se centrait à **29 px** quand la navigation et le bouton se centraient à **32** — trois pixels trop haut, assez pour que l'œil voie le décalage sans savoir le nommer. Cause : un `inline-flex` est une boîte en ligne, donc posée sur la ligne de base de son parent | Le lien du logo devient lui-même un conteneur `flex items-center h-full`. Le centrage est géométrique et non typographique. Mesuré : les trois centres à 32 px |
+| 96 | Sur une ligne, le verrouillage passe de ~100 à 148 px, et l'en-tête débordait de **22 px à 1024 px** — la largeur exacte où la navigation complète apparaît | Place reprise sur les écarts (`gap-4` → `gap-3`, `px-3` → `px-2.5`) et sur l'interlettrage du mot-symbole (0,09 → 0,055 em), **pas sur les points de rupture** : repousser la navigation à `xl` aurait privé les tablettes en paysage du menu déployé et du sélecteur de langue, qui ne vivent qu'au-delà de `lg`. Largeur finale 136,8 px, aucun débordement de 1024 à 1280 |
+
 ### Passage à la planche « Concept 16 »
 
 | # | Problème | Correctif |
