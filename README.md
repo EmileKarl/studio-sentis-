@@ -222,62 +222,101 @@ pas.
 le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
 sien, ni équipe qui n'existe pas.
 
-## Marque — Concept 16, « Chaleur néo-minimaliste »
+## Marque — planche « Concept 16 », couleurs du livre de Sanzo Wada
 
-Le site applique la planche de marque fournie par le client. Cinq couleurs, une
-police, un symbole.
+Deux sources, et chacune décide de ce qu'elle sait décider.
 
-| | | |
-| --- | --- | --- |
-| blanc cassé | `#f8f5f2` | papier |
-| beige chaud | `#e6dacd` | surface de section |
-| gris souple | `#949291` | texte en thème sombre |
-| accent terre | `#c8a284` | aplats, et texte en thème sombre |
-| noir | `#1a1a1a` | encre |
+La **planche de marque** fournie par le client donne la peau : un papier blanc
+cassé `#f8f5f2`, une encre `#1a1a1a`, un beige chaud `#e6dacd` en surface, une
+seule police, et un symbole. Elle tient toujours.
 
-**Un point de la planche est faux, et il est corrigé.** Elle annonce « blanc sur
-accent — contraste valide » : mesuré, c'est **2,34:1**, pour un plancher à 4,5.
-Du blanc sur le terracotta serait illisible. Le couple qui tient est le **noir
-sur l'accent, à 7,42:1** ; c'est lui qui est en place.
+Elle avait aussi un **accent unique**, un terracotta, et c'est ce qui ne tenait
+pas. Une identité à un accent ne peut pas colorer quatre choses différemment :
+les quatre pictogrammes de services, les quatre fonds de section et les quatre
+couleurs de volume pointaient tous sur la même valeur. Le client l'a résumé en
+un mot — « terne ». Ce n'était pas un défaut de couleur, c'était un défaut
+d'**arrangement**.
 
-Trois des cinq couleurs ne peuvent pas porter de texte sur le papier — le beige
-à 1,27:1, l'accent à 2,16:1, le gris souple à 2,85:1. Ce sont des couleurs de
-**surface** et de **marque**, pas d'interface, et une planche n'a pas à s'en
-excuser. Partout où il en fallait une version lisible, elle est **assombrie à
-teinte et saturation constantes** jusqu'au plancher, jamais remplacée : le gris
-souple devient `--ink-muted`, l'accent terre devient `--signal-aa`. La planche
-reste reconnaissable.
+Les couleurs viennent donc maintenant d'un arrangement du livre.
+*A Dictionary of Color Combinations* (Sanzo Wada, 1933) donne 348 combinaisons
+de 159 couleurs ; le jeu de données utilisé est celui de Matt DesLauriers (MIT),
+qui numérise la compilation de Dain M. Blodorn Kim.
 
-En **thème sombre**, que la planche ne couvre pas, le gris souple et l'accent
-terre reprennent leur valeur d'origine sans retouche : leur clarté médiane, qui
-ne passait pas sur le blanc cassé, donne 5,99:1 et 7,92:1 sur l'encre.
+**Combinaison 333** — quatre couleurs. C'est la seule des douze contenant
+`Blue`, le bleu électrique demandé, dont les quatre teintes se répartissent sur
+tout le cercle :
 
-Un piège qui a coûté une itération : `--signal` et `--accent-*` portent la même
-couleur à deux valeurs. `--signal` est l'accent clair de la planche et reçoit du
-**noir** ; `--accent-*` est sa version assombrie, qui porte le texte, et reçoit
-du **clair**. Même couleur, deux contrastes opposés.
+| | | | |
+| --- | --- | --- | --- |
+| `#006eb8` | Blue | 204° | logo, liens, offre |
+| `#f8ed43` | Lemon Yellow | 56° | applications, conditions |
+| `#ae5224` | Burnt Sienna | 20° | identité visuelle |
+| `#96d1aa` | Cobalt Green | 140° | informatique et marketing |
 
-### Ce que le changement de direction coûte
+Elle garde un fil avec la planche : le Burnt Sienna est à deux doigts de son
+accent terre. Ce qui change, c'est que le site a de nouveau **quatre couleurs au
+lieu d'une**, et que c'est le bleu qui mène.
 
-La planche n'a **qu'un accent**. Les quatre couleurs de section issues de Sanzo
-Wada disparaissent : les sections se distinguent désormais par la **chaleur et
-la valeur**, pas par la teinte. Les quatre noms de tokens `--teinte-*` et
-`--accent-*` sont conservés — une dizaine de composants les nomment — mais ils
-désignent quatre pas entre le blanc cassé et le beige chaud, et les quatre
-accents pointent sur la même valeur. **Les pictogrammes des quatre services
-perdent donc leur couleur propre.** C'est la conséquence directe d'une identité
-à un accent, pas un oubli.
+### Ce que les mesures ont décidé
+
+Rien n'est réglé à l'œil. Un solveur part de la couleur du livre et ne déplace
+que sa **clarté**, teinte et saturation constantes, jusqu'au plancher de 4,5:1 ;
+la couleur reste reconnaissable. Trois conséquences qu'il faut connaître :
+
+- **Les fonds de section sont la couleur du livre diluée à 20 % dans le
+  papier**, une dose unique pour les quatre. Doser chaque couleur séparément
+  aurait donné quatre bandes d'intensités différentes, que l'œil lit comme un
+  défaut d'impression.
+- **Les deux gris de texte sont descendus d'un cran** (`#3d3c3a` et `#595755`,
+  contre `#464444` et `#62605f`). Les lavis sont deux fois plus francs qu'avant,
+  et c'est ce qui permet aux teintes d'être vraiment colorées sans qu'un texte
+  secondaire passe sous le plancher. Un gris plus sombre achète de la couleur.
+- **Le fond du thème sombre passe du presque-noir chaud au froid** (`#141312` →
+  `#121314`). La chaleur venait de l'accent terre unique ; sous un bleu à 100 %
+  de saturation elle le rendait sale.
+
+En **thème sombre**, que le livre ne couvre pas, c'est là que la combinaison est
+la plus fidèle : **deux de ses quatre couleurs passent sans aucune retouche** —
+Lemon Yellow à 15,22:1 et Cobalt Green à 10,63:1. Seuls le bleu et le sienna
+s'éclaircissent, par le même solveur, dans l'autre sens.
+
+`npm run verify:teintes` refait le calcul complet à chaque exécution : chaque
+teinte contre chaque couleur de texte, chaque accent sur le papier, sur son
+propre fond et sous sa couleur de contraste, dans les deux thèmes. Pire couple
+de cette palette : **4,63:1**, contre 4,53:1 pour la précédente — avec quatre
+teintes au lieu d'une.
+
+**Les quatre noms de jetons sont des emplacements, pas des teintes.** `bleu`,
+`cyan`, `violet`, `vert` sont partagés avec l'autre marque du dépôt et servent
+de classes Tailwind dans une dizaine de composants ; les renommer toucherait les
+deux marques. Deux des quatre tombent juste, deux non, et autant l'écrire :
+`--*-bleu` → Blue et `--*-vert` → Cobalt Green sont exacts ; `--*-cyan` porte le
+Lemon Yellow et `--*-violet` le Burnt Sienna.
+
+**Ce que la correction de la planche laisse debout.** Elle annonçait « blanc sur
+accent — contraste valide » : mesuré sur le terracotta, c'était **2,34:1**. Le
+bleu du livre règle le problème à la source — `#006eb8` porte du texte tel quel,
+à 4,93:1 sur le papier, et reçoit du blanc cassé à la même valeur. `--signal-aa`
+n'existe plus pour sauver une couleur illisible mais pour tenir sur les **lavis
+de section**, où le bleu du livre tombe à 3,72:1.
 
 ### Logotype
 
-Un **symbole** — carré très arrondi contenant un sourire, tracé au filet — et un
-**mot-symbole** en capitales sur deux lignes.
+Un **symbole** — carré très arrondi contenant un sourire, tracé au filet dans le
+bleu électrique de la marque — et un **mot-symbole** en capitales, sur une ligne
+dans l'en-tête, empilé là où la largeur manque.
 ([`logotype.tsx`](src/components/sentis/logotype.tsx), un seul fichier à
 toucher.)
 
-Le symbole est un **SVG en ligne**, donc il suit `currentColor` et bascule seul
-en thème sombre, sans variante à maintenir. Le mot-symbole est composé dans
-Inter, que la page charge déjà : plus de police dédiée au logo.
+Le symbole est un **SVG en ligne**, donc il suit `currentColor` et les jetons :
+il bascule seul en thème sombre, sans variante à maintenir. Le mot-symbole est
+composé dans Inter, que la page charge déjà : plus de police dédiée au logo.
+
+Le filet porte `--signal`, c'est-à-dire le `Blue` du livre **à sa valeur
+d'origine** (`#006eb8`, saturation 100 %) et non sa version assombrie pour le
+texte courant. Il n'a pas à être adouci : mesuré, 4,93:1 sur le papier et 5,40:1
+sur l'encre du thème sombre. Le terracotta de la planche, lui, ne tenait que
+2,16:1 et ne pouvait donc porter aucun trait fin.
 
 ### Typographie
 
@@ -292,11 +331,13 @@ Effet de bord mesuré : les polices d'une page passent de **89,8 à 47,3 ko**.
 `node scripts/generer-images-marque.mjs` refabrique l'icône d'onglet, l'icône
 iOS et l'image de partage. Le symbole y est tracé avec **les mêmes coordonnées
 que le composant**, donc l'icône est le dessin de l'en-tête et non une
-approximation. L'icône est l'**inversion** de la planche — symbole clair sur
-carré d'encre : à seize pixels, un filet terracotta sur blanc cassé donne 2,16:1
-et disparaît.
+approximation. L'icône est un **symbole blanc cassé sur un carré bleu** : dans
+une barre d'onglets, un carré presque noir est ce que font la moitié des sites,
+alors qu'un bleu à 100 % de saturation se reconnaît sans être lu. Le couple tient
+4,93:1 ; l'inverse — symbole bleu sur carré d'encre — n'aurait donné que 3,25:1 à
+seize pixels.
 
-## Référencement et poids## Référencement et poids
+## Référencement et poids
 
 **Référencement.** Chaque page pose sa propre balise canonique, ses `hreflang`
 (`fr`, `en`, `x-default` sur le français) et ses balises Open Graph, via

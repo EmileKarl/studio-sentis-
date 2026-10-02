@@ -39,15 +39,20 @@ import { dirname, resolve } from "node:path";
 
 const RACINE = resolve(import.meta.dirname, "..");
 
-// Les cinq couleurs de la planche, recopiées de `src/styles/sentis.css`. Ce
-// sont des images figées : elles ne suivent pas les tokens au rendu, donc tout
-// changement de palette demande de relancer ce script.
+// Les couleurs, recopiées de `src/styles/sentis.css`. Ce sont des images
+// figées : elles ne suivent pas les tokens au rendu, donc tout changement de
+// palette demande de relancer ce script.
+//
+// Le papier, le beige et le noir viennent de la planche « Concept 16 ». Les
+// deux couleurs d'accent viennent de la combinaison 333 du livre de Sanzo
+// Wada, celle du site : `Blue` à sa valeur du livre pour les aplats, le même
+// un cran plus sombre pour les traits et le texte.
 const BLANC_CASSE = "#f8f5f2";
 const BEIGE = "#e6dacd";
-const ACCENT = "#c8a284";
-const ACCENT_TEXTE = "#805839";
+const ACCENT = "#006eb8"; /* Blue, valeur du livre */
+const ACCENT_TEXTE = "#005fa0"; /* le même, pour le filet du symbole */
 const NOIR = "#1a1a1a";
-const GRIS_TEXTE = "#464444";
+const GRIS_TEXTE = "#3d3c3a";
 
 const POLICES = [
   { famille: "InterOG", fichier: "scripts/polices/inter-og.woff2" },
@@ -73,10 +78,19 @@ const symbole = (taille, couleur) => `
           stroke="${couleur}" stroke-width="2.2"/>
   </svg>`;
 
+/**
+ * L'icône de l'onglet et de l'écran d'accueil.
+ *
+ * Le fond passe de l'encre au **bleu de la marque**. Dans une barre d'onglets,
+ * un carré presque noir est ce que font la moitié des sites ; un bleu à 100 %
+ * de saturation se reconnaît sans être lu. Le symbole reste en blanc cassé,
+ * qui donne 4,93:1 sur ce bleu — au-dessus du plancher, ce qu'un symbole bleu
+ * sur fond d'encre n'aurait pas tenu (3,25:1) à la taille d'un favicon.
+ */
 const icone = (taille) => `<!doctype html><html><head><meta charset="utf-8">${POLICE}
 <style>
   html,body{margin:0;padding:0}
-  body{width:${taille}px;height:${taille}px;background:${NOIR};
+  body{width:${taille}px;height:${taille}px;background:${ACCENT};
        display:flex;align-items:center;justify-content:center}
 </style></head><body>${symbole(Math.round(taille * 0.66), BLANC_CASSE)}</body></html>`;
 
@@ -94,7 +108,8 @@ const partage = () => `<!doctype html><html><head><meta charset="utf-8">${POLICE
        font-family:InterOG,system-ui,sans-serif;
        display:flex;flex-direction:column;justify-content:center;
        padding:0 88px;position:relative;overflow:hidden}
-  /* Un aplat de beige chaud en biais, seule respiration de la planche. */
+  /* Un aplat de beige chaud en biais : la chaleur de la planche, contre
+     laquelle le bleu du livre se détache. */
   .biais{position:absolute;right:-120px;top:-120px;width:620px;height:620px;
          background:${BEIGE};border-radius:180px;transform:rotate(18deg)}
   .marque{position:relative;display:flex;align-items:center;gap:26px;margin-bottom:46px}

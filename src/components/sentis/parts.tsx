@@ -82,11 +82,12 @@ export function Section({
  * monochrome ; celle qui pose en plus `--scene-2` et `--scene-3` obtient un
  * dégradé qui traverse le nuage.
  *
- * **À propos** et **Réalisations** en profitent ; l'accueil et Contact gardent
- * leur couleur unique. Ce n'est pas une inconséquence : la couleur dominante
- * reste celle de la page — cyan pour Services, violet pour Réalisations — et
- * c'est elle qui dit qu'on a changé de page avant d'avoir lu le titre. Le
- * dégradé ne fait que l'enrichir.
+ * **À propos**, **Services** et **Réalisations** en profitent ; l'accueil et
+ * Contact gardent leur couleur unique. Ce n'est pas une inconséquence : la
+ * couleur dominante reste celle de la page, et c'est elle qui dit qu'on a
+ * changé de page avant d'avoir lu le titre. Le dégradé ne fait que l'enrichir.
+ * Le tableau des trois couleurs de chaque page est plus bas, sur
+ * `COULEUR_SCENE`.
  */
 const MASQUE =
   "[mask-image:radial-gradient(ellipse_at_80%_50%,white,transparent_72%)]";
@@ -118,14 +119,23 @@ const ALPHA_SCENE: Record<Variante3D, number> = {
 const COULEUR_SCENE: Record<Variante3D, string> = {
   treillis: `text-accent-violet ${MASQUE}`,
   anneau: `text-accent-cyan ${MASQUE}`,
-  // Vert → cyan → violet : l'olive part du plus proche du papier et le dégradé
-  // l'emmène vers les deux teintes les plus franches de la palette.
-  poussiere: `text-accent-vert [--scene-2:var(--accent-cyan)] [--scene-3:var(--accent-violet)] ${MASQUE}`,
+  // Depuis que la palette vient d'un arrangement du livre de Sanzo Wada, les
+  // quatre accents sont quatre teintes distinctes et non quatre valeurs d'une
+  // seule : un dégradé de volume traverse maintenant vraiment le cercle au
+  // lieu de passer du terracotta au terracotta.
+  //
+  // Chaque page intérieure garde une **couleur de tête** qui lui est propre —
+  // c'est elle qui dit qu'on a changé de page avant d'avoir lu le titre — et
+  // les deux autres couleurs du dégradé font circuler le reste de la
+  // combinaison, chaque page partant de la sienne.
+  //
+  //   À propos      Lemon Yellow → Burnt Sienna → Cobalt Green
+  //   Services      Cobalt Green → Blue          → Lemon Yellow
+  //   Réalisations  Burnt Sienna → Blue          → Lemon Yellow
+  //   Contact       Blue seul
+  poussiere: `text-accent-cyan [--scene-2:var(--accent-violet)] [--scene-3:var(--accent-vert)] ${MASQUE}`,
   onde: `text-accent-bleu ${MASQUE}`,
-  // Services garde son cyan et Réalisations son violet : les volumes changent,
-  // la couleur de la page ne bouge pas. C'est elle qui dit qu'on a changé de
-  // page avant d'avoir lu le titre.
-  helice: `text-accent-cyan ${MASQUE}`,
+  helice: `text-accent-vert [--scene-2:var(--accent-bleu)] [--scene-3:var(--accent-cyan)] ${MASQUE}`,
   constellation: `text-accent-violet [--scene-2:var(--accent-bleu)] [--scene-3:var(--accent-cyan)] ${MASQUE}`,
 };
 

@@ -8,11 +8,11 @@
  * Ce qu'elle pose :
  *
  * - **un symbole** — un carré aux angles très arrondis contenant un sourire —
- *   tracé au filet, dans l'accent terre ;
+ *   tracé au filet, dans le bleu électrique de la marque ;
  * - **un mot-symbole** en capitales, en Inter, sur une ligne dans l'en-tête
  *   et empilé là où la largeur manque.
  *
- * Trois décisions de mise en œuvre, toutes dictées par l'usage réel :
+ * Quatre décisions de mise en œuvre, toutes dictées par l'usage réel :
  *
  * 1. **Le symbole est un SVG en ligne, pas un fichier image.** Il suit donc
  *    `currentColor` et les tokens, ce qui lui permet de basculer seul en thème
@@ -22,7 +22,13 @@
  *    pour tout le site, le mot-symbole est composé dans la police que la page
  *    charge déjà : mille kilo-octets d'économie deviennent un fichier de moins
  *    à régénérer quand le nom change.
- 3. **Le mot-symbole est sur une ligne dans l'en-tête.** Le verrouillage
+ 3. **Le symbole est bleu, pas terre.** La planche le voulait dans son accent
+ *    terracotta. Le client a demandé un bleu électrique, et le jeton
+ *    `--signal` porte désormais le `Blue` de la combinaison 333 du livre de
+ *    Sanzo Wada : #006eb8, saturation 100 %. Le gain n'est pas qu'esthétique —
+ *    le terracotta ne tenait que 2,16:1 sur le papier et ne pouvait donc pas
+ *    porter de trait fin ; ce bleu-là tient 4,93:1.
+ * 4. **Le mot-symbole est sur une ligne dans l'en-tête.** Le verrouillage
  *    empilé de la planche y faisait une boîte plus haute que les liens de
  *    navigation et que le bouton : le logo flottait au-dessus d'une rangée
  *    dont il devrait faire partie. Les tailles sont réglées pour que
@@ -98,7 +104,14 @@ export function Logotype({
       {/* Le symbole est dimensionné en `em`, donc il suit la taille du texte
           qui l'accompagne : une seule valeur à régler pour que le verrouillage
           grandisse ou rétrécisse d'un bloc. */}
-      <Symbole className="text-signal-aa size-[1.55em] shrink-0" />
+      {/* `text-signal` et non `text-signal-aa` : le symbole porte le **bleu du
+          livre tel quel** (#006eb8, saturation 100 %), pas sa version
+          assombrie pour le texte courant. C'est le bleu électrique demandé, et
+          il n'a pas à être adouci : mesuré, il donne 4,93:1 sur le papier et
+          5,40:1 sur l'encre du thème sombre, au-dessus du plancher dans les
+          deux cas. Le jeton bascule seul d'un thème à l'autre ; aucune
+          variante du logo à maintenir. */}
+      <Symbole className="text-signal size-[1.55em] shrink-0" />
       <span
         className={
           empile

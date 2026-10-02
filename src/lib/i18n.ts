@@ -60,6 +60,11 @@ export const DICT = {
       services: {
         titre: "Services",
         chapo: "Quatre métiers, un seul interlocuteur. Chaque service peut être commandé seul ou combiné aux autres — c'est là qu'il devient intéressant.",
+        sommaire: {
+          titre: "Les quatre métiers, en un coup d'œil",
+          chapo: "Chacun se commande seul. Choisissez par où vous commencez ; le reste peut venir plus tard, ou jamais.",
+        },
+        voirDetail: "Le détail",
         items: [
           {
             nom: "Sites web",
@@ -131,6 +136,12 @@ export const DICT = {
           corps: "Les dix premiers projets sont à −25 %. Ce n'est pas un rabais de vitrine : c'est un échange, et le voici en entier.",
           libelleRabais: "Rabais sur le prix affiché",
           libellePlaces: "Places, dans l'ordre d'arrivée",
+          // Dix pastilles vides, et la légende le dit en clair. Afficher des
+          // places « déjà prises » serait le seul mensonge d'une page dont tout
+          // l'argument est de ne pas en faire.
+          placesEtat: "Les dix sont libres. Personne n'a encore signé — la première place est à prendre.",
+          echangeTitre: "L'échange, dans les deux sens",
+          echangeChapo: "Un rabais de cette taille se paie en quelque chose. Voici exactement en quoi, et ce que je ne demande pas.",
           jeDonne: {
             titre: "Ce que je donne",
             items: [
@@ -526,6 +537,11 @@ export const DICT = {
       services: {
         titre: "Services",
         chapo: "Four crafts, one point of contact. Each service stands alone or combines with the others — which is where it gets interesting.",
+        sommaire: {
+          titre: "The four crafts, at a glance",
+          chapo: "Each one stands alone. Pick where you start; the rest can come later, or never.",
+        },
+        voirDetail: "Details",
         items: [
           {
             nom: "Websites",
@@ -593,6 +609,9 @@ export const DICT = {
           corps: "The first ten projects are 25% off. This is not a shop-window discount: it is a trade, and here it is in full.",
           libelleRabais: "Off the published price",
           libellePlaces: "Places, in order of arrival",
+          placesEtat: "All ten are open. Nobody has signed yet — the first place is there for the taking.",
+          echangeTitre: "The trade, both ways",
+          echangeChapo: "A discount that size is paid for in something. Here is what, and what I am not asking for.",
           jeDonne: {
             titre: "What I give",
             items: [

@@ -29,6 +29,27 @@ import { FIN_OFFRE, PLACES_LANCEMENT, RABAIS_LANCEMENT } from "@/lib/site";
  * payer et règlement à publier au-delà d'un certain montant. Un rabais accordé
  * dans l'ordre d'arrivée n'est rien de tout cela. Les conditions le disent
  * explicitement, pour qu'aucun visiteur ne croie participer à un tirage.
+ *
+ * ---
+ *
+ * **Refonte, deuxième version.** La première mettait l'offre entière — chiffres,
+ * compte à rebours, bouton, et les deux listes de l'échange — dans une seule
+ * grille à deux colonnes sur un lavis terracotta. Trois défauts, dans l'ordre
+ * de gravité :
+ *
+ * 1. Les deux listes « ce que je donne / ce que je demande » sont la partie la
+ *    plus engageante de la page, et elles se lisaient en colonne étroite à
+ *    côté d'un bouton qui captait l'attention. Elles ont maintenant leur propre
+ *    section, en pleine largeur, avec un titre qui dit ce qu'on y lit.
+ * 2. Rien ne donnait de volume aux « dix places ». Un nombre dans une
+ *    définition se lit ; dix pastilles se comptent. Elles sont toutes vides, et
+ *    la légende le dit en clair — afficher des places prises serait le seul
+ *    mensonge d'une page dont tout l'argument est de ne pas en faire.
+ * 3. Une seule couleur pour toute la page. La combinaison 333 du livre de
+ *    Sanzo Wada en donne quatre, et chacune a ici un rôle : le bleu de la
+ *    marque porte l'offre, le vert ce que le studio donne, le sienna ce qu'il
+ *    demande, le jaune les conditions — un fond de mise en garde, qui est
+ *    exactement ce qu'elles sont.
  */
 export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
   const p = dict.pages.realisations;
@@ -53,6 +74,28 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
       )
     : null;
 
+  // Les deux faces de l'échange, chacune avec sa couleur du livre. Le vert
+  // pour ce qui est donné, le sienna pour ce qui est demandé : deux teintes
+  // opposées sur le cercle, ce qui est exactement le rapport entre les deux
+  // listes. Les classes sont écrites en entier — Tailwind ne génère pas une
+  // classe qu'il ne voit pas écrite dans le source.
+  const faces = [
+    {
+      bloc: o.jeDonne,
+      fond: "bg-teinte-vert",
+      filet: "border-accent-vert",
+      puce: "marker:text-accent-vert",
+      depuis: "droite" as const,
+    },
+    {
+      bloc: o.jeDemande,
+      fond: "bg-teinte-violet",
+      filet: "border-accent-violet",
+      puce: "marker:text-accent-violet",
+      depuis: "bas" as const,
+    },
+  ];
+
   return (
     <>
       <Section>
@@ -63,13 +106,16 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
           {/* Les lignes s'allument une à une au défilement, à la manière des
               paroles sur un lecteur de musique. C'est l'argument central de la
               page — pourquoi elle est vide — et il doit être lu jusqu'au bout ;
-              voir `TexteProgressif` pour ce que cela implique en contraste. */}
+              voir `TexteProgressif` pour ce que cela implique en contraste.
+              Le fond reste le papier nu : c'est le plus long passage de texte
+              du site, et aucun lavis n'y gagnerait ce qu'il coûterait en
+              lisibilité. */}
           <TexteProgressif texte={p.vide.corps.map((l) => [...l])} />
         </div>
       </Section>
 
-      <Section tone="violet">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+      <Section tone="bleu">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
           <div>
             <p className="text-ink-muted font-mono text-[11px] tracking-[0.2em] uppercase">
               {o.surtitre}
@@ -87,7 +133,7 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
             <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
               <div>
                 <dt className="text-ink-muted text-sm">{o.libelleRabais}</dt>
-                <dd className="font-display text-accent-violet text-4xl font-semibold tabular-nums">
+                <dd className="font-display text-accent-bleu text-4xl font-semibold tabular-nums">
                   −{RABAIS_LANCEMENT}&nbsp;%
                 </dd>
               </div>
@@ -120,42 +166,85 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
             </div>
           </div>
 
-          <div className="space-y-8">
-            {[o.jeDonne, o.jeDemande].map((bloc, i) => (
-              <Reveal3D
-                key={bloc.titre}
-                depuis={i === 0 ? "droite" : "bas"}
-                distance={80}
-                delay={i * 0.08}
-                classeAnimee="bg-paper rounded-lg p-6 shadow-sm"
-              >
-                <>
-                  <h3 className="font-display text-ink text-xl font-semibold text-balance">
-                    {bloc.titre}
-                  </h3>
-                  <ul className="text-ink-secondary marker:text-accent-violet mt-4 list-disc space-y-2 pl-5 leading-relaxed">
-                    {bloc.items.map((item) => (
-                      <li key={item} className="text-pretty">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              </Reveal3D>
-            ))}
-          </div>
+          {/* Les dix places, comptables à l'œil.
+              Le bloc entier est `aria-hidden` et la phrase sous lui porte la
+              même information en mots : dix pastilles identiques annoncées une
+              par une à la voix seraient dix fois « liste, élément » pour rien.
+              Les pastilles sont vides parce que les places le sont. */}
+          <Reveal3D
+            depuis="droite"
+            distance={80}
+            // `self-start` sur l'enveloppe et non sur la carte : c'est
+            // l'enveloppe qui est l'enfant de la grille, et une classe de
+            // placement posée sur l'élément animé n'aurait aucun effet.
+            className="self-start"
+            classeAnimee="bg-paper border-rule rounded-lg border p-6 sm:p-8"
+          >
+            <>
+              <h3 className="font-display text-ink text-xl font-semibold text-balance">
+                {o.libellePlaces}
+              </h3>
+              <ul aria-hidden className="mt-6 grid grid-cols-5 gap-3 sm:gap-4">
+                {Array.from({ length: PLACES_LANCEMENT }, (_, i) => (
+                  <li
+                    key={i}
+                    className="border-accent-bleu text-accent-bleu flex aspect-square items-center justify-center rounded-full border-2 border-dashed font-mono text-sm tabular-nums"
+                  >
+                    {i + 1}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-ink-secondary mt-6 leading-relaxed text-pretty">
+                {o.placesEtat}
+              </p>
+            </>
+          </Reveal3D>
+        </div>
+      </Section>
+
+      {/* L'échange, en pleine largeur et sous son propre titre. C'est la partie
+          qui décide : un rabais de 25 % sans sa contrepartie écrite ressemble à
+          une vitrine, et une contrepartie reléguée dans une colonne étroite
+          ressemble à une clause qu'on espère non lue. */}
+      <Section titre={o.echangeTitre} chapo={o.echangeChapo}>
+        <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
+          {faces.map((face, i) => (
+            <Reveal3D
+              key={face.bloc.titre}
+              depuis={face.depuis}
+              distance={80}
+              delay={i * 0.08}
+              classeAnimee={`${face.fond} ${face.filet} h-full rounded-lg border-t-2 p-6 sm:p-8`}
+            >
+              <>
+                <h3 className="font-display text-ink text-xl font-semibold text-balance">
+                  {face.bloc.titre}
+                </h3>
+                <ul
+                  className={`text-ink-secondary mt-4 list-disc space-y-2.5 pl-5 leading-relaxed ${face.puce}`}
+                >
+                  {face.bloc.items.map((item) => (
+                    <li key={item} className="text-pretty">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            </Reveal3D>
+          ))}
         </div>
       </Section>
 
       {/* Les conditions ne sont pas repliées derrière un « voir les détails ».
           Une offre dont les limites se cachent est exactement ce que ce studio
-          dit ne pas faire ailleurs sur le site. */}
-      <section className="border-rule border-t py-16 sm:py-20">
+          dit ne pas faire ailleurs sur le site. Elles prennent le lavis jaune
+          du livre, qui est la couleur d'un avis — elles en sont un. */}
+      <section className="bg-teinte-cyan border-rule border-y py-16 sm:py-20">
         <Zone>
           <h2 className="font-display text-ink text-2xl font-semibold tracking-tight">
             {o.conditions.titre}
           </h2>
-          <ol className="text-ink-secondary mt-6 max-w-(--content-max) list-decimal space-y-3 pl-5 leading-relaxed">
+          <ol className="text-ink-secondary marker:text-accent-cyan mt-6 max-w-(--content-max) list-decimal space-y-3 pl-5 leading-relaxed">
             {o.conditions.items.map((item) => (
               <li key={item} className="text-pretty">
                 {item}

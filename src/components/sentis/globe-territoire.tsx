@@ -170,8 +170,12 @@ export function GlobeTerritoire({
     const dessiner = (lon0: number, lat0: number, temps: number) => {
       const encre = jeton("--ink-secondary", "#4a443c");
       const filet = jeton("--rule", "#e0d9cb");
-      const accent = jeton("--accent-bleu", "#1d4ed8");
-      const teinte = jeton("--teinte-bleu", "#e2ecff");
+      // Les replis sont les valeurs réelles des jetons en thème clair — le
+      // `Blue` de la combinaison 333 assombri, et son lavis à 20 %. Ils
+      // traînaient encore les bleus de l'autre marque, ce qui aurait donné un
+      // globe d'une couleur absente du site si la feuille arrivait en retard.
+      const accent = jeton("--accent-bleu", "#005fa0");
+      const teinte = jeton("--teinte-bleu", "#c6dae6");
       const sourd = jeton("--ink-muted", "#6e6659");
       const papier = jeton("--paper", "#fcfaf6");
 

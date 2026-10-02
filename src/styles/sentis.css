@@ -16,47 +16,78 @@
 
 [data-brand="sentis"] {
   /* ---------------------------------------------------------------------
-     Concept 16 — « Chaleur néo-minimaliste ».
+     Combinaison 333 du livre de Sanzo Wada.
 
-     Les cinq couleurs de la planche de marque, telles quelles :
+     La peau précédente appliquait la planche « Concept 16 », qui n'a qu'un
+     accent : les quatre pictogrammes de services, les quatre fonds de section
+     et les quatre couleurs de volume y pointaient tous sur le même terracotta.
+     Le client l'a dit en un mot — « terne ». Ce n'était pas un défaut de
+     valeur, c'était un défaut d'**arrangement** : une identité à un accent ne
+     peut pas colorer quatre choses différemment.
 
-       blanc cassé  #f8f5f2      beige chaud  #e6dacd
-       gris souple  #949291      accent terre #c8a284
-       noir         #1a1a1a
+     Le choix de couleurs vient donc d'un arrangement du livre, et pas d'une
+     série de retouches à l'œil. *A Dictionary of Color Combinations* (Sanzo
+     Wada, 1933) donne 348 combinaisons de 159 couleurs. Le jeu de données
+     utilisé ici est celui de Matt DesLauriers (MIT), qui numérise la
+     compilation de Dain M. Blodorn Kim.
 
-     Trois d'entre elles ne peuvent pas porter de texte sur le papier : le
-     beige à 1,27:1, l'accent à 2,16:1, le gris souple à 2,85:1. Ce sont des
-     couleurs de **surface** et de **marque**, pas d'interface, et une planche
-     de marque n'a pas à s'en excuser.
+     **La combinaison 333**, quatre couleurs, choisie parce qu'elle est la
+     seule des douze contenant `Blue` — le bleu électrique demandé — dont les
+     quatre teintes se répartissent sur tout le cercle :
 
-     **Un point de la planche est faux et il est corrigé ici.** Elle annonce
-     « BLANC SUR ACCENT — contraste valide » : mesuré, c'est **2,34:1**, pour
-     un plancher à 4,5. Du blanc sur le terracotta serait illisible. Le couple
-     qui tient, c'est le **noir sur l'accent, à 7,42:1** — d'où
-     `--signal-contrast: #1a1a1a` plus bas.
+       #006eb8  Blue             teinte 204°, saturation 100 %
+       #f8ed43  Lemon Yellow     teinte  56°
+       #ae5224  Burnt Sienna     teinte  20°
+       #96d1aa  Cobalt Green     teinte 140°
 
-     Partout où une couleur de la planche ne pouvait pas porter de texte, elle
-     est **assombrie à teinte et saturation constantes** jusqu'au plancher,
-     jamais remplacée par une autre : le gris souple devient `--ink-muted`,
-     l'accent terre devient `--signal-aa`. La planche reste reconnaissable.
+     Elle garde un fil avec la planche : le Burnt Sienna est à deux doigts de
+     l'accent terre de Concept 16. Le papier et l'encre de la planche restent
+     tels quels. Ce qui change, c'est que le site a de nouveau quatre couleurs
+     au lieu d'une, et que c'est le bleu qui mène.
+
+     **Les quatre noms de jetons sont des emplacements, pas des teintes.**
+     `bleu`, `cyan`, `violet`, `vert` sont partagés avec l'autre marque du
+     dépôt et servent de classes Tailwind dans une dizaine de composants ; les
+     renommer toucherait les deux marques. Deux des quatre tombent juste, deux
+     non, et autant l'écrire que de le laisser deviner :
+
+       --*-bleu    → Blue            (exact)
+       --*-vert    → Cobalt Green    (exact)
+       --*-cyan    → Lemon Yellow    (emplacement : la note claire et vive)
+       --*-violet  → Burnt Sienna    (emplacement : la note chaude)
+
+     Rien ici n'est réglé à l'œil. Un solveur part de la couleur du livre et
+     ne déplace que sa **clarté**, teinte et saturation constantes, jusqu'à ce
+     que le plancher de 4,5:1 soit atteint ; la couleur reste reconnaissable.
+     `npm run verify:teintes` refait le calcul complet à chaque exécution.
+     Pire couple de cette palette : **4,63:1** — mieux que les 4,53:1 de la
+     précédente, avec quatre teintes au lieu d'une.
      --------------------------------------------------------------------- */
-  --paper: #f8f5f2;           /* blanc cassé, planche */
+  --paper: #f8f5f2;           /* blanc cassé, planche Concept 16 */
   --surface: #ffffff;
-  --surface-2: #e6dacd;       /* beige chaud, planche */
+  --surface-2: #e6dacd;       /* beige chaud, planche Concept 16 */
   --overlay: rgb(26 26 26 / 0.5);
 
   --ink: #1a1a1a;             /* noir, planche — 16,02:1 sur le papier */
-  --ink-secondary: #464444;   /* gris souple assombri à 7:1 sur le pire fond */
-  --ink-muted: #62605f;       /* gris souple assombri à 4,5:1 sur le pire fond */
+  /* Les deux gris sont descendus d'un cran par rapport à la version
+     précédente (#464444 et #62605f). Ce n'est pas une préférence : les lavis
+     de section sont deux fois plus francs qu'avant, et c'est ce qui permet
+     aux quatre teintes d'être vraiment colorées sans qu'un texte secondaire
+     passe sous le plancher. Un gris plus sombre achète de la couleur. */
+  --ink-secondary: #3d3c3a;   /* ≥ 7,65:1 sur les sept fonds clairs */
+  --ink-muted: #595755;       /* ≥ 4,99:1 sur les sept fonds clairs */
 
   --rule: #e3dcd4;
   --rule-strong: #b9b0a6;
 
-  /* L'accent terre à sa valeur de planche sert d'**aplat** ; sa version
-     assombrie sert de **texte**. Deux rôles, deux valeurs, une seule couleur. */
-  --signal: #c8a284;          /* accent terre, planche */
-  --signal-aa: #805839;       /* le même, assombri pour le texte et les liens */
-  --signal-contrast: #1a1a1a; /* et non blanc : voir plus haut */
+  /* Le bleu du livre, et c'est lui qui signe le logo.
+     Il porte du texte tel quel : 4,93:1 sur le papier, au-dessus du plancher,
+     ce que le terracotta de la planche ne faisait pas (2,16:1). `--signal-aa`
+     n'existe donc plus pour sauver une couleur illisible mais pour tenir sur
+     les **lavis de section**, où le bleu du livre tombait à 3,72:1. */
+  --signal: #006eb8;          /* Blue, valeur du livre, intacte */
+  --signal-aa: #005fa0;       /* le même, un cran plus sombre, pour le texte */
+  --signal-contrast: #f8f5f2; /* du clair sur l'aplat de bleu : 4,93:1 */
 
   --success: #3f6b4a;
   --warning: #8a5e2a;
@@ -73,97 +104,86 @@
 
 
   /* ---------------------------------------------------------------------
-     Fonds de section, version chaude.
+     Fonds de section : chaque couleur du livre diluée à 20 % dans le papier.
 
-     La version précédente tirait quatre **teintes** d'une combinaison de Sanzo
-     Wada — bleu, vert-bleu, lilas, olive. Cette planche-ci n'a qu'un accent et
-     deux surfaces : les sections ne se distinguent donc plus par la teinte
-     mais par la **chaleur et la valeur**. C'est ce que veut dire
-     « néo-minimaliste », et c'est le vrai coût du changement de direction.
+     20 %, et pas une valeur par couleur : une dose unique donne quatre lavis
+     de même **force**, ce qui les rend lisibles comme une suite. Doser chaque
+     couleur séparément aurait donné quatre bandes d'intensités différentes,
+     et l'œil l'aurait lu comme un défaut d'impression.
 
-     Les quatre noms de tokens sont conservés — ils servent de classes Tailwind
-     dans une dizaine de composants — mais ils ne désignent plus des couleurs,
-     ils désignent quatre pas entre le blanc cassé et le beige chaud. Le beige
-     de la planche est l'un d'eux, sans retouche.
-
-     `npm run verify:teintes` refait le calcul complet à chaque exécution.
-     Pire couple de cette palette : **4,53:1** (`--signal-aa` sur le beige
-     chaud), soit le plancher tout juste tenu, ce qui est normal pour une
-     palette dont trois couleurs sur cinq sont des surfaces claires.
+     C'est la dose la plus forte qui laisse les quatre couleurs de texte
+     au-dessus de 4,5:1 sur les quatre lavis à la fois.
      --------------------------------------------------------------------- */
-  --teinte-bleu: #f2eae2;     /* sable clair, entre le papier et le beige */
-  --teinte-cyan: #e6dacd;     /* beige chaud, planche, sans retouche */
-  --teinte-violet: #f0e3d7;   /* lavis d'accent terre */
-  --teinte-vert: #eceae7;     /* lavis de gris souple, la seule note froide */
+  --teinte-bleu: #c6dae6;     /* Blue à 20 % */
+  --teinte-cyan: #f8f3cf;     /* Lemon Yellow à 20 % */
+  --teinte-violet: #e9d4c9;   /* Burnt Sienna à 20 % */
+  --teinte-vert: #e4eee4;     /* Cobalt Green à 20 % */
 
-  /* Un seul accent, parce que la planche n'en a qu'un. Les quatre jetons
-     existent encore pour les composants qui les nomment ; ils pointent tous
-     sur la même valeur, celle qui porte le texte. Les pictogrammes des quatre
-     services perdent donc leur couleur propre — c'est la conséquence directe
-     d'une identité à un accent, pas un oubli. */
-  /* Valeurs écrites en clair et non `var(--accent-terre)` : les contrôles de
-     contraste lisent les tokens un par un, et une indirection leur renvoie un
-     flux de jetons au lieu d'une couleur. Un token de couleur doit être une
-     couleur. */
-  --accent-bleu: #805839;
-  --accent-cyan: #805839;
-  --accent-violet: #805839;
-  --accent-vert: #805839;
+  /* Les accents : la couleur du livre assombrie, à teinte et saturation
+     constantes, jusqu'à tenir **à la fois** sur le papier et sur son propre
+     lavis de section — c'est cette seconde contrainte qui décide, pas la
+     première. Les quatre pictogrammes de services retrouvent du coup une
+     couleur chacun, ce que l'identité à un accent leur avait retiré. */
+  --accent-bleu: #005fa0;     /* Blue           → 6,15:1 papier / 4,63:1 lavis */
+  --accent-cyan: #756e04;     /* Lemon Yellow   → 4,85:1 papier / 4,69:1 lavis */
+  --accent-violet: #95461f;   /* Burnt Sienna   → 6,09:1 papier / 4,64:1 lavis */
+  --accent-vert: #337449;     /* Cobalt Green   → 5,18:1 papier / 4,73:1 lavis */
 
-  /* Le texte posé SUR un aplat d'accent.
-     Attention au piège, qui a coûté une itération : `--signal` et `--accent-*`
-     ne portent pas la même valeur de la même couleur. `--signal` est l'accent
-     terre de la planche, clair, et reçoit donc du **noir** — c'est la règle de
-     la planche, corrigée du sens. `--accent-*` est sa version assombrie, celle
-     qui porte le texte, et reçoit donc du **clair**. Même couleur, deux
-     valeurs, deux contrastes opposés. */
+  /* Le texte posé SUR un aplat d'accent. En thème clair les quatre accents
+     sont sombres, donc il est clair ; en thème sombre ils s'éclaircissent et
+     il bascule. Un `text-white` écrit en dur donnait 1,82:1 sur le cyan. */
   --accent-contrast: #f8f5f2;
 
   /* L'élévation remplace le filet comme séparateur principal. */
-  --shadow-sm: 0 1px 2px rgb(26 23 20 / 0.05);
-  --shadow-md: 0 4px 16px rgb(26 23 20 / 0.07);
-  --shadow-lg: 0 16px 48px rgb(26 23 20 / 0.10);
+  --shadow-sm: 0 1px 2px rgb(18 19 20 / 0.05);
+  --shadow-md: 0 4px 16px rgb(18 19 20 / 0.07);
+  --shadow-lg: 0 16px 48px rgb(18 19 20 / 0.10);
 }
 
 .dark [data-brand="sentis"] {
-  /* La planche ne donne pas de thème sombre. Celui-ci est dérivé d'elle, et
-     c'est là qu'elle se lit le mieux : sur un fond d'encre, le **gris souple**
-     et l'**accent terre** passent à leur valeur de planche, sans retouche.
-     Leur clarté médiane, celle qui ne passait pas sur le blanc cassé, donne
-     5,99:1 et 7,92:1 ici. */
-  --paper: #141312;
-  --surface: #1d1b19;
-  --surface-2: #2a241e;
+  /* Le livre ne donne pas de thème sombre, et c'est ici que la combinaison
+     333 est la plus fidèle : sur un fond d'encre, **deux de ses quatre
+     couleurs passent sans aucune retouche** — Lemon Yellow à 15,22:1 et
+     Cobalt Green à 10,63:1. Seuls le bleu et le sienna doivent s'éclaircir,
+     par le même solveur, dans l'autre sens.
+
+     Le fond passe du presque-noir chaud (#141312) à un presque-noir froid :
+     la chaleur venait de l'accent terre unique de la planche, et sous un bleu
+     à 100 % de saturation elle le rendait sale. L'encre, elle, reste le blanc
+     cassé de la planche — même valeur qu'en thème clair, où c'est le papier. */
+  --paper: #121314;
+  --surface: #1b1d1f;
+  --surface-2: #262a2d;
   --overlay: rgb(0 0 0 / 0.66);
 
-  --ink: #f8f5f2;             /* blanc cassé, planche */
-  --ink-secondary: #b0afae;
-  --ink-muted: #949291;       /* gris souple, planche, sans retouche */
+  --ink: #f8f5f2;             /* blanc cassé, planche Concept 16 */
+  --ink-secondary: #c5c6c7;
+  --ink-muted: #9ba0a4;       /* ≥ 4,66:1 sur les sept fonds sombres */
 
-  --rule: #2e2a26;
-  --rule-strong: #46403a;
+  --rule: #2a2d30;
+  --rule-strong: #434749;
 
-  --signal: #c8a284;          /* accent terre, planche, sans retouche */
-  --signal-aa: #c8a284;
-  --signal-contrast: #1a1a1a;
+  --signal: #008eed;          /* Blue éclairci : 5,40:1 sur l'encre */
+  --signal-aa: #21a6ff;       /* et un cran plus clair pour tenir sur les lavis */
+  --signal-contrast: #121314;
 
   --success: #7fb48c;
   --warning: #d7a662;
   --error: #e08a76;
   --info: #8fb0cc;
 
-  /* Quatre pas chauds au-dessus de l'encre, pas une inversion mécanique :
-     inverser donnerait quatre gris identiques. */
-  --teinte-bleu: #1f1c19;
-  --teinte-cyan: #2a241e;
-  --teinte-violet: #231d18;
-  --teinte-vert: #1e1e1d;
+  /* Les mêmes couleurs diluées à 18 % dans l'encre. Dose plus basse qu'en
+     clair parce qu'un lavis sombre monte en contraste beaucoup plus vite. */
+  --teinte-bleu: #0f2332;
+  --teinte-cyan: #37361c;
+  --teinte-violet: #2e1e17;
+  --teinte-vert: #2a352f;
 
-  --accent-bleu: #c8a284;
-  --accent-cyan: #c8a284;
-  --accent-violet: #c8a284;
-  --accent-vert: #c8a284;
-  --accent-contrast: #1a1a1a;
+  --accent-bleu: #008eed;     /* Blue éclairci */
+  --accent-cyan: #f8ed43;     /* Lemon Yellow, valeur du livre, intacte */
+  --accent-violet: #d66d39;   /* Burnt Sienna éclairci */
+  --accent-vert: #96d1aa;     /* Cobalt Green, valeur du livre, intacte */
+  --accent-contrast: #121314;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);

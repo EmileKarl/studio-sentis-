@@ -315,11 +315,36 @@ toujours au héros de l'accueil.
 suppression du sous-ensemble dédié au logo, font passer les polices d'une page
 de **89,8 à 47,3 ko**.
 
-**Ce que la direction coûte, et c'est dit sans détour :** la planche n'a qu'un
-accent, donc les quatre couleurs de section issues de Sanzo Wada disparaissent,
-et les pictogrammes des quatre services perdent leur couleur propre. Les
-sections se distinguent désormais par la chaleur et la valeur. C'est une
-conséquence de l'identité choisie, pas un oubli.
+**Ce que la direction a coûté, et ce qui l'a annulé :** la planche n'ayant qu'un
+accent, les quatre couleurs de section disparaissaient et les pictogrammes des
+quatre services perdaient leur couleur propre. C'était une conséquence de
+l'identité choisie, pas un oubli — et le client l'a vu avant de la nommer :
+« terne ». La section suivante défait exactement ce coût.
+
+### Retour aux couleurs du livre — combinaison 333
+
+La peau de la planche est gardée (papier, encre, beige, police, symbole) ; les
+couleurs viennent d'un arrangement du livre de Sanzo Wada, autour du bleu
+électrique demandé. Les choix ont été calculés, pas réglés à l'œil, et voici ce
+que le calcul a corrigé.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 97 | **Le bleu du livre ne tient pas sur ses propres lavis de section.** `#006eb8` donne 4,93:1 sur le papier — au-dessus du plancher — mais **3,72:1** sur `--teinte-bleu`, la couleur de la section où il sert le plus | `--signal` garde la valeur du livre pour le logo et les aplats ; `--signal-aa` est le même bleu un cran plus sombre et c'est lui qui porte le texte. La contrainte qui décide n'est pas le papier mais le **lavis** |
+| 98 | Les deux gris de texte de la planche (`#464444`, `#62605f`) interdisaient des lavis de section colorés : au-delà de 8 % de dilution, `--ink-muted` passait sous 4,5:1 sur le bleu et sur le sienna. Les quatre teintes seraient restées presque blanches | Gris descendus d'un cran (`#3d3c3a`, `#595755`), ce qui porte la dilution de **8 % à 20 %** sur les quatre couleurs. Un gris plus sombre achète de la couleur ; c'est l'arbitrage, et il est mesuré des deux côtés |
+| 99 | Une dilution **par couleur** aurait donné quatre bandes d'intensités différentes, que l'œil lit comme un défaut d'impression plutôt que comme une suite | Une dose unique pour les quatre, choisie comme la plus forte qui laisse les quatre couleurs de texte au-dessus du plancher sur les quatre lavis à la fois |
+| 100 | Le presque-noir **chaud** du thème sombre (`#141312`) venait de l'accent terre unique ; sous un bleu à 100 % de saturation il le rendait sale | Fond froid `#121314`. L'encre reste le blanc cassé de la planche — même valeur qu'en thème clair, où c'est le papier |
+| 101 | Le repli du globe de la page Contact nommait encore `#1d4ed8` et `#e2ecff`, les bleus de **l'autre marque** : feuille en retard, globe d'une couleur absente du site | Replis alignés sur les valeurs réelles des jetons |
+| 102 | L'icône d'onglet était un symbole clair sur carré d'encre. Un carré presque noir est ce que font la moitié des sites, et un symbole bleu sur encre ne tiendrait que **3,25:1** à seize pixels | Carré **bleu**, symbole blanc cassé : 4,93:1, et la marque se reconnaît dans une barre d'onglets sans être lue |
+
+**Ce que ça rend :** quatre accents distincts au lieu d'un, donc les quatre
+pictogrammes de services retrouvent leur couleur, les quatre fonds de section
+leur teinte, et les volumes 3D un vrai dégradé — `scene-3d` savait déjà
+mélanger trois couleurs, mais les trois pointaient sur le même terracotta.
+
+**Mesure :** pire couple de la palette **4,63:1**, contre 4,53:1 pour la
+précédente. Plus coloré *et* plus contrasté ; ce n'est pas un compromis, c'est
+le résultat d'avoir laissé un solveur choisir plutôt que l'œil.
 
 ## 4. Problèmes restants
 
