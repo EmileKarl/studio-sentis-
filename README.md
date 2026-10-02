@@ -443,6 +443,54 @@ Lighthouse le vérifie et qu'un agent à qui l'on donne l'adresse du studio y
 trouve en quinze lignes ce qu'il devrait sinon deviner. Il est régénéré depuis
 le dictionnaire, donc il ne peut pas diverger du site.
 
+## Prix
+
+La zone de prix est un **configurateur**, pas une grille. Le visiteur assemble
+son projet et voit le montant **et la date de livraison** se calculer pendant
+qu'il choisit. C'est la seule forme qui tienne sur la page la promesse faite
+partout ailleurs sur le site — « le prix et la date, dès le premier échange ».
+
+La date est une vraie date, en jours ouvrables depuis aujourd'hui. Elle est
+calculée **au client**, jamais au serveur : ces pages sont construites une fois
+puis servies des semaines, et une date figée à la construction serait fausse dès
+le lendemain.
+
+### Comment les montants sont fixés
+
+Ils ne sont pas alignés sur un concurrent, ils sont **calculés**. Le modèle, en
+clair :
+
+| | |
+| --- | --- |
+| Heures facturables réalistes | 1 050 h/an, soit ~57 % d'un temps plein |
+| Charges annuelles | 6 120 $ (outils, hébergement, assurance responsabilité professionnelle, comptabilité, matériel amorti, internet, prospection) |
+| Revenu brut visé | 90 000 $ |
+| **Taux interne nécessaire** | **92 $/h**, arrondi à 100 $/h |
+
+Cent dollars l'heure place le studio dans le **bas** de la fourchette
+québécoise, relevée entre 80 et 250 $/h. Chaque forfait est ensuite le produit
+de ce taux par les heures réelles du travail, révisions comprises :
+
+| Forfait | Heures | Prix | Marge réelle |
+| --- | --- | --- | --- |
+| Site une page | 23 | 2 200 $ | 96 $/h |
+| Site vitrine, 5 pages | 43 | 4 200 $ | 98 $/h |
+| Identité visuelle | 22 | 2 200 $ | 100 $/h |
+| Identité + vitrine | 58 | 5 600 $ | 97 $/h |
+| Cadrage d'application | 16 | 1 500 $ | 94 $/h |
+| Suivi mensuel | — | 125 $/mois | voir ci-dessous |
+
+**Le suivi mensuel était vendu à perte.** À 85 $, il ne couvrait pas son coût :
+hébergement infogéré 25 $, sauvegardes et surveillance 15 $, trois quarts
+d'heure de modifications 75 $, soit 115 $ de coût réel. Il passe à 125 $, ce qui
+reste le milieu du marché québécois (50 à 300 $).
+
+Sources du marché, relevées en octobre 2026 :
+[My Little Big Web](https://mylittlebigweb.com/blogue/combien-coute-un-site-internet/),
+[DKITWEB](https://dkitweb.ca/en/blog/website-cost-quebec/),
+[ITCares Montréal](https://itcares.ca/prix-creation-site-web-montreal.html),
+[Altorix](https://www.altorix.ca/fr/blog/combien-coute-un-site-web-quebec-2026).
+
 ## Pages légales
 
 Deux pages, [`/mentions-legales`](src/app/(sentis)/[locale]/mentions-legales) et

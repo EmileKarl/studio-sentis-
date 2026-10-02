@@ -281,6 +281,18 @@ sur aucune page : il fait partie du jeu de base (treillis, onde, anneau,
 poussière) que la bibliothèque de mouvement documente, et `treillis` sert
 toujours au héros de l'accueil.
 
+### Zone de prix, crédit de pied de page
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 97 | La zone de prix était une grille de six lignes « nom — prix », c'est-à-dire ce que fait tout le monde, et elle ne faisait rien de la promesse centrale du site | Configurateur : le visiteur assemble son projet, le montant **et la date** se calculent pendant qu'il choisit, et la sélection part dans la demande de soumission |
+| 98 | **Le suivi mensuel était vendu à perte.** 85 $/mois pour un coût réel de 115 $ (hébergement 25, sauvegardes et surveillance 15, trois quarts d'heure de modifications 75) | 125 $/mois, milieu du marché québécois relevé à 50-300 $ |
+| 99 | Les autres forfaits étaient dans le bas du marché freelance sans modèle de coûts derrière | Recalculés sur 1 050 h facturables, 6 120 $ de charges et un taux interne de 92 $/h arrondi à 100. Chaque prix est le produit du taux par les heures réelles ; marges mesurées entre 94 et 100 $/h |
+| 100 | Les cases du configurateur faisaient **16 × 16 px** pour un minimum tactile de 44 : sur un téléphone, on visait une pastille au lieu d'un bloc | La commande native couvre toute la carte (`absolute inset-0 size-full opacity-0`) ; la pastille visible est dessinée à côté, `aria-hidden`, et suit l'état réel |
+| 101 | Le panneau récapitulatif atténuait son texte avec `opacity-70` et `opacity-80` — même défaut que le logotype, et le contrôle l'a attrapé de la même façon | `text-paper/70`, une couleur composée donc mesurable, et non une opacité d'élément |
+| 102 | Le titre de l'appel final restait à **0 % d'opacité** alors qu'il était dans le viewport : son entrée au défilement n'avait pas encore couru | `sansFondu`. Le texte qui porte la conversion ne doit dépendre d'aucune animation pour être lu |
+| 103 | Le pied de page créditait « Site construit sur NEXUS UI » avec un lien vers la vitrine technique | Retiré, des deux langues et du composant |
+
 ### Verrouillage du logo sur une ligne
 
 | # | Problème | Correctif |

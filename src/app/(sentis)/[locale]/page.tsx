@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { HorizontalTrack, ObjetFlottant3D, Reveal3D } from "@/components/motion";
 import { Scene3DDifferee } from "@/components/motion/differe";
+import { ConfigurateurPrix } from "@/components/sentis/configurateur-prix";
 import { DemoBoulangerie } from "@/components/sentis/demos";
 import { BrowserFrame } from "@/components/sentis/frames";
 import { HeroPleinEcran } from "@/components/sentis/hero-plein-ecran";
@@ -125,36 +126,38 @@ export default async function SentisHome({
         </div>
       </Section>
 
-      {/* --- Vertical : les prix, argument central --- */}
-      <Section titre={d.prix.titre} chapo={d.prix.intro} tone="cyan">
-        <Reveal3D depuis="droite" distance={120}>
-          <div className="border-rule bg-paper overflow-hidden rounded-lg border">
-          <ul className="divide-rule divide-y">
-            {d.prix.forfaits.map((f) => (
-              <li
-                key={f.nom}
-                className="flex flex-col gap-3 p-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
-              >
-                <div className="min-w-0 sm:max-w-md">
-                  <h3 className="font-display text-ink text-xl font-semibold">{f.nom}</h3>
-                  <p className="text-ink-secondary mt-1 leading-relaxed text-pretty">
-                    {f.detail}
-                  </p>
-                </div>
-                <div className="shrink-0 sm:text-right">
-                  <p className="font-display text-ink text-2xl font-semibold tabular-nums">
-                    {f.prix}
-                  </p>
-                  <p className="text-ink-muted mt-0.5 text-sm">{f.delai}</p>
-                </div>
+      {/* --- Vertical : les prix, argument central ---
+          Un configurateur plutôt qu'une grille : c'est la seule forme qui
+          tienne sur la page la promesse faite partout ailleurs sur le site —
+          le prix **et la date**, tout de suite. Voir
+          `src/components/sentis/configurateur-prix.tsx`. */}
+      <Section id="prix" titre={d.prix.titre} chapo={d.prix.intro} tone="cyan">
+        <ConfigurateurPrix dict={d} locale={locale} />
+
+        <div className="border-rule mt-16 border-t pt-10">
+          <h3 className="font-display text-ink text-2xl font-semibold tracking-tight">
+            {d.prix.composition.titre}
+          </h3>
+          <p className="text-ink-secondary mt-4 max-w-(--content-max) leading-relaxed text-pretty">
+            {d.prix.composition.chapo}
+          </p>
+          <ul className="text-ink-secondary marker:text-signal-aa mt-5 max-w-(--content-max) list-disc space-y-2 pl-5 leading-relaxed">
+            {d.prix.composition.items.map((item) => (
+              <li key={item} className="text-pretty">
+                {item}
               </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal3D>
-        <p className="text-ink-secondary mt-8 max-w-(--content-max) leading-relaxed text-pretty">
-          {d.prix.note}
-        </p>
+            ))}
+          </ul>
+          {/* La comparaison sur trois ans est le seul chiffre de la page qui
+              parle d'un concurrent. Il est vérifiable à la calculette, ce qui
+              est la seule façon honnête d'en citer un. */}
+          <p className="text-ink bg-paper border-signal-aa mt-6 max-w-(--content-max) border-l-2 py-4 pl-5 leading-relaxed text-pretty">
+            {d.prix.composition.comparaison}
+          </p>
+          <p className="text-ink-secondary mt-6 max-w-(--content-max) leading-relaxed text-pretty">
+            {d.prix.note}
+          </p>
+        </div>
       </Section>
 
       {/* --- Appel final --- */}
@@ -170,7 +173,12 @@ export default async function SentisHome({
           className="text-rule-strong"
         />
         <Zone className="relative">
-          <Reveal3D depuis="bas" distance={70} angle={9}>
+          {/* `sansFondu` : ce titre est le dernier appel de la page, et le
+              contrôle navigateur l'a trouvé à 0 % d'opacité alors qu'il était
+              dans le viewport — l'entrée au défilement n'avait pas encore
+              couru. Le texte qui porte la conversion ne doit dépendre d'aucune
+              animation pour être lu. Il s'anime en position, pas en opacité. */}
+          <Reveal3D depuis="bas" distance={70} angle={9} sansFondu>
             <h2 className="font-display max-w-[18ch] text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl">
               {d.contact.titre}
             </h2>
