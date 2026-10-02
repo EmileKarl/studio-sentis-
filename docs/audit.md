@@ -281,6 +281,26 @@ sur aucune page : il fait partie du jeu de base (treillis, onde, anneau,
 poussière) que la bibliothèque de mouvement documente, et `treillis` sert
 toujours au héros de l'accueil.
 
+### Passage à la planche « Concept 16 »
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 89 | **La planche de marque affirme un contraste qui n'existe pas** : « BLANC SUR ACCENT — contraste valide ». Mesuré : **2,34:1**, plancher 4,5. Appliqué tel quel, tout texte blanc sur le terracotta aurait été illisible | `--signal-contrast: #1a1a1a`. Le noir sur l'accent donne 7,42:1 ; c'est ce couple-là que la planche aurait dû nommer |
+| 90 | Trois des cinq couleurs ne portent pas de texte sur le papier (beige 1,27:1, accent 2,16:1, gris souple 2,85:1) | Assombries à teinte et saturation constantes jusqu'au plancher, jamais remplacées. La planche reste reconnaissable, et les deux couleurs reprennent leur valeur d'origine en thème sombre |
+| 91 | `--signal` et `--accent-*` portent la même couleur à deux valeurs, et j'avais posé le même `--accent-contrast` sur les deux : noir sur l'accent **foncé** donnait 2,80:1 | Deux valeurs, deux contrastes opposés — clair sur l'accent foncé (5,73:1), noir sur l'accent clair (7,42:1) |
+| 92 | Les contrôles de contraste lisent les tokens un par un : une indirection `var(--accent-terre)` leur renvoie un flux de jetons au lieu d'une couleur, et quatre accents sont sortis « introuvables » | Valeurs écrites en clair. Un token de couleur doit être une couleur |
+| 93 | L'accent terre est bien plus clair que le violet qu'il remplace : à opacité inchangée, le chapô du héros tombait à **2,69:1** sur le pire pixel de fond en thème sombre | Opacité de la scène descendue par paliers mesurés — 0,38 donnait 3,16:1, 0,24 donnait 4,47:1 — jusqu'à 0,20, où `verify:scene` repasse |
+
+**Effet de bord mesuré :** une seule famille au lieu de deux, plus la
+suppression du sous-ensemble dédié au logo, font passer les polices d'une page
+de **89,8 à 47,3 ko**.
+
+**Ce que la direction coûte, et c'est dit sans détour :** la planche n'a qu'un
+accent, donc les quatre couleurs de section issues de Sanzo Wada disparaissent,
+et les pictogrammes des quatre services perdent leur couleur propre. Les
+sections se distinguent désormais par la chaleur et la valeur. C'est une
+conséquence de l'identité choisie, pas un oubli.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.

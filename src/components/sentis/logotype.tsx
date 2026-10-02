@@ -1,57 +1,86 @@
-import { policeLogo } from "@/lib/polices-marque";
-
 /**
  * Le logotype du studio.
  *
- * Deuxième version. La première posait le nom dans la serif du site avec
- * « Sentis » souligné d'un trait vermillon. Le client l'a écartée au profit de
- * quelque chose de **plus simple, plus doux et plus futuriste** : le trait
- * était un geste de crayon, donc un signe d'atelier, quand il veut un signe de
- * studio numérique.
+ * Troisième version, et la première qui ne soit pas de mon invention : elle
+ * applique la planche de marque « Concept 16 — Chaleur néo-minimaliste »
+ * fournie par le client.
  *
- * Ce qui change, et pourquoi :
+ * Ce qu'elle pose :
  *
- * - **Une géométrique, pas une serif.** Outfit est construite au compas : le
- *   « o », le « e » et le « s » sont des cercles à peine corrigés. C'est ce
- *   qui donne à la fois la douceur (aucun angle vif, aucune empattement) et le
- *   caractère contemporain. Une serif ne peut pas être « futuriste » sans se
- *   contredire.
- * - **Bas de casse.** Une capitale initiale annonce un nom propre ; le bas de
- *   casse intégral annonce une marque. C'est aussi ce qui allège le plus la
- *   silhouette du mot.
- * - **Graisse légère, approche ouverte.** Le poids 300 et l'interlettrage
- *   élargi laissent passer le fond entre les lettres. C'est le levier qui fait
- *   « soft » sans rien arrondir de plus.
- * - **Plus de trait, plus de couleur.** « Plus simple » veut dire un mot et
- *   rien d'autre. La hiérarchie est portée par la taille et par l'opacité du
- *   mot « studio », pas par un accent.
+ * - **un symbole** — un carré aux angles très arrondis contenant un sourire —
+ *   tracé au filet, dans l'accent terre ;
+ * - **un mot-symbole** en capitales, sur deux lignes, en Inter.
  *
- * **Coût : 1 088 octets.** La police est auto-hébergée et réduite à ses dix
- * glyphes — les lettres du nom et l'espace. Cette version de Next n'expose pas
- * l'option `text` du chargeur Google, qui aurait fait ce travail ; sans elle,
- * afficher six lettres coûtait un jeu latin complet, environ quinze
- * kilo-octets, et faisait sauter le budget de polices du projet
- * (`npm run verify:poids`). Ce n'est pas une dépense qu'un logo justifie.
- * Voir `src/fonts/README.md` pour la régénération et la licence.
+ * Trois décisions de mise en œuvre, toutes dictées par l'usage réel :
+ *
+ * 1. **Le symbole est un SVG en ligne, pas un fichier image.** Il suit donc
+ *    `currentColor` et les tokens, ce qui lui permet de basculer seul en thème
+ *    sombre et sur fond d'encre, sans qu'aucune variante soit à maintenir.
+ * 2. **Plus de police dédiée au logo.** Les versions précédentes chargeaient
+ *    un sous-ensemble d'Outfit pour six lettres. La planche demandant Inter
+ *    pour tout le site, le mot-symbole est composé dans la police que la page
+ *    charge déjà : mille kilo-octets d'économie deviennent un fichier de moins
+ *    à régénérer quand le nom change.
+ * 3. **Le mot-symbole est sur deux lignes**, comme le verrouillage principal
+ *    de la planche. Sur une seule, « STUDIO SENTIS » en capitales espacées
+ *    occupe deux cent quarante pixels dans un en-tête qui en fait mille deux
+ *    cents : il écrase la navigation.
  *
  * Pour changer de marque plus tard, il n'y a toujours que ce fichier à
  * toucher : les trois endroits où le nom apparaît — en-tête, tiroir mobile,
  * pied de page — passent tous par ici.
  */
+
+/**
+ * Le symbole seul.
+ *
+ * Le sourire est une courbe cubique et non un arc de cercle : un demi-cercle
+ * exact donne une bouche trop ouverte, qui lit comme un émoticône. Les deux
+ * points de contrôle descendent plus qu'ils ne s'écartent, ce qui aplatit le
+ * fond de la courbe et relève ses extrémités — c'est le dessin de la planche.
+ */
+export function Symbole({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      aria-hidden
+      className={className}
+      // `vectorEffect` non : à ces tailles le filet doit grossir avec le
+      // symbole, sinon il devient un cheveu sur l'enseigne et un trait épais
+      // sur le favicon.
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect
+        x="2.1"
+        y="2.1"
+        width="35.8"
+        height="35.8"
+        rx="11.4"
+        stroke="currentColor"
+        strokeWidth="2.2"
+      />
+      <path
+        d="M12.8 18.2 C 14.2 25.6, 25.8 25.6, 27.2 18.2"
+        stroke="currentColor"
+        strokeWidth="2.2"
+      />
+    </svg>
+  );
+}
+
 export function Logotype({ className }: { className?: string }) {
   return (
-    <span
-      className={`${policeLogo.className} ${className ?? ""} inline-flex items-baseline gap-[0.35em] leading-none font-light lowercase`}
-    >
-      {/* `text-ink-muted` et non une opacité. Le contrôle navigateur a levé
-          vingt constats sur un `opacity-55` : sa règle attrape tout texte sous
-          90 % d'opacité, parce que c'est ainsi que se manifeste une animation
-          d'entrée restée bloquée. Elle a raison sur le fond — une opacité
-          arbitraire échappe aux barrières de contraste, qui mesurent des
-          couleurs. Le token, lui, est mesuré : `npm run verify:teintes`
-          vérifie qu'il tient 4,5:1 sur chaque fond du site. */}
-      <span className="text-ink-muted text-[0.62em] tracking-[0.34em]">studio</span>
-      <span className="tracking-[0.13em]">sentis</span>
+    <span className={`inline-flex items-center gap-[0.55em] ${className ?? ""}`}>
+      <Symbole className="text-signal-aa size-[2.1em] shrink-0" />
+      {/* `leading-[0.98]` : deux lignes de capitales n'ont ni jambage ni
+          hampe, donc l'interligne normal y creuse un trou que l'œil lit comme
+          une séparation entre deux mots sans rapport. */}
+      <span className="block text-[0.52em] leading-[0.98] font-bold tracking-[0.07em] uppercase">
+        <span className="block">Studio</span>
+        <span className="block">Sentis</span>
+      </span>
     </span>
   );
 }

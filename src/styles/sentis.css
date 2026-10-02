@@ -15,26 +15,53 @@
    ========================================================================= */
 
 [data-brand="sentis"] {
-  --paper: #fcfaf6;           /* crème, plus chaude que le papier NEXUS */
+  /* ---------------------------------------------------------------------
+     Concept 16 — « Chaleur néo-minimaliste ».
+
+     Les cinq couleurs de la planche de marque, telles quelles :
+
+       blanc cassé  #f8f5f2      beige chaud  #e6dacd
+       gris souple  #949291      accent terre #c8a284
+       noir         #1a1a1a
+
+     Trois d'entre elles ne peuvent pas porter de texte sur le papier : le
+     beige à 1,27:1, l'accent à 2,16:1, le gris souple à 2,85:1. Ce sont des
+     couleurs de **surface** et de **marque**, pas d'interface, et une planche
+     de marque n'a pas à s'en excuser.
+
+     **Un point de la planche est faux et il est corrigé ici.** Elle annonce
+     « BLANC SUR ACCENT — contraste valide » : mesuré, c'est **2,34:1**, pour
+     un plancher à 4,5. Du blanc sur le terracotta serait illisible. Le couple
+     qui tient, c'est le **noir sur l'accent, à 7,42:1** — d'où
+     `--signal-contrast: #1a1a1a` plus bas.
+
+     Partout où une couleur de la planche ne pouvait pas porter de texte, elle
+     est **assombrie à teinte et saturation constantes** jusqu'au plancher,
+     jamais remplacée par une autre : le gris souple devient `--ink-muted`,
+     l'accent terre devient `--signal-aa`. La planche reste reconnaissable.
+     --------------------------------------------------------------------- */
+  --paper: #f8f5f2;           /* blanc cassé, planche */
   --surface: #ffffff;
-  --surface-2: #f2ede3;       /* sable : porte les sections, à la place des filets */
-  --overlay: rgb(26 23 20 / 0.5);
+  --surface-2: #e6dacd;       /* beige chaud, planche */
+  --overlay: rgb(26 26 26 / 0.5);
 
-  --ink: #1a1714;
-  --ink-secondary: #4a443c;
-  --ink-muted: #6e6659;
+  --ink: #1a1a1a;             /* noir, planche — 16,02:1 sur le papier */
+  --ink-secondary: #464444;   /* gris souple assombri à 7:1 sur le pire fond */
+  --ink-muted: #62605f;       /* gris souple assombri à 4,5:1 sur le pire fond */
 
-  --rule: #e0d9cb;
-  --rule-strong: #b5ab99;
+  --rule: #e3dcd4;
+  --rule-strong: #b9b0a6;
 
-  --signal: #e23e1f;
-  --signal-aa: #be2f16;
-  --signal-contrast: #ffffff;
+  /* L'accent terre à sa valeur de planche sert d'**aplat** ; sa version
+     assombrie sert de **texte**. Deux rôles, deux valeurs, une seule couleur. */
+  --signal: #c8a284;          /* accent terre, planche */
+  --signal-aa: #805839;       /* le même, assombri pour le texte et les liens */
+  --signal-contrast: #1a1a1a; /* et non blanc : voir plus haut */
 
-  --success: #1f7a4c;
-  --warning: #8a5800;
-  --error: #c0311a;
-  --info: #1f5f9e;
+  --success: #3f6b4a;
+  --warning: #8a5e2a;
+  --error: #9c3b2c;
+  --info: #44607a;
 
   /* Rayons plus doux que les 4px de NEXUS, sans basculer dans la bulle. */
   --radius: 0.625rem;
@@ -46,89 +73,51 @@
 
 
   /* ---------------------------------------------------------------------
-     Couleurs de section, version Sanzo Wada.
+     Fonds de section, version chaude.
 
-     Historique. Une première version très lavée (vert-de-gris, bleu pâle,
-     terre cuite, ocre) a été écartée : trop délavée, et pas « tech ». La
-     deuxième — bleu #1d4ed8, cyan #0b6379, violet #6d28d9, vert #13692f —
-     assumait la chroma, mais c'était la palette par défaut de n'importe quel
-     produit : quatre couleurs d'utilitaire, sans provenance.
+     La version précédente tirait quatre **teintes** d'une combinaison de Sanzo
+     Wada — bleu, vert-bleu, lilas, olive. Cette planche-ci n'a qu'un accent et
+     deux surfaces : les sections ne se distinguent donc plus par la teinte
+     mais par la **chaleur et la valeur**. C'est ce que veut dire
+     « néo-minimaliste », et c'est le vrai coût du changement de direction.
 
-     Celle-ci garde cette franchise et lui donne une origine : la combinaison
-     n° 347 de « A Dictionary of Color Combinations » de Sanzo Wada
-     (1933-34), quatre couleurs —
+     Les quatre noms de tokens sont conservés — ils servent de classes Tailwind
+     dans une dizaine de composants — mais ils ne désignent plus des couleurs,
+     ils désignent quatre pas entre le blanc cassé et le beige chaud. Le beige
+     de la planche est l'un d'eux, sans retouche.
 
-         Olive Yellow    #a6a159
-         Sea Green       #00b49b
-         Helvetia Blue   #005b8d
-         Lilac           #b984af
-
-     Relevée sur deux publications numériques qui concordent au hex près : le
-     jeu de données de mattdesl, fork corrigé de celui de Dain M. Blodorn Kim
-     qui fait tourner sanzo-wada.dmbk.io
-     (https://github.com/mattdesl/dictionary-of-colour-combinations), et la
-     version interactive https://colors.elwyn.co/ (Combination #347).
-     Réserve honnête : ces deux relevés descendent probablement de la même
-     numérisation d'origine, celle de Blodorn Kim. Leur accord confirme qu'on
-     n'a pas mal recopié, pas que le livre imprimé dise exactement cela.
-
-     Pourquoi le n° 347. Les 348 combinaisons du livre ont été passées en
-     revue : aucune ne couvre d'un coup les quatre familles du site (bleu,
-     cyan, violet, vert). Le n° 347 est celle qui en tient le plus — un bleu
-     franc, un vert-bleu franc, un mauve — sans faire entrer un rouge dans le
-     jeu. La quatrième place revient donc à `Olive Yellow` : un vert olive, et
-     non l'émeraude qu'il remplace. C'est un décalage assumé, et c'est
-     exactement la chaleur qu'on cherchait sur le papier crème.
-
-     Ce que valent les valeurs ci-dessous. Une couleur de 1933 est un pigment,
-     pas un token : trois des quatre tombent en pleine zone médiane, là où ni
-     texte sombre ni blanc ne passent — Sea Green est à 2,62:1 sous du blanc,
-     Olive Yellow à 2,67:1, Lilac à 3,01:1. Les mêmes couleurs, posées sur
-     l'encre du thème sombre, donnent 7,12:1, 7,00:1 et 6,22:1. Elles ne sont
-     pas mauvaises : elles sont faites pour l'autre fond.
-
-     D'où la règle appliquée ici : la valeur du livre est gardée telle quelle
-     partout où elle franchit déjà 4,5:1, et seulement ré-éclairée ailleurs —
-     même teinte et même chroma en OKLCH, clarté déplacée, dérive de teinte
-     sous 2°. Rien n'est choisi à l'œil, rien n'est inventé.
-
-     En thème clair, seul `Helvetia Blue` passe littéralement : il est déjà
-     assez sombre pour porter du blanc (7,29:1). Les trois autres descendent
-     en clarté. En thème sombre, c'est l'inverse : les trois autres tiennent
-     telles quelles et c'est `Helvetia Blue` qu'il faut remonter.
-
-     Deux familles, deux usages :
-
-     - `--teinte-*` : des fonds de section encore clairs, mais dont on voit la
-       couleur. Ils portent le texte du site tel quel.
-     - `--accent-*` : les mêmes couleurs à pleine force, pour ce qui doit
-       trancher — pictogrammes, filets, scènes 3D, panneaux pleins.
-
-     `npm run verify:teintes` refait le calcul complet — teintes et accents,
-     sur papier, sur leur fond, et la couleur de contraste par-dessus — à
-     chaque exécution. Le pire couple de cette palette est à 4,79:1
-     (`--ink-muted` sur `--teinte-cyan`), contre 4,60:1 dans la version
-     précédente (`--ink-muted` sur `--teinte-violet`) : la marge a été
-     gagnée, pas perdue.
+     `npm run verify:teintes` refait le calcul complet à chaque exécution.
+     Pire couple de cette palette : **4,53:1** (`--signal-aa` sur le beige
+     chaud), soit le plancher tout juste tenu, ce qui est normal pour une
+     palette dont trois couleurs sur cinq sont des surfaces claires.
      --------------------------------------------------------------------- */
+  --teinte-bleu: #f2eae2;     /* sable clair, entre le papier et le beige */
+  --teinte-cyan: #e6dacd;     /* beige chaud, planche, sans retouche */
+  --teinte-violet: #f0e3d7;   /* lavis d'accent terre */
+  --teinte-vert: #eceae7;     /* lavis de gris souple, la seule note froide */
 
-  /* Les quatre couleurs du livre, éclaircies en fonds de section. La chroma
-     est plafonnée à 0,036 (OKLCH) pour qu'elles portent `--ink-muted` sans
-     descendre sous le plancher. */
-  --teinte-bleu: #daefff;     /* Helvetia Blue éclairci */
-  --teinte-cyan: #d2f3eb;     /* Sea Green éclairci */
-  --teinte-violet: #fee5f8;   /* Lilac éclairci — un lilas pâle tire au rose */
-  --teinte-vert: #efeed2;     /* Olive Yellow éclairci */
+  /* Un seul accent, parce que la planche n'en a qu'un. Les quatre jetons
+     existent encore pour les composants qui les nomment ; ils pointent tous
+     sur la même valeur, celle qui porte le texte. Les pictogrammes des quatre
+     services perdent donc leur couleur propre — c'est la conséquence directe
+     d'une identité à un accent, pas un oubli. */
+  /* Valeurs écrites en clair et non `var(--accent-terre)` : les contrôles de
+     contraste lisent les tokens un par un, et une indirection leur renvoie un
+     flux de jetons au lieu d'une couleur. Un token de couleur doit être une
+     couleur. */
+  --accent-bleu: #805839;
+  --accent-cyan: #805839;
+  --accent-violet: #805839;
+  --accent-vert: #805839;
 
-  --accent-bleu: #005b8d;     /* Helvetia Blue, valeur du livre, non retouchée */
-  --accent-cyan: #016e5e;     /* Sea Green assombri (l'original est à 2,62:1 sous blanc) */
-  --accent-violet: #825079;   /* Lilac assombri (3,01:1 sous blanc) */
-  --accent-vert: #686316;     /* Olive Yellow assombri (2,67:1 sous blanc) */
-
-  /* La couleur du texte posé SUR un aplat d'accent. Elle ne peut pas être
-     figée à blanc : en thème sombre les accents s'éclaircissent, et le
-     contrôle a mesuré du blanc sur le cyan clair à 1,82:1. */
-  --accent-contrast: #ffffff;
+  /* Le texte posé SUR un aplat d'accent.
+     Attention au piège, qui a coûté une itération : `--signal` et `--accent-*`
+     ne portent pas la même valeur de la même couleur. `--signal` est l'accent
+     terre de la planche, clair, et reçoit donc du **noir** — c'est la règle de
+     la planche, corrigée du sens. `--accent-*` est sa version assombrie, celle
+     qui porte le texte, et reçoit donc du **clair**. Même couleur, deux
+     valeurs, deux contrastes opposés. */
+  --accent-contrast: #f8f5f2;
 
   /* L'élévation remplace le filet comme séparateur principal. */
   --shadow-sm: 0 1px 2px rgb(26 23 20 / 0.05);
@@ -137,58 +126,61 @@
 }
 
 .dark [data-brand="sentis"] {
-  --paper: #14120f;
-  --surface: #1e1b17;
-  --surface-2: #2a251f;
+  /* La planche ne donne pas de thème sombre. Celui-ci est dérivé d'elle, et
+     c'est là qu'elle se lit le mieux : sur un fond d'encre, le **gris souple**
+     et l'**accent terre** passent à leur valeur de planche, sans retouche.
+     Leur clarté médiane, celle qui ne passait pas sur le blanc cassé, donne
+     5,99:1 et 7,92:1 ici. */
+  --paper: #141312;
+  --surface: #1d1b19;
+  --surface-2: #2a241e;
   --overlay: rgb(0 0 0 / 0.66);
 
-  --ink: #f7f3ec;
-  --ink-secondary: #c4bcae;
-  --ink-muted: #9c9384;
+  --ink: #f8f5f2;             /* blanc cassé, planche */
+  --ink-secondary: #b0afae;
+  --ink-muted: #949291;       /* gris souple, planche, sans retouche */
 
-  --rule: #322c25;
-  --rule-strong: #4a443c;
+  --rule: #2e2a26;
+  --rule-strong: #46403a;
 
-  --signal: #ff7a57;
-  --signal-aa: #ff7a57;
-  --signal-contrast: #14120f;
+  --signal: #c8a284;          /* accent terre, planche, sans retouche */
+  --signal-aa: #c8a284;
+  --signal-contrast: #1a1a1a;
 
-  --success: #5fd19a;
-  --warning: #e5a83b;
-  --error: #ff7a63;
-  --info: #6fb2f0;
+  --success: #7fb48c;
+  --warning: #d7a662;
+  --error: #e08a76;
+  --info: #8fb0cc;
 
+  /* Quatre pas chauds au-dessus de l'encre, pas une inversion mécanique :
+     inverser donnerait quatre gris identiques. */
+  --teinte-bleu: #1f1c19;
+  --teinte-cyan: #2a241e;
+  --teinte-violet: #231d18;
+  --teinte-vert: #1e1e1d;
 
-  /* Les fonds sombres ne sont pas les clairs inversés : une inversion
-     mécanique donne quatre gris identiques. Chacun garde la teinte de sa
-     couleur Wada, assez pour qu'on distingue une section de la suivante.
-
-     C'est ici que le livre se lit sans retouche : `Sea Green`, `Lilac` et
-     `Olive Yellow` sont recopiés tels quels — leur clarté médiane, celle qui
-     ne passait pas sur le crème, donne 7,12:1, 6,22:1 et 7,00:1 sur l'encre.
-     Seul `Helvetia Blue` doit être remonté : à #005b8d il tomberait à 2,57:1
-     sur ce fond. */
-  --teinte-bleu: #0e2638;
-  --teinte-cyan: #032a23;
-  --teinte-violet: #331d2f;
-  --teinte-vert: #282509;
-
-  --accent-bleu: #529cd2;     /* Helvetia Blue remonté en clarté */
-  --accent-cyan: #00b49b;     /* Sea Green, valeur du livre, non retouchée */
-  --accent-violet: #b984af;   /* Lilac, valeur du livre, non retouchée */
-  --accent-vert: #a6a159;     /* Olive Yellow, valeur du livre, non retouchée */
-  --accent-contrast: #14120f;
+  --accent-bleu: #c8a284;
+  --accent-cyan: #c8a284;
+  --accent-violet: #c8a284;
+  --accent-vert: #c8a284;
+  --accent-contrast: #1a1a1a;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);
   --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.6);
 }
 
-/* Les familles typographiques ne sont pas celles de NEXUS : un grotesk
-   technique signe un outil, une serif à contraste doux signe un atelier. */
+/* Une seule famille, Inter, comme le demande la planche de marque.
+   Les titres se distinguent par la graisse et l'interlettrage, pas par une
+   seconde police. L'interlettrage est resserré parce qu'un grotesk neutre
+   composé en grand corps paraît sinon lâche. */
 [data-brand="sentis"] {
-  --font-display-brand: var(--font-fraunces), Georgia, serif;
-  --font-body-brand: var(--font-source-sans), system-ui, sans-serif;
+  --font-display-brand: var(--font-inter), system-ui, sans-serif;
+  --font-body-brand: var(--font-inter), system-ui, sans-serif;
+}
+
+[data-brand="sentis"] .font-display {
+  letter-spacing: -0.022em;
 }
 
 [data-brand="sentis"] .font-display {

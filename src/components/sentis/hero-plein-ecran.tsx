@@ -47,7 +47,16 @@ export function HeroPleinEcran({
           Il est masqué vers la gauche pour laisser la colonne de texte nette. */}
       <Scene3DDifferee
         variante="treillis"
-        alpha={0.6}
+        // 0,20 et non 0,6 : la planche « Concept 16 » remplace le violet
+        // profond de l'accent précédent par un terracotta nettement plus
+        // clair. À opacité égale, le contrôle mesurait le chapô du héros à
+        // 2,69:1 sur le pire pixel de fond en thème sombre, pour un plancher à
+        // 4,5. La valeur est descendue par paliers — 0,38 donnait encore
+        // 3,16:1 et 0,24 encore 4,47:1 — jusqu'à ce que `npm run verify:scene`
+        // repasse. Elle n'est pas choisie à l'œil : c'est le prix d'un accent
+        // clair posé derrière du texte clair, et la scène y gagne la discrétion
+        // que « néo-minimaliste » demandait de toute façon.
+        alpha={0.2}
         decalage={0.34}
         zoom={1.22}
         className="text-accent-bleu [mask-image:radial-gradient(ellipse_at_76%_48%,white,transparent_74%)]"

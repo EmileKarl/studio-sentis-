@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { SentisFooter } from "@/components/sentis/footer";
@@ -9,20 +9,23 @@ import { SentisHeader } from "@/components/sentis/header";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { SITE_URL, SITE_URL_IS_PLACEHOLDER } from "@/lib/site";
 
-/** Serif à contraste doux : un atelier, pas un outil. Fraunces est variable. */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+/**
+ * Une seule famille, Inter, comme le demande la planche de marque.
+ *
+ * Elle remplace le couple Fraunces + Source Sans 3. Ce n'est pas un détail de
+ * goût : une serif à contraste doux signait un atelier, un grotesk neutre
+ * signe un studio. C'est le cœur de « néo-minimaliste », et c'est aussi ce qui
+ * fait que les titres n'ont plus besoin d'une seconde police pour se
+ * distinguer — la graisse et l'interlettrage suffisent.
+ *
+ * Une famille au lieu de deux allège aussi la page : un seul fichier de
+ * police là où il y en avait deux.
+ */
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-  axes: ["SOFT", "WONK"],
 });
-
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
@@ -91,7 +94,7 @@ export default async function SentisLayout({
       data-brand="sentis"
       lang={locale}
       data-langue-document={locale}
-      className={`${fraunces.variable} ${sourceSans.variable} bg-paper text-ink flex min-h-dvh flex-col`}
+      className={`${inter.variable} bg-paper text-ink flex min-h-dvh flex-col`}
     >
       {/*
         `<html lang>` est posé par la mise en page racine, qui ne connaît pas

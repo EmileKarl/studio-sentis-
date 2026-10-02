@@ -1,23 +1,33 @@
 /**
  * Fabrique les images de marque : icône d'onglet, icône iOS, image de partage.
  *
- * Pourquoi un script plutôt que des fichiers dessinés à la main : le logotype
- * du studio est du texte composé, pas un dessin. Le seul moyen d'obtenir une
- * icône qui soit *exactement* la même lettre que celle de l'en-tête, c'est de
- * la faire rendre par le même moteur que le site, puis de la photographier.
- * Si la marque change, on relance ce script.
- *
- * **Deuxième marque.** La première composait « Studio Sentis » dans la
- * Fraunces avec un soulignement vermillon. Le client l'a écartée pour quelque
- * chose de plus simple, plus doux et plus futuriste : bas de casse intégral,
- * géométrique (Outfit), approche ouverte, aucun accent de couleur.
- *
  *   node scripts/generer-images-marque.mjs
  *
  * Il écrit :
  *   src/app/icon.png          512 × 512  — icône d'onglet (convention Next)
  *   src/app/apple-icon.png    180 × 180  — écran d'accueil iOS
  *   public/og.png            1200 × 630  — aperçu au partage (Open Graph)
+ *
+ * **Troisième marque.** Elle applique la planche « Concept 16 — Chaleur
+ * néo-minimaliste » : le symbole au filet — un carré très arrondi contenant un
+ * sourire — et le mot-symbole en capitales dans Inter.
+ *
+ * Le symbole est tracé **en SVG dans la page**, avec exactement les mêmes
+ * coordonnées que `src/components/sentis/logotype.tsx`. C'est ce qui garantit
+ * que l'icône d'onglet est le même dessin que celui de l'en-tête, et non une
+ * approximation. Si le symbole change, les deux fichiers changent ensemble.
+ *
+ * **L'icône est l'inversion de la planche** — symbole clair sur carré d'encre —
+ * et non la version claire. À seize pixels dans une barre d'onglets, un filet
+ * terracotta sur blanc cassé donne 2,16:1 et disparaît ; le carré sombre porte
+ * l'icône et le symbole la signe.
+ *
+ * **La police est lue sur le disque, pas demandée à Google.** La version
+ * précédente la chargeait par `<link>`, et quand cette requête échoue — proxy
+ * dont le certificat n'est pas reconnu par Chromium, machine hors ligne —
+ * `document.fonts.ready` se résout quand même : l'image sortait dans une
+ * police de repli sans que rien ne le signale. `verifierPolice` interroge
+ * désormais `document.fonts.check` avant la capture et arrête le script.
  *
  * Il a besoin d'un Chromium. `CHROME_PATH` permet d'en désigner un déjà
  * présent plutôt que de laisser Playwright en télécharger un.
@@ -29,73 +39,46 @@ import { dirname, resolve } from "node:path";
 
 const RACINE = resolve(import.meta.dirname, "..");
 
-// Les couleurs sont recopiées de `src/styles/sentis.css`. Ce sont des images
-// figées : elles ne peuvent pas suivre les tokens au moment du rendu, donc
-// toute modification de la palette demande de relancer ce script.
-const PAPIER = "#fcfaf6";
-const ENCRE = "#1a1714";
-const FILET = "#e0d9cb";
-const GRIS = "#6e6659";
-const GRIS_TEXTE = "#4a443c";
+// Les cinq couleurs de la planche, recopiées de `src/styles/sentis.css`. Ce
+// sont des images figées : elles ne suivent pas les tokens au rendu, donc tout
+// changement de palette demande de relancer ce script.
+const BLANC_CASSE = "#f8f5f2";
+const BEIGE = "#e6dacd";
+const ACCENT = "#c8a284";
+const ACCENT_TEXTE = "#805839";
+const NOIR = "#1a1a1a";
+const GRIS_TEXTE = "#464444";
 
-// Aucune couleur d'accent dans ces images, et c'est délibéré : ce sont des
-// fichiers figés, alors que la palette de section du site, elle, bouge. Une
-// image de partage teintée d'un accent qui a changé depuis se remarque tout
-// de suite, et on ne la regénère jamais au bon moment.
-
-/**
- * Les polices sont lues **sur le disque**, pas demandées à Google.
- *
- * Ce n'est pas une préférence, c'est la correction d'un défaut : la version
- * précédente de ce script chargeait Fraunces par une balise `<link>` vers
- * fonts.googleapis.com. Quand cette requête échoue — proxy d'entreprise dont
- * le certificat n'est pas reconnu par Chromium, machine hors ligne, panne —
- * `document.fonts.ready` se résout quand même, la capture part, et l'image
- * sort **dans une police de repli sans que rien ne le signale**. Les icônes
- * livrées jusqu'ici n'étaient pas dans la police du site, et personne ne
- * pouvait le voir sans comparer les lettres côte à côte.
- *
- * Deux garde-fous désormais :
- *
- * 1. les fichiers sont locaux, encodés en base64 dans la page — aucune
- *    requête réseau, donc rien à échouer ;
- * 2. `verifierPolice` interroge `document.fonts.check` **avant** la capture et
- *    arrête le script si la police n'est pas là. Un échec bruyant vaut mieux
- *    qu'une icône fausse qu'on découvre en production.
- *
- * Les trois fichiers sont des sous-ensembles réduits aux caractères employés
- * ici — voir `scripts/polices/` et `src/fonts/README.md` pour les regénérer.
- * Les licences OFL les accompagnent, comme elles l'exigent.
- */
 const POLICES = [
-  { famille: "OutfitLogo", graisse: 400, fichier: "src/fonts/outfit-logo-300.woff2" },
-  { famille: "OutfitIcone", graisse: 400, fichier: "scripts/polices/outfit-icone-500.woff2" },
-  { famille: "SourceOG", graisse: 400, fichier: "scripts/polices/source-sans-3-400-og.woff2" },
+  { famille: "InterOG", fichier: "scripts/polices/inter-og.woff2" },
 ];
 
-const POLICE = POLICES.map(({ famille, graisse, fichier }) => {
+const POLICE = POLICES.map(({ famille, fichier }) => {
   const donnees = readFileSync(resolve(RACINE, fichier)).toString("base64");
-  return `<style>@font-face{font-family:"${famille}";font-weight:${graisse};font-style:normal;font-display:block;src:url(data:font/woff2;base64,${donnees}) format("woff2")}</style>`;
+  return `<style>@font-face{font-family:"${famille}";font-weight:400 700;font-style:normal;font-display:block;src:url(data:font/woff2;base64,${donnees}) format("woff2")}</style>`;
 }).join("\n");
 
 /**
- * L'icône : la lettre seule, en réserve sur un carré d'encre.
+ * Le symbole, aux coordonnées exactes du composant.
  *
- * Le fond plein n'est pas décoratif, il est fonctionnel. Un « s » géométrique
- * léger posé sur le papier crème disparaît à seize pixels dans une barre
- * d'onglets ; en réserve sur l'encre, c'est la forme du carré qui porte
- * l'icône et la lettre qui la signe. La graisse est relevée à 500 pour la
- * même raison — la 300 de l'en-tête est trop fine à cette taille.
+ * `taille` est le côté du carré de dessin ; l'épaisseur du filet suit, sinon
+ * le symbole devient un cheveu sur l'enseigne et un trait épais sur le favicon.
  */
+const symbole = (taille, couleur) => `
+  <svg width="${taille}" height="${taille}" viewBox="0 0 40 40" fill="none"
+       stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.1" y="2.1" width="35.8" height="35.8" rx="11.4"
+          stroke="${couleur}" stroke-width="2.2"/>
+    <path d="M12.8 18.2 C 14.2 25.6, 25.8 25.6, 27.2 18.2"
+          stroke="${couleur}" stroke-width="2.2"/>
+  </svg>`;
+
 const icone = (taille) => `<!doctype html><html><head><meta charset="utf-8">${POLICE}
 <style>
   html,body{margin:0;padding:0}
-  body{width:${taille}px;height:${taille}px;background:${ENCRE};
+  body{width:${taille}px;height:${taille}px;background:${NOIR};
        display:flex;align-items:center;justify-content:center}
-  .s{font-family:OutfitIcone,system-ui,sans-serif;color:${PAPIER};
-     font-size:${Math.round(taille * 0.62)}px;line-height:1;
-     letter-spacing:0}
-</style></head><body><span class="s">s</span></body></html>`;
+</style></head><body>${symbole(Math.round(taille * 0.66), BLANC_CASSE)}</body></html>`;
 
 /**
  * L'aperçu au partage : ce que voient Facebook, LinkedIn, WhatsApp et iMessage.
@@ -107,31 +90,23 @@ const icone = (taille) => `<!doctype html><html><head><meta charset="utf-8">${PO
 const partage = () => `<!doctype html><html><head><meta charset="utf-8">${POLICE}
 <style>
   html,body{margin:0;padding:0}
-  body{width:1200px;height:630px;background:${PAPIER};color:${ENCRE};
-       font-family:SourceOG,system-ui,sans-serif;
+  body{width:1200px;height:630px;background:${BLANC_CASSE};color:${NOIR};
+       font-family:InterOG,system-ui,sans-serif;
        display:flex;flex-direction:column;justify-content:center;
        padding:0 88px;position:relative;overflow:hidden}
-  /* La même trame que le héros du site, en fond. */
-  .trame{position:absolute;inset:0;
-     background-image:linear-gradient(${FILET} 1px,transparent 1px),
-                      linear-gradient(90deg,${FILET} 1px,transparent 1px);
-     background-size:72px 72px;
-     -webkit-mask-image:radial-gradient(ellipse at 72% 50%,#fff,transparent 70%)}
-  .lieu{position:relative;font-family:ui-monospace,monospace;font-size:20px;
-        letter-spacing:.24em;color:${GRIS};margin-bottom:30px}
-  /* Le mot-symbole, aux proportions exactes de l'en-tête : bas de casse,
-     graisse 300, « studio » à 62 % et très ouvert, « sentis » à pleine taille. */
-  .nom{position:relative;font-family:OutfitLogo,system-ui,sans-serif;
-       display:flex;align-items:baseline;gap:.35em;line-height:1;font-size:104px}
-  .nom .petit{font-size:.62em;letter-spacing:.34em;opacity:.55}
-  .nom .grand{letter-spacing:.13em}
-  .quoi{position:relative;font-size:32px;color:${GRIS_TEXTE};margin-top:38px;max-width:24ch;line-height:1.35}
-  .barre{position:absolute;left:0;right:0;bottom:0;height:10px;background:${ENCRE}}
+  /* Un aplat de beige chaud en biais, seule respiration de la planche. */
+  .biais{position:absolute;right:-120px;top:-120px;width:620px;height:620px;
+         background:${BEIGE};border-radius:180px;transform:rotate(18deg)}
+  .marque{position:relative;display:flex;align-items:center;gap:26px;margin-bottom:46px}
+  .mot{font-weight:700;font-size:40px;line-height:.98;letter-spacing:.07em;text-transform:uppercase}
+  .quoi{position:relative;font-weight:700;font-size:56px;line-height:1.14;letter-spacing:-.022em;max-width:17ch}
+  .lieu{position:relative;font-size:26px;color:${GRIS_TEXTE};margin-top:34px}
+  .barre{position:absolute;left:0;right:0;bottom:0;height:12px;background:${ACCENT}}
 </style></head><body>
-  <div class="trame"></div>
-  <p class="lieu">CHÂTEAUGUAY · QUÉBEC</p>
-  <p class="nom"><span class="petit">studio</span><span class="grand">sentis</span></p>
+  <div class="biais"></div>
+  <div class="marque">${symbole(84, ACCENT_TEXTE)}<div class="mot">Studio<br>Sentis</div></div>
   <p class="quoi">Sites web, applications et identité visuelle.</p>
+  <p class="lieu">Châteauguay · Québec</p>
   <div class="barre"></div>
 </body></html>`;
 
@@ -145,19 +120,16 @@ async function photographier(html, largeur, hauteur, sortie) {
     deviceScaleFactor: 1,
   });
   await page.setContent(html, { waitUntil: "load" });
+
   // `document.fonts.check` ne dit vrai que d'une police **déjà chargée**. Les
-  // trois sont déclarées en `font-display: block` sur des données locales : on
-  // demande donc leur chargement explicitement avant de vérifier, sans quoi le
-  // garde-fou refuserait des polices parfaitement présentes.
+  // données étant locales, on demande leur chargement explicitement avant de
+  // vérifier, sans quoi le garde-fou refuserait une police présente.
   await page.evaluate(() =>
     Promise.all([...document.fonts].map((f) => f.load())).then(
       () => document.fonts.ready,
     ),
   );
 
-  // Le garde-fou : si une police n'est pas réellement disponible, on s'arrête.
-  // Sans lui, la capture part quand même et l'image sort dans une police de
-  // repli — le défaut exact qu'avait la version précédente de ce script.
   const manquantes = await page.evaluate(
     (familles) => familles.filter((f) => !document.fonts.check(`16px "${f}"`)),
     POLICES.map((p) => p.famille),
@@ -169,6 +141,7 @@ async function photographier(html, largeur, hauteur, sortie) {
     );
   }
   await page.waitForTimeout(150);
+
   const chemin = resolve(RACINE, sortie);
   mkdirSync(dirname(chemin), { recursive: true });
   await page.screenshot({ path: chemin, type: "png" });

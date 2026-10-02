@@ -222,43 +222,81 @@ pas.
 le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
 sien, ni équipe qui n'existe pas.
 
-## Logotype et police de marque
+## Marque — Concept 16, « Chaleur néo-minimaliste »
 
-Le logotype est composé, pas dessiné : « studio sentis » en bas de casse dans
-**Outfit Light**, approche ouverte, sans accent de couleur. Un seul fichier à
-toucher pour changer de marque — [`logotype.tsx`](src/components/sentis/logotype.tsx).
+Le site applique la planche de marque fournie par le client. Cinq couleurs, une
+police, un symbole.
 
-La police est **auto-hébergée et réduite à ses dix glyphes** : 1 088 octets au
-lieu d'environ quinze kilo-octets pour un jeu latin complet. Cette version de
-Next n'expose pas l'option `text` du chargeur Google ; sans elle, six lettres
-auraient fait sauter le budget de polices. Régénération et licence dans
-[`src/fonts/README.md`](src/fonts/README.md).
+| | | |
+| --- | --- | --- |
+| blanc cassé | `#f8f5f2` | papier |
+| beige chaud | `#e6dacd` | surface de section |
+| gris souple | `#949291` | texte en thème sombre |
+| accent terre | `#c8a284` | aplats, et texte en thème sombre |
+| noir | `#1a1a1a` | encre |
+
+**Un point de la planche est faux, et il est corrigé.** Elle annonce « blanc sur
+accent — contraste valide » : mesuré, c'est **2,34:1**, pour un plancher à 4,5.
+Du blanc sur le terracotta serait illisible. Le couple qui tient est le **noir
+sur l'accent, à 7,42:1** ; c'est lui qui est en place.
+
+Trois des cinq couleurs ne peuvent pas porter de texte sur le papier — le beige
+à 1,27:1, l'accent à 2,16:1, le gris souple à 2,85:1. Ce sont des couleurs de
+**surface** et de **marque**, pas d'interface, et une planche n'a pas à s'en
+excuser. Partout où il en fallait une version lisible, elle est **assombrie à
+teinte et saturation constantes** jusqu'au plancher, jamais remplacée : le gris
+souple devient `--ink-muted`, l'accent terre devient `--signal-aa`. La planche
+reste reconnaissable.
+
+En **thème sombre**, que la planche ne couvre pas, le gris souple et l'accent
+terre reprennent leur valeur d'origine sans retouche : leur clarté médiane, qui
+ne passait pas sur le blanc cassé, donne 5,99:1 et 7,92:1 sur l'encre.
+
+Un piège qui a coûté une itération : `--signal` et `--accent-*` portent la même
+couleur à deux valeurs. `--signal` est l'accent clair de la planche et reçoit du
+**noir** ; `--accent-*` est sa version assombrie, qui porte le texte, et reçoit
+du **clair**. Même couleur, deux contrastes opposés.
+
+### Ce que le changement de direction coûte
+
+La planche n'a **qu'un accent**. Les quatre couleurs de section issues de Sanzo
+Wada disparaissent : les sections se distinguent désormais par la **chaleur et
+la valeur**, pas par la teinte. Les quatre noms de tokens `--teinte-*` et
+`--accent-*` sont conservés — une dizaine de composants les nomment — mais ils
+désignent quatre pas entre le blanc cassé et le beige chaud, et les quatre
+accents pointent sur la même valeur. **Les pictogrammes des quatre services
+perdent donc leur couleur propre.** C'est la conséquence directe d'une identité
+à un accent, pas un oubli.
+
+### Logotype
+
+Un **symbole** — carré très arrondi contenant un sourire, tracé au filet — et un
+**mot-symbole** en capitales sur deux lignes.
+([`logotype.tsx`](src/components/sentis/logotype.tsx), un seul fichier à
+toucher.)
+
+Le symbole est un **SVG en ligne**, donc il suit `currentColor` et bascule seul
+en thème sombre, sans variante à maintenir. Le mot-symbole est composé dans
+Inter, que la page charge déjà : plus de police dédiée au logo.
+
+### Typographie
+
+**Inter pour tout**, en remplacement du couple Fraunces + Source Sans 3. Les
+titres se distinguent par la graisse et un interlettrage resserré, pas par une
+seconde police. Les capitales de la planche sont réservées aux libellés courts :
+un titre de phrase entière en capitales se lit moins bien, et le site en a
+plusieurs.
+
+Effet de bord mesuré : les polices d'une page passent de **89,8 à 47,3 ko**.
 
 `node scripts/generer-images-marque.mjs` refabrique l'icône d'onglet, l'icône
-iOS et l'image de partage à partir du même mot-symbole. Le script **lit les
-polices sur le disque** et **s'arrête** si l'une manque : la version précédente
-les demandait à Google et, quand cette requête échouait, produisait en silence
-des images dans une police de repli. Les icônes livrées jusqu'ici n'étaient pas
-dans la police du site.
+iOS et l'image de partage. Le symbole y est tracé avec **les mêmes coordonnées
+que le composant**, donc l'icône est le dessin de l'en-tête et non une
+approximation. L'icône est l'**inversion** de la planche — symbole clair sur
+carré d'encre : à seize pixels, un filet terracotta sur blanc cassé donne 2,16:1
+et disparaît.
 
-## Couleurs
-
-La palette de section vient de la **combinaison n° 347** de *A Dictionary of
-Color Combinations* de Sanzo Wada (1933-34) : Olive Yellow, Sea Green, Helvetia
-Blue, Lilac.
-
-Une couleur de 1933 est un pigment, pas un token : trois des quatre tombent
-dans la zone médiane où ni le texte sombre ni le blanc ne passent. La règle
-appliquée : **la valeur du livre est gardée telle quelle partout où elle franchit
-déjà 4,5:1**, et seulement ré-éclairée ailleurs — teinte et chroma OKLCH
-conservées, dérive mesurée sous 2°. Quatre des huit accents sont la valeur du
-livre non retouchée.
-
-`npm run verify:teintes` passe, seuil intact. Le pire couple est passé de
-**4,60:1 à 4,79:1** : la marge a été gagnée, pas dépensée. Le détail des
-mesures est dans [`src/styles/sentis.css`](src/styles/sentis.css).
-
-## Référencement et poids
+## Référencement et poids## Référencement et poids
 
 **Référencement.** Chaque page pose sa propre balise canonique, ses `hreflang`
 (`fr`, `en`, `x-default` sur le français) et ses balises Open Graph, via
