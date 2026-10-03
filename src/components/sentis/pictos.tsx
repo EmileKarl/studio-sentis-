@@ -51,7 +51,7 @@ function Trace({
       data-entree-animee
       initial={{ pathLength: 0, opacity: 0 }}
       whileInView={{ pathLength: 1, opacity: 1 }}
-      viewport={{ once: true, amount: "some", margin: "0px 0px -10% 0px" }}
+      viewport={{ once: true, amount: "some", margin: "0px 0px -40px 0px" }}
       transition={{
         pathLength: { duration: DURATION.slower, ease: EASE.out, delay },
         opacity: { duration: DURATION.fast, delay },

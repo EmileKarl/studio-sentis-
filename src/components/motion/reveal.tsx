@@ -51,7 +51,10 @@ export function Reveal({
         ...offsetFor(direction, distance),
       }}
       whileInView={{ opacity: 1, filter: blur ? "blur(0px)" : undefined, x: 0, y: 0 }}
-      viewport={{ once: !repeat, amount: "some", margin: "0px 0px -10% 0px" }}
+      // 40 px et non `-10%` : voir `reveal-3d.tsx`, qui porte le raisonnement.
+      // Une marge en pourcentage ouvrait une bande où un texte restait visible
+      // à opacité 0, et le contrôle navigateur la trouvait.
+      viewport={{ once: !repeat, amount: "some", margin: "0px 0px -40px 0px" }}
       transition={{ duration: DURATION.slow, ease: EASE.out, delay }}
     >
       {children}

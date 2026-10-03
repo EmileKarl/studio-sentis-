@@ -84,7 +84,18 @@ export function Reveal3D({
         style={{ transformStyle: "preserve-3d" }}
         initial={{ opacity: sansFondu ? 1 : 0, z: -distance, ...depart }}
         whileInView={{ opacity: 1, z: 0, rotateX: 0, rotateY: 0, x: 0, y: 0 }}
-        viewport={{ once: true, amount: "some", margin: "0px 0px -10% 0px" }}
+        // La marge basse retarde le départ pour que l'entrée se joue une fois
+        // l'élément franchement visible, et non sur son premier pixel.
+        //
+        // Elle valait `-10%`, soit 90 px sur un écran de 900, et c'était un
+        // défaut : le détecteur considère qu'un texte est dans le viewport dès
+        // que son haut passe à 40 px du bas, donc il restait une bande de 50 px
+        // où un texte était **visible à opacité 0**. Invisible la plupart du
+        // temps, parce qu'il faut qu'un pas de défilement s'arrête dedans —
+        // ce qui est arrivé sur la page Services dès que le sommaire a décalé
+        // le contenu. Une valeur fixe de 40 px aligne le déclencheur sur le
+        // seuil mesuré : tout ce que le contrôle juge visible a déjà démarré.
+        viewport={{ once: true, amount: "some", margin: "0px 0px -40px 0px" }}
         transition={{ duration: DURATION.slower, ease: EASE.out, delay }}
       >
         {children}
