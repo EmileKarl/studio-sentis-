@@ -1,0 +1,14 @@
+export { HorizontalTrack } from "@/components/motion/horizontal-track";
+export { GridRecompose } from "@/components/motion/grid-recompose";
+export { InkBleed } from "@/components/motion/ink-bleed";
+export { WeightWave } from "@/components/motion/weight-wave";
+export { CursorFollow } from "@/components/motion/cursor-follow";
+export { Magnetic } from "@/components/motion/magnetic";
+export { Parallax } from "@/components/motion/parallax";
+export { PinnedSequence, type PinnedStep } from "@/components/motion/pinned-sequence";
+export { Reveal } from "@/components/motion/reveal";
+export { Stagger, StaggerItem } from "@/components/motion/stagger";
+export { TextReveal } from "@/components/motion/text-reveal";
+export { Scene3D, type Variante3D } from "@/components/motion/scene-3d";
+export { Reveal3D } from "@/components/motion/reveal-3d";
+export { ObjetFlottant3D, Prisme3D } from "@/components/motion/objets-3d";

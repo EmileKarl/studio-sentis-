@@ -1,0 +1,212 @@
+/* =========================================================================
+   Studio Sentis — seconde marque sur la même architecture de tokens.
+
+   NEXUS UI est un instrument : dense, filets, mono partout, rayons courts.
+   Son public juge une exécution. Celui de Sentis — particuliers, commerçants,
+   petites structures de la Rive-Sud — n'a pas ces repères : la même austérité
+   y lirait comme de la froideur.
+
+   Cette peau garde l'architecture (mêmes noms de tokens, mêmes composants) et
+   change ce qui parle : plus d'air, des surfaces chaudes plutôt que des
+   filets, des rayons plus doux, une échelle typographique plus généreuse.
+
+   Toutes les paires texte/surface ci-dessous ont été vérifiées au détecteur
+   avant d'être écrites. Aucune ne descend sous 4,5:1.
+   ========================================================================= */
+
+[data-brand="sentis"] {
+  /* ---------------------------------------------------------------------
+     Combinaison 333 du livre de Sanzo Wada.
+
+     La peau précédente appliquait la planche « Concept 16 », qui n'a qu'un
+     accent : les quatre pictogrammes de services, les quatre fonds de section
+     et les quatre couleurs de volume y pointaient tous sur le même terracotta.
+     Le client l'a dit en un mot — « terne ». Ce n'était pas un défaut de
+     valeur, c'était un défaut d'**arrangement** : une identité à un accent ne
+     peut pas colorer quatre choses différemment.
+
+     Le choix de couleurs vient donc d'un arrangement du livre, et pas d'une
+     série de retouches à l'œil. *A Dictionary of Color Combinations* (Sanzo
+     Wada, 1933) donne 348 combinaisons de 159 couleurs. Le jeu de données
+     utilisé ici est celui de Matt DesLauriers (MIT), qui numérise la
+     compilation de Dain M. Blodorn Kim.
+
+     **La combinaison 333**, quatre couleurs, choisie parce qu'elle est la
+     seule des douze contenant `Blue` — le bleu électrique demandé — dont les
+     quatre teintes se répartissent sur tout le cercle :
+
+       #006eb8  Blue             teinte 204°, saturation 100 %
+       #f8ed43  Lemon Yellow     teinte  56°
+       #ae5224  Burnt Sienna     teinte  20°
+       #96d1aa  Cobalt Green     teinte 140°
+
+     Elle garde un fil avec la planche : le Burnt Sienna est à deux doigts de
+     l'accent terre de Concept 16. Le papier et l'encre de la planche restent
+     tels quels. Ce qui change, c'est que le site a de nouveau quatre couleurs
+     au lieu d'une, et que c'est le bleu qui mène.
+
+     **Les quatre noms de jetons sont des emplacements, pas des teintes.**
+     `bleu`, `cyan`, `violet`, `vert` sont partagés avec l'autre marque du
+     dépôt et servent de classes Tailwind dans une dizaine de composants ; les
+     renommer toucherait les deux marques. Deux des quatre tombent juste, deux
+     non, et autant l'écrire que de le laisser deviner :
+
+       --*-bleu    → Blue            (exact)
+       --*-vert    → Cobalt Green    (exact)
+       --*-cyan    → Lemon Yellow    (emplacement : la note claire et vive)
+       --*-violet  → Burnt Sienna    (emplacement : la note chaude)
+
+     Rien ici n'est réglé à l'œil. Un solveur part de la couleur du livre et
+     ne déplace que sa **clarté**, teinte et saturation constantes, jusqu'à ce
+     que le plancher de 4,5:1 soit atteint ; la couleur reste reconnaissable.
+     `npm run verify:teintes` refait le calcul complet à chaque exécution.
+     Pire couple de cette palette : **4,63:1** — mieux que les 4,53:1 de la
+     précédente, avec quatre teintes au lieu d'une.
+     --------------------------------------------------------------------- */
+  --paper: #f8f5f2;           /* blanc cassé, planche Concept 16 */
+  --surface: #ffffff;
+  --surface-2: #e6dacd;       /* beige chaud, planche Concept 16 */
+  --overlay: rgb(26 26 26 / 0.5);
+
+  --ink: #1a1a1a;             /* noir, planche — 16,02:1 sur le papier */
+  /* Les deux gris sont descendus d'un cran par rapport à la version
+     précédente (#464444 et #62605f). Ce n'est pas une préférence : les lavis
+     de section sont deux fois plus francs qu'avant, et c'est ce qui permet
+     aux quatre teintes d'être vraiment colorées sans qu'un texte secondaire
+     passe sous le plancher. Un gris plus sombre achète de la couleur. */
+  --ink-secondary: #3d3c3a;   /* ≥ 7,65:1 sur les sept fonds clairs */
+  --ink-muted: #595755;       /* ≥ 4,99:1 sur les sept fonds clairs */
+
+  --rule: #e3dcd4;
+  --rule-strong: #b9b0a6;
+
+  /* Le bleu du livre, et c'est lui qui signe le logo.
+     Il porte du texte tel quel : 4,93:1 sur le papier, au-dessus du plancher,
+     ce que le terracotta de la planche ne faisait pas (2,16:1). `--signal-aa`
+     n'existe donc plus pour sauver une couleur illisible mais pour tenir sur
+     les **lavis de section**, où le bleu du livre tombait à 3,72:1. */
+  --signal: #006eb8;          /* Blue, valeur du livre, intacte */
+  --signal-aa: #005fa0;       /* le même, un cran plus sombre, pour le texte */
+  --signal-contrast: #f8f5f2; /* du clair sur l'aplat de bleu : 4,93:1 */
+
+  --success: #3f6b4a;
+  --warning: #8a5e2a;
+  --error: #9c3b2c;
+  --info: #44607a;
+
+  /* Rayons plus doux que les 4px de NEXUS, sans basculer dans la bulle. */
+  --radius: 0.625rem;
+
+  /* Mesure plus courte : le lecteur n'est pas un développeur qui parcourt
+     une documentation, il lit une phrase à la fois. */
+  --content-max: 58ch;
+  --container-max: 1180px;
+
+
+  /* ---------------------------------------------------------------------
+     Fonds de section : chaque couleur du livre diluée à 20 % dans le papier.
+
+     20 %, et pas une valeur par couleur : une dose unique donne quatre lavis
+     de même **force**, ce qui les rend lisibles comme une suite. Doser chaque
+     couleur séparément aurait donné quatre bandes d'intensités différentes,
+     et l'œil l'aurait lu comme un défaut d'impression.
+
+     C'est la dose la plus forte qui laisse les quatre couleurs de texte
+     au-dessus de 4,5:1 sur les quatre lavis à la fois.
+     --------------------------------------------------------------------- */
+  --teinte-bleu: #c6dae6;     /* Blue à 20 % */
+  --teinte-cyan: #f8f3cf;     /* Lemon Yellow à 20 % */
+  --teinte-violet: #e9d4c9;   /* Burnt Sienna à 20 % */
+  --teinte-vert: #e4eee4;     /* Cobalt Green à 20 % */
+
+  /* Les accents : la couleur du livre assombrie, à teinte et saturation
+     constantes, jusqu'à tenir **à la fois** sur le papier et sur son propre
+     lavis de section — c'est cette seconde contrainte qui décide, pas la
+     première. Les quatre pictogrammes de services retrouvent du coup une
+     couleur chacun, ce que l'identité à un accent leur avait retiré. */
+  --accent-bleu: #005fa0;     /* Blue           → 6,15:1 papier / 4,63:1 lavis */
+  --accent-cyan: #756e04;     /* Lemon Yellow   → 4,85:1 papier / 4,69:1 lavis */
+  --accent-violet: #95461f;   /* Burnt Sienna   → 6,09:1 papier / 4,64:1 lavis */
+  --accent-vert: #337449;     /* Cobalt Green   → 5,18:1 papier / 4,73:1 lavis */
+
+  /* Le texte posé SUR un aplat d'accent. En thème clair les quatre accents
+     sont sombres, donc il est clair ; en thème sombre ils s'éclaircissent et
+     il bascule. Un `text-white` écrit en dur donnait 1,82:1 sur le cyan. */
+  --accent-contrast: #f8f5f2;
+
+  /* L'élévation remplace le filet comme séparateur principal. */
+  --shadow-sm: 0 1px 2px rgb(18 19 20 / 0.05);
+  --shadow-md: 0 4px 16px rgb(18 19 20 / 0.07);
+  --shadow-lg: 0 16px 48px rgb(18 19 20 / 0.10);
+}
+
+.dark [data-brand="sentis"] {
+  /* Le livre ne donne pas de thème sombre, et c'est ici que la combinaison
+     333 est la plus fidèle : sur un fond d'encre, **deux de ses quatre
+     couleurs passent sans aucune retouche** — Lemon Yellow à 15,22:1 et
+     Cobalt Green à 10,63:1. Seuls le bleu et le sienna doivent s'éclaircir,
+     par le même solveur, dans l'autre sens.
+
+     Le fond passe du presque-noir chaud (#141312) à un presque-noir froid :
+     la chaleur venait de l'accent terre unique de la planche, et sous un bleu
+     à 100 % de saturation elle le rendait sale. L'encre, elle, reste le blanc
+     cassé de la planche — même valeur qu'en thème clair, où c'est le papier. */
+  --paper: #121314;
+  --surface: #1b1d1f;
+  --surface-2: #262a2d;
+  --overlay: rgb(0 0 0 / 0.66);
+
+  --ink: #f8f5f2;             /* blanc cassé, planche Concept 16 */
+  --ink-secondary: #c5c6c7;
+  --ink-muted: #9ba0a4;       /* ≥ 4,66:1 sur les sept fonds sombres */
+
+  --rule: #2a2d30;
+  --rule-strong: #434749;
+
+  --signal: #008eed;          /* Blue éclairci : 5,40:1 sur l'encre */
+  --signal-aa: #21a6ff;       /* et un cran plus clair pour tenir sur les lavis */
+  --signal-contrast: #121314;
+
+  --success: #7fb48c;
+  --warning: #d7a662;
+  --error: #e08a76;
+  --info: #8fb0cc;
+
+  /* Les mêmes couleurs diluées à 18 % dans l'encre. Dose plus basse qu'en
+     clair parce qu'un lavis sombre monte en contraste beaucoup plus vite. */
+  --teinte-bleu: #0f2332;
+  --teinte-cyan: #37361c;
+  --teinte-violet: #2e1e17;
+  --teinte-vert: #2a352f;
+
+  --accent-bleu: #008eed;     /* Blue éclairci */
+  --accent-cyan: #f8ed43;     /* Lemon Yellow, valeur du livre, intacte */
+  --accent-violet: #d66d39;   /* Burnt Sienna éclairci */
+  --accent-vert: #96d1aa;     /* Cobalt Green, valeur du livre, intacte */
+  --accent-contrast: #121314;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.6);
+}
+
+/* Une seule famille, Inter, comme le demande la planche de marque.
+   Les titres se distinguent par la graisse et l'interlettrage, pas par une
+   seconde police. L'interlettrage est resserré parce qu'un grotesk neutre
+   composé en grand corps paraît sinon lâche. */
+[data-brand="sentis"] {
+  --font-display-brand: var(--font-inter), system-ui, sans-serif;
+  --font-body-brand: var(--font-inter), system-ui, sans-serif;
+}
+
+[data-brand="sentis"] .font-display {
+  letter-spacing: -0.022em;
+}
+
+[data-brand="sentis"] .font-display {
+  font-family: var(--font-display-brand);
+}
+
+[data-brand="sentis"] {
+  font-family: var(--font-body-brand);
+}

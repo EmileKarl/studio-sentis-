@@ -1,0 +1,85 @@
+/* =========================================================================
+   Animations natives pilotées par le scroll.
+
+   `animation-timeline` lie une animation CSS à la position d'un élément dans
+   le viewport, sans JavaScript, sans IntersectionObserver et sans écouteur de
+   scroll. Elle tourne sur le thread de composition : elle ne peut pas être
+   retardée par du travail JavaScript, et elle ne coûte rien au thread
+   principal pendant le défilement.
+
+   Tout est sous @supports. Là où la propriété n'existe pas, l'élément est
+   rendu dans son état final — jamais masqué en attente d'un déclencheur
+   qui ne viendra pas.
+   ========================================================================= */
+
+@supports (animation-timeline: view()) {
+  /* Un filet qui se trace à mesure que sa section traverse le viewport. */
+  .sd-rule {
+    transform-origin: left center;
+    animation: sd-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+
+  /* Un bloc dont la graisse typographique suit la progression du scroll.
+     Aucun changement d'opacité ni de position : le texte reste lisible. */
+  .sd-weight {
+    animation: sd-weight linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 60%;
+  }
+
+  /* Colonne de mesure qui se remplit : indicateur de progression local,
+     rattaché à sa section plutôt qu'à la page entière. */
+  .sd-meter > span {
+    transform-origin: top center;
+    animation: sd-fill linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes sd-draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes sd-weight {
+    from {
+      font-variation-settings: "wght" 300;
+      letter-spacing: 0.04em;
+    }
+    to {
+      font-variation-settings: "wght" 800;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  @keyframes sd-fill {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  /* §7.8 — la règle globale de motion.css neutralise déjà les durées, mais
+     une animation liée au scroll n'a pas de durée : elle se neutralise en
+     détachant la timeline. */
+  @media (prefers-reduced-motion: reduce) {
+    .sd-rule,
+    .sd-weight,
+    .sd-meter > span {
+      animation-timeline: none;
+      animation: none;
+    }
+    .sd-rule,
+    .sd-meter > span {
+      transform: none;
+    }
+  }
+}

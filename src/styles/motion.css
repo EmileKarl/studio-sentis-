@@ -1,0 +1,65 @@
+/* =========================================================================
+   NEXUS UI — Motion tokens (§5.7) and global motion rules (§7.8)
+   ========================================================================= */
+
+:root {
+  /* --- Durations -------------------------------------------------------- */
+  --duration-instant: 90ms;
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 420ms;
+  --duration-slower: 700ms;
+
+  /* --- Easing. No bounce: this is an instrument, not a toy. ------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);      /* entrances */
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);       /* exits */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);   /* transforms */
+  --ease-linear: linear;                            /* marquees, progress */
+
+  /* --- Delay / stagger --------------------------------------------------- */
+  --delay-none: 0ms;
+  --delay-short: 60ms;
+  --stagger-tight: 40ms;
+  --stagger-base: 70ms;
+  --stagger-loose: 120ms;
+
+  /* --- Travel distance. Short. Long travel reads as a page reflow. ------ */
+  --travel-sm: 8px;
+  --travel-md: 16px;
+  --travel-lg: 28px;
+
+  /* --- Composite transitions -------------------------------------------- */
+  --transition-fast: var(--duration-fast) var(--ease-out);
+  --transition-base: var(--duration-base) var(--ease-out);
+  --transition-slow: var(--duration-slow) var(--ease-in-out);
+}
+
+/* -------------------------------------------------------------------------
+   §7.8 / §10 — prefers-reduced-motion is honoured globally, not per component.
+   Motion is removed; the final state is rendered immediately. Nothing
+   disappears, nothing stays mid-transition.
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0.01ms;
+    --duration-fast: 0.01ms;
+    --duration-base: 0.01ms;
+    --duration-slow: 0.01ms;
+    --duration-slower: 0.01ms;
+    --stagger-tight: 0ms;
+    --stagger-base: 0ms;
+    --stagger-loose: 0ms;
+    --travel-sm: 0px;
+    --travel-md: 0px;
+    --travel-lg: 0px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

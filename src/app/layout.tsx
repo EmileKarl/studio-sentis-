@@ -1,0 +1,64 @@
+import type { Metadata } from "next";
+
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: {
+    default: "NEXUS UI — Digital Starter Kit",
+    template: "%s — NEXUS UI",
+  },
+  description:
+    "Infrastructure de création numérique : design system, bibliothèque de composants et bibliothèque d'animations pour des interfaces modernes, accessibles et maintenables.",
+};
+
+/**
+ * Racine : polices, thème et providers uniquement.
+ *
+ * Le chrome de page vit dans les groupes de routes : `(showcase)` porte
+ * l'en-tête et le pied de page du site, `(app)` porte l'enveloppe applicative
+ * à barre latérale. Un dashboard de démonstration coiffé d'un en-tête marketing
+ * ne démontre pas grand-chose.
+ */
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html
+      lang="fr"
+      suppressHydrationWarning
+      // Aucune police ici : chaque partie du site déclare les siennes, sur son
+      // propre conteneur. Déclarées à la racine, elles étaient préchargées
+      // partout — 188 ko sur une page de l'agence qui n'en affiche que deux.
+      className="h-full antialiased"
+    >
+      <body className="bg-paper text-ink min-h-full">
+        {/*
+          Les entrées au scroll sont rendues côté serveur à `opacity: 0` — c'est
+          ce qui leur permet d'apparaître sans clignoter. Sans JavaScript, elles
+          ne réapparaîtraient jamais : le titre du héros, les cartes, la grille
+          de prix resteraient invisibles sur une page pourtant entièrement
+          rendue. Cette règle ne s'applique que dans ce cas précis, et ne coûte
+          rien aux autres visiteurs.
+        */}
+        <noscript>
+          <style>{`[data-entree-animee]{opacity:1!important;transform:none!important;filter:none!important;stroke-dasharray:none!important;stroke-dashoffset:0!important}`}</style>
+        </noscript>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TooltipProvider delayDuration={200}>
+            {children}
+            <Toaster />
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
