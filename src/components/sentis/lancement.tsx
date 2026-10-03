@@ -2,12 +2,13 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { CompteARebours } from "@/components/sentis/compte-a-rebours";
-import { Reveal3D } from "@/components/motion";
+import { Entree } from "@/components/motion/entree";
 import { TexteProgressif } from "@/components/motion/texte-progressif";
+import { PlacesLancement } from "@/components/sentis/places-lancement";
 import { Section, Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import type { Dict, Locale } from "@/lib/i18n";
-import { FIN_OFFRE, PLACES_LANCEMENT, RABAIS_LANCEMENT } from "@/lib/site";
+import { FIN_OFFRE, RABAIS_LANCEMENT } from "@/lib/site";
 
 /**
  * La page Réalisations d'un studio qui n'a pas encore de réalisations.
@@ -32,24 +33,34 @@ import { FIN_OFFRE, PLACES_LANCEMENT, RABAIS_LANCEMENT } from "@/lib/site";
  *
  * ---
  *
- * **Refonte, deuxième version.** La première mettait l'offre entière — chiffres,
- * compte à rebours, bouton, et les deux listes de l'échange — dans une seule
- * grille à deux colonnes sur un lavis terracotta. Trois défauts, dans l'ordre
- * de gravité :
+ * **Troisième version, et celle-ci est une refonte de la hiérarchie et du
+ * mouvement, pas du texte.**
  *
- * 1. Les deux listes « ce que je donne / ce que je demande » sont la partie la
- *    plus engageante de la page, et elles se lisaient en colonne étroite à
- *    côté d'un bouton qui captait l'attention. Elles ont maintenant leur propre
- *    section, en pleine largeur, avec un titre qui dit ce qu'on y lit.
- * 2. Rien ne donnait de volume aux « dix places ». Un nombre dans une
- *    définition se lit ; dix pastilles se comptent. Elles sont toutes vides, et
- *    la légende le dit en clair — afficher des places prises serait le seul
- *    mensonge d'une page dont tout l'argument est de ne pas en faire.
- * 3. Une seule couleur pour toute la page. La combinaison 333 du livre de
- *    Sanzo Wada en donne quatre, et chacune a ici un rôle : le bleu de la
- *    marque porte l'offre, le vert ce que le studio donne, le sienna ce qu'il
- *    demande, le jaune les conditions — un fond de mise en garde, qui est
- *    exactement ce qu'elles sont.
+ * La deuxième posait l'offre dans une grille à deux colonnes : le bloc de
+ * texte et son bouton d'un côté, la carte des dix places de l'autre. Les deux
+ * se disputaient le regard, et le résultat est qu'aucun ne gagnait. Une page
+ * dont l'unique but est de faire écrire un premier client doit **culminer**,
+ * et une grille à deux colonnes ne culmine pas : elle répartit.
+ *
+ * La bande de l'offre est donc une colonne unique, et l'ordre est celui dont
+ * un visiteur a besoin, pas celui du texte source :
+ *
+ *   1. il y a dix places, et elles sont toutes libres  → rareté, et honnêteté
+ *   2. c'est −25 %, et ça se termine à telle date      → les deux faits
+ *   3. prendre une place                               → la sortie
+ *
+ * Côté mouvement, trois décisions, prises avec le cadre et non à l'habitude :
+ *
+ * - **Les entrées passent de `Reveal3D` à `Entree`.** L'ancienne inclinait
+ *   chaque bloc de 12° et le reculait de 80 px pendant 700 ms. Posée sur un
+ *   paragraphe, une inclinaison 3D ne répond à aucune question — et le cadre
+ *   demande d'abord à quoi sert une animation. La nouvelle fait 240 ms, une
+ *   opacité et seize pixels, en CSS donc hors du fil principal.
+ * - **Les dix places s'allument une par une**, à 40 ms d'intervalle. C'est le
+ *   seul mouvement de la page qui fasse quelque chose : il fait compter.
+ * - **Le compte à rebours n'anime rien.** Ses chiffres changent chaque
+ *   seconde ; les animer serait du bruit sur la seule information de la page
+ *   qui bouge toute seule.
  */
 export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
   const p = dict.pages.realisations;
@@ -74,25 +85,23 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
       )
     : null;
 
-  // Les deux faces de l'échange, chacune avec sa couleur du livre. Le vert
-  // pour ce qui est donné, le sienna pour ce qui est demandé : deux teintes
-  // opposées sur le cercle, ce qui est exactement le rapport entre les deux
-  // listes. Les classes sont écrites en entier — Tailwind ne génère pas une
-  // classe qu'il ne voit pas écrite dans le source.
+  // Les deux faces de l'échange, chacune avec sa couleur du livre : le vert
+  // pour ce qui est donné, le sienna pour ce qui est demandé. Deux teintes
+  // opposées sur le cercle, ce qui est le rapport exact entre les deux listes.
+  // Les classes sont écrites en entier — Tailwind ne génère pas une classe
+  // qu'il ne voit pas écrite dans le source.
   const faces = [
     {
       bloc: o.jeDonne,
       fond: "bg-teinte-vert",
       filet: "border-accent-vert",
       puce: "marker:text-accent-vert",
-      depuis: "droite" as const,
     },
     {
       bloc: o.jeDemande,
       fond: "bg-teinte-violet",
       filet: "border-accent-violet",
       puce: "marker:text-accent-violet",
-      depuis: "bas" as const,
     },
   ];
 
@@ -114,47 +123,59 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
         </div>
       </Section>
 
+      {/* La bande de l'offre : une colonne, un sommet.
+
+          `max-w-4xl` **sans** `mx-auto` : mesuré, un centrage posait le bord
+          gauche de cette bande à 192 px quand toutes les autres sections de la
+          page commencent à 32. L'œil suit un bord gauche en descendant une
+          page, et celui-là sautait de 160 px sans qu'aucune raison ne le
+          justifie. La largeur maximale sert à tenir la mesure de lecture, pas
+          à recentrer la colonne. */}
       <Section tone="bleu">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-          <div>
+        <div className="max-w-4xl">
+          <Entree>
             <p className="text-ink-muted font-mono text-[11px] tracking-[0.2em] uppercase">
               {o.surtitre}
             </p>
-            <h2 className="font-display text-ink mt-4 max-w-[16ch] text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl">
+            <h2 className="font-display text-ink mt-4 max-w-[14ch] text-4xl leading-[1.03] font-semibold tracking-tight text-balance sm:text-6xl">
               {o.titre}
             </h2>
-            <p className="text-ink-secondary mt-5 max-w-(--content-max) text-lg leading-relaxed text-pretty">
+            <p className="text-ink-secondary mt-6 max-w-(--content-max) text-lg leading-relaxed text-pretty">
               {o.corps}
             </p>
+          </Entree>
 
-            {/* Les deux chiffres qui portent l'offre, sortis du texte courant :
-                ce sont eux qu'on retient, et ce sont eux qui doivent tenir sur
-                une capture d'écran envoyée à un associé. */}
-            <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+          {/* Les dix places, en pleine largeur. Elles ne sont plus un encadré
+              posé à côté du texte : elles sont ce que la bande montre. */}
+          <div className="mt-12 sm:mt-14">
+            <PlacesLancement titre={o.libellePlaces} etat={o.placesEtat} />
+          </div>
+
+          {/* Les deux faits, côte à côte, séparés par un filet plutôt que par
+              une carte : ce sont deux lignes du même contrat, pas deux objets.
+              Le rabais est le chiffre qu'on retient ; l'échéance est celle qui
+              fait agir. */}
+          <Entree delai={60}>
+            <div className="border-rule mt-12 grid gap-8 border-t pt-8 sm:mt-14 sm:grid-cols-2 sm:gap-12">
               <div>
-                <dt className="text-ink-muted text-sm">{o.libelleRabais}</dt>
-                <dd className="font-display text-accent-bleu text-4xl font-semibold tabular-nums">
+                <p className="text-ink-muted text-sm">{o.libelleRabais}</p>
+                <p className="font-display text-accent-bleu mt-2 text-5xl leading-none font-semibold tabular-nums sm:text-6xl">
                   −{RABAIS_LANCEMENT}&nbsp;%
-                </dd>
+                </p>
               </div>
               <div>
-                <dt className="text-ink-muted text-sm">{o.libellePlaces}</dt>
-                <dd className="font-display text-ink text-4xl font-semibold tabular-nums">
-                  {PLACES_LANCEMENT}
-                </dd>
+                <CompteARebours dict={dict} />
+                {dateFin ? (
+                  <p className="text-ink-muted mt-3 text-sm">
+                    <time dateTime={FIN_OFFRE}>{dateFin}</time>
+                  </p>
+                ) : null}
               </div>
-            </dl>
-
-            <div className="mt-10">
-              <CompteARebours dict={dict} />
-              {dateFin ? (
-                <p className="text-ink-muted mt-3 text-sm">
-                  <time dateTime={FIN_OFFRE}>{dateFin}</time>
-                </p>
-              ) : null}
             </div>
+          </Entree>
 
-            <div className="mt-10">
+          <Entree delai={120}>
+            <div className="mt-12 sm:mt-14">
               <Button asChild size="lg" className="rounded-md text-base">
                 <Link href={`/${locale}/contact`}>
                   {o.cta} <ArrowRight aria-hidden />
@@ -164,41 +185,7 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
                 {o.ctaNote}
               </p>
             </div>
-          </div>
-
-          {/* Les dix places, comptables à l'œil.
-              Le bloc entier est `aria-hidden` et la phrase sous lui porte la
-              même information en mots : dix pastilles identiques annoncées une
-              par une à la voix seraient dix fois « liste, élément » pour rien.
-              Les pastilles sont vides parce que les places le sont. */}
-          <Reveal3D
-            depuis="droite"
-            distance={80}
-            // `self-start` sur l'enveloppe et non sur la carte : c'est
-            // l'enveloppe qui est l'enfant de la grille, et une classe de
-            // placement posée sur l'élément animé n'aurait aucun effet.
-            className="self-start"
-            classeAnimee="bg-paper border-rule rounded-lg border p-6 sm:p-8"
-          >
-            <>
-              <h3 className="font-display text-ink text-xl font-semibold text-balance">
-                {o.libellePlaces}
-              </h3>
-              <ul aria-hidden className="mt-6 grid grid-cols-5 gap-3 sm:gap-4">
-                {Array.from({ length: PLACES_LANCEMENT }, (_, i) => (
-                  <li
-                    key={i}
-                    className="border-accent-bleu text-accent-bleu flex aspect-square items-center justify-center rounded-full border-2 border-dashed font-mono text-sm tabular-nums"
-                  >
-                    {i + 1}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-ink-secondary mt-6 leading-relaxed text-pretty">
-                {o.placesEtat}
-              </p>
-            </>
-          </Reveal3D>
+          </Entree>
         </div>
       </Section>
 
@@ -209,14 +196,10 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
       <Section titre={o.echangeTitre} chapo={o.echangeChapo}>
         <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
           {faces.map((face, i) => (
-            <Reveal3D
-              key={face.bloc.titre}
-              depuis={face.depuis}
-              distance={80}
-              delay={i * 0.08}
-              classeAnimee={`${face.fond} ${face.filet} h-full rounded-lg border-t-2 p-6 sm:p-8`}
-            >
-              <>
+            <Entree key={face.bloc.titre} delai={i * 70} className="h-full">
+              <div
+                className={`${face.fond} ${face.filet} h-full rounded-lg border-t-2 p-6 sm:p-8`}
+              >
                 <h3 className="font-display text-ink text-xl font-semibold text-balance">
                   {face.bloc.titre}
                 </h3>
@@ -229,8 +212,8 @@ export function Lancement({ dict, locale }: { dict: Dict; locale: Locale }) {
                     </li>
                   ))}
                 </ul>
-              </>
-            </Reveal3D>
+              </div>
+            </Entree>
           ))}
         </div>
       </Section>

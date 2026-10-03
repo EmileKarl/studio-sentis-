@@ -346,6 +346,28 @@ mélanger trois couleurs, mais les trois pointaient sur le même terracotta.
 précédente. Plus coloré *et* plus contrasté ; ce n'est pas un compromis, c'est
 le résultat d'avoir laissé un solveur choisir plutôt que l'œil.
 
+### Refonte de la page Réalisations — hiérarchie et mouvement
+
+Le mouvement de cette page a été repris avec le cadre de décision d'Emil
+Kowalski (skill `emil-design-eng`, installé dans le dépôt) plutôt qu'à
+l'habitude. Quatre questions dans l'ordre : faut-il animer, dans quel but,
+quelle courbe, quelle durée.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 103 | **L'offre était répartie, pas culminante.** Une grille à deux colonnes mettait le texte et son bouton d'un côté, la carte des dix places de l'autre : les deux se disputaient le regard et aucun ne gagnait. Une page dont l'unique but est de faire écrire un premier client doit monter vers sa sortie | Colonne unique, dans l'ordre dont un visiteur a besoin et non dans celui du texte source : les dix places libres, puis les deux faits (−25 %, l'échéance), puis le bouton |
+| 104 | **Le bord gauche de la bande bleue sautait de 160 px.** Mesuré : 192 px contre 32 pour toutes les autres sections. Un `mx-auto` centrait la colonne dans le conteneur. L'œil suit un bord gauche en descendant une page | `max-w-4xl` sans `mx-auto`. La largeur maximale tient la mesure de lecture, elle ne recentre pas |
+| 105 | **`Reveal3D` inclinait chaque bloc de texte de 12° et le reculait de 80 px, pendant 700 ms.** Le cadre demande d'abord à quoi sert une animation : posée sur un paragraphe, une inclinaison 3D ne répond à aucune question, et on la voyait à chaque section | Nouveau composant `Entree` : opacité et 16 px de translation, 240 ms, `--ease-out`. Le seul but retenu est d'éviter qu'un bloc surgisse |
+| 106 | **Ces entrées passaient par les raccourcis `y`, `z`, `rotateX` de Motion, qui ne sont pas accélérés matériellement** : ils tournent sur le fil principal via `requestAnimationFrame`. Cette page porte une scène WebGL dans son en-tête | `Entree` n'utilise JavaScript que pour poser un attribut ; la transition est en CSS, donc hors du fil principal, sur trois propriétés composées (`opacity`, `translate`, `scale`) et jamais sur `all` |
+| 107 | **Les dix places n'animaient pas**, alors que c'est le seul endroit de la page où le mouvement ferait quelque chose : dix objets faits pour être comptés | Entrée décalée de 40 ms par pastille. Mesuré au navigateur : premier délai 0 s, dixième 0,36 s, durée 240 ms, courbe `cubic-bezier(0.22, 1, 0.36, 1)`. Chaque pastille part de `scale(0.9)` et non de `scale(0)` — rien n'apparaît à partir de rien |
+| 108 | Le compte à rebours — tentation d'animer ses chiffres | **Rien.** Ils changent chaque seconde ; les animer serait du bruit sur la seule information de la page qui bouge toute seule |
+
+**Ce qui reste à faire, et c'est dit :** `Reveal3D` sert encore sur l'accueil,
+Services, À propos et Contact. Les mêmes constats 105 et 106 y valent. La
+migration n'a pas été faite dans cette passe parce que la demande portait sur
+Réalisations, et qu'un changement d'entrée sur tout le site mérite d'être vu
+page par page.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
