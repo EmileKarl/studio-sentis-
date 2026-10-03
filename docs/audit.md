@@ -368,6 +368,36 @@ migration n'a pas été faite dans cette passe parce que la demande portait sur
 Réalisations, et qu'un changement d'entrée sur tout le site mérite d'être vu
 page par page.
 
+### « Comme un blog » — Services et Réalisations en blocs
+
+Le client a nommé le défaut en trois mots, et la mesure lui donne raison :
+**Services 460 mots sur 4 152 px, Réalisations 459 mots sur 3 673 px**, une
+quarantaine de blocs de texte courant à eux deux. Une page de services qui se
+lit en défilant paragraphe après paragraphe n'est pas une page de services,
+c'est un article sur les services.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 109 | **Services dépliait chaque métier en une section pleine largeur** : titre, résumé, paragraphe de détail, cinq puces, une limite. Quatre fois | Quatre tuiles. Le détail passe sous un `<details>` natif — pas d'état React, pas de script, et il s'ouvre même sans JavaScript. Les cinq puces deviennent des pastilles : même information, un quart de la hauteur. Les quatre limites, dispersées en bas de chaque section, se rassemblent en un bloc qui dit le périmètre du studio d'un coup |
+| 110 | **La grille asymétrique (4-2 puis 2-4) sortait avec un tiers de vide.** Dans une grille, toutes les tuiles d'une rangée prennent la hauteur de la plus haute, et la plus haute est l'étroite — cinq pastilles dans une colonne étroite font cinq lignes. Deux sorties : remplir les tuiles larges en ressortant le texte long, ce que la demande interdit, ou renoncer à l'asymétrie | Grille 2×2. Mesuré après : quatre tuiles à 355 px, aucun trou. L'asymétrie était mon idée, pas une exigence ; le texte court en est une |
+| 111 | **Le constat de Réalisations disait la même chose trois fois** : les maquettes inventées, le faux témoignage, puis une troisième strophe expliquant une nuance que personne n'avait demandée | Douze lignes deviennent cinq. Les plus dures restent, et elles s'allument toujours une à une au défilement — l'effet validé reste, c'est la longueur qui part |
+| 112 | **Les conditions étaient cinq phrases complètes numérotées**, c'est-à-dire exactement la forme qu'on saute | Cinq blocs titre + ligne, sur trois colonnes. Le titre suffit à savoir si la ligne concerne |
+| 113 | Les tuiles s'inclinaient — ou se seraient inclinées — sans parallaxe. **Une carte qui penche sans que son contenu se décale reste une image plate qu'on penche**, et l'œil le voit | `Carte3D` + `Couche3D` : perspective 900, `preserve-3d`, et trois plans de profondeur (fond, pastilles à z=10, pictogramme à z=44). C'est le nombre de plans qui fait lire une épaisseur, pas l'angle |
+
+**Mesuré au navigateur, pas supposé.** Au repos la tuile porte `transform:
+none` ; pointeur au coin haut-droit elle sort une `matrix3d` valant rotateY
++5,9° et rotateX +5,3° ; au coin bas-gauche les deux signes s'inversent. La
+couche du pictogramme reste à `translateZ(44px)` dans les deux cas — c'est son
+décalage relatif au fond qui fait le volume.
+
+L'inclinaison est plafonnée à 7°. Au-delà de huit, le rendu sous-pixel brouille
+le texte et la tuile paraît floue plutôt qu'inclinée. Elle est décorative, donc
+coupée sous `prefers-reduced-motion`, et elle ne part jamais au doigt
+(`pointerType !== "mouse"`) : sur tactile il n'y a pas de survol.
+
+**Résultat mesuré :** Services **460 → 295 mots**, **4 152 → 2 671 px**.
+Réalisations **459 → 367 mots**.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.

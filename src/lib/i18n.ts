@@ -65,6 +65,9 @@ export const DICT = {
           chapo: "Chacun se commande seul. Choisissez par où vous commencez ; le reste peut venir plus tard, ou jamais.",
         },
         voirDetail: "Le détail",
+        deplier: "Comment ça se passe",
+        limitesTitre: "Ce que je ne fais pas",
+        limitesChapo: "Dit ici plutôt que découvert en cours de route.",
         items: [
           {
             nom: "Sites web",
@@ -110,23 +113,15 @@ export const DICT = {
           // ligne s'allume seule au défilement — voir `TexteProgressif`.
           corps: [
             [
-              "J'aurais pu mettre trois maquettes inventées,",
-              "un logo de boulangerie qui n'existe pas",
-              "et deux témoignages écrits par moi.",
-              "C'est ce que font la plupart des studios qui commencent,",
-              "et tout le monde le sait.",
+              "J'aurais pu inventer trois maquettes",
+              "et deux témoignages signés « Marie L. ».",
             ],
             [
-              "Vous liriez « Marie L., cliente satisfaite »",
-              "et vous penseriez, à raison, que Marie L. n'existe pas.",
+              "Vous l'auriez vu. Tout le monde le voit.",
+            ],
+            [
               "Alors autant le dire : je commence,",
               "et cette page attend son premier vrai nom.",
-            ],
-            [
-              "Les démonstrations que vous voyez ailleurs sur ce site",
-              "sont des exercices de ma main, annoncés comme tels.",
-              "Elles montrent ce que je sais construire.",
-              "Elles ne prétendent pas être des mandats.",
             ],
           ],
         },
@@ -162,11 +157,11 @@ export const DICT = {
           conditions: {
             titre: "Les conditions, en entier",
             items: [
-              "Offre réservée aux dix premiers projets acceptés, une par entreprise.",
-              "Elle s'applique aux forfaits affichés sur la page Prix, hors suivi mensuel.",
-              "Le rabais figure sur la soumission écrite ; sans soumission signée, il n'y a pas d'engagement, ni du studio ni de vous.",
-              "L'autorisation de publier votre projet peut être retirée à tout moment, par simple courriel, sans que le prix change rétroactivement.",
-              "Ce n'est pas un concours : il n'y a ni tirage, ni hasard, ni prix à gagner. C'est un rabais commercial, accordé dans l'ordre d'arrivée.",
+              { cle: "Dix projets", texte: "Une seule place par entreprise." },
+              { cle: "Forfaits affichés", texte: "Hors suivi mensuel." },
+              { cle: "Sur la soumission", texte: "Sans signature, aucun engagement — ni du studio, ni de vous." },
+              { cle: "Retirable", texte: "L'autorisation de publier se retire par courriel, sans que le prix change." },
+              { cle: "Pas un concours", texte: "Ni tirage, ni hasard. Un rabais, dans l'ordre d'arrivée." },
             ],
           },
           compteARebours: {
@@ -542,6 +537,9 @@ export const DICT = {
           chapo: "Each one stands alone. Pick where you start; the rest can come later, or never.",
         },
         voirDetail: "Details",
+        deplier: "How it works",
+        limitesTitre: "What I don't do",
+        limitesChapo: "Said here rather than discovered along the way.",
         items: [
           {
             nom: "Websites",
@@ -583,23 +581,15 @@ export const DICT = {
           titre: "An empty page, on purpose",
           corps: [
             [
-              "I could have put up three invented mockups,",
-              "a logo for a bakery that does not exist",
-              "and two testimonials written by me.",
-              "That is what most studios do when they start,",
-              "and everyone knows it.",
+              "I could have invented three mockups",
+              "and two testimonials signed “Marie L.”.",
             ],
             [
-              "You would read “Marie L., happy client”",
-              "and think, rightly, that Marie L. does not exist.",
-              "So I would rather say it plainly: I am starting out,",
+              "You would have seen it. Everyone does.",
+            ],
+            [
+              "So I will say it plainly: I am starting out,",
               "and this page is waiting for its first real name.",
-            ],
-            [
-              "The demonstrations elsewhere on this site",
-              "are exercises of my own, announced as such.",
-              "They show what I can build.",
-              "They do not claim to be client work.",
             ],
           ],
         },
@@ -632,11 +622,11 @@ export const DICT = {
           conditions: {
             titre: "The conditions, in full",
             items: [
-              "Limited to the first ten accepted projects, one per business.",
-              "It applies to the packages published on the Pricing page, excluding monthly care.",
-              "The discount appears on the written quote; without a signed quote there is no commitment, from the studio or from you.",
-              "Permission to publish your project can be withdrawn at any time, by email, without the price changing retroactively.",
-              "This is not a contest: there is no draw, no chance and no prize. It is a commercial discount, granted in order of arrival.",
+              { cle: "Ten projects", texte: "One place per business." },
+              { cle: "Published packages", texte: "Monthly care excluded." },
+              { cle: "On the quote", texte: "Without a signature, no commitment — from the studio or from you." },
+              { cle: "Withdrawable", texte: "Permission to publish ends by email, with no change to the price." },
+              { cle: "Not a contest", texte: "No draw, no chance. A discount, in order of arrival." },
             ],
           },
           compteARebours: {

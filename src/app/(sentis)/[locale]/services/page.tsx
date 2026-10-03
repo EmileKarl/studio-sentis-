@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Reveal3D, Stagger, StaggerItem } from "@/components/motion";
-import { EnTetePage, Section, Zone, type Fond } from "@/components/sentis/parts";
+import { Carte3D, Couche3D } from "@/components/motion/carte-3d";
+import { Entree } from "@/components/motion/entree";
+import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { PictoService } from "@/components/sentis/pictos";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
@@ -12,53 +13,79 @@ import { donneesPage, donneesServices, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 
 /**
- * Un métier, une couleur du livre.
+ * Quatre métiers, quatre tuiles, et plus un article.
  *
- * La page était une liste de quatre articles alternant gauche-droite sur un
- * fond unique : lisible, mais rien n'y distinguait un métier d'un autre avant
- * d'avoir lu le titre, et il fallait faire défiler la page entière pour savoir
- * ce qu'elle contenait.
+ * La version précédente dépliait chaque métier en une section pleine largeur :
+ * un titre, un résumé, un paragraphe de détail, cinq puces de livrables et une
+ * limite. Quatre fois. Mesuré : **460 mots sur 4 152 px de hauteur**, dont
+ * vingt blocs de texte courant. Le client l'a nommé en un mot — « comme un
+ * blog » — et il avait raison : une page de services qui se lit en défilant
+ * paragraphe après paragraphe n'est pas une page de services, c'est un article
+ * sur les services.
  *
- * Les quatre couleurs de la combinaison 333 de Sanzo Wada donnent la réponse
- * aux deux problèmes à la fois. Chaque métier reçoit une couleur, et il la
- * garde partout : sur sa carte du sommaire, sur le fond de sa section, sur son
- * pictogramme, sur ses puces de livrables. Le sommaire devient alors la
- * **planche de la combinaison** — les quatre lavis côte à côte — et sert de
- * table des matières cliquable. En défilant, on traverse la même suite de
- * couleurs dans le même ordre : bleu, jaune, sienna, vert.
+ * Trois changements, dans l'ordre de ce qu'ils rapportent :
  *
- * L'ordre n'est pas décoratif, c'est celui des métiers : les sites web
- * prennent le bleu de la marque parce que c'est l'offre principale.
+ * 1. **Le texte long passe sous un dépliant.** Le détail de chaque métier
+ *    n'est pas supprimé — il intéresse celui qui hésite — mais il ne remplit
+ *    plus la page pour les neuf autres. Un `<details>` natif : pas d'état
+ *    React, pas de JavaScript, et il s'ouvre même si le script ne charge pas.
+ * 2. **Les livrables deviennent des pastilles.** Cinq puces empilées font cinq
+ *    lignes ; les mêmes cinq libellés en pastilles font un nuage qu'on
+ *    embrasse d'un regard. Même information, un quart de la hauteur.
+ * 3. **La grille est asymétrique.** Quatre tuiles de taille égale sur une
+ *    rangée, c'est un tableau ; 4-2 puis 2-4, c'est une composition. Rien
+ *    n'oblige des services différents à occuper la même surface.
+ *
+ * Et la troisième dimension est **réelle**, pas suggérée : chaque tuile est un
+ * objet en perspective dont le pictogramme flotte en avant du fond, sur l'axe
+ * de profondeur. C'est le décalage entre ces deux plans en tournant — la
+ * parallaxe — qui donne l'épaisseur. Une carte qui s'incline sans parallaxe
+ * reste une image plate qu'on penche, et l'œil le voit.
  */
-const COULEUR_SERVICE: readonly Fond[] = ["bleu", "cyan", "violet", "vert"];
+/**
+ * **Une grille 2×2, et c'est un retour en arrière assumé.**
+ *
+ * La première tentative posait quatre tuiles de tailles inégales — 4-2 puis
+ * 2-4 sur six colonnes — pour que la page soit une composition et non un
+ * tableau. Mesuré au navigateur, ça ne tient pas : dans une grille, toutes les
+ * tuiles d'une rangée prennent la hauteur de la plus haute. La tuile étroite
+ * est la plus haute, parce que cinq pastilles empilées dans une colonne
+ * étroite font cinq lignes. La tuile large héritait donc de cette hauteur avec
+ * la moitié du contenu, et sortait avec un tiers de vide en bas.
+ *
+ * Il y avait deux sorties : remplir les tuiles larges en ressortant le texte
+ * long — ce que la demande interdit — ou renoncer à l'asymétrie. L'asymétrie
+ * était mon idée, pas une exigence ; le texte court en est une. Quatre tuiles
+ * égales, aucun trou.
+ */
 
 /**
- * Les classes d'accent, écrites en entier et non composées.
+ * Les classes de couleur, écrites en entier et non composées.
  *
- * `text-accent-${couleur}` ne survit pas au balayage de Tailwind : la classe
- * n'existe nulle part dans le source, donc elle n'est pas générée et le texte
- * sort en couleur héritée. Un tableau de chaînes littérales est la seule forme
- * que le compilateur voit.
+ * `bg-teinte-${couleur}` ne survit pas au balayage de Tailwind : la classe
+ * n'existe nulle part dans le source, donc elle n'est pas générée et la tuile
+ * sort sans fond. Un tableau de chaînes littérales est la seule forme que le
+ * compilateur voit.
  */
-const ACCENT_SERVICE = [
+const FOND_TUILE = [
+  "bg-teinte-bleu",
+  "bg-teinte-cyan",
+  "bg-teinte-violet",
+  "bg-teinte-vert",
+] as const;
+
+const ACCENT_TUILE = [
   "text-accent-bleu",
   "text-accent-cyan",
   "text-accent-violet",
   "text-accent-vert",
 ] as const;
 
-const BORDURE_SERVICE = [
+const BORDURE_TUILE = [
   "border-accent-bleu",
   "border-accent-cyan",
   "border-accent-violet",
   "border-accent-vert",
-] as const;
-
-const CARTE_SERVICE = [
-  "bg-teinte-bleu",
-  "bg-teinte-cyan",
-  "bg-teinte-violet",
-  "bg-teinte-vert",
 ] as const;
 
 export function generateStaticParams() {
@@ -72,10 +99,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  return metadonneesPage({
-    locale,
-    chemin: "/services",
-  });
+  return metadonneesPage({ locale, chemin: "/services" });
 }
 
 export default async function ServicesPage({
@@ -95,109 +119,104 @@ export default async function ServicesPage({
 
       <EnTetePage titre={p.titre} chapo={p.chapo} scene="helice" />
 
-      {/* Le sommaire. Quatre cartes, quatre lavis du livre, et chacune mène à
-          sa section. Ce n'est pas une redite du contenu : c'est la seule vue de
-          la page où les quatre métiers tiennent dans un même écran, et c'est
-          celle qui permet de n'en lire qu'un. */}
-      <Section titre={p.sommaire.titre} chapo={p.sommaire.chapo}>
-        <Stagger
-          as="ol"
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5"
-        >
+      <Section>
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {p.items.map((item, i) => (
-            <StaggerItem as="li" key={item.nom}>
-              {/* Toute la carte est cliquable, et c'est l'ancre elle-même qui
-                  porte la surface : une carte dont seul le libellé du bas est
-                  actionnable donne une cible de 20 px sur un écran tactile. */}
-              <a
-                href={`#service-${i + 1}`}
-                className={`group focus-visible:ring-signal flex h-full flex-col rounded-lg p-6 transition-shadow hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${CARTE_SERVICE[i]}`}
+            <Entree key={item.nom} delai={i * 70} className="h-full">
+              <Carte3D
+                className={`${FOND_TUILE[i]} ${BORDURE_TUILE[i]} flex h-full flex-col rounded-2xl border-t-2 p-6 sm:p-8`}
               >
-                <PictoService index={i} />
-                <p className="text-ink-muted mt-5 font-mono text-xs tracking-[0.2em] tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="font-display text-ink mt-2 text-xl leading-snug font-semibold text-balance">
-                  {item.nom}
-                </h3>
-                <p className="text-ink-secondary mt-2 grow text-sm leading-relaxed text-pretty">
-                  {item.resume}
-                </p>
-                <span
-                  className={`mt-5 inline-flex items-center gap-1.5 text-sm font-medium ${ACCENT_SERVICE[i]}`}
-                >
-                  {p.voirDetail}
-                  <ArrowRight
-                    className="size-4 transition-transform group-hover:translate-x-0.5"
-                    aria-hidden
-                  />
-                </span>
-              </a>
-            </StaggerItem>
+                {/* Trois plans de profondeur : le fond de la tuile, les
+                    pastilles un peu en avant, le pictogramme franchement
+                    devant. C'est le **nombre de plans** qui fait lire une
+                    épaisseur, pas l'angle — au-delà de huit degrés, le rendu
+                    sous-pixel brouille le texte et la tuile paraît floue
+                    plutôt qu'inclinée. */}
+                <Couche3D z={44} className="flex items-start justify-between gap-4">
+                  <PictoService index={i} />
+                  <span
+                    className={`font-mono text-xs tracking-[0.2em] tabular-nums ${ACCENT_TUILE[i]}`}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </Couche3D>
+
+                <Couche3D z={22} className="mt-6">
+                  <h2 className="font-display text-ink text-2xl leading-tight font-semibold tracking-tight text-balance sm:text-3xl">
+                    {item.nom}
+                  </h2>
+                  <p className="text-ink mt-2 text-lg leading-snug text-pretty">
+                    {item.resume}
+                  </p>
+                </Couche3D>
+
+                {/* Les livrables en pastilles. Cinq puces empilées font cinq
+                    lignes ; les mêmes libellés en pastilles font un nuage qu'on
+                    embrasse d'un regard. Même information, un quart de la
+                    hauteur. */}
+                <Couche3D z={10} className="mt-6">
+                  <ul className="flex flex-wrap gap-2">
+                    {item.livrables.map((l) => (
+                      <li
+                        key={l}
+                        className="bg-paper/70 text-ink-secondary rounded-full px-3 py-1 text-xs leading-relaxed"
+                      >
+                        {l}
+                      </li>
+                    ))}
+                  </ul>
+                </Couche3D>
+
+                {/* Le texte long, replié. Un `<details>` natif : aucun état
+                    React, aucun script, et il s'ouvre même si le JavaScript ne
+                    charge pas. Ce qui remplissait la page reste disponible à
+                    celui qui hésite, sans la remplir pour les autres. */}
+                <details className="group/d mt-auto pt-6">
+                  <summary
+                    className={`focus-visible:ring-signal inline-flex cursor-pointer list-none items-center gap-1.5 rounded-sm py-1 text-sm font-medium focus-visible:ring-2 focus-visible:outline-none ${ACCENT_TUILE[i]}`}
+                  >
+                    {p.deplier}
+                    <ArrowRight
+                      className="size-4 transition-transform duration-(--duration-fast) ease-(--ease-out) group-open/d:rotate-90"
+                      aria-hidden
+                    />
+                  </summary>
+                  <p className="text-ink-secondary mt-4 max-w-(--content-max) text-sm leading-relaxed text-pretty">
+                    {item.detail}
+                  </p>
+                </details>
+              </Carte3D>
+            </Entree>
           ))}
-        </Stagger>
+        </div>
       </Section>
 
-      {/* Une section par métier, sur sa propre couleur. Les filets haut et bas
-          que `Section` pose sur une teinte suffisent à séparer deux lavis
-          voisins ; sans eux, bleu et jaune se touchent et l'œil lit un dégradé
-          raté plutôt que deux bandes. */}
-      {p.items.map((item, i) => (
-        <Section key={item.nom} id={`service-${i + 1}`} tone={COULEUR_SERVICE[i]}>
-          <Reveal3D depuis={i % 2 === 0 ? "gauche" : "droite"} distance={100}>
-            <article className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-              <div>
-                <PictoService index={i} />
-                <p className="text-ink-muted mt-5 font-mono text-xs tracking-[0.2em] tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h2 className="font-display text-ink mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                  {item.nom}
-                </h2>
-                <p className="text-ink mt-4 text-lg leading-relaxed text-pretty">
-                  {item.resume}
-                </p>
-              </div>
-              <div>
-                <p className="text-ink-secondary max-w-(--content-max) leading-relaxed text-pretty">
-                  {item.detail}
-                </p>
-                <Stagger as="ul" className="mt-6 space-y-2.5">
-                  {item.livrables.map((l) => (
-                    <StaggerItem as="li" key={l}>
-                      <span className="flex items-start gap-3">
-                        <Check
-                          className={`mt-0.5 size-4 shrink-0 ${ACCENT_SERVICE[i]}`}
-                          aria-hidden
-                        />
-                        <span className="text-ink-secondary text-pretty">{l}</span>
-                      </span>
-                    </StaggerItem>
-                  ))}
-                </Stagger>
-                {/* Ce que la prestation ne couvre pas, sous les livrables et
-                    dans le même bloc. Annoncer une limite au même endroit
-                    qu'une promesse est ce qui la rend crédible ; la reléguer
-                    en bas de page reviendrait à l'enterrer, ce que le studio
-                    dit ne pas faire ailleurs sur le site. Elle écarte aussi
-                    les demandes hors sujet avant le premier courriel.
+      {/* Les limites, toutes ensemble et en petit.
 
-                    Le filet de gauche prend la couleur du métier : sur un
-                    lavis coloré, `--rule` est un gris qui disparaît. */}
-                <p
-                  className={`text-ink-muted mt-6 max-w-(--content-max) border-l-2 pl-4 text-sm leading-relaxed text-pretty ${BORDURE_SERVICE[i]}`}
-                >
-                  {item.horsPerimetre}
-                </p>
-              </div>
-            </article>
-          </Reveal3D>
-        </Section>
-      ))}
+          Elles étaient quatre paragraphes dispersés, un par métier, chacun au
+          bas d'une section. Rassemblées, elles tiennent en un bloc et disent
+          quelque chose qu'elles ne disaient pas éparpillées : voici le
+          périmètre du studio, en entier. Annoncer une limite reste ce qui rend
+          une promesse crédible ; ce qui change, c'est qu'on la lit d'un coup. */}
+      <Section tone="sand" titre={p.limitesTitre} chapo={p.limitesChapo}>
+        <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+          {p.items.map((item, i) => (
+            <li key={item.nom} className="max-w-(--content-max)">
+              <p
+                className={`font-mono text-[11px] tracking-[0.2em] uppercase ${ACCENT_TUILE[i]}`}
+              >
+                {item.nom}
+              </p>
+              <p className="text-ink-secondary mt-2 text-sm leading-relaxed text-pretty">
+                {item.horsPerimetre}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-      {/* La page se ferme sur l'encre. Après quatre lavis clairs, un fond
-          soutenu fait lire le bouton comme la sortie de la page et non comme
-          une cinquième section. */}
+      {/* La page se ferme sur l'encre : après des lavis clairs, un fond soutenu
+          fait lire le bouton comme la sortie et non comme une section de plus. */}
       <section className="bg-ink py-20 sm:py-24">
         <Zone>
           <h2 className="font-display text-paper max-w-[20ch] text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
