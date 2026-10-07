@@ -25,14 +25,6 @@ const PAGES = [
   ["/fr/contact", "sentis-contact"],
   ["/fr/mentions-legales", "sentis-mentions"],
   ["/fr/confidentialite", "sentis-confidentialite"],
-  ["/nexus", "nexus-accueil"],
-  ["/nexus/design-system", "nexus-design-system"],
-  ["/nexus/components", "nexus-composants"],
-  ["/nexus/motion", "nexus-motion"],
-  ["/nexus/scroll", "nexus-scroll"],
-  ["/nexus/gallery", "nexus-gallery"],
-  ["/nexus/dashboard", "nexus-dashboard"],
-  ["/nexus/docs", "nexus-docs"],
 ];
 // §11 — les neuf largeurs imposées par le cahier des charges.
 const WIDTHS = [1440, 1280, 1024, 834, 768, 430, 390, 375, 320];
