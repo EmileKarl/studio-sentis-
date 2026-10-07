@@ -3,10 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 /**
- * Le 404 sert deux publics sur un seul déploiement, et ne sait pas lequel se
- * trompe d'adresse : il propose donc les deux entrées plutôt que d'en deviner
- * une. Le texte est bilingue pour la même raison — la langue du visiteur n'est
- * pas connue hors des routes /fr et /en.
+ * Le texte est bilingue parce que la langue du visiteur n'est pas connue hors
+ * des routes /fr et /en : ce fichier sert les deux.
  */
 export default function NotFound() {
   return (
@@ -28,10 +26,10 @@ export default function NotFound() {
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button asChild size="lg" className="rounded-md">
-            <Link href="/fr">Studio Sentis</Link>
+            <Link href="/fr">Accueil</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="rounded-md">
-            <Link href="/nexus">NEXUS UI</Link>
+            <Link href="/en">Home</Link>
           </Button>
         </div>
       </div>

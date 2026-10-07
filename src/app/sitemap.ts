@@ -44,21 +44,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  const nexus = [
-    "/nexus",
-    "/nexus/design-system",
-    "/nexus/components",
-    "/nexus/motion",
-    "/nexus/scroll",
-    "/nexus/gallery",
-    "/nexus/dashboard",
-    "/nexus/docs",
-  ].map((path) => ({
-    url: `${SITE_URL}${path}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
-
-  return [...sentis, ...nexus];
+  return sentis;
 }
