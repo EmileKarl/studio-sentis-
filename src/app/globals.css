@@ -1,4 +1,12 @@
 @import "tailwindcss";
+
+/* Les skills d'agents et les fichiers de travail d'Impeccable regorgent
+   d'exemples de classes Tailwind. Sans ces exclusions, la détection
+   automatique les lit comme du code du site et génère des règles que rien
+   n'utilise : +13 ko de CSS mesurés à l'installation des skills taste. */
+@source not "../../.claude";
+@source not "../../.agents";
+@source not "../../.impeccable";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../styles/tokens.css";

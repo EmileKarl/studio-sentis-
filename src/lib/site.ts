@@ -61,7 +61,7 @@ export const IDENTITE_INCOMPLETE = Object.values(EXPLOITANT).some((v) => !v);
  * change** — c'est la seule information de ces pages qu'un visiteur peut
  * vérifier, et une date périmée les décrédibilise entièrement.
  */
-export const LEGAL_MAJ = "2026-09-29";
+export const LEGAL_MAJ = "2026-10-05";
 
 /**
  * Identifiants d'entité pour les données structurées.
@@ -93,3 +93,15 @@ export const PLACES_LANCEMENT = 10;
 
 /** Rabais consenti, en pourcentage. */
 export const RABAIS_LANCEMENT = 25;
+
+/**
+ * Places de l'offre de lancement déjà signées.
+ *
+ * Zéro, et c'est un fait, pas un réglage : personne n'a encore signé. Le
+ * ticket de la page Réalisations et son bouton en dépendent — le prochain
+ * numéro servi vaut `PLACES_PRISES + 1`. **À relever à chaque soumission
+ * signée**, et
+ * seulement à ce moment-là : afficher une place prise qui ne l'est pas serait
+ * le seul mensonge d'une page dont tout l'argument est de ne pas en faire.
+ */
+export const PLACES_PRISES = 0;

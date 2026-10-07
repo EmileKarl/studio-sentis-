@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Lancement } from "@/components/sentis/lancement";
 import { EnTetePage } from "@/components/sentis/parts";
+import { TemoinTicket } from "@/components/sentis/temoins";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { donneesPage, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
@@ -38,7 +39,11 @@ export default async function RealisationsPage({
     <>
       <DonneesStructurees data={donneesPage(locale, "/realisations", p.titre, "CollectionPage")} />
 
-      <EnTetePage titre={p.titre} chapo={p.chapo} scene="constellation" />
+      <EnTetePage
+        titre={p.titre}
+        chapo={p.chapo}
+        temoin={<TemoinTicket ticket={p.ticket} />}
+      />
       <Lancement dict={d} locale={locale} />
     </>
   );

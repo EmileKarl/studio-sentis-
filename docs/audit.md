@@ -398,6 +398,61 @@ coupée sous `prefers-reduced-motion`, et elle ne part jamais au doigt
 **Résultat mesuré :** Services **460 → 295 mots**, **4 152 → 2 671 px**.
 Réalisations **459 → 367 mots**.
 
+### Carnet de bord, grille en attente, témoins en direct
+
+Trois demandes du client le même jour : un meilleur agencement pour À propos,
+une refonte de Réalisations, et « autre chose » que les volumes 3D à côté des
+titres. Pour À propos, sa direction tenait en une phrase : faire comprendre
+que l'histoire s'écrit, s'écrira et se racontera avec ses clients, à partir de
+maintenant. Trois structures lui ont été proposées sur une page de décision
+(Impeccable, tirage `b1644ed1`), puis trois autres après un nouveau tirage ; il
+a retenu le carnet de bord, sur recommandation.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 114 | **À propos était devenue la page la plus « blog » du site** : 429 mots, dix-huit blocs de texte courant, trois paragraphes numérotés puis sept cartes. Elle répétait l'accueil (les trois raisons de repousser un projet) et Services (« Ce que je ne fais pas », même titre sur les deux pages) | Un carnet de bord : « Déjà écrit » (quatre lignes, chacune vérifiable sur le site), « Ne s'écrira jamais » (les quatre refus, barrés), « S'écrira avec vous » (dix lignes vides, une par place de l'offre). Les principes passent dans une colonne collante, « Les règles du carnet ». Le fil vertical s'écrit au défilement, en CSS piloté (`.sd-fil`), sans JavaScript |
+| 115 | **Le barré ne s'entend pas** : un lecteur d'écran n'annonce pas `line-through` | Le titre du groupe, « Ne s'écrira jamais », dit en mots ce que le trait dit à l'œil |
+| 116 | **Réalisations avait la silhouette d'une page d'offre** : surtitre, gros « −25 % », dix pastilles, et une moitié droite vide sur trois sections | La grille du portfolio avant les projets : le cadre 01, grand, adressé au visiteur, face au constat ; les neuf autres en bande, en pointillé. Le surtitre disparaît. Les cartes de l'échange perdent leur filet supérieur coloré, que le détecteur relève sur un coin arrondi |
+| 117 | **Les volumes 3D des en-têtes ne disaient rien de la page**, coûtaient une scène WebGL par visite, et la « poussière » d'À propos était presque invisible | Un témoin par page, qui tient une promesse en direct : une page de Cahier Canada datée du jour (À propos), un bon de livraison avec le prix et la date si l'on commençait aujourd'hui (Services), un ticket « prenez un numéro » qui affiche le prochain numéro servi (Réalisations), un reçu avec l'heure à Châteauguay et la date limite de réponse (Contact). Les dates sont calculées au client, sur le calendrier du studio (`src/lib/dates.ts`) ; le numéro du ticket vient de `PLACES_PRISES` |
+| 118 | **Réunis dans un seul module client, les quatre témoins étaient recopiés dans le paquet de chaque page** ; et chaque page précharge les autres par le menu | Un fichier par témoin, importé directement par sa page ; le ticket, qui ne dépend d'aucune heure, est rendu au serveur. Mesuré : le témoin d'À propos pèse 2 ko |
+| 119 | **L'installation des skills taste a ajouté 13 ko de CSS au site** : la détection automatique de Tailwind lisait leurs exemples (`backdrop-blur-3xl`, `py-40`…) comme du code du site | `@source not` sur `.claude`, `.agents` et `.impeccable` dans `globals.css`. Le CSS tombe à **133 ko, contre 151,5 avant l'installation** : les skills déjà présents en gonflaient aussi |
+| 120 | Le curseur du cahier clignotait sans fin | Quatre clignotements, puis fixe : un clignotement qui démarre seul doit s'arrêter avant cinq secondes (WCAG 2.2.2) |
+
+**Résultat mesuré :** À propos **429 → 315 mots** (FR, 3 324 → 3 012 px) ;
+Réalisations **367 → 332 mots**. JavaScript propre à chaque page — les
+scripts déclarés dans son HTML, hors préchargement des autres : Services
+894 → 847 ko, Réalisations 897 → 855 ko, À propos 891 → 824 ko, Contact
+931 → 869 ko, mentions légales 891 → 822 ko.
+
+### Le site qui parle : photos, objets, et plus de lavis de couleur
+
+Retour du client le 2026-10-05, dicté : garder l'en-tête de l'accueil ; donner
+au manifeste et au déroulé des images ou des animations interactives au lieu
+d'aplats ; refaire « Trois raisons » ; remplacer « Ce que je sais faire » par
+quelque chose qui retient le visiteur ; retirer les fonds de couleur (« comme
+un cahier de couleurs ») ; supprimer les cadres numérotés de Réalisations ;
+dire qu'il monte des équipes pour les projets lourds. Il a retenu les quatre
+recommandations proposées : photos et animations mêlées, fonds neutres
+partout, « équipe, un seul interlocuteur », et un test de site en direct.
+
+| # | Problème | Correctif |
+| --- | --- | --- |
+| 121 | **Les deux séquences horizontales étaient quatre aplats de couleur pleine page**, qui ne disaient rien de plus que leur titre | Manifeste : une photo par promesse (un agenda, un atelier, une clé, la rivière Châteauguay) sous un voile dégradé, et **un objet qui montre la promesse** : un devis dont le prix et la date suivent le forfait choisi, un fil Logo → Suivi parcouru une fois, un titre de propriété qu'on remplit avec le nom de son commerce, l'heure qu'il est à Châteauguay. Déroulé : gardé horizontal, papier d'un côté, photo de l'autre, et le moment de chaque étape à côté de son numéro |
+| 122 | **Les photos devaient rester honnêtes** dans un site qui s'interdit d'inventer | Aucune personne sur aucune photo, aucune présentée comme le studio, ses locaux ou ses clients. Huit photos de Wikimedia Commons, licence vérifiée à la source : sept CC0, une CC BY 4.0 dont le crédit (auteur, licence, « recadrée ») est un lien vers l'original. Crédit affiché sur chacune ; mention ajoutée aux mentions légales. Unsplash bloquant les requêtes automatiques, la recherche est passée par Openverse puis par l'API de Commons |
+| 123 | **Le texte clair posé sur une photo** n'était mesuré par aucun contrôle | Mesuré au pire pixel, texte masqué, comme `verify:scene` : 1 440 et 390 px, deux thèmes. Première version du voile : 4,41:1 sur le titre du panneau 1 (la page blanche de l'agenda). Voile renforcé sous le titre : **pire cas 6,96:1**. Le fil et l'horloge, posés là où le voile s'efface, ont reçu une plaque sombre unie |
+| 124 | **« Trois raisons » s'arrêtait à l'objection**, dans trois cartes égales sur lavis bleu ; la réponse vivait dans le dictionnaire sans jamais être affichée | Chaque objection, en gris, en face de sa réponse, en noir, sur une ligne |
+| 125 | **« Ce que je sais faire » montrait une boulangerie fictive** ; le client doutait de son utilité | Remplacée par « Testez votre site » : le visiteur entre l'adresse de son site, Google PageSpeed Insights le mesure depuis son navigateur, le bulletin affiche quatre notes et trois mesures. Rien ne passe par un serveur du studio ; la politique de confidentialité a une section pour ça. Démonstrations, cadres d'appareil et textes `travaux` supprimés, plus utilisés |
+| 126 | **Sans clé, l'API PageSpeed répond 429** : le quota anonyme partagé de Google est épuisé | `NEXT_PUBLIC_PSI_KEY` (documentée dans `.env.example`). Sans clé ou en cas de refus, le bulletin le dit et propose le même test sur `pagespeed.web.dev`, l'adresse déjà remplie |
+| 127 | **Une séquence horizontale ne prévoyait pas de contrôle à l'intérieur** : au clavier, le navigateur aurait décalé le cadre collant pour montrer un bouton hors champ | `HorizontalTrack` suit le focus : il annule le décalage et amène la page à la hauteur où ce panneau est celui qu'on lit |
+| 128 | **Fonds de couleur partout** — lavis par section, tuiles de Services, colonne des règles d'À propos, cartes de l'échange | Papier ou blanc, un filet entre deux sections. La couleur reste dans les titres, chiffres, pictogrammes et boutons |
+| 129 | **Le site disait « si votre projet demande une équipe, je vous oriente ailleurs »**, ce qui n'est plus vrai | Services : bande « Projets d'envergure » ; À propos, manifeste et réponse 2 réécrits : « celle à qui vous parlez dirige le travail, même quand une équipe s'y ajoute ». Le développement assisté par IA n'est pas mentionné, à la demande du client |
+| 130 | Réalisations : les dix cadres numérotés prenaient la moitié de la page pour redire le ticket de l'en-tête | Supprimés ; le constat passe en grand, en regard de son titre |
+| 131 | **« Ce que ces montants couvrent » était un article** : un paragraphe de soixante mots, une liste à puces, et la comparaison avec un abonnement dans un encadré à filet coloré à gauche — le motif que le plancher de qualité refuse | Un reçu « Inclus dans chaque forfait », quatre lignes cochées et un total : « Frais découverts en cours de route : 0 $ », qui ne promet rien de plus que la note déjà affichée (« chiffré avant d'être commencé, jamais après »). La comparaison devient un vrai tableau « Au bout de trois ans » — payé, possédé, si l'on arrête — et dit ce que la phrase taisait : l'hébergement d'un site livré se paie à part. Sur téléphone, les mêmes lignes en deux colonnes plutôt qu'un tableau à trois. Aucun JavaScript ajouté |
+
+**Mesuré :** 0 constat au détecteur sur les fichiers modifiés ; lint, typage,
+`verify:seo`, `verify:scene`, `verify:teintes`, `verify:tokens` passent.
+`verify:poids` dépasse — voir §4.
+
 ## 4. Problèmes restants
 
 Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
@@ -408,9 +463,10 @@ Aucun n'est bloquant. Ils sont listés parce que le §13 exige qu'ils le soient.
 | `nested-cards` — carte dans une carte | 34 sur Composants, Motion Lab et Dashboard | **Inhérent.** Une galerie de composants ne peut pas montrer un composant `Card` sans l'encadrer dans un bloc de démonstration. À revoir si le motif apparaît hors galerie. |
 | `cramped-padding` — enfants au ras d'une bordure | 7 sur la vitrine, 9 sur le site de l'agence | **Assumé, mesuré.** Deux causes distinctes. Sur la vitrine : grilles à filet unique (`gap-px`), les cellules ont leur padding, c'est la grille porteuse qui n'en a pas — le procédé suisse recherché. Sur le site de l'agence : les boutons shadcn ont une hauteur fixe et zéro padding vertical ; mesuré au navigateur, le lien d'appel à l'action fait 32 px de haut pour 14 px de texte et le bouton d'envoi 36 px pour 16 px, soit 9 à 10 px de part et d'autre. La règle lit le padding, pas l'espace réel. |
 | `layout-transition` — `transition: height` | 3 sur la vitrine, 1 par page sur le site de l'agence | **Réel, non corrigé.** Vient de `transition-all` sur le bouton shadcn et de l'accordéon. Le passage à `grid-template-rows` demande de modifier un composant vendu ; à traiter avec la revue des primitives. |
-| `nested-cards` sur les cartes en section teintée | 3 sur À propos, 3 sur l'accueil | **Non localisé, et je le dis plutôt que de l'appeler faux positif.** Le compte suit exactement le nombre de cartes posées dans une section teintée, et il a monté quand ces cartes ont reçu une entrée 3D. Mais la chaîne d'ancêtres d'une carte, relevée au navigateur, ne contient aucune boîte décorée : l'enveloppe d'animation ne porte que `perspective`, le `li` et le `ul` sont nus, et la section sable n'a ni rayon ni ombre. Un essai de suppression d'un niveau de `div` (les classes de carte portées par l'élément animé lui-même) n'a rien changé au compte. Visuellement, les captures ne montrent aucune carte dans une carte. Reste ouvert. |
+| `nested-cards` sur les cartes en section teintée | 3 sur l'accueil (À propos n'a plus de cartes depuis le carnet de bord) | **Non localisé, et je le dis plutôt que de l'appeler faux positif.** Le compte suit exactement le nombre de cartes posées dans une section teintée, et il a monté quand ces cartes ont reçu une entrée 3D. Mais la chaîne d'ancêtres d'une carte, relevée au navigateur, ne contient aucune boîte décorée : l'enveloppe d'animation ne porte que `perspective`, le `li` et le `ul` sont nus, et la section sable n'a ni rayon ni ombre. Un essai de suppression d'un niveau de `div` (les classes de carte portées par l'élément animé lui-même) n'a rien changé au compte. Visuellement, les captures ne montrent aucune carte dans une carte. Reste ouvert. |
 | `nested-cards` sur les pages de réalisations | 1 sur `/fr`, 3 sur `/fr/realisations` | **Inhérent, vérifié.** Sonde DOM à l'appui : les seules occurrences restantes sont les cartes produits de la démo boulangerie à l'intérieur du cadre de navigateur, et l'écran du téléphone à l'intérieur de son châssis. Un cadre d'appareil n'est pas une carte, mais il en a la forme calculée. |
 | `low-contrast` sur le bouton « Désactivé » | 1 | **Exemption assumée.** WCAG 1.4.3 exclut explicitement les composants d'interface inactifs. |
+| `verify:poids` — JavaScript à 928 ko pour un budget de 900 (contact : 944 pour 940) | toutes les pages | **Ouvert, à trancher par le client.** Deux causes. 1. Le contrôle additionne les scripts que chaque page **précharge** pour les autres pages du menu, d'où un chiffre presque identique partout ; depuis que l'en-tête commun n'anime plus le titre, `motion` n'est plus partagé et Turbopack le découpe en deux morceaux préchargés (+36 ko). 2. L'accueil porte maintenant le test de site et quatre objets interactifs : son JavaScript propre passe de 903 à 931 ko (+9,7 ko compressés). Le JavaScript propre des autres pages reste plus bas qu'avant la refonte (−42 à −69 ko). Sorties possibles : relever le budget en le justifiant, ou mesurer le JavaScript propre à chaque page. |
 
 ## 5. Ce qui n'est pas fait
 

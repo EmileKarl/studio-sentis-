@@ -2,7 +2,7 @@
 
 import { useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
 import * as m from "motion/react-m";
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type FocusEvent, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,7 @@ export function HorizontalTrack({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const cadre = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -46,6 +47,28 @@ export function HorizontalTrack({
   // La plage reste dans [0, 1] : une valeur liée au scroll qui en sort est
   // refusée par l'API d'animation du navigateur.
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(count - 1) * 100}%`]);
+
+  /**
+   * Un panneau peut porter des contrôles — un bouton, un champ, un lien. Au
+   * clavier, on peut y arriver alors que le panneau est encore hors champ :
+   * le navigateur ferait alors défiler le cadre collant de côté pour montrer
+   * l'élément, et la piste resterait décalée pour de bon. On fait l'inverse :
+   * on annule ce décalage et on amène la page à la hauteur où ce panneau est
+   * celui qu'on lit. Le défilement reste celui de la page, comme partout.
+   */
+  const suivreLeFocus = (evenement: FocusEvent<HTMLElement>) => {
+    const piste = ref.current;
+    const panneau = (evenement.target as HTMLElement).closest("[data-panneau]");
+    if (!piste || !panneau) return;
+    const index = Number(panneau.getAttribute("data-panneau"));
+    const haut = window.scrollY + piste.getBoundingClientRect().top;
+    const course = piste.offsetHeight - window.innerHeight;
+    const cible = haut + (count > 1 ? (index / (count - 1)) * course : 0);
+    requestAnimationFrame(() => {
+      if (cadre.current) cadre.current.scrollLeft = 0;
+    });
+    if (Math.abs(window.scrollY - cible) > 4) window.scrollTo({ top: cible });
+  };
 
   if (reduced) {
     return (
@@ -63,13 +86,14 @@ export function HorizontalTrack({
     <section
       ref={ref}
       aria-label={label}
+      onFocusCapture={suivreLeFocus}
       className={cn("relative", className)}
       // Une écran par panneau, plus une pour amorcer : en dessous, la séquence
       // défile trop vite pour être lue ; au-dessus, elle donne l'impression
       // que la page est bloquée.
       style={{ height: `${count * 90 + 10}vh` }}
     >
-      <div className="sticky top-0 h-dvh overflow-hidden">
+      <div ref={cadre} className="sticky top-0 h-dvh overflow-hidden">
         <m.div style={{ x }} className="flex h-full">
           {panels.map((panel, i) => (
             <Panneau key={i} progress={scrollYProgress} index={i} count={count}>
@@ -121,7 +145,7 @@ function Panneau({
   const z = useTransform(progress, plage, [-140, 0, -140]);
 
   return (
-    <div className="h-full w-screen shrink-0" style={{ perspective: 1600 }}>
+    <div data-panneau={index} className="h-full w-screen shrink-0" style={{ perspective: 1600 }}>
       <m.div
         className="h-full w-full"
         style={{ rotateY, z, transformStyle: "preserve-3d" }}

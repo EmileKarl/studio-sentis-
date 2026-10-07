@@ -95,6 +95,19 @@ Confirmés par le client, donc affichables :
 - **Un seul interlocuteur**, du premier contact à la livraison.
 - **Délai court et daté** dès le devis.
 
+Confirmé par le client le 2026-10-05 :
+
+- **Projets lourds possibles, avec une équipe.** Le studio monte et pilote
+  l'équipe qu'un projet demande ; le client garde **un seul interlocuteur**, un
+  seul contrat et une seule date. L'engagement « un seul interlocuteur » tient
+  donc toujours ; c'est « une seule personne fait tout » qui ne tient plus pour
+  les gros projets. Le site le dit (Services : « Projets d'envergure » ;
+  À propos ; manifeste de l'accueil).
+- **Le client travaille aussi en développement assisté par IA** (« vibe
+  coding »). Décision du 2026-10-05 : **ne pas l'écrire sur le site** — le mot
+  ne parle pas aux trois publics visés, et il n'ajoute rien à la promesse de
+  prix et de date.
+
 Recommandés en complément, non encore confirmés :
 
 - **Autonomie du client** — site modifiable seul, avec prise en main. C'est la

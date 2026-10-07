@@ -109,7 +109,7 @@ export default async function MentionsLegalesPage({
               ))}
             </dl>
             {IDENTITE_INCOMPLETE ? (
-              <p className="text-ink-secondary bg-surface-2 border-rule mt-5 max-w-(--content-max) border-l-2 py-3 pl-4 text-sm leading-relaxed text-pretty">
+              <p className="text-ink-secondary bg-surface border-rule mt-5 max-w-(--content-max) border-l-2 py-3 pl-4 text-sm leading-relaxed text-pretty">
                 {t.trouNote}
               </p>
             ) : null}

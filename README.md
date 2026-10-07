@@ -198,8 +198,17 @@ le vert ne donnait que 4,30:1 sur son propre fond et le cyan 4,52:1 ; les deux
 ont été assombris.
 
 Chaque page porte une couleur : bleu sur l'accueil, cyan sur les services,
-violet sur les réalisations, vert sur À propos. La scène 3D de la page est de
-cette couleur, et ses pictogrammes aussi.
+violet sur les réalisations, vert sur À propos. Ses pictogrammes sont de cette
+couleur.
+
+Les pages intérieures n'ont plus de volume 3D à côté du titre. Chacune porte un
+**témoin** : un objet du quotidien qui tient une promesse du studio en direct,
+calculé au moment de la lecture — une page de Cahier Canada datée du jour (À
+propos), un bon de livraison avec la date si l'on commençait aujourd'hui
+(Services), un ticket « prenez un numéro » (Réalisations), un reçu avec la date
+limite de réponse (Contact). Voir
+[`temoins.tsx`](src/components/sentis/temoins.tsx). La scène WebGL reste sur
+l'accueil.
 
 Les illustrations sont dessinées, pas photographiées : quatre pictogrammes de
 métier qui se tracent au défilement
@@ -218,9 +227,13 @@ c'est écrit sous le dessin : **le halo local est symbolique**, parce qu'à cett
 listées en toutes lettres à côté, en texte — sur un globe, elles ne tiendraient
 pas.
 
-**Il n'y a aucune photographie dans le projet.** C'est un choix assumé tant que
-le studio n'a pas les siennes : ni banque d'images, ni bureau qui n'est pas le
-sien, ni équipe qui n'existe pas.
+**Photographies : des objets et un lieu, jamais une personne.** Le site n'en
+avait aucune ; le client a demandé que le site « parle » avec des images
+(2026-10-05). Huit photos viennent de Wikimedia Commons, sept en CC0 et une en
+CC BY 4.0 (la rivière Châteauguay, près de l'île Saint-Bernard), avec leur
+crédit affiché sur chacune. Le principe d'origine tient toujours : ni bureau
+qui n'est pas le sien, ni équipe ou client inventés. Provenance et licences :
+[`src/lib/photos.ts`](src/lib/photos.ts).
 
 ## Marque — planche « Concept 16 », couleurs du livre de Sanzo Wada
 

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { FormulaireSoumission } from "@/components/sentis/formulaire";
 import { GlobeDiffere } from "@/components/motion/differe";
 import { EnTetePage, Section } from "@/components/sentis/parts";
+import { TemoinReponse } from "@/components/sentis/temoin-reponse";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { donneesPage, metadonneesPage } from "@/lib/seo";
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
@@ -41,7 +42,11 @@ export default async function ContactPage({
     <>
       <DonneesStructurees data={donneesPage(locale, "/contact", p.titre, "ContactPage")} />
 
-      <EnTetePage titre={p.titre} chapo={p.chapo} scene="onde" />
+      <EnTetePage
+        titre={p.titre}
+        chapo={p.chapo}
+        temoin={<TemoinReponse locale={locale} textes={d.temoins.reponse} />}
+      />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">

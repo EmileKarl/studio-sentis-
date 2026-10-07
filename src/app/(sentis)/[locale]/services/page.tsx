@@ -7,6 +7,7 @@ import { Carte3D, Couche3D } from "@/components/motion/carte-3d";
 import { Entree } from "@/components/motion/entree";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { PictoService } from "@/components/sentis/pictos";
+import { TemoinLivraison } from "@/components/sentis/temoin-livraison";
 import { Button } from "@/components/ui/button";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { donneesPage, donneesServices, metadonneesPage } from "@/lib/seo";
@@ -62,18 +63,14 @@ import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
 /**
  * Les classes de couleur, écrites en entier et non composées.
  *
- * `bg-teinte-${couleur}` ne survit pas au balayage de Tailwind : la classe
- * n'existe nulle part dans le source, donc elle n'est pas générée et la tuile
- * sort sans fond. Un tableau de chaînes littérales est la seule forme que le
- * compilateur voit.
+ * `text-accent-${couleur}` ne survit pas au balayage de Tailwind : la classe
+ * n'existe nulle part dans le source, donc elle n'est pas générée. Un tableau
+ * de chaînes littérales est la seule forme que le compilateur voit.
+ *
+ * Les tuiles n'ont plus de lavis de couleur (demande du client,
+ * 2026-10-05) : la couleur de chaque métier tient dans son pictogramme et son
+ * numéro, et la tuile est blanche sur le papier.
  */
-const FOND_TUILE = [
-  "bg-teinte-bleu",
-  "bg-teinte-cyan",
-  "bg-teinte-violet",
-  "bg-teinte-vert",
-] as const;
-
 const ACCENT_TUILE = [
   "text-accent-bleu",
   "text-accent-cyan",
@@ -81,12 +78,13 @@ const ACCENT_TUILE = [
   "text-accent-vert",
 ] as const;
 
-const BORDURE_TUILE = [
-  "border-accent-bleu",
-  "border-accent-cyan",
-  "border-accent-violet",
-  "border-accent-vert",
-] as const;
+/**
+ * Les forfaits du bon de livraison de l'en-tête : un par métier qui se vend
+ * au forfait, plus le cadrage, qui est la porte d'entrée des applications.
+ * L'informatique et le marketing se facturent à l'heure ou au mois ; ils n'ont
+ * pas de date de livraison à promettre, donc pas de ligne ici.
+ */
+const FORFAITS_TEMOIN: readonly string[] = ["une-page", "vitrine", "identite", "cadrage"];
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -117,14 +115,24 @@ export default async function ServicesPage({
       <DonneesStructurees data={donneesPage(locale, "/services", p.titre, "CollectionPage")} />
       <DonneesStructurees data={donneesServices(locale)} />
 
-      <EnTetePage titre={p.titre} chapo={p.chapo} scene="helice" />
+      <EnTetePage
+        titre={p.titre}
+        chapo={p.chapo}
+        temoin={
+          <TemoinLivraison
+            locale={locale}
+            textes={d.temoins.livraison}
+            forfaits={d.prix.forfaits.filter((f) => FORFAITS_TEMOIN.includes(f.cle))}
+          />
+        }
+      />
 
       <Section>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {p.items.map((item, i) => (
             <Entree key={item.nom} delai={i * 70} className="h-full">
               <Carte3D
-                className={`${FOND_TUILE[i]} ${BORDURE_TUILE[i]} flex h-full flex-col rounded-2xl border-t-2 p-6 sm:p-8`}
+                className="bg-surface border-rule flex h-full flex-col rounded-2xl border p-6 sm:p-8"
               >
                 {/* Trois plans de profondeur : le fond de la tuile, les
                     pastilles un peu en avant, le pictogramme franchement
@@ -159,7 +167,7 @@ export default async function ServicesPage({
                     {item.livrables.map((l) => (
                       <li
                         key={l}
-                        className="bg-paper/70 text-ink-secondary rounded-full px-3 py-1 text-xs leading-relaxed"
+                        className="bg-paper text-ink-secondary rounded-full px-3 py-1 text-xs leading-relaxed"
                       >
                         {l}
                       </li>
@@ -189,6 +197,36 @@ export default async function ServicesPage({
             </Entree>
           ))}
         </div>
+
+        {/* Projets d'envergure. Le client peut monter et piloter une équipe
+            (2026-10-05) ; la page disait l'inverse ailleurs. Une bande pleine
+            largeur plutôt qu'une cinquième tuile : ce n'est pas un métier de
+            plus, c'est une échelle de plus pour les quatre. */}
+        <Entree delai={280}>
+          <div className="bg-surface border-rule mt-5 grid gap-8 rounded-2xl border p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
+            <div>
+              <h2 className="font-display text-ink text-2xl leading-tight font-semibold tracking-tight text-balance sm:text-3xl">
+                {p.envergure.titre}
+              </h2>
+              <p className="text-ink-secondary mt-3 max-w-(--content-max) text-lg leading-relaxed text-pretty">
+                {p.envergure.corps}
+              </p>
+              <Button asChild size="lg" className="mt-6 rounded-md text-base active:translate-y-px">
+                <Link href={`/${locale}/contact`}>
+                  {p.envergure.cta} <ArrowRight aria-hidden />
+                </Link>
+              </Button>
+            </div>
+            <ul className="text-ink-secondary space-y-3 self-center leading-relaxed">
+              {p.envergure.points.map((point) => (
+                <li key={point} className="border-rule flex gap-3 border-b border-dashed pb-3 last:border-0 last:pb-0">
+                  <ArrowRight aria-hidden className="text-accent-bleu mt-1 size-4 shrink-0" />
+                  <span className="text-pretty">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Entree>
       </Section>
 
       {/* Les limites, toutes ensemble et en petit.
@@ -198,7 +236,7 @@ export default async function ServicesPage({
           quelque chose qu'elles ne disaient pas éparpillées : voici le
           périmètre du studio, en entier. Annoncer une limite reste ce qui rend
           une promesse crédible ; ce qui change, c'est qu'on la lit d'un coup. */}
-      <Section tone="sand" titre={p.limitesTitre} chapo={p.limitesChapo}>
+      <Section tone="blanc" titre={p.limitesTitre} chapo={p.limitesChapo}>
         <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
           {p.items.map((item, i) => (
             <li key={item.nom} className="max-w-(--content-max)">
