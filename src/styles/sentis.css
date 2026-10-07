@@ -210,3 +210,102 @@
 [data-brand="sentis"] {
   font-family: var(--font-body-brand);
 }
+
+/* =========================================================================
+   Témoins des en-têtes de page.
+
+   Ils remplacent les volumes 3D qui tournaient à côté des titres. Chacun est
+   un objet du quotidien qui porte une promesse vraie, calculée au moment de la
+   lecture : une page de Cahier Canada datée du jour, un ticket de file
+   d'attente, un bon de livraison, un reçu. Ce sont des objets, donc ils ont
+   une ombre décalée et floue, comme une feuille posée sur une table, et non
+   un halo.
+   ========================================================================= */
+
+[data-brand="sentis"] .temoin-objet {
+  box-shadow:
+    0 1px 2px rgb(26 26 26 / 0.06),
+    0 10px 28px -6px rgb(26 26 26 / 0.16);
+}
+.dark[data-brand="sentis"] .temoin-objet,
+[data-brand="sentis"].dark .temoin-objet,
+.dark [data-brand="sentis"] .temoin-objet {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.5),
+    0 12px 32px -8px rgb(0 0 0 / 0.7);
+}
+
+/* La page de cahier : lignes bleues, marge rouge, comme le Cahier Canada que
+   tout le Québec a eu dans son sac d'école. Le texte est posé sur les lignes :
+   l'interligne du texte et celui du réglage sont la même variable. */
+[data-brand="sentis"] .cahier-page {
+  --interligne: 1.75rem;
+  position: relative;
+  background-color: var(--surface);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 calc(var(--interligne) - 1px),
+    color-mix(in oklab, var(--accent-bleu) 32%, transparent)
+      calc(var(--interligne) - 1px) var(--interligne)
+  );
+  line-height: var(--interligne);
+}
+[data-brand="sentis"] .cahier-page::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 2.75rem;
+  width: 1px;
+  background: color-mix(in oklab, var(--accent-violet) 70%, transparent);
+}
+
+/* Le curseur qui attend la suite. Il clignote en marches, pas en fondu : un
+   fondu se lit comme un chargement. Quatre fois, puis il reste fixe : un
+   clignotement qui démarre seul doit s'arrêter avant cinq secondes (WCAG
+   2.2.2), et l'œil a compris bien avant. Sous `prefers-reduced-motion`, la
+   règle globale ramène l'animation à une itération quasi nulle ; dans les deux
+   cas l'état de base, visible, reste affiché. */
+@keyframes curseur-attente {
+  50% {
+    opacity: 0;
+  }
+}
+[data-brand="sentis"] .curseur {
+  animation: curseur-attente 1.1s steps(1, end) 4;
+}
+
+/* Le ticket : deux encoches à hauteur de la perforation, découpées dans le
+   papier par un masque, et non dessinées par-dessus. */
+[data-brand="sentis"] .ticket-encoches {
+  --encoche: 0.75rem;
+  --hauteur-encoche: 66%;
+  -webkit-mask-image:
+    radial-gradient(circle at 0 var(--hauteur-encoche), transparent var(--encoche), #000 calc(var(--encoche) + 0.5px)),
+    radial-gradient(circle at 100% var(--hauteur-encoche), transparent var(--encoche), #000 calc(var(--encoche) + 0.5px));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(circle at 0 var(--hauteur-encoche), transparent var(--encoche), #000 calc(var(--encoche) + 0.5px)),
+    radial-gradient(circle at 100% var(--hauteur-encoche), transparent var(--encoche), #000 calc(var(--encoche) + 0.5px));
+  mask-composite: intersect;
+}
+
+/* Le ticket sort du distributeur : il descend de sous la fente, son bord
+   inférieur en premier, comme un vrai. Le parent coupe ce qui est encore
+   dans la machine. Une seule fois, au chargement ; c'est le seul mouvement de
+   l'en-tête. */
+@keyframes ticket-sortie {
+  from {
+    translate: 0 -101%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+[data-brand="sentis"] .ticket-sortie {
+  animation: ticket-sortie var(--duration-slower) var(--ease-out) 250ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-brand="sentis"] .ticket-sortie {
+    animation: none;
+  }
+}

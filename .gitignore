@@ -55,3 +55,9 @@ next-env.d.ts
 
 # Captures produites par npm run verify
 tests/__screenshots__/
+
+# Fichiers de travail d'Impeccable : captures de revue (plusieurs dizaines de
+# Mo), page de decision, scripts de mesure jetables. Les contrats de direction
+# (surfaces/) restent suivis : ils guident les prochaines retouches.
+/.impeccable/*
+!/.impeccable/surfaces/

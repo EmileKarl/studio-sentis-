@@ -94,8 +94,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           titre: "Ce que présente ce site",
           corps: [
             "La section Réalisations est vide, et c'est délibéré : le studio n'a pas encore livré de mandat, et n'emprunte ni logo ni témoignage pour faire croire le contraire. Elle porte à la place une offre de lancement dont les conditions y figurent en entier.",
-            "Les démonstrations visibles ailleurs sur ce site — notamment sur la page d'accueil — sont des exercices conçus par le studio pour montrer ce qu'il sait construire. Ce ne sont pas des mandats livrés, et aucune entreprise réelle n'y est présentée comme cliente. Ce site est lui-même la première pièce du studio.",
-            "Les noms d'entreprises qui apparaissent dans ces démonstrations sont fictifs. Toute ressemblance avec une entreprise existante serait fortuite ; signalez-la et elle sera corrigée.",
+            "Ce site est lui-même la première pièce du studio. Les photographies qui l'illustrent montrent des objets et des lieux, jamais le studio, ses locaux ou des clients.",
           ],
         },
         {
@@ -109,6 +108,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           titre: "Propriété intellectuelle",
           corps: [
             "Les textes, illustrations, animations et le code de ce site appartiennent au studio, à l'exception des composants tiers cités ci-dessous, qui restent la propriété de leurs auteurs et sont utilisés selon leurs licences respectives.",
+            "Les photographies ne sont pas du studio. Elles viennent de Wikimedia Commons, sous licence libre (CC0 ou CC BY 4.0), et leur auteur et leur licence sont indiqués sur chacune. Aucune ne montre une personne, et aucune ne prétend montrer le studio, ses locaux ou ses clients.",
             "Ce qui est livré à un client lui appartient. Le code, les fichiers sources de l'identité visuelle et le nom de domaine sont transférés à la livraison, sans redevance ni location. C'est un engagement commercial du studio, et il figure au contrat.",
           ],
         },
@@ -159,7 +159,14 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           corps: [
             "Aucune mesure d'audience, aucun témoin de suivi, aucun pixel de réseau social, aucun réseau publicitaire, aucun profilage. Le site ne sait pas qui le consulte, ni combien de personnes le font.",
             "La seule chose écrite sur votre appareil est votre préférence d'affichage — thème clair, sombre ou automatique — que vous posez vous-même en cliquant sur le sélecteur du menu. Elle reste sur votre appareil, ne m'est jamais transmise, et s'efface avec les données de votre navigateur.",
-            "C'est vérifiable sans me croire sur parole : l'onglet Réseau des outils de développement de votre navigateur montre les requêtes que fait cette page, et aucune ne part vers un service de mesure.",
+            "C'est vérifiable sans me croire sur parole : l'onglet Réseau des outils de développement de votre navigateur montre les requêtes que fait cette page, et aucune ne part vers un service de mesure d'audience.",
+          ],
+        },
+        {
+          titre: "Le test de site, si vous l'utilisez",
+          corps: [
+            "Sur la page d'accueil, l'outil « Testez votre site » envoie l'adresse que vous y entrez à Google PageSpeed Insights, un service de Google qui charge cette page et en mesure la vitesse. La demande part de votre navigateur directement vers Google : elle ne passe par aucun serveur du studio, et je ne la vois pas.",
+            "Rien n'est envoyé tant que vous n'avez pas cliqué sur « Tester mon site ». Google traite cette demande selon sa propre politique de confidentialité (policies.google.com/privacy).",
           ],
         },
         {
@@ -283,8 +290,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           titre: "What this site shows",
           corps: [
             "The Work section is empty, and deliberately so: the studio has not yet delivered a mandate, and borrows neither logos nor testimonials to suggest otherwise. It carries a launch offer instead, whose conditions are set out there in full.",
-            "The demonstrations visible elsewhere on this site — on the home page in particular — are exercises built by the studio to show what it can build. They are not delivered mandates, and no real company is presented as a client. This site is the studio's first exhibit.",
-            "Company names appearing in those demonstrations are fictional. Any resemblance to a real business would be accidental; point it out and it will be corrected.",
+            "This site is the studio's first exhibit. The photographs illustrating it show objects and places, never the studio, its premises or clients.",
           ],
         },
         {
@@ -298,6 +304,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           titre: "Intellectual property",
           corps: [
             "The text, illustrations, animations and code of this site belong to the studio, except for the third-party components listed below, which remain their authors' property and are used under their respective licences.",
+            "The photographs are not the studio's. They come from Wikimedia Commons under free licences (CC0 or CC BY 4.0), and each one carries its author and licence. None shows a person, and none claims to show the studio, its premises or its clients.",
             "What is delivered to a client belongs to that client. Code, visual identity source files and the domain name are transferred on delivery, with no royalty and no rental. That is a commercial commitment of the studio, and it is written into the contract.",
           ],
         },
@@ -348,7 +355,14 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           corps: [
             "No analytics, no tracking cookies, no social network pixel, no ad network, no profiling. The site does not know who visits it, or how many people do.",
             "The only thing written to your device is your display preference — light, dark or automatic — which you set yourself using the switch in the menu. It stays on your device, is never sent to me, and disappears when you clear your browser data.",
-            "You do not have to take my word for it: the Network tab of your browser's developer tools shows every request this page makes, and none goes to a measurement service.",
+            "You do not have to take my word for it: the Network tab of your browser's developer tools shows every request this page makes, and none goes to an audience measurement service.",
+          ],
+        },
+        {
+          titre: "The site test, if you use it",
+          corps: [
+            "On the home page, the “Test your site” tool sends the address you enter to Google PageSpeed Insights, a Google service that loads that page and measures its speed. The request goes from your browser straight to Google: it passes through no studio server, and I do not see it.",
+            "Nothing is sent until you press “Test my site”. Google handles that request under its own privacy policy (policies.google.com/privacy).",
           ],
         },
         {

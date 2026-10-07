@@ -2,22 +2,37 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { HorizontalTrack, ObjetFlottant3D, Reveal3D } from "@/components/motion";
+import { HorizontalTrack, Reveal3D } from "@/components/motion";
 import { Scene3DDifferee } from "@/components/motion/differe";
 import { ConfigurateurPrix } from "@/components/sentis/configurateur-prix";
-import { DemoBoulangerie } from "@/components/sentis/demos";
-import { BrowserFrame } from "@/components/sentis/frames";
+import { CouverturePrix } from "@/components/sentis/couverture-prix";
 import { HeroPleinEcran } from "@/components/sentis/hero-plein-ecran";
-import { PanneauSentis, Section, Zone } from "@/components/sentis/parts";
+import {
+  ObjetDevis,
+  ObjetFil,
+  ObjetHorloge,
+  ObjetTitre,
+} from "@/components/sentis/objets-manifeste";
+import { PanneauEtape, PanneauPhoto } from "@/components/sentis/panneaux-accueil";
+import { Section, Zone } from "@/components/sentis/parts";
+import { TestSite } from "@/components/sentis/test-site";
+import { TroisRaisons } from "@/components/sentis/trois-raisons";
 import { Button } from "@/components/ui/button";
 import { DICT, isLocale } from "@/lib/i18n";
+import { PHOTOS } from "@/lib/photos";
 import { metadonneesPage } from "@/lib/seo";
 import { LocalBusinessJsonLd } from "@/components/sentis/local-business";
 
-// Les quatre panneaux du manifeste alternent quatre aplats francs. La
-// version précédente en posait deux en teintes pâles : sur un plein écran,
-// un fond presque blanc ne se distinguait pas de la page.
-const TONS = ["ink", "bleuPlein", "signal", "violetPlein"] as const;
+/**
+ * Les photos des deux séquences, dans l'ordre des panneaux. Aucune ne montre
+ * une personne ; voir `src/lib/photos.ts` pour leur provenance et leur
+ * licence.
+ */
+const PHOTOS_MANIFESTE = [PHOTOS.agenda, PHOTOS.atelier, PHOTOS.cle, PHOTOS.riviere] as const;
+const PHOTOS_METHODE = [PHOTOS.cafe, PHOTOS.carnet, PHOTOS.poste, PHOTOS.portable] as const;
+
+/** Les forfaits que le devis du manifeste laisse choisir : un par métier vendu au forfait. */
+const FORFAITS_DEVIS: readonly string[] = ["une-page", "vitrine", "identite"];
 
 export async function generateMetadata({
   params,
@@ -48,116 +63,78 @@ export default async function SentisHome({
 
       <HeroPleinEcran dict={d} locale={locale} />
 
-      {/* --- Séquence horizontale : le manifeste, qui EST une progression --- */}
+      {/* --- Séquence horizontale : le manifeste, qui EST une progression ---
+          Une photo par promesse, et un objet qui la montre. Voir
+          `panneaux-accueil.tsx` et `objets-manifeste.tsx`. */}
       <HorizontalTrack
         label={locale === "fr" ? "Nos engagements, séquence horizontale" : "Our commitments, horizontal sequence"}
         panels={p.manifeste.map((m, i) => (
-          <PanneauSentis key={m.titre} tone={TONS[i % TONS.length]} titre={m.titre} corps={m.corps} />
+          <PanneauPhoto
+            key={m.titre}
+            photo={PHOTOS_MANIFESTE[i % PHOTOS_MANIFESTE.length]}
+            locale={locale}
+            titre={m.titre}
+            corps={m.corps}
+            decrire={i === 3}
+            objet={
+              i === 0 ? (
+                <ObjetDevis
+                  locale={locale}
+                  textes={p.objets.devis}
+                  forfaits={d.prix.forfaits.filter((f) => FORFAITS_DEVIS.includes(f.cle))}
+                />
+              ) : i === 1 ? (
+                <ObjetFil textes={p.objets.fil} />
+              ) : i === 2 ? (
+                <ObjetTitre textes={p.objets.titre} />
+              ) : (
+                <ObjetHorloge locale={locale} textes={p.objets.horloge} />
+              )
+            }
+          />
         ))}
       />
 
-      {/* --- Retour au vertical : on s'arrête, on lit --- */}
-      <Section titre={d.probleme.titre} chapo={d.probleme.intro} tone="bleu">
-        <ul className="grid gap-6 md:grid-cols-3">
-          {d.probleme.items.map((item, i) => (
-            // Le Reveal3D est dans le <li> : un <div> entre <ul> et <li>
-            // casserait le comptage de la liste pour un lecteur d'écran.
-            <li key={item.titre}>
-              <Reveal3D
-                depuis={i === 0 ? "gauche" : i === 1 ? "bas" : "droite"}
-                distance={110}
-                delay={i * 0.06}
-                className="h-full"
-                classeAnimee="bg-paper h-full rounded-lg p-6 shadow-sm"
-              >
-                <>
-                  <h3 className="font-display text-ink text-xl leading-snug font-semibold text-balance">
-                    {item.titre}
-                  </h3>
-                  <p className="text-ink-secondary mt-3 leading-relaxed text-pretty">
-                    {item.corps}
-                  </p>
-                </>
-              </Reveal3D>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      {/* --- Retour au vertical : l'objection, et ce qui la règle --- */}
+      <TroisRaisons dict={d} />
 
-      {/* --- Séquence horizontale : le déroulé d'un projet --- */}
+      {/* --- Séquence horizontale : le déroulé d'un projet ---
+          Gardée horizontale, à la demande du client ; le papier d'un côté, la
+          photo de l'autre, et le moment de chaque étape à côté de son
+          numéro. */}
       <HorizontalTrack
         label={locale === "fr" ? "Déroulé d'un projet, séquence horizontale" : "How a project runs, horizontal sequence"}
         panels={d.methode.etapes.map((e, i) => (
-          <PanneauSentis
+          <PanneauEtape
             key={e.n}
-            tone={TONS[(i + 2) % TONS.length]}
+            photo={PHOTOS_METHODE[i % PHOTOS_METHODE.length]}
+            locale={locale}
+            index={i}
+            numero={e.n}
+            quand={e.quand}
             titre={e.titre}
             corps={e.corps}
           />
         ))}
       />
 
-      {/* --- Vertical : un aperçu des réalisations, le reste sur sa page --- */}
-      <Section titre={d.travaux.titre} chapo={d.travaux.intro} tone="violet">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-12">
-          <div className="order-2 lg:order-1">
-            <h3 className="font-display text-ink text-2xl font-semibold tracking-tight text-balance">
-              {d.travaux.items[0].titre}
-            </h3>
-            <p className="text-ink-secondary mt-3 max-w-(--content-max) leading-relaxed text-pretty">
-              {d.travaux.items[0].corps}
-            </p>
-            <p className="text-ink-muted mt-4 max-w-(--content-max) font-mono text-xs">
-              {d.travaux.items[0].etiquette} · {d.travaux.items[0].meta}
-            </p>
-            <Button asChild variant="outline" size="lg" className="mt-6 rounded-md">
-              <Link href={`/${locale}/realisations`}>
-                {d.nav.realisations} <ArrowRight aria-hidden />
-              </Link>
-            </Button>
-          </div>
-          <div className="order-1 min-w-0 lg:order-2">
-            <ObjetFlottant3D>
-              <BrowserFrame url="lefournil.example">
-                <DemoBoulangerie />
-              </BrowserFrame>
-            </ObjetFlottant3D>
-          </div>
-        </div>
-      </Section>
+      {/* --- Vertical : le visiteur teste son propre site ---
+          Remplace l'aperçu des démonstrations. Voir `test-site.tsx`. */}
+      <section className="border-rule border-t py-20 sm:py-28">
+        <Zone>
+          <TestSite locale={locale} textes={d.testSite} />
+        </Zone>
+      </section>
 
       {/* --- Vertical : les prix, argument central ---
           Un configurateur plutôt qu'une grille : c'est la seule forme qui
           tienne sur la page la promesse faite partout ailleurs sur le site —
           le prix **et la date**, tout de suite. Voir
           `src/components/sentis/configurateur-prix.tsx`. */}
-      <Section id="prix" titre={d.prix.titre} chapo={d.prix.intro} tone="cyan">
+      <Section id="prix" titre={d.prix.titre} chapo={d.prix.intro} tone="blanc">
         <ConfigurateurPrix dict={d} locale={locale} />
 
-        <div className="border-rule mt-16 border-t pt-10">
-          <h3 className="font-display text-ink text-2xl font-semibold tracking-tight">
-            {d.prix.composition.titre}
-          </h3>
-          <p className="text-ink-secondary mt-4 max-w-(--content-max) leading-relaxed text-pretty">
-            {d.prix.composition.chapo}
-          </p>
-          <ul className="text-ink-secondary marker:text-signal-aa mt-5 max-w-(--content-max) list-disc space-y-2 pl-5 leading-relaxed">
-            {d.prix.composition.items.map((item) => (
-              <li key={item} className="text-pretty">
-                {item}
-              </li>
-            ))}
-          </ul>
-          {/* La comparaison sur trois ans est le seul chiffre de la page qui
-              parle d'un concurrent. Il est vérifiable à la calculette, ce qui
-              est la seule façon honnête d'en citer un. */}
-          <p className="text-ink bg-paper border-signal-aa mt-6 max-w-(--content-max) border-l-2 py-4 pl-5 leading-relaxed text-pretty">
-            {d.prix.composition.comparaison}
-          </p>
-          <p className="text-ink-secondary mt-6 max-w-(--content-max) leading-relaxed text-pretty">
-            {d.prix.note}
-          </p>
-        </div>
+        <CouverturePrix dict={d} />
       </Section>
 
       {/* --- Appel final --- */}
