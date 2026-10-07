@@ -1,7 +1,7 @@
 "use client";
 
 import { Send } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,9 +37,26 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
   const [erreurs, setErreurs] = useState<Erreurs>({});
   const [service, setService] = useState("");
   const [budget, setBudget] = useState("");
+  /**
+   * Verrou anti-double-envoi.
+   *
+   * Sans lui, deux clics rapides sur « Envoyer » posent deux fois
+   * `window.location.href`. Sur la plupart des systèmes le second écrase le
+   * premier et ça ne se voit pas ; sur certains clients de messagerie, deux
+   * navigations `mailto:` successives ouvrent **deux brouillons**, et le
+   * visiteur croit avoir écrit deux fois. C'est le défaut classique du bouton
+   * d'envoi, et il existe même quand l'envoi n'est pas une requête réseau.
+   *
+   * `useRef` et non `useState` : la navigation part dans le même tour que le
+   * clic, avant qu'un rendu ait eu lieu, donc un état n'aurait pas encore
+   * changé quand le second clic arrive. Une référence, elle, est à jour tout
+   * de suite.
+   */
+  const envoiEnCours = useRef(false);
 
   function soumettre(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (envoiEnCours.current) return;
     const data = new FormData(event.currentTarget);
     const nom = String(data.get("nom") ?? "").trim();
     const courriel = String(data.get("courriel") ?? "").trim();
@@ -68,9 +85,19 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
       message,
     ].join("\n");
 
+    envoiEnCours.current = true;
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
       `${c.titre} — ${nom}`,
     )}&body=${encodeURIComponent(corps)}`;
+
+    // Le verrou se relâche au bout d'un instant. Une navigation `mailto:` ne
+    // quitte pas la page : si le visiteur ferme son brouillon et veut
+    // recommencer, un bouton verrouillé pour toujours serait un cul-de-sac.
+    // Une seconde et demie couvre largement le double-clic sans gêner une
+    // seconde tentative volontaire.
+    window.setTimeout(() => {
+      envoiEnCours.current = false;
+    }, 1500);
   }
 
   return (
