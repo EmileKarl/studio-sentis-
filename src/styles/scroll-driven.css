@@ -95,3 +95,62 @@
     }
   }
 }
+
+/* =========================================================================
+   Entrée — la même idée, appliquée au texte courant.
+
+   Ce bloc remplace un observateur d'intersection, et c'est une correction de
+   bogue, pas un rangement.
+
+   L'ancienne version rendait le texte à `opacity: 0` côté serveur et le
+   révélait en JavaScript. Mesuré au navigateur, JavaScript bloqué : **88
+   textes invisibles sur le site**, dont la ligne de territoire, le
+   sous-titre et le bouton du héros, et seize entrées de la page Services.
+   Ce n'est pas un cas théorique — c'est ce que voit un téléphone pendant
+   qu'il télécharge et analyse 875 ko de JavaScript, et c'est ce que le
+   client a vu : « certains textes sont blancs ».
+
+   Le filet `<noscript>` de `app/layout.tsx` ne couvrait pas ce cas : le
+   navigateur a bien JavaScript, il ne l'a simplement pas encore exécuté.
+
+   **Pourquoi au chargement et non au défilement.** J'ai d'abord lié cette
+   entrée à `animation-timeline: view()`, comme les quatre animations
+   ci-dessus. Mesuré, `npm run verify` l'a refusée : trois textes relevés à
+   76 % d'opacité alors qu'ils étaient à l'écran. C'est inhérent à une
+   timeline de défilement — l'opacité y est une fonction de la position, donc
+   il existe toujours une bande où le texte est à demi transparent. Les
+   classes `sd-*` ci-dessus n'animent pour cette raison ni l'opacité ni la
+   position d'un texte, et c'est écrit noir sur blanc dans leur commentaire.
+   La règle du projet est la bonne ; c'est mon idée qui était mauvaise.
+
+   L'entrée se joue donc avec la page. Le bloc situé plus bas aura fini son
+   fondu avant qu'on l'atteigne — soit. Le but d'une entrée, ici, est d'éviter
+   qu'un bloc surgisse d'un coup sous l'œil ; un bloc déjà en place ne surgit
+   pas. Et l'animation ne peut plus rester en suspens, puisque plus rien ne la
+   déclenche.
+   ========================================================================= */
+
+.entree {
+  animation: entree var(--duration-slow) var(--ease-out)
+    var(--entree-delai, 0ms) both;
+}
+
+@keyframes entree {
+  from {
+    opacity: 0;
+    translate: 0 var(--entree-y, var(--travel-md));
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* `motion.css` écrase déjà les durées à 0,01 ms, mais pas les délais : sans
+     cette ligne, une cascade de 240 ms resterait une attente de 240 ms devant
+     du texte invisible. */
+  .entree {
+    animation-delay: 0ms !important;
+  }
+}

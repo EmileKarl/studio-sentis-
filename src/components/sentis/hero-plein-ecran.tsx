@@ -3,7 +3,8 @@
 import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { Reveal, Reveal3D } from "@/components/motion";
+import { Reveal3D } from "@/components/motion";
+import { Entree } from "@/components/motion/entree";
 import { Scene3DDifferee } from "@/components/motion/differe";
 import { Zone } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
@@ -63,12 +64,17 @@ export function HeroPleinEcran({
       />
 
       <Zone className="relative flex flex-1 flex-col justify-center py-24">
-        <Reveal direction="up" distance={12}>
+        {/* La cascade du héros — 0, 160, 240 ms — est celle qui était réglée
+            en JavaScript. Elle est maintenant en CSS, donc elle part même si
+            le JavaScript n'est pas encore arrivé. C'est exactement le défaut
+            que le client a vu : ces trois blocs restaient invisibles tant que
+            les 875 ko n'étaient pas téléchargés et analysés. */}
+        <Entree distance={12}>
           <p className="text-ink-muted flex items-center gap-2 text-sm">
             <MapPin className="size-4" aria-hidden />
             {dict.hero.lieu}
           </p>
-        </Reveal>
+        </Entree>
 
         {/* `sansFondu` : ce titre est l'élément LCP de la page d'accueil. Animé
             en opacité, il repoussait la mesure à 1 148 ms sur un téléphone.
@@ -79,13 +85,13 @@ export function HeroPleinEcran({
           </h1>
         </Reveal3D>
 
-        <Reveal direction="up" distance={18} delay={0.16}>
+        <Entree distance={18} delai={160}>
           <p className="text-ink-secondary mt-8 max-w-(--content-max) text-lg leading-relaxed text-pretty sm:text-xl">
             {dict.hero.chapo}
           </p>
-        </Reveal>
+        </Entree>
 
-        <Reveal direction="up" distance={18} delay={0.24}>
+        <Entree distance={18} delai={240}>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-md text-base">
               <Link href={`/${locale}/contact`}>
@@ -96,7 +102,7 @@ export function HeroPleinEcran({
               <Link href={`/${locale}/realisations`}>{dict.nav.realisations}</Link>
             </Button>
           </div>
-        </Reveal>
+        </Entree>
       </Zone>
 
       <Zone className="relative pb-10">
