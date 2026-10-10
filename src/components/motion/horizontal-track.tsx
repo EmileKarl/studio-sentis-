@@ -186,7 +186,12 @@ function TrackProgress({
       aria-hidden
       className="pointer-events-none absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-3"
     >
-      <span className="text-ink-muted bg-paper/80 rounded-full px-2.5 py-1 font-mono text-xs tabular-nums">
+      {/* `bg-paper` et non `bg-paper/80` : à 80 %, la photographie
+          transparaissait sous le compteur. Mesuré au pixel, le pire fond
+          derrière « 03 / 04 » tombait à 1,00:1 — autant dire invisible. Une
+          pastille opaque, c'est un ovale de 50 px sur l'image, et un chiffre
+          qu'on peut lire. */}
+      <span className="text-ink-muted bg-paper rounded-full px-2.5 py-1 font-mono text-xs tabular-nums">
         {String(actif).padStart(2, "0")} / {String(count).padStart(2, "0")}
       </span>
       <span className="flex gap-1.5">
