@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 import "./globals.css";
 
@@ -29,7 +27,21 @@ export const metadata: Metadata = {
 };
 
 /**
- * Racine : police, thème, providers et **la peau de la marque**.
+ * Racine : police, thème et **la peau de la marque**.
+ *
+ * Il n'y a plus qu'un seul fournisseur ici, et c'est le résultat d'une mesure.
+ * La racine montait aussi un `TooltipProvider` et un `Toaster` hérités du kit
+ * de départ NEXUS. Le site n'affiche **aucune infobulle et aucune notification
+ * flottante** — vérifié : zéro `<Tooltip>`, zéro appel à `toast()` dans tout
+ * le dépôt. Les deux n'en embarquaient pas moins `radix-tooltip`,
+ * `radix-popper` et `sonner` dans le paquet partagé, donc sur **chaque page**,
+ * y compris les mentions légales. Mesuré au navigateur, avant et après :
+ * 923,5 ko contre 876,9 — **46,6 ko** de JavaScript non compressé que le
+ * téléphone téléchargeait et analysait pour rien.
+ *
+ * Le jour où une infobulle ou une notification sera vraiment nécessaire, le
+ * fournisseur se remonte en trois lignes — mais à ce moment-là il portera
+ * quelque chose.
  */
 export default function RootLayout({
   children,
@@ -80,10 +92,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider delayDuration={200}>
-            {children}
-            <Toaster />
-          </TooltipProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
