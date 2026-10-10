@@ -24,20 +24,29 @@ import { cn } from "@/lib/utils";
 /** Le crédit, toujours lisible : sur sa propre pastille sombre, jamais à même la photo. */
 function Credit({ photo, locale }: { photo: Photo; locale: Locale }) {
   const texte = creditPhoto(photo, locale);
-  // **En haut à droite, et sur une pastille opaque.** Les deux sont des
-  // corrections, mesurées puis vues à l'écran :
+  // **En bas à gauche, et sur une pastille opaque.** Trois positions
+  // essayées, deux écartées par la mesure puis par l'image :
   //
-  // - en bas à droite, le crédit passait sous le compteur du carrousel, qui
-  //   est centré en bas de la piste (`horizontal-track.tsx`). Sur un écran
-  //   de 1280 px, le centre de la piste tombe dans le panneau de gauche :
-  //   les deux pastilles se recouvraient, et « Photo : Katy Belcher, CC0 »
-  //   devenait illisible — texte clair par-dessus une pastille claire ;
-  // - à 72 % d'opacité, la photo transparaissait sous le crédit. Mesuré au
-  //   pixel, le pire fond sous ce texte tombait à 1,43:1 en thème clair. Une
-  //   pastille opaque coûte un carré de 120 px sur une photo et règle la
-  //   question définitivement.
+  // - **en bas à droite** (l'origine) : le crédit passait sous le compteur
+  //   du carrousel, centré en bas de la piste (`horizontal-track.tsx`). Sur
+  //   un écran de 1280 px, le centre de la piste tombe dans le panneau de
+  //   gauche : les deux pastilles se recouvraient et « Photo : Katy Belcher,
+  //   CC0 » devenait illisible — texte clair sur pastille claire ;
+  // - **en haut à droite** (premier essai de correction) : le haut du
+  //   panneau passe sous l'en-tête collant. Le crédit disparaissait
+  //   derrière lui. Mesuré : le fond relevé dans sa boîte était le papier de
+  //   l'en-tête, pas la pastille. Une correction qui cache ce qu'elle
+  //   voulait rendre lisible n'en est pas une ;
+  // - **en bas à gauche** : le compteur est centré, le crédit tient dans les
+  //   130 px de gauche, l'en-tête est loin. Aucune collision à aucune
+  //   largeur.
+  //
+  // La pastille est opaque. À 72 %, la photo transparaissait dessous :
+  // mesuré au pixel, le pire fond sous ce texte tombait à 1,43:1 en thème
+  // clair. Opaque, elle coûte un carré de 120 px sur l'image et règle la
+  // question.
   const classes =
-    "absolute top-3 right-3 z-10 rounded-sm bg-[#121314] px-2 py-0.5 text-[11px] text-[#f8f5f2]";
+    "absolute bottom-3 left-3 z-10 rounded-sm bg-[#121314] px-2 py-0.5 text-[11px] text-[#f8f5f2]";
   // Une licence CC BY demande un lien vers la source quand c'est possible :
   // sur le web, ça l'est. Le CC0 n'en demande pas ; on garde le crédit en
   // texte, pour ne pas semer des liens dans une séquence qu'on fait défiler.
