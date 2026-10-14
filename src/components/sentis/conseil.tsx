@@ -184,12 +184,14 @@ export function Conseil({
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 flex flex-wrap gap-3">
+              {/* Un seul bouton ici aussi. Le prix vient d'être affiché,
+                  juste au-dessus : un « voir tous les prix » posé à côté
+                  rouvrirait le choix que ce bloc existe pour fermer. Le lien
+                  vers la page Prix reste dans le repli, là où il sert
+                  vraiment — quand la recommandation ne peut pas s'afficher. */}
+              <div className="mt-6">
                 <Button asChild size="lg" className="rounded-md">
                   <Link href={`/${locale}/contact`}>{t.cta}</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-md">
-                  <Link href={`/${locale}/prix`}>{t.ctaPrix}</Link>
                 </Button>
               </div>
             </div>

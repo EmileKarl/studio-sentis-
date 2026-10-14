@@ -91,15 +91,23 @@ export function HeroPleinEcran({
           </p>
         </Entree>
 
+        {/* **Un seul bouton, et c'est une suppression assumée.** Le héros
+            en portait deux : la soumission, et un lien vers Réalisations.
+            Deux problèmes. Le premier est de méthode — « trop de choix tue
+            le choix » vaut d'abord pour le premier écran, et un bouton
+            secondaire posé à côté du principal divise l'attention au moment
+            exact où elle est entière. Le second est factuel : la page
+            Réalisations est vide, et volontairement — « cette page attend
+            son premier vrai nom ». Envoyer un visiteur qui découvre le site
+            vers une page vide, en deuxième choix, c'est dépenser son premier
+            clic pour rien. Le lien reste dans la navigation, où il est à sa
+            place. */}
         <Entree distance={18} delai={240}>
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-10">
             <Button asChild size="lg" className="rounded-md text-base">
               <Link href={`/${locale}/contact`}>
                 {dict.nav.soumission} <ArrowRight aria-hidden />
               </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-md text-base">
-              <Link href={`/${locale}/realisations`}>{dict.nav.realisations}</Link>
             </Button>
           </div>
         </Entree>

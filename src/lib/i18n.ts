@@ -55,7 +55,7 @@ export const DICT = {
         sansSupport:
           "Votre navigateur n'affiche pas la recommandation. Tous les forfaits et leurs prix sont sur la page Prix.",
         avant: "Ce que je vous recommande",
-        cta: "Demander cette soumission",
+        cta: "Demander une soumission",
         ctaPrix: "Voir tous les prix",
         rabais: "−25\u00a0% pour les dix premiers projets",
         offres: [
@@ -468,7 +468,7 @@ export const DICT = {
         jours: "jours ouvrables",
         rien: "Choisissez un point de départ pour voir le prix et la date.",
         economie: "au lieu de",
-        cta: "Demander cette soumission",
+        cta: "Demander une soumission",
         ctaNote: "Le détail de votre sélection part avec le message. Réponse sous 48 heures, avec une soumission écrite — c'est elle qui engage, pas cette page.",
         formulaire: "Ou passer par le formulaire",
       },
@@ -691,7 +691,7 @@ export const DICT = {
         sansSupport:
           "Your browser can't display the recommendation. Every package and its price is on the Pricing page.",
         avant: "What I recommend",
-        cta: "Request this quote",
+        cta: "Request a quote",
         ctaPrix: "See all prices",
         rabais: "−25% for the first ten projects",
         offres: [
@@ -1046,7 +1046,7 @@ export const DICT = {
         jours: "business days",
         rien: "Pick a starting point to see the price and the date.",
         economie: "instead of",
-        cta: "Request this quote",
+        cta: "Request a quote",
         ctaNote: "Your selection travels with the message. A reply within 48 hours, with a written quote — that is what commits anyone, not this page.",
         formulaire: "Or use the form instead",
       },
