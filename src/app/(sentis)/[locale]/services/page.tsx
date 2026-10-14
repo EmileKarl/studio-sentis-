@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { Carte3D, Couche3D } from "@/components/motion/carte-3d";
 import { Entree } from "@/components/motion/entree";
+import { Conseil } from "@/components/sentis/conseil";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
 import { PictoService } from "@/components/sentis/pictos";
 import { TemoinLivraison } from "@/components/sentis/temoin-livraison";
@@ -126,6 +127,13 @@ export default async function ServicesPage({
           />
         }
       />
+
+      {/* Le conseil passe **avant** l'inventaire des quatre métiers. Un
+          visiteur qui sait ce qu'il cherche descend d'un cran et trouve sa
+          famille ; celui qui ne le sait pas — le plus fréquent — n'a pas à
+          arbitrer entre quatre familles avant d'avoir lu un prix. Voir
+          `conseil.tsx`. */}
+      <Conseil dict={d} locale={locale} tone="blanc" />
 
       <Section>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">

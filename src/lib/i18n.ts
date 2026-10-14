@@ -36,6 +36,127 @@ export const DICT = {
       fermer: "Fermer",
     },
     pages: {
+      /**
+       * Le conseil : deux questions, une seule réponse.
+       *
+       * Les quatre métiers de la page Services sont un bon inventaire et un
+       * mauvais point d'entrée : quelqu'un qui ne sait pas ce qu'il lui faut
+       * doit arbitrer entre quatre familles avant même d'avoir lu un prix.
+       * Ce bloc fait l'inverse — il pose deux questions fermées et rend une
+       * recommandation unique, avec son prix et son délai. Neuf cases
+       * existent ; le visiteur n'en voit jamais qu'une.
+       */
+      conseil: {
+        titre: "Dites-moi deux choses. Je vous dis par où commencer.",
+        chapo:
+          "Quatre services, c'est déjà trop de choix quand on ne sait pas lequel il vous faut. Deux questions, et vous repartez avec une seule recommandation, son prix et son délai.",
+        q1: {
+          libelle: "Aujourd'hui, en ligne, vous avez\u00a0:",
+          options: [
+            { cle: "rien", texte: "Rien du tout" },
+            { cle: "facebook", texte: "Une page Facebook, pas de site" },
+            { cle: "vieux", texte: "Un site, mais il date" },
+          ],
+        },
+        q2: {
+          libelle: "Ce qui presse le plus\u00a0:",
+          options: [
+            { cle: "trouve", texte: "Être trouvé quand on cherche mon métier" },
+            { cle: "serieux", texte: "Avoir l'air sérieux, partout" },
+            { cle: "outil", texte: "Un outil qui me fait gagner du temps" },
+          ],
+        },
+        attente: "Répondez aux deux questions.",
+        sansSupport:
+          "Votre navigateur n'affiche pas la recommandation. Tous les forfaits et leurs prix sont sur la page Prix.",
+        avant: "Ce que je vous recommande",
+        cta: "Demander cette soumission",
+        ctaPrix: "Voir tous les prix",
+        rabais: "−25\u00a0% pour les dix premiers projets",
+        resultats: [
+          {
+            q1: "rien",
+            q2: "trouve",
+            nom: "Site une page",
+            prix: "2\u00a0200\u00a0$",
+            delai: "10 jours ouvrables",
+            pourquoi:
+              "Vous n'existez pas encore en ligne. Une seule page bien faite, avec votre fiche Google, suffit pour être trouvé. Le reste peut attendre — ou ne jamais venir.",
+          },
+          {
+            q1: "facebook",
+            q2: "trouve",
+            nom: "Site une page",
+            prix: "2\u00a0200\u00a0$",
+            delai: "10 jours ouvrables",
+            pourquoi:
+              "Une page Facebook ne sort pas dans Google quand quelqu'un cherche votre métier à Châteauguay. Une page à vous, oui.",
+          },
+          {
+            q1: "vieux",
+            q2: "trouve",
+            nom: "Site vitrine, 5 pages",
+            prix: "4\u00a0200\u00a0$",
+            delai: "18 jours ouvrables",
+            pourquoi:
+              "Votre site existe déjà : le problème n'est pas d'exister, c'est d'être lisible et trouvable. Cinq pages, bilingues, que vous modifiez vous-même.",
+          },
+          {
+            q1: "rien",
+            q2: "serieux",
+            nom: "Identité + site vitrine",
+            prix: "5\u00a0600\u00a0$",
+            delai: "24 jours ouvrables",
+            pourquoi:
+              "Ni marque ni site. Menés d'un seul tenant, les deux coûtent moins cher que l'un après l'autre — et surtout, ils se ressemblent.",
+          },
+          {
+            q1: "facebook",
+            q2: "serieux",
+            nom: "Identité visuelle",
+            prix: "2\u00a0200\u00a0$",
+            delai: "9 jours ouvrables",
+            pourquoi:
+              "Vous avez déjà une présence. Ce qui manque, c'est une image qui tienne sur une facture, un camion et une enseigne. Le site viendra après, sur cette base.",
+          },
+          {
+            q1: "vieux",
+            q2: "serieux",
+            nom: "Identité + site vitrine",
+            prix: "5\u00a0600\u00a0$",
+            delai: "24 jours ouvrables",
+            pourquoi:
+              "Quand le site et l'image datent tous les deux, les reprendre séparément fait payer deux fois le même travail de cadrage.",
+          },
+          {
+            q1: "rien",
+            q2: "outil",
+            nom: "Cadrage d'application",
+            prix: "1\u00a0500\u00a0$",
+            delai: "5 jours ouvrables",
+            pourquoi:
+              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
+          },
+          {
+            q1: "facebook",
+            q2: "outil",
+            nom: "Cadrage d'application",
+            prix: "1\u00a0500\u00a0$",
+            delai: "5 jours ouvrables",
+            pourquoi:
+              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
+          },
+          {
+            q1: "vieux",
+            q2: "outil",
+            nom: "Cadrage d'application",
+            prix: "1\u00a0500\u00a0$",
+            delai: "5 jours ouvrables",
+            pourquoi:
+              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
+          },
+        ],
+      },
       accueil: {
         manifeste: [
           {
@@ -621,6 +742,117 @@ export const DICT = {
       fermer: "Close",
     },
     pages: {
+      conseil: {
+        titre: "Tell me two things. I'll tell you where to start.",
+        chapo:
+          "Four services is already too much choice when you don't know which one you need. Two questions, and you leave with a single recommendation, its price and its timeline.",
+        q1: {
+          libelle: "Online, right now, you have:",
+          options: [
+            { cle: "rien", texte: "Nothing at all" },
+            { cle: "facebook", texte: "A Facebook page, no website" },
+            { cle: "vieux", texte: "A website, but it's dated" },
+          ],
+        },
+        q2: {
+          libelle: "What matters most right now:",
+          options: [
+            { cle: "trouve", texte: "Being found when people search my trade" },
+            { cle: "serieux", texte: "Looking serious, everywhere" },
+            { cle: "outil", texte: "A tool that saves me time" },
+          ],
+        },
+        attente: "Answer both questions.",
+        sansSupport:
+          "Your browser can't display the recommendation. Every package and its price is on the Pricing page.",
+        avant: "What I recommend",
+        cta: "Request this quote",
+        ctaPrix: "See all prices",
+        rabais: "−25% for the first ten projects",
+        resultats: [
+          {
+            q1: "rien",
+            q2: "trouve",
+            nom: "One-page website",
+            prix: "$2,200",
+            delai: "10 business days",
+            pourquoi:
+              "You don't exist online yet. One well-made page, with your Google listing, is enough to be found. The rest can wait — or never come.",
+          },
+          {
+            q1: "facebook",
+            q2: "trouve",
+            nom: "One-page website",
+            prix: "$2,200",
+            delai: "10 business days",
+            pourquoi:
+              "A Facebook page doesn't show up in Google when someone searches your trade in Châteauguay. A page of your own does.",
+          },
+          {
+            q1: "vieux",
+            q2: "trouve",
+            nom: "Five-page website",
+            prix: "$4,200",
+            delai: "18 business days",
+            pourquoi:
+              "Your site already exists: the problem isn't existing, it's being readable and findable. Five pages, bilingual, that you edit yourself.",
+          },
+          {
+            q1: "rien",
+            q2: "serieux",
+            nom: "Identity + five-page website",
+            prix: "$5,600",
+            delai: "24 business days",
+            pourquoi:
+              "No brand, no site. Run as one piece of work, the two cost less than one after the other — and above all, they match.",
+          },
+          {
+            q1: "facebook",
+            q2: "serieux",
+            nom: "Visual identity",
+            prix: "$2,200",
+            delai: "9 business days",
+            pourquoi:
+              "You already have a presence. What's missing is an image that holds on an invoice, a van and a storefront. The site comes later, on that base.",
+          },
+          {
+            q1: "vieux",
+            q2: "serieux",
+            nom: "Identity + five-page website",
+            prix: "$5,600",
+            delai: "24 business days",
+            pourquoi:
+              "When the site and the image are both dated, redoing them separately means paying twice for the same groundwork.",
+          },
+          {
+            q1: "rien",
+            q2: "outil",
+            nom: "Application scoping",
+            prix: "$1,500",
+            delai: "5 business days",
+            pourquoi:
+              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
+          },
+          {
+            q1: "facebook",
+            q2: "outil",
+            nom: "Application scoping",
+            prix: "$1,500",
+            delai: "5 business days",
+            pourquoi:
+              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
+          },
+          {
+            q1: "vieux",
+            q2: "outil",
+            nom: "Application scoping",
+            prix: "$1,500",
+            delai: "5 business days",
+            pourquoi:
+              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
+          },
+        ],
+      },
       accueil: {
         manifeste: [
           {

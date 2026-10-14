@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { HorizontalTrack, Reveal3D } from "@/components/motion";
 import { Scene3DDifferee } from "@/components/motion/differe";
 import { ConfigurateurPrix } from "@/components/sentis/configurateur-prix";
+import { Conseil } from "@/components/sentis/conseil";
 import { CouverturePrix } from "@/components/sentis/couverture-prix";
 import { HeroPleinEcran } from "@/components/sentis/hero-plein-ecran";
 import {
@@ -125,6 +126,15 @@ export default async function SentisHome({
           <TestSite locale={locale} textes={d.testSite} />
         </Zone>
       </section>
+
+      {/* --- Vertical : on conseille avant de faire choisir ---
+          Le configurateur qui suit demande au visiteur d'assembler son
+          projet. C'est juste pour qui sait déjà ce qu'il veut, et c'est un
+          mur pour les autres : la page porte douze sections, et la page
+          Services quatre métiers. Ce bloc-ci fait l'inverse — deux questions
+          fermées, une seule recommandation. Il vient donc **avant** le
+          configurateur, pas après. Voir `conseil.tsx`. */}
+      <Conseil dict={d} locale={locale} tone="paper" />
 
       {/* --- Vertical : les prix, argument central ---
           Un configurateur plutôt qu'une grille : c'est la seule forme qui
