@@ -47,113 +47,53 @@ export const DICT = {
        * existent ; le visiteur n'en voit jamais qu'une.
        */
       conseil: {
-        titre: "Dites-moi deux choses. Je vous dis par où commencer.",
+        etiquette: "Le choix",
+        titre: "Une seule question.",
         chapo:
-          "Quatre services, c'est déjà trop de choix quand on ne sait pas lequel il vous faut. Deux questions, et vous repartez avec une seule recommandation, son prix et son délai.",
-        q1: {
-          libelle: "Aujourd'hui, en ligne, vous avez\u00a0:",
-          options: [
-            { cle: "rien", texte: "Rien du tout" },
-            { cle: "facebook", texte: "Une page Facebook, pas de site" },
-            { cle: "vieux", texte: "Un site, mais il date" },
-          ],
-        },
-        q2: {
-          libelle: "Ce qui presse le plus\u00a0:",
-          options: [
-            { cle: "trouve", texte: "Être trouvé quand on cherche mon métier" },
-            { cle: "serieux", texte: "Avoir l'air sérieux, partout" },
-            { cle: "outil", texte: "Un outil qui me fait gagner du temps" },
-          ],
-        },
-        attente: "Répondez aux deux questions.",
+          "Deux portes, et vous savez laquelle est la vôtre avant d'avoir fini de lire. Pas quatre métiers à comparer, pas de formulaire : une question, et le prix qui va avec.",
+        attente: "Choisissez votre porte.",
         sansSupport:
           "Votre navigateur n'affiche pas la recommandation. Tous les forfaits et leurs prix sont sur la page Prix.",
         avant: "Ce que je vous recommande",
         cta: "Demander cette soumission",
         ctaPrix: "Voir tous les prix",
         rabais: "−25\u00a0% pour les dix premiers projets",
-        resultats: [
+        offres: [
           {
-            q1: "rien",
-            q2: "trouve",
-            nom: "Site une page",
-            prix: "2\u00a0200\u00a0$",
-            delai: "10 jours ouvrables",
+            cle: "lancement",
+            num: "N\u00b0 01",
+            question: "Votre entreprise démarre ?",
+            mot: "Lancement",
+            sous: "Devenir une marque",
+            nom: "Identité + site vitrine",
+            prix: "5\u00a0600\u00a0$",
+            delai: "24 jours ouvrables",
             pourquoi:
-              "Vous n'existez pas encore en ligne. Une seule page bien faite, avec votre fiche Google, suffit pour être trouvé. Le reste peut attendre — ou ne jamais venir.",
+              "Une marque et un site, menés d'un seul tenant. Séparés, ils coûtent plus cher et ne se ressemblent pas : le logo est dessiné sans savoir où il ira, le site est construit sans savoir à quoi il ressemblera.",
+            inclus: [
+              "Logo, palette, typographie et guide d'usage",
+              "Cinq pages, bilingues, que vous modifiez vous-même",
+              "Fiche Google Business créée et remplie",
+              "Le code et le nom de domaine à vous",
+            ],
           },
           {
-            q1: "facebook",
-            q2: "trouve",
-            nom: "Site une page",
-            prix: "2\u00a0200\u00a0$",
-            delai: "10 jours ouvrables",
-            pourquoi:
-              "Une page Facebook ne sort pas dans Google quand quelqu'un cherche votre métier à Châteauguay. Une page à vous, oui.",
-          },
-          {
-            q1: "vieux",
-            q2: "trouve",
+            cle: "croissance",
+            num: "N\u00b0 02",
+            question: "Votre entreprise existe déjà ?",
+            mot: "Croissance",
+            sous: "Le rester",
             nom: "Site vitrine, 5 pages",
             prix: "4\u00a0200\u00a0$",
             delai: "18 jours ouvrables",
             pourquoi:
-              "Votre site existe déjà : le problème n'est pas d'exister, c'est d'être lisible et trouvable. Cinq pages, bilingues, que vous modifiez vous-même.",
-          },
-          {
-            q1: "rien",
-            q2: "serieux",
-            nom: "Identité + site vitrine",
-            prix: "5\u00a0600\u00a0$",
-            delai: "24 jours ouvrables",
-            pourquoi:
-              "Ni marque ni site. Menés d'un seul tenant, les deux coûtent moins cher que l'un après l'autre — et surtout, ils se ressemblent.",
-          },
-          {
-            q1: "facebook",
-            q2: "serieux",
-            nom: "Identité visuelle",
-            prix: "2\u00a0200\u00a0$",
-            delai: "9 jours ouvrables",
-            pourquoi:
-              "Vous avez déjà une présence. Ce qui manque, c'est une image qui tienne sur une facture, un camion et une enseigne. Le site viendra après, sur cette base.",
-          },
-          {
-            q1: "vieux",
-            q2: "serieux",
-            nom: "Identité + site vitrine",
-            prix: "5\u00a0600\u00a0$",
-            delai: "24 jours ouvrables",
-            pourquoi:
-              "Quand le site et l'image datent tous les deux, les reprendre séparément fait payer deux fois le même travail de cadrage.",
-          },
-          {
-            q1: "rien",
-            q2: "outil",
-            nom: "Cadrage d'application",
-            prix: "1\u00a0500\u00a0$",
-            delai: "5 jours ouvrables",
-            pourquoi:
-              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
-          },
-          {
-            q1: "facebook",
-            q2: "outil",
-            nom: "Cadrage d'application",
-            prix: "1\u00a0500\u00a0$",
-            delai: "5 jours ouvrables",
-            pourquoi:
-              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
-          },
-          {
-            q1: "vieux",
-            q2: "outil",
-            nom: "Cadrage d'application",
-            prix: "1\u00a0500\u00a0$",
-            delai: "5 jours ouvrables",
-            pourquoi:
-              "Avant de développer quoi que ce soit : périmètre écrit, maquette cliquable, soumission ferme. Déduit du projet s'il se fait.",
+              "Vous avez déjà des clients. Ce qui manque, c'est d'être trouvé par ceux qui ne vous connaissent pas encore, et d'avoir l'air de ce que vous êtes devenu depuis le dernier site.",
+            inclus: [
+              "Accueil, services, réalisations, à propos, contact",
+              "Bilingue, et vous modifiez le contenu vous-même",
+              "Référencement local remis d'aplomb",
+              "Suivi mensuel en option, 125\u00a0$ par mois, sans engagement",
+            ],
           },
         ],
       },
@@ -743,113 +683,53 @@ export const DICT = {
     },
     pages: {
       conseil: {
-        titre: "Tell me two things. I'll tell you where to start.",
+        etiquette: "The choice",
+        titre: "One question.",
         chapo:
-          "Four services is already too much choice when you don't know which one you need. Two questions, and you leave with a single recommendation, its price and its timeline.",
-        q1: {
-          libelle: "Online, right now, you have:",
-          options: [
-            { cle: "rien", texte: "Nothing at all" },
-            { cle: "facebook", texte: "A Facebook page, no website" },
-            { cle: "vieux", texte: "A website, but it's dated" },
-          ],
-        },
-        q2: {
-          libelle: "What matters most right now:",
-          options: [
-            { cle: "trouve", texte: "Being found when people search my trade" },
-            { cle: "serieux", texte: "Looking serious, everywhere" },
-            { cle: "outil", texte: "A tool that saves me time" },
-          ],
-        },
-        attente: "Answer both questions.",
+          "Two doors, and you'll know which one is yours before you finish reading. No four trades to compare, no form: one question, and the price that goes with it.",
+        attente: "Pick your door.",
         sansSupport:
           "Your browser can't display the recommendation. Every package and its price is on the Pricing page.",
         avant: "What I recommend",
         cta: "Request this quote",
         ctaPrix: "See all prices",
         rabais: "−25% for the first ten projects",
-        resultats: [
+        offres: [
           {
-            q1: "rien",
-            q2: "trouve",
-            nom: "One-page website",
-            prix: "$2,200",
-            delai: "10 business days",
+            cle: "lancement",
+            num: "N\u00b0 01",
+            question: "Just starting out?",
+            mot: "Launch",
+            sous: "Become a brand",
+            nom: "Identity + five-page website",
+            prix: "$5,600",
+            delai: "24 business days",
             pourquoi:
-              "You don't exist online yet. One well-made page, with your Google listing, is enough to be found. The rest can wait — or never come.",
+              "A brand and a site, run as one piece of work. Apart, they cost more and don't match: the logo gets drawn without knowing where it will live, the site gets built without knowing what it will look like.",
+            inclus: [
+              "Logo, palette, typography and usage guide",
+              "Five pages, bilingual, that you edit yourself",
+              "Google Business listing created and filled in",
+              "The code and the domain name are yours",
+            ],
           },
           {
-            q1: "facebook",
-            q2: "trouve",
-            nom: "One-page website",
-            prix: "$2,200",
-            delai: "10 business days",
-            pourquoi:
-              "A Facebook page doesn't show up in Google when someone searches your trade in Châteauguay. A page of your own does.",
-          },
-          {
-            q1: "vieux",
-            q2: "trouve",
+            cle: "croissance",
+            num: "N\u00b0 02",
+            question: "Already up and running?",
+            mot: "Growth",
+            sous: "Stay there",
             nom: "Five-page website",
             prix: "$4,200",
             delai: "18 business days",
             pourquoi:
-              "Your site already exists: the problem isn't existing, it's being readable and findable. Five pages, bilingual, that you edit yourself.",
-          },
-          {
-            q1: "rien",
-            q2: "serieux",
-            nom: "Identity + five-page website",
-            prix: "$5,600",
-            delai: "24 business days",
-            pourquoi:
-              "No brand, no site. Run as one piece of work, the two cost less than one after the other — and above all, they match.",
-          },
-          {
-            q1: "facebook",
-            q2: "serieux",
-            nom: "Visual identity",
-            prix: "$2,200",
-            delai: "9 business days",
-            pourquoi:
-              "You already have a presence. What's missing is an image that holds on an invoice, a van and a storefront. The site comes later, on that base.",
-          },
-          {
-            q1: "vieux",
-            q2: "serieux",
-            nom: "Identity + five-page website",
-            prix: "$5,600",
-            delai: "24 business days",
-            pourquoi:
-              "When the site and the image are both dated, redoing them separately means paying twice for the same groundwork.",
-          },
-          {
-            q1: "rien",
-            q2: "outil",
-            nom: "Application scoping",
-            prix: "$1,500",
-            delai: "5 business days",
-            pourquoi:
-              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
-          },
-          {
-            q1: "facebook",
-            q2: "outil",
-            nom: "Application scoping",
-            prix: "$1,500",
-            delai: "5 business days",
-            pourquoi:
-              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
-          },
-          {
-            q1: "vieux",
-            q2: "outil",
-            nom: "Application scoping",
-            prix: "$1,500",
-            delai: "5 business days",
-            pourquoi:
-              "Before building anything: a written scope, a clickable mockup, a firm quote. Deducted from the project if it goes ahead.",
+              "You already have customers. What's missing is being found by the ones who don't know you yet, and looking like what you've become since the last site.",
+            inclus: [
+              "Home, services, work, about, contact",
+              "Bilingual, and you edit the content yourself",
+              "Local search put back in order",
+              "Monthly follow-up optional, $125 a month, no commitment",
+            ],
           },
         ],
       },

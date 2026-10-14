@@ -1,39 +1,37 @@
+import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 
 import { Section } from "@/components/sentis/parts";
 import { Button } from "@/components/ui/button";
 import type { Dict, Locale } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 /**
- * Le conseil : deux questions, une seule réponse.
+ * Le choix : une question, deux portes.
  *
- * **Le problème qu'il règle.** La page Services présente quatre métiers, et
- * c'est un bon inventaire. Mais quelqu'un qui ne sait pas ce qu'il lui faut
- * doit arbitrer entre quatre familles avant d'avoir lu un seul prix — et la
- * page d'accueil, elle, porte douze sections. Trop de choix ne fait pas
- * choisir : il fait partir. Ce bloc prend le problème à l'envers. Il pose
- * deux questions fermées, à trois réponses chacune, et rend **une seule**
- * recommandation, avec son prix et son délai. Neuf cases existent ; le
- * visiteur n'en voit jamais qu'une.
+ * **D'où vient cette forme.** Le client a envoyé une vidéo — « Trop de choix
+ * tue le choix », @blyinder — puis le fichier lui-même, ce qui a permis de la
+ * lire image par image. Sa démonstration est en trois temps : on vous montre
+ * vingt-quatre paires de chaussures et trois secondes pour choisir — « Trop
+ * tard » ; on vous en montre trois, vous choisissez tout de suite ; puis elle
+ * nomme l'étude des confitures de 2000. Sa conclusion pratique tient en un
+ * écran : **deux offres, un interlocuteur, une seconde pour décider.**
  *
- * **Pourquoi il ne contient pas une ligne de JavaScript.** Tout tient en
- * deux boutons radio et une poignée de règles `:has()` dans `sentis.css`.
- * Trois conséquences, toutes voulues :
+ * **Ce que ce bloc a d'abord été.** Deux questions à trois réponses, donc
+ * neuf recommandations. C'était déjà mieux que quatre métiers à comparer,
+ * mais c'était encore deux décisions à prendre. La vidéo en demande une.
+ * Celle-ci est la bonne version : **une question, deux portes.**
  *
- * 1. il fonctionne **avant** que la page soit hydratée — c'est le défaut que
- *    le client avait signalé sur le héros, et il n'est pas question de le
- *    réintroduire ici ;
- * 2. il ne coûte rien au budget de poids, qui est déjà serré ;
- * 3. il n'a pas d'état à perdre : le navigateur garde les réponses au retour
- *    arrière, gratuitement.
+ * **Ce que je n'ai pas repris.** La vidéo avance « 3 % contre 30 % » pour
+ * l'étude des confitures. Le chiffre est célèbre, mais sa réplication est
+ * contestée — plusieurs méta-analyses trouvent un effet proche de zéro. Une
+ * statistique fragile sur le site d'une entreprise qui vend de la rigueur,
+ * c'est un risque pour rien. On garde la forme, pas le chiffre.
  *
- * `:has()` n'existe pas partout. Là où il manque, les neuf réponses restent
- * masquées et un lien vers la page Prix prend leur place — jamais un bloc
- * vide, jamais une question sans réponse.
- *
- * **Les neuf réponses sont dans le dictionnaire**, pas ici : ce sont des
- * décisions commerciales, elles se relisent et se traduisent comme le reste
- * du site.
+ * **Toujours zéro JavaScript.** Deux boutons radio et deux règles `:has()`.
+ * Le bloc fonctionne avant que la page soit hydratée, ne coûte rien au
+ * budget de poids, et le navigateur restaure le choix au retour arrière.
+ * Là où `:has()` manque, un lien vers la page Prix prend la place.
  */
 export function Conseil({
   dict,
@@ -49,57 +47,90 @@ export function Conseil({
 
   return (
     <Section id="conseil" titre={t.titre} chapo={t.chapo} tone={tone}>
-      {/* `<form>` sans action : rien ne s'envoie, rien ne se soumet. La
-          balise est là pour le groupement, et parce qu'elle donne au
-          navigateur le droit de restaurer les réponses au retour arrière. */}
-      <form className="conseil grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
-        <div className="flex flex-col gap-8">
-          {[
-            { nom: "conseil-q1", q: t.q1 },
-            { nom: "conseil-q2", q: t.q2 },
-          ].map(({ nom, q }) => (
-            <fieldset key={nom} className="border-0 p-0">
-              <legend className="text-ink mb-3 text-base font-medium">
-                {q.libelle}
-              </legend>
-              <div className="flex flex-col gap-2">
-                {q.options.map((option) => (
-                  // L'entrée est **dans** l'étiquette : pas d'identifiant à
-                  // inventer, donc le bloc peut apparaître deux fois sur le
-                  // site sans collision.
-                  <label
-                    key={option.cle}
-                    className="conseil-choix border-rule hover:border-rule-strong relative flex min-h-12 cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-base transition-colors"
-                  >
-                    {/* L'entrée couvre toute l'étiquette, à l'opacité zéro.
-                        Elle reste une vraie case radio — focalisable, lue par
-                        les lecteurs d'écran, restaurée au retour arrière —
-                        mais sa cible tactile devient la rangée entière. Le
-                        détecteur du projet mesure la boîte de l'entrée
-                        elle-même : à 16 × 16 px, la case native échouait six
-                        fois sur la page. Le rond visible est dessiné à côté,
-                        en `aria-hidden`. */}
-                    <input
-                      type="radio"
-                      name={nom}
-                      value={option.cle}
-                      className="absolute inset-0 m-0 h-full w-full cursor-pointer appearance-none opacity-0"
-                    />
-                    <span aria-hidden className="conseil-puce" />
-                    <span>{option.texte}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-          ))}
-        </div>
+      {/* L'étiquette de section, reprise de la grammaire de la vidéo : un
+          mot en petites capitales, posé sur un filet. Elle dit où l'on est
+          sans ajouter un titre de plus. */}
+      <p className="border-rule text-ink-muted mb-8 border-t pt-3 font-mono text-xs tracking-widest uppercase">
+        {t.etiquette}
+      </p>
 
-        {/* `aria-live` : la réponse apparaît sans rechargement ni navigation.
-            Sans cela, un lecteur d'écran ne saurait pas qu'elle est arrivée. */}
-        <div
-          aria-live="polite"
-          className="border-rule bg-paper flex min-h-56 flex-col justify-center rounded-lg border p-6 sm:p-8"
-        >
+      {/* `<form>` sans action : rien ne s'envoie. La balise sert au
+          groupement, et donne au navigateur le droit de restaurer le choix
+          au retour arrière. */}
+      <form className="conseil">
+        <fieldset className="border-0 p-0">
+          {/* La question est déjà le titre de la section : la légende la
+              répète pour les lecteurs d'écran, qui n'ont pas le contexte
+              visuel, et reste invisible à l'œil. */}
+          <legend className="sr-only">{t.titre}</legend>
+
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+            {t.offres.map((offre, i) => (
+              <label
+                key={offre.cle}
+                className={cn(
+                  "conseil-porte relative flex min-h-56 cursor-pointer flex-col justify-between rounded-lg p-6 transition-transform sm:p-7",
+                  // Bleu et encre, pas bleu et jaune comme la vidéo : ce
+                  // sont les deux aplats que la marque utilise déjà, sur le
+                  // bouton et sur les flyers. Une troisième couleur
+                  // n'apporterait rien qu'une couleur de plus.
+                  i === 0
+                    ? "bg-signal text-signal-contrast"
+                    : "bg-ink text-paper",
+                )}
+              >
+                {/* `z-10` : l'entrée est **au-dessus** du contenu de la
+                    carte, pas en dessous. Sans cela elle reste cliquable —
+                    l'étiquette enveloppe tout — mais c'est le texte qui
+                    reçoit le pointeur, et une carte de choix qui se
+                    sélectionne par la sémantique plutôt que par la surface
+                    est fragile : elle casse dès qu'on y met un lien. */}
+                <input
+                  type="radio"
+                  name="conseil-porte"
+                  value={offre.cle}
+                  className="absolute inset-0 z-10 m-0 h-full w-full cursor-pointer appearance-none opacity-0"
+                />
+
+                <span className="flex items-start justify-between gap-4">
+                  {/* Pas d'`opacity` sur ces libellés. Le contrôle du projet
+                      refuse tout texte sous 0,9 d'opacité une fois à l'écran, et
+                      il a raison : un texte à 70 % est un texte qu'on lit moins
+                      bien, pas un texte « secondaire ». La hiérarchie se fait
+                      ici par la taille et la casse. */}
+                  <span className="font-mono text-xs tracking-widest">
+                    {offre.num}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="conseil-coche grid size-6 shrink-0 place-items-center rounded-full border"
+                  >
+                    <Check className="size-3.5" />
+                  </span>
+                </span>
+
+                <span className="mt-8 block">
+                  <span className="block text-base leading-snug">
+                    {offre.question}
+                  </span>
+                  <span className="mt-3 flex items-center gap-3">
+                    <span className="font-display text-3xl leading-none font-semibold tracking-tight sm:text-4xl">
+                      {offre.mot}
+                    </span>
+                    <ArrowRight className="size-5 shrink-0" aria-hidden />
+                  </span>
+                  <span className="mt-3 block font-mono text-xs tracking-widest uppercase">
+                    {offre.sous}
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        {/* `aria-live` : la réponse arrive sans navigation. Sans cela, un
+            lecteur d'écran ne saurait pas qu'elle est là. */}
+        <div aria-live="polite" className="mt-6">
           <p className="conseil-attente text-ink-muted text-base">
             {t.attente}
           </p>
@@ -115,41 +146,49 @@ export function Conseil({
             </Link>
           </p>
 
-          {t.resultats.map((r) => (
+          {t.offres.map((offre) => (
             <div
-              key={`${r.q1}-${r.q2}`}
-              className="conseil-reponse"
-              data-q1={r.q1}
-              data-q2={r.q2}
+              key={offre.cle}
+              className="conseil-reponse border-rule bg-paper rounded-lg border p-6 sm:p-8"
+              data-porte={offre.cle}
             >
-              <p className="text-ink-muted text-xs tracking-wider uppercase">
+              <p className="text-ink-muted font-mono text-xs tracking-widest uppercase">
                 {t.avant}
               </p>
               <p className="font-display text-ink mt-2 text-2xl leading-tight font-semibold tracking-tight">
-                {r.nom}
+                {offre.nom}
               </p>
               <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <span className="text-ink text-xl font-semibold tabular-nums">
-                  {r.prix}
+                  {offre.prix}
                 </span>
-                <span className="text-ink-muted text-sm">{r.delai}</span>
+                <span className="text-ink-muted text-sm">{offre.delai}</span>
+                <span className="text-signal-aa text-sm font-medium">
+                  {t.rabais}
+                </span>
               </p>
-              <p className="text-ink-secondary mt-4 text-base leading-relaxed text-pretty">
-                {r.pourquoi}
+              <p className="text-ink-secondary mt-4 max-w-(--content-max) text-base leading-relaxed text-pretty">
+                {offre.pourquoi}
               </p>
-              <p className="text-signal-aa mt-4 text-sm font-medium">
-                {t.rabais}
-              </p>
+              <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                {offre.inclus.map((ligne) => (
+                  <li
+                    key={ligne}
+                    className="text-ink-secondary flex items-start gap-2 text-sm"
+                  >
+                    <Check
+                      className="text-signal mt-0.5 size-4 shrink-0"
+                      aria-hidden
+                    />
+                    <span>{ligne}</span>
+                  </li>
+                ))}
+              </ul>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button asChild size="lg" className="rounded-md">
                   <Link href={`/${locale}/contact`}>{t.cta}</Link>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-md"
-                >
+                <Button asChild size="lg" variant="outline" className="rounded-md">
                   <Link href={`/${locale}/prix`}>{t.ctaPrix}</Link>
                 </Button>
               </div>

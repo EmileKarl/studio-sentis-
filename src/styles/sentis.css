@@ -311,22 +311,19 @@
 }
 
 /* =========================================================================
-   Le conseil — deux questions, une seule réponse, zéro JavaScript.
+   Le choix — une question, deux portes, zéro JavaScript.
 
-   La logique tient en une phrase : on montre tout dès que les deux
-   questions sont répondues, puis on retire ce qui ne correspond pas. Huit
-   règles au lieu des neuf que demanderait une table de vérité, et surtout
-   une logique qu'on peut relire.
+   Deux règles au lieu des neuf de la version précédente, parce qu'il n'y a
+   plus qu'une décision à prendre. C'est le point de la vidéo dont ce bloc
+   est tiré : deux offres, un interlocuteur, une seconde pour décider.
 
    Les sélecteurs portent sur `name`/`value`, pas sur des identifiants : le
-   bloc peut donc apparaître sur deux pages — ou deux fois sur la même —
-   sans qu'un `id` entre en collision.
+   bloc apparaît sur deux pages sans qu'un `id` entre en collision.
 
    `:has()` manque encore sur quelques navigateurs. Tout est donc sous
-   `@supports` : là où il n'existe pas, les neuf réponses restent masquées,
+   `@supports` : là où il n'existe pas, les deux réponses restent masquées,
    le message d'attente disparaît, et c'est le lien vers la page Prix qui
-   s'affiche. Jamais un bloc vide, jamais une question sans réponse — la
-   même règle que `scroll-driven.css` applique aux entrées.
+   s'affiche. Jamais un bloc vide — la même règle que `scroll-driven.css`.
    ========================================================================= */
 
 .conseil .conseil-reponse {
@@ -343,97 +340,48 @@
 }
 
 @supports selector(:has(*)) {
-  /* Une règle par case : neuf lignes de table de vérité, et rien à déduire.
-     J'avais d'abord écrit six règles — « tout afficher, puis élaguer ce qui
-     ne correspond pas ». Mesuré au navigateur, les neuf réponses
-     s'affichaient en même temps : la règle d'affichage portait deux `:has()`
-     et pesait donc (0,6,2) de spécificité, contre (0,6,1) pour les règles
-     d'élagage. L'affichage gagnait. Une table de vérité explicite ne peut
-     pas avoir ce défaut : aucune règle n'en combat une autre. */
-  .conseil:has(input[name="conseil-q1"][value="rien"]:checked):has(
-      input[name="conseil-q2"][value="trouve"]:checked
-    )
-    .conseil-reponse[data-q1="rien"][data-q2="trouve"],
-  .conseil:has(input[name="conseil-q1"][value="rien"]:checked):has(
-      input[name="conseil-q2"][value="serieux"]:checked
-    )
-    .conseil-reponse[data-q1="rien"][data-q2="serieux"],
-  .conseil:has(input[name="conseil-q1"][value="rien"]:checked):has(
-      input[name="conseil-q2"][value="outil"]:checked
-    )
-    .conseil-reponse[data-q1="rien"][data-q2="outil"],
-  .conseil:has(input[name="conseil-q1"][value="facebook"]:checked):has(
-      input[name="conseil-q2"][value="trouve"]:checked
-    )
-    .conseil-reponse[data-q1="facebook"][data-q2="trouve"],
-  .conseil:has(input[name="conseil-q1"][value="facebook"]:checked):has(
-      input[name="conseil-q2"][value="serieux"]:checked
-    )
-    .conseil-reponse[data-q1="facebook"][data-q2="serieux"],
-  .conseil:has(input[name="conseil-q1"][value="facebook"]:checked):has(
-      input[name="conseil-q2"][value="outil"]:checked
-    )
-    .conseil-reponse[data-q1="facebook"][data-q2="outil"],
-  .conseil:has(input[name="conseil-q1"][value="vieux"]:checked):has(
-      input[name="conseil-q2"][value="trouve"]:checked
-    )
-    .conseil-reponse[data-q1="vieux"][data-q2="trouve"],
-  .conseil:has(input[name="conseil-q1"][value="vieux"]:checked):has(
-      input[name="conseil-q2"][value="serieux"]:checked
-    )
-    .conseil-reponse[data-q1="vieux"][data-q2="serieux"],
-  .conseil:has(input[name="conseil-q1"][value="vieux"]:checked):has(
-      input[name="conseil-q2"][value="outil"]:checked
-    )
-    .conseil-reponse[data-q1="vieux"][data-q2="outil"] {
+  .conseil:has(input[name="conseil-porte"][value="lancement"]:checked)
+    .conseil-reponse[data-porte="lancement"],
+  .conseil:has(input[name="conseil-porte"][value="croissance"]:checked)
+    .conseil-reponse[data-porte="croissance"] {
     display: block;
   }
 
-  /* Le message d'attente s'efface quand la réponse arrive. */
-  .conseil:has(input[name="conseil-q1"]:checked):has(
-      input[name="conseil-q2"]:checked
-    )
-    .conseil-attente {
+  .conseil:has(input[name="conseil-porte"]:checked) .conseil-attente {
     display: none;
   }
 }
 
-/* Le rond, dessiné à la main : l'entrée native est étirée sur toute
-   l'étiquette et rendue invisible, pour que la cible tactile fasse la taille
-   de la rangée. Ce rond-ci n'est donc que l'indicateur visuel. */
-.conseil .conseil-puce {
-  position: relative;
-  flex: 0 0 auto;
-  width: 1.125rem;
-  height: 1.125rem;
-  border: 1.5px solid var(--rule-strong);
-  border-radius: 50%;
-  background-color: var(--surface);
-  transition: border-color var(--duration-fast) var(--ease-out);
+/* La porte retenue se cerne d'un trait, exactement comme dans la vidéo —
+   et surtout, la porte écartée **ne s'efface pas**. J'avais d'abord baissé
+   son opacité à 0,45 : le contrôle du projet refuse tout texte sous 0,9
+   d'opacité une fois à l'écran, et il a raison. Un texte à demi transparent
+   est un texte qu'on lit mal, pas un texte « désactivé ». Le trait dit la
+   même chose sans rien abîmer. */
+.conseil .conseil-porte:has(input:checked) {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
 }
 
-.conseil .conseil-choix:has(input:checked) .conseil-puce {
-  border-color: var(--signal);
+/* La coche n'apparaît que sur la porte retenue. Hors sélection, son cercle
+   reste visible mais vide : c'est lui qui dit « ceci se clique ». */
+.conseil .conseil-coche {
+  border-color: color-mix(in oklab, currentColor 45%, transparent);
+  color: transparent;
 }
 
-.conseil .conseil-choix:has(input:checked) .conseil-puce::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border-radius: 50%;
-  background-color: var(--signal);
+.conseil .conseil-porte:has(input:checked) .conseil-coche {
+  border-color: currentColor;
+  color: inherit;
 }
 
-/* Le choix retenu se marque par un filet net et un fond très pâle — pas par
-   une ombre ni un cadre épais : on lit une liste, pas des boutons. */
-.conseil .conseil-choix:has(input:checked) {
-  border-color: var(--signal);
-  background-color: var(--teinte-bleu);
+.conseil .conseil-porte:has(input:focus-visible) {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
 }
 
-/* L'anneau de focus se pose sur l'étiquette entière, pas sur le petit rond :
-   c'est l'étiquette qui est la cible, et c'est elle qu'on voit. */
-.conseil .conseil-choix:has(input:focus-visible) {
-  outline: 2px solid var(--signal);
-  outline-offset: 2px;
+@media (prefers-reduced-motion: no-preference) {
+  .conseil .conseil-porte:hover {
+    transform: translateY(-2px);
+  }
 }
