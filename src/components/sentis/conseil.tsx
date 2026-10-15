@@ -138,8 +138,14 @@ export function Conseil({
           {/* Visible seulement là où `:has()` manque. */}
           <p className="conseil-repli text-ink-muted hidden text-base">
             {t.sansSupport}{" "}
+            {/* `#prix` sur l'accueil, et non `/prix` : la grille de prix est
+                une section de l'accueil, il n'y a pas de page dediee. Le lien
+                precedent pointait sur `/${locale}/prix`, qui repond 404 —
+                invisible en production parce que ce repli ne s'affiche que la
+                ou `:has()` manque, donc sur les navigateurs que personne ici
+                n'ouvre. Un lien mort reste un lien mort. */}
             <Link
-              href={`/${locale}/prix`}
+              href={`/${locale}#prix`}
               className="text-signal-aa underline underline-offset-2"
             >
               {t.ctaPrix}
