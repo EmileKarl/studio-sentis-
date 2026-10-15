@@ -1,0 +1,49 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Studio Sentis — carte d'affaires</title><style>
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; color: #1a1a1a; }
+.mono { font-family: ui-monospace, Menlo, monospace; }
+
+@page { size: 95mm 57mm; margin: 0; }
+.carte { position: relative; width: 95mm; height: 57mm; overflow: hidden;
+         page-break-after: always; break-after: page; }
+.carte:last-child { page-break-after: auto; }
+/* Le trait de coupe est a 3 mm : tout ce qui compte reste a 7 mm du bord
+   du fichier, soit 4 mm du bord rogne. */
+.util { position: absolute; inset: 7mm; }
+.recto { background: #f8f5f2; }
+.recto .logo { width: 42mm; }
+.recto .nom { font-size: 10pt; font-weight: 600; letter-spacing: -0.01em; margin-top: 9mm; }
+.recto .role { font-size: 7.6pt; color: #3d3c3a; margin-top: 0.6mm; }
+.recto .coord { position: absolute; left: 0; bottom: 0; font-size: 7.4pt; line-height: 1.5; color: #3d3c3a; }
+.recto .coord b { color: #1a1a1a; font-weight: 500; }
+.verso { background: #006eb8; color: #f8f5f2; }
+.verso .centre { position: absolute; inset: 0; display: flex; flex-direction: column;
+                 align-items: center; justify-content: center; gap: 5mm; }
+.verso img { width: 17mm; }
+.verso .phrase { font-size: 9.4pt; font-weight: 600; letter-spacing: -0.022em;
+                 text-align: center; max-width: 60mm; line-height: 1.25; }
+.verso .site { position: absolute; left: 0; right: 0; bottom: 0; text-align: center;
+               font-size: 7.4pt; letter-spacing: 0.1em; text-transform: uppercase; opacity: .9; }
+</style></head><body>
+<section class="carte recto">
+  <div class="util">
+    <img class="logo" src="../1-logo/svg/sentis-logo-horizontal-couleur.svg" alt="Studio Sentis">
+    <div class="nom">Prénom Nom</div>
+    <div class="role">Design et développement</div>
+    <div class="coord">
+      <div class="mono"><b>Emiletchesseu@gmail.com</b></div>
+      <div class="mono">www.studiosentis.ca</div>
+      <div>Châteauguay, Québec</div>
+    </div>
+  </div>
+</section>
+<section class="carte verso">
+  <div class="centre">
+    <img src="../1-logo/svg/sentis-symbole-blanc.svg" alt="">
+    <div class="phrase">Le prix et la date, dès le premier échange.</div>
+  </div>
+  <div class="util"><div class="site">www.studiosentis.ca</div></div>
+</section>
+</body></html>

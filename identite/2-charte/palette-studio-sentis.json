@@ -1,0 +1,796 @@
+{
+  "Les quatre couleurs du livre (valeurs source)": [
+    {
+      "nom": "Blue",
+      "hex": "#006EB8",
+      "rgb": [
+        0,
+        110,
+        184
+      ],
+      "hsl": [
+        204,
+        100,
+        36
+      ],
+      "cmjn": [
+        100,
+        40,
+        0,
+        28
+      ],
+      "role": "la couleur qui signe la marque",
+      "contraste_fond": 4.93,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Lemon Yellow",
+      "hex": "#F8ED43",
+      "rgb": [
+        248,
+        237,
+        67
+      ],
+      "hsl": [
+        56,
+        93,
+        62
+      ],
+      "cmjn": [
+        0,
+        4,
+        73,
+        3
+      ],
+      "role": "la note claire et vive",
+      "contraste_fond": 1.13,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Burnt Sienna",
+      "hex": "#AE5224",
+      "rgb": [
+        174,
+        82,
+        36
+      ],
+      "hsl": [
+        20,
+        66,
+        41
+      ],
+      "cmjn": [
+        0,
+        53,
+        79,
+        32
+      ],
+      "role": "la note chaude",
+      "contraste_fond": 4.8,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Cobalt Green",
+      "hex": "#96D1AA",
+      "rgb": [
+        150,
+        209,
+        170
+      ],
+      "hsl": [
+        140,
+        39,
+        70
+      ],
+      "cmjn": [
+        28,
+        0,
+        19,
+        18
+      ],
+      "role": "la note froide",
+      "contraste_fond": 1.61,
+      "fond_test": "papier"
+    }
+  ],
+  "Theme clair — surfaces et texte": [
+    {
+      "nom": "Papier",
+      "hex": "#F8F5F2",
+      "rgb": [
+        248,
+        245,
+        242
+      ],
+      "hsl": [
+        30,
+        30,
+        96
+      ],
+      "cmjn": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "role": "fond de page",
+      "contraste_fond": 1.0,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Surface",
+      "hex": "#FFFFFF",
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "hsl": [
+        0,
+        0,
+        100
+      ],
+      "cmjn": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "role": "carte posee sur le papier",
+      "contraste_fond": 1.09,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Surface 2",
+      "hex": "#E6DACD",
+      "rgb": [
+        230,
+        218,
+        205
+      ],
+      "hsl": [
+        31,
+        33,
+        85
+      ],
+      "cmjn": [
+        0,
+        5,
+        11,
+        10
+      ],
+      "role": "beige chaud, fond en creux",
+      "contraste_fond": 1.27,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Encre",
+      "hex": "#1A1A1A",
+      "rgb": [
+        26,
+        26,
+        26
+      ],
+      "hsl": [
+        0,
+        0,
+        10
+      ],
+      "cmjn": [
+        0,
+        0,
+        0,
+        90
+      ],
+      "role": "texte principal",
+      "contraste_fond": 16.02,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Encre seconde",
+      "hex": "#3D3C3A",
+      "rgb": [
+        61,
+        60,
+        58
+      ],
+      "hsl": [
+        40,
+        3,
+        23
+      ],
+      "cmjn": [
+        0,
+        2,
+        5,
+        76
+      ],
+      "role": "texte secondaire",
+      "contraste_fond": 10.14,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Encre sourde",
+      "hex": "#595755",
+      "rgb": [
+        89,
+        87,
+        85
+      ],
+      "hsl": [
+        30,
+        2,
+        34
+      ],
+      "cmjn": [
+        0,
+        2,
+        4,
+        65
+      ],
+      "role": "legendes",
+      "contraste_fond": 6.62,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Filet",
+      "hex": "#E3DCD4",
+      "rgb": [
+        227,
+        220,
+        212
+      ],
+      "hsl": [
+        32,
+        21,
+        86
+      ],
+      "cmjn": [
+        0,
+        3,
+        7,
+        11
+      ],
+      "role": "trait de separation",
+      "contraste_fond": 1.25,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Filet fort",
+      "hex": "#B9B0A6",
+      "rgb": [
+        185,
+        176,
+        166
+      ],
+      "hsl": [
+        32,
+        12,
+        69
+      ],
+      "cmjn": [
+        0,
+        5,
+        10,
+        27
+      ],
+      "role": "trait appuye",
+      "contraste_fond": 1.97,
+      "fond_test": "papier"
+    }
+  ],
+  "Theme clair — signal et accents": [
+    {
+      "nom": "Signal",
+      "hex": "#006EB8",
+      "rgb": [
+        0,
+        110,
+        184
+      ],
+      "hsl": [
+        204,
+        100,
+        36
+      ],
+      "cmjn": [
+        100,
+        40,
+        0,
+        28
+      ],
+      "role": "le bleu du logo, aplats et grands textes",
+      "contraste_fond": 4.93,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Signal texte",
+      "hex": "#005FA0",
+      "rgb": [
+        0,
+        95,
+        160
+      ],
+      "hsl": [
+        204,
+        100,
+        31
+      ],
+      "cmjn": [
+        100,
+        41,
+        0,
+        37
+      ],
+      "role": "le meme, pour le texte courant et les lavis",
+      "contraste_fond": 6.15,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Accent bleu",
+      "hex": "#005FA0",
+      "rgb": [
+        0,
+        95,
+        160
+      ],
+      "hsl": [
+        204,
+        100,
+        31
+      ],
+      "cmjn": [
+        100,
+        41,
+        0,
+        37
+      ],
+      "role": "pictogramme et titre de section bleue",
+      "contraste_fond": 6.15,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Accent jaune",
+      "hex": "#756E04",
+      "rgb": [
+        117,
+        110,
+        4
+      ],
+      "hsl": [
+        56,
+        93,
+        24
+      ],
+      "cmjn": [
+        0,
+        6,
+        97,
+        54
+      ],
+      "role": "pictogramme et titre de section jaune",
+      "contraste_fond": 4.85,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Accent sienne",
+      "hex": "#95461F",
+      "rgb": [
+        149,
+        70,
+        31
+      ],
+      "hsl": [
+        20,
+        66,
+        35
+      ],
+      "cmjn": [
+        0,
+        53,
+        79,
+        42
+      ],
+      "role": "pictogramme et titre de section sienne",
+      "contraste_fond": 6.09,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Accent vert",
+      "hex": "#337449",
+      "rgb": [
+        51,
+        116,
+        73
+      ],
+      "hsl": [
+        140,
+        39,
+        33
+      ],
+      "cmjn": [
+        56,
+        0,
+        37,
+        55
+      ],
+      "role": "pictogramme et titre de section verte",
+      "contraste_fond": 5.18,
+      "fond_test": "papier"
+    }
+  ],
+  "Theme clair — lavis de section (couleur du livre a 20 %)": [
+    {
+      "nom": "Lavis bleu",
+      "hex": "#C6DAE6",
+      "rgb": [
+        198,
+        218,
+        230
+      ],
+      "hsl": [
+        202,
+        39,
+        84
+      ],
+      "cmjn": [
+        14,
+        5,
+        0,
+        10
+      ],
+      "role": "fond de section",
+      "contraste_fond": 1.33,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Lavis jaune",
+      "hex": "#F8F3CF",
+      "rgb": [
+        248,
+        243,
+        207
+      ],
+      "hsl": [
+        53,
+        75,
+        89
+      ],
+      "cmjn": [
+        0,
+        2,
+        17,
+        3
+      ],
+      "role": "fond de section",
+      "contraste_fond": 1.03,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Lavis sienne",
+      "hex": "#E9D4C9",
+      "rgb": [
+        233,
+        212,
+        201
+      ],
+      "hsl": [
+        21,
+        42,
+        85
+      ],
+      "cmjn": [
+        0,
+        9,
+        14,
+        9
+      ],
+      "role": "fond de section",
+      "contraste_fond": 1.31,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Lavis vert",
+      "hex": "#E4EEE4",
+      "rgb": [
+        228,
+        238,
+        228
+      ],
+      "hsl": [
+        120,
+        23,
+        91
+      ],
+      "cmjn": [
+        4,
+        0,
+        4,
+        7
+      ],
+      "role": "fond de section",
+      "contraste_fond": 1.1,
+      "fond_test": "papier"
+    }
+  ],
+  "Theme sombre": [
+    {
+      "nom": "Papier",
+      "hex": "#121314",
+      "rgb": [
+        18,
+        19,
+        20
+      ],
+      "hsl": [
+        210,
+        5,
+        7
+      ],
+      "cmjn": [
+        10,
+        5,
+        0,
+        92
+      ],
+      "role": "fond de page",
+      "contraste_fond": 1.0,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Surface",
+      "hex": "#1B1D1F",
+      "rgb": [
+        27,
+        29,
+        31
+      ],
+      "hsl": [
+        210,
+        7,
+        11
+      ],
+      "cmjn": [
+        13,
+        6,
+        0,
+        88
+      ],
+      "role": "carte",
+      "contraste_fond": 1.1,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Surface 2",
+      "hex": "#262A2D",
+      "rgb": [
+        38,
+        42,
+        45
+      ],
+      "hsl": [
+        206,
+        8,
+        16
+      ],
+      "cmjn": [
+        16,
+        7,
+        0,
+        82
+      ],
+      "role": "fond en creux",
+      "contraste_fond": 1.29,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Encre",
+      "hex": "#F8F5F2",
+      "rgb": [
+        248,
+        245,
+        242
+      ],
+      "hsl": [
+        30,
+        30,
+        96
+      ],
+      "cmjn": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "role": "texte principal",
+      "contraste_fond": 17.13,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Encre seconde",
+      "hex": "#C5C6C7",
+      "rgb": [
+        197,
+        198,
+        199
+      ],
+      "hsl": [
+        210,
+        2,
+        78
+      ],
+      "cmjn": [
+        1,
+        1,
+        0,
+        22
+      ],
+      "role": "texte secondaire",
+      "contraste_fond": 10.87,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Encre sourde",
+      "hex": "#9BA0A4",
+      "rgb": [
+        155,
+        160,
+        164
+      ],
+      "hsl": [
+        207,
+        5,
+        63
+      ],
+      "cmjn": [
+        5,
+        2,
+        0,
+        36
+      ],
+      "role": "legendes",
+      "contraste_fond": 7.05,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Signal",
+      "hex": "#008EED",
+      "rgb": [
+        0,
+        142,
+        237
+      ],
+      "hsl": [
+        204,
+        100,
+        46
+      ],
+      "cmjn": [
+        100,
+        40,
+        0,
+        7
+      ],
+      "role": "le bleu eclairci",
+      "contraste_fond": 5.4,
+      "fond_test": "encre"
+    },
+    {
+      "nom": "Signal texte",
+      "hex": "#21A6FF",
+      "rgb": [
+        33,
+        166,
+        255
+      ],
+      "hsl": [
+        204,
+        100,
+        56
+      ],
+      "cmjn": [
+        87,
+        35,
+        0,
+        0
+      ],
+      "role": "pour le texte sur lavis",
+      "contraste_fond": 7.05,
+      "fond_test": "encre"
+    }
+  ],
+  "Etats": [
+    {
+      "nom": "Succes",
+      "hex": "#3F6B4A",
+      "rgb": [
+        63,
+        107,
+        74
+      ],
+      "hsl": [
+        135,
+        26,
+        33
+      ],
+      "cmjn": [
+        41,
+        0,
+        31,
+        58
+      ],
+      "role": "confirmation",
+      "contraste_fond": 5.66,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Alerte",
+      "hex": "#8A5E2A",
+      "rgb": [
+        138,
+        94,
+        42
+      ],
+      "hsl": [
+        33,
+        53,
+        35
+      ],
+      "cmjn": [
+        0,
+        32,
+        70,
+        46
+      ],
+      "role": "avertissement",
+      "contraste_fond": 5.2,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Erreur",
+      "hex": "#9C3B2C",
+      "rgb": [
+        156,
+        59,
+        44
+      ],
+      "hsl": [
+        8,
+        56,
+        39
+      ],
+      "cmjn": [
+        0,
+        62,
+        72,
+        39
+      ],
+      "role": "echec",
+      "contraste_fond": 6.29,
+      "fond_test": "papier"
+    },
+    {
+      "nom": "Info",
+      "hex": "#44607A",
+      "rgb": [
+        68,
+        96,
+        122
+      ],
+      "hsl": [
+        209,
+        28,
+        37
+      ],
+      "cmjn": [
+        44,
+        21,
+        0,
+        52
+      ],
+      "role": "information",
+      "contraste_fond": 6.04,
+      "fond_test": "papier"
+    }
+  ]
+}

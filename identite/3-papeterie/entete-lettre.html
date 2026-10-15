@@ -1,0 +1,47 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Studio Sentis — en-tête de lettre</title><style>
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; color: #1a1a1a; }
+.mono { font-family: ui-monospace, Menlo, monospace; }
+
+@page { size: 8.5in 11in; margin: 0; }
+.feuille { position: relative; width: 8.5in; height: 11in; background: #f8f5f2;
+           padding: 25mm 25mm 30mm; font-size: 10.5pt; line-height: 1.6; }
+.tete { display: flex; justify-content: space-between; align-items: flex-start;
+        padding-bottom: 7mm; border-bottom: 1px solid #e3dcd4; }
+.tete img { width: 46mm; }
+.tete .coord { text-align: right; font-size: 8pt; line-height: 1.6; color: #3d3c3a; }
+.corps { margin-top: 12mm; max-width: 58ch; }
+.corps .date { color: #3d3c3a; font-size: 9.5pt; }
+.corps h1 { font-size: 15pt; font-weight: 600; letter-spacing: -0.022em; margin: 8mm 0 4mm; }
+.corps p { margin: 0 0 4mm; }
+.gris { color: #8f8a85; }
+.pied { position: absolute; left: 25mm; right: 25mm; bottom: 14mm;
+        display: flex; justify-content: space-between; align-items: center;
+        font-size: 7.6pt; color: #3d3c3a; letter-spacing: .04em;
+        border-top: 1px solid #e3dcd4; padding-top: 3mm; }
+.barre { position: absolute; left: 0; right: 0; bottom: 0; height: 6mm; background: #006eb8; }
+</style></head><body>
+<section class="feuille">
+  <div class="tete">
+    <img src="../1-logo/svg/sentis-logo-horizontal-couleur.svg" alt="Studio Sentis">
+    <div class="coord">
+      <div class="mono">Emiletchesseu@gmail.com</div>
+      <div class="mono">www.studiosentis.ca</div>
+      <div>Châteauguay, Québec</div>
+    </div>
+  </div>
+  <div class="corps">
+    <div class="date gris">Châteauguay, le [date]</div>
+    <h1 class="gris">[Objet de la lettre]</h1>
+    <p class="gris">[Madame, Monsieur,]</p>
+    <p class="gris">[Corps de la lettre. Les marges, la police et le filet sont
+    posés : il n'y a qu'à écrire. Le texte courant est en Inter Regular,
+    10,5&nbsp;pt, sur une mesure de 58 caractères.]</p>
+    <p class="gris">[Salutation.]</p>
+  </div>
+  <div class="pied"><span>Studio Sentis — Châteauguay, Québec</span><span class="mono">www.studiosentis.ca</span></div>
+  <div class="barre"></div>
+</section>
+</body></html>

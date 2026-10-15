@@ -1,0 +1,45 @@
+GIMP Palette
+Name: Studio Sentis
+Columns: 4
+# Studio Sentis — palette de marque
+#
+# Les quatre couleurs du livre (valeurs source)
+  0 110 184	Blue — #006EB8
+248 237  67	Lemon Yellow — #F8ED43
+174  82  36	Burnt Sienna — #AE5224
+150 209 170	Cobalt Green — #96D1AA
+# Theme clair — surfaces et texte
+248 245 242	Papier — #F8F5F2
+255 255 255	Surface — #FFFFFF
+230 218 205	Surface 2 — #E6DACD
+ 26  26  26	Encre — #1A1A1A
+ 61  60  58	Encre seconde — #3D3C3A
+ 89  87  85	Encre sourde — #595755
+227 220 212	Filet — #E3DCD4
+185 176 166	Filet fort — #B9B0A6
+# Theme clair — signal et accents
+  0 110 184	Signal — #006EB8
+  0  95 160	Signal texte — #005FA0
+  0  95 160	Accent bleu — #005FA0
+117 110   4	Accent jaune — #756E04
+149  70  31	Accent sienne — #95461F
+ 51 116  73	Accent vert — #337449
+# Theme clair — lavis de section (couleur du livre a 20 %)
+198 218 230	Lavis bleu — #C6DAE6
+248 243 207	Lavis jaune — #F8F3CF
+233 212 201	Lavis sienne — #E9D4C9
+228 238 228	Lavis vert — #E4EEE4
+# Theme sombre
+ 18  19  20	Papier — #121314
+ 27  29  31	Surface — #1B1D1F
+ 38  42  45	Surface 2 — #262A2D
+248 245 242	Encre — #F8F5F2
+197 198 199	Encre seconde — #C5C6C7
+155 160 164	Encre sourde — #9BA0A4
+  0 142 237	Signal — #008EED
+ 33 166 255	Signal texte — #21A6FF
+# Etats
+ 63 107  74	Succes — #3F6B4A
+138  94  42	Alerte — #8A5E2A
+156  59  44	Erreur — #9C3B2C
+ 68  96 122	Info — #44607A
