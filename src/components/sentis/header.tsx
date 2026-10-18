@@ -187,9 +187,13 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
                   bas, et le blanc du milieu est du blanc, pas un oubli.
                   `overflow-y-auto` pour le téléphone trop court : les liens
                   défilent alors sans décrocher le pied. */}
+              {/* Aucun retrait horizontal ici : c'est ce qui permet au trait
+                  du lien actif de venir se coller à la bordure du tiroir. Le
+                  retrait est porté par les liens eux-mêmes, qui s'alignent du
+                  coup sur l'en-tête et le pied du tiroir (`px-5`). */}
               <nav
                 aria-label={dict.nav.menu}
-                className="flex-1 overflow-y-auto px-3 py-4"
+                className="flex-1 overflow-y-auto py-4"
               >
                 <ul className="flex flex-col">
                   {liens.map((lien) => {
@@ -204,10 +208,20 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
                           // pleine largeur faisaient de la navigation une
                           // liste d'articles. La hiérarchie est portée par la
                           // taille et la couleur, la séparation par l'espace.
-                          // `pl-4` sur tous les liens, actif ou non, sinon le
+                          // `px-5` sur tous les liens, actif ou non, sinon le
                           // texte se décale quand on change de page.
+                          //
+                          // `rounded-r-md` et non `rounded-md` : le lien part
+                          // maintenant du bord du tiroir, et un coin arrondi
+                          // contre une bordure droite laisse voir un croissant
+                          // de fond au survol.
+                          //
+                          // `ring-inset` : l'anneau de focus se dessine à
+                          // l'intérieur. À l'extérieur, ses deux pixels de
+                          // gauche sortiraient du tiroir et seraient rognés
+                          // par le défilement vertical de la liste.
                           className={cn(
-                            "focus-visible:ring-signal relative flex min-h-12 items-center rounded-md py-3 pr-3 pl-4 text-xl transition-colors focus-visible:ring-2 focus-visible:outline-none",
+                            "focus-visible:ring-signal relative flex min-h-12 items-center rounded-r-md py-3 pr-5 pl-5 text-xl transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:outline-none",
                             actif
                               ? "text-ink font-medium"
                               : "text-ink-secondary hover:text-ink",
@@ -222,7 +236,7 @@ export function SentisHeader({ dict, locale }: { dict: Dict; locale: Locale }) {
                             // à l'œil qui ne distingue pas le bleu.
                             <span
                               aria-hidden
-                              className="bg-signal absolute inset-y-2 left-0 block w-0.5 rounded-full"
+                              className="bg-signal absolute inset-y-2 left-0 block w-0.5 rounded-r-full"
                             />
                           ) : null}
                           {lien.label}
