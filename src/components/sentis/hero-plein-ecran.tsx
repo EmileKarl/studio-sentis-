@@ -3,7 +3,7 @@
 import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 
-import { Reveal3D } from "@/components/motion";
+import { Reveal3D } from "@/components/motion/reveal-3d";
 import { Entree } from "@/components/motion/entree";
 import { Scene3DDifferee } from "@/components/motion/differe";
 import { Zone } from "@/components/sentis/parts";

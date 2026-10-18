@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { MotionLeger } from "@/components/motion/fournisseur-leger";
 
 /**
  * Une tuile qui est un objet dans l'espace, et non un rectangle qui bouge.
@@ -31,7 +32,7 @@ import { cn } from "@/lib/utils";
  * ne part jamais au doigt : `pointerType !== "mouse"` l'écarte sur tactile, où
  * elle n'aurait de toute façon pas de sens — il n'y a pas de survol.
  */
-export function Carte3D({
+function Carte3DAnime({
   children,
   className,
   /** Inclinaison maximale, en degrés. Au-delà de ~8°, le rendu sous-pixel du
@@ -89,7 +90,7 @@ export function Carte3D({
  * fond. `translateZ` seul suffit — pas besoin de dupliquer la rotation, le
  * parent la porte déjà et `preserve-3d` la propage.
  */
-export function Couche3D({
+function Couche3DAnime({
   children,
   z = 26,
   className,
@@ -103,5 +104,35 @@ export function Couche3D({
     <div className={className} style={{ transform: `translateZ(${z}px)` }}>
       {children}
     </div>
+  );
+}
+
+/**
+ * Le fournisseur d'animation est posé **ici**, autour du composant, et non
+ * dans la mise en page commune.
+ *
+ * Il y était, et il enveloppait donc tout le site : les mentions légales et la
+ * politique de confidentialité, qui n'animent rien, téléchargeaient et
+ * analysaient la bibliothèque pour rien. Un fournisseur par composant animé ne
+ * coûte rien de plus — plusieurs sur une même page partagent le même morceau —
+ * et il disparaît des pages où il n'a rien à faire.
+ *
+ * Le composant porte ainsi sa propre exigence : impossible de l'utiliser
+ * ailleurs en oubliant son fournisseur.
+ */
+
+export function Carte3D(props: Parameters<typeof Carte3DAnime>[0]) {
+  return (
+    <MotionLeger>
+      <Carte3DAnime {...props} />
+    </MotionLeger>
+  );
+}
+
+export function Couche3D(props: Parameters<typeof Couche3DAnime>[0]) {
+  return (
+    <MotionLeger>
+      <Couche3DAnime {...props} />
+    </MotionLeger>
   );
 }

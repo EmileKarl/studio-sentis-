@@ -154,3 +154,49 @@
     animation-delay: 0ms !important;
   }
 }
+
+/* =========================================================================
+   La transition de page, en CSS.
+
+   Elle était pilotée par Motion, dans `template.tsx`. Or `template.tsx` est
+   monté sur **toutes** les pages : c'est lui qui faisait entrer la
+   bibliothèque d'animation dans les mentions légales, une page qui n'anime
+   rien. Les valeurs sont les mêmes qu'avant — 240 ms, même courbe, mêmes
+   5 degrés et 140 px de profondeur — parce que les jetons CSS et les jetons
+   JavaScript portent les mêmes nombres ; `npm run verify:tokens` le vérifie.
+
+   `backwards` et non `both` : c'est la clé. Avec `both`, la transformation
+   finale reste appliquée, et un élément transformé devient le bloc conteneur
+   de ses descendants positionnés — le carrousel horizontal, qui tient sur
+   `position: sticky`, cesserait alors de coller. C'est le défaut que la
+   version JavaScript effaçait à la main dans `onAnimationComplete`. En CSS,
+   `backwards` applique l'état de départ avant l'animation et ne laisse rien
+   derrière elle.
+
+   La perspective est posée par le parent : une perspective sur l'élément
+   animé lui-même agirait sur ses enfants, pas sur lui.
+   ========================================================================= */
+.transition-page {
+  perspective: 1400px;
+}
+.transition-page > * {
+  animation: transition-page var(--duration-base) var(--ease-out) backwards;
+}
+@keyframes transition-page {
+  from {
+    opacity: 0;
+    transform: rotateX(5deg) translateZ(-140px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .transition-page {
+    perspective: none;
+  }
+  .transition-page > * {
+    animation: none;
+  }
+}

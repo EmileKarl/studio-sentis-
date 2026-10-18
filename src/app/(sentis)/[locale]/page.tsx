@@ -2,7 +2,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { HorizontalTrack, Reveal3D } from "@/components/motion";
+import { HorizontalTrack } from "@/components/motion/horizontal-track";
+import { Reveal3D } from "@/components/motion/reveal-3d";
 import { Scene3DDifferee } from "@/components/motion/differe";
 import { ConfigurateurPrix } from "@/components/sentis/configurateur-prix";
 import { Conseil } from "@/components/sentis/conseil";

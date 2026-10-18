@@ -4,6 +4,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
 import { DURATION, EASE } from "@/lib/motion";
+import { MotionLeger } from "@/components/motion/fournisseur-leger";
 
 /**
  * Pictogrammes des quatre métiers, dessinés à la main en SVG.
@@ -75,7 +76,7 @@ function Cadre({
 }
 
 /** Site web : une fenêtre de navigateur et deux lignes de texte. */
-export function PictoSite() {
+function PictoSiteAnime() {
   return (
     <Cadre couleur="text-accent-bleu">
       <Trace d="M3 7 H37 V33 H3 Z" />
@@ -87,7 +88,7 @@ export function PictoSite() {
 }
 
 /** Application : un téléphone et le point du doigt. */
-export function PictoApplication() {
+function PictoApplicationAnime() {
   return (
     <Cadre couleur="text-accent-cyan">
       <Trace d="M11 3 H29 V37 H11 Z" />
@@ -99,7 +100,7 @@ export function PictoApplication() {
 }
 
 /** Identité : un bloc d'impression, la lettre réservée dedans. */
-export function PictoIdentite() {
+function PictoIdentiteAnime() {
   return (
     <Cadre couleur="text-accent-violet">
       <Trace d="M4 4 H36 V36 H4 Z" />
@@ -110,7 +111,7 @@ export function PictoIdentite() {
 }
 
 /** Informatique et marketing : trois machines empilées, et la courbe qui monte. */
-export function PictoSuivi() {
+function PictoSuiviAnime() {
   return (
     <Cadre couleur="text-accent-vert">
       <Trace d="M4 5 H28 V13 H4 Z" />
@@ -135,4 +136,50 @@ export function PictoService({ index }: { index: number }) {
   const liste = [PictoSite, PictoApplication, PictoIdentite, PictoSuivi];
   const Picto = liste[index % liste.length];
   return <Picto />;
+}
+
+/**
+ * Le fournisseur d'animation est posé **ici**, autour du composant, et non
+ * dans la mise en page commune.
+ *
+ * Il y était, et il enveloppait donc tout le site : les mentions légales et la
+ * politique de confidentialité, qui n'animent rien, téléchargeaient et
+ * analysaient la bibliothèque pour rien. Un fournisseur par composant animé ne
+ * coûte rien de plus — plusieurs sur une même page partagent le même morceau —
+ * et il disparaît des pages où il n'a rien à faire.
+ *
+ * Le composant porte ainsi sa propre exigence : impossible de l'utiliser
+ * ailleurs en oubliant son fournisseur.
+ */
+
+export function PictoSite() {
+  return (
+    <MotionLeger>
+      <PictoSiteAnime />
+    </MotionLeger>
+  );
+}
+
+export function PictoApplication() {
+  return (
+    <MotionLeger>
+      <PictoApplicationAnime />
+    </MotionLeger>
+  );
+}
+
+export function PictoIdentite() {
+  return (
+    <MotionLeger>
+      <PictoIdentiteAnime />
+    </MotionLeger>
+  );
+}
+
+export function PictoSuivi() {
+  return (
+    <MotionLeger>
+      <PictoSuiviAnime />
+    </MotionLeger>
+  );
 }

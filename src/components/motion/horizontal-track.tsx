@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import { useRef, useState, type FocusEvent, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { MotionLeger } from "@/components/motion/fournisseur-leger";
 
 /**
  * Séquence horizontale pilotée par le défilement vertical.
@@ -25,7 +26,7 @@ import { cn } from "@/lib/utils";
  * ordinaire. Rien n'est masqué, rien ne dépend d'une animation qui ne se joue
  * pas.
  */
-export function HorizontalTrack({
+function HorizontalTrackAnime({
   panels,
   label,
   className,
@@ -232,5 +233,27 @@ function Pip({
       style={{ opacity, scale }}
       className="bg-signal block size-1.5 rounded-full"
     />
+  );
+}
+
+/**
+ * Le fournisseur d'animation est posé **ici**, autour du composant, et non
+ * dans la mise en page commune.
+ *
+ * Il y était, et il enveloppait donc tout le site : les mentions légales et la
+ * politique de confidentialité, qui n'animent rien, téléchargeaient et
+ * analysaient la bibliothèque pour rien. Un fournisseur par composant animé ne
+ * coûte rien de plus — plusieurs sur une même page partagent le même morceau —
+ * et il disparaît des pages où il n'a rien à faire.
+ *
+ * Le composant porte ainsi sa propre exigence : impossible de l'utiliser
+ * ailleurs en oubliant son fournisseur.
+ */
+
+export function HorizontalTrack(props: Parameters<typeof HorizontalTrackAnime>[0]) {
+  return (
+    <MotionLeger>
+      <HorizontalTrackAnime {...props} />
+    </MotionLeger>
   );
 }

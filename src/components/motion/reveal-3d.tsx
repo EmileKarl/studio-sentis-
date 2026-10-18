@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { DURATION, EASE } from "@/lib/motion";
+import { MotionLeger } from "@/components/motion/fournisseur-leger";
 
 /**
  * Entrée en profondeur : l'élément arrive depuis l'arrière de la scène et se
@@ -20,7 +21,7 @@ import { DURATION, EASE } from "@/lib/motion";
  *   franchement déformé, et sur une ligne de titre cela se lit comme un défaut
  *   d'affichage plutôt que comme une intention.
  */
-export function Reveal3D({
+function Reveal3DAnime({
   children,
   depuis = "bas",
   distance = 90,
@@ -101,5 +102,27 @@ export function Reveal3D({
         {children}
       </m.div>
     </div>
+  );
+}
+
+/**
+ * Le fournisseur d'animation est posé **ici**, autour du composant, et non
+ * dans la mise en page commune.
+ *
+ * Il y était, et il enveloppait donc tout le site : les mentions légales et la
+ * politique de confidentialité, qui n'animent rien, téléchargeaient et
+ * analysaient la bibliothèque pour rien. Un fournisseur par composant animé ne
+ * coûte rien de plus — plusieurs sur une même page partagent le même morceau —
+ * et il disparaît des pages où il n'a rien à faire.
+ *
+ * Le composant porte ainsi sa propre exigence : impossible de l'utiliser
+ * ailleurs en oubliant son fournisseur.
+ */
+
+export function Reveal3D(props: Parameters<typeof Reveal3DAnime>[0]) {
+  return (
+    <MotionLeger>
+      <Reveal3DAnime {...props} />
+    </MotionLeger>
   );
 }

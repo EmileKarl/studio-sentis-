@@ -8,6 +8,7 @@ import {
 } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState } from "react";
+import { MotionLeger } from "@/components/motion/fournisseur-leger";
 
 /**
  * Texte qui se lit ligne à ligne au défilement, comme les paroles d'une
@@ -98,7 +99,7 @@ function Ligne({
   );
 }
 
-export function TexteProgressif({
+function TexteProgressifAnime({
   texte,
   className,
 }: {
@@ -186,5 +187,27 @@ export function TexteProgressif({
         </p>
       ))}
     </div>
+  );
+}
+
+/**
+ * Le fournisseur d'animation est posé **ici**, autour du composant, et non
+ * dans la mise en page commune.
+ *
+ * Il y était, et il enveloppait donc tout le site : les mentions légales et la
+ * politique de confidentialité, qui n'animent rien, téléchargeaient et
+ * analysaient la bibliothèque pour rien. Un fournisseur par composant animé ne
+ * coûte rien de plus — plusieurs sur une même page partagent le même morceau —
+ * et il disparaît des pages où il n'a rien à faire.
+ *
+ * Le composant porte ainsi sa propre exigence : impossible de l'utiliser
+ * ailleurs en oubliant son fournisseur.
+ */
+
+export function TexteProgressif(props: Parameters<typeof TexteProgressifAnime>[0]) {
+  return (
+    <MotionLeger>
+      <TexteProgressifAnime {...props} />
+    </MotionLeger>
   );
 }

@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 
 import { SentisFooter } from "@/components/sentis/footer";
 import { PreNavigation } from "@/components/sentis/pre-navigation";
-import { MotionLeger } from "@/components/motion/fournisseur-leger";
 import { SentisHeader } from "@/components/sentis/header";
 import { DICT, LOCALES, isLocale } from "@/lib/i18n";
 import { SITE_URL, SITE_URL_IS_PLACEHOLDER } from "@/lib/site";
@@ -104,13 +103,15 @@ export default async function SentisLayout({
       >
         {locale === "fr" ? "Aller au contenu" : "Skip to content"}
       </a>
-      <MotionLeger>
-        <SentisHeader dict={dict} locale={locale} />
-        <main id="contenu" className="flex-1">
-          {children}
-        </main>
-        <SentisFooter dict={dict} locale={locale} />
-      </MotionLeger>
+      {/* Plus de fournisseur d'animation ici. Il enveloppait tout le site,
+          donc aussi les mentions légales et la politique de confidentialité,
+          qui n'animent rien : la bibliothèque y était téléchargée et analysée
+          pour rien. Chaque composant animé porte désormais le sien. */}
+      <SentisHeader dict={dict} locale={locale} />
+      <main id="contenu" className="flex-1">
+        {children}
+      </main>
+      <SentisFooter dict={dict} locale={locale} />
     </div>
   );
 }
