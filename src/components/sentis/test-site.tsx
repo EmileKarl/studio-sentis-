@@ -19,10 +19,24 @@ import { cn } from "@/lib/utils";
  *
  * La mesure est faite par **Google PageSpeed Insights**, appelé directement
  * depuis le navigateur du visiteur : aucun serveur du studio ne voit passer
- * l'adresse, et la politique de confidentialité le dit. Sans clé, l'API est
- * limitée et peut refuser aux heures chargées ; une clé restreinte au domaine
- * se pose dans `NEXT_PUBLIC_PSI_KEY` — publique par nature, elle ne donne
- * accès qu'à ce service, depuis ce site.
+ * l'adresse, et la politique de confidentialité le dit.
+ *
+ * **Sans clé, ce bloc ne peut pas mesurer — jamais, pas « aux heures
+ * chargées ».** C'est ce que disait la version précédente, et c'était faux :
+ * les appels sans clé ne sont pas comptés par appelant, ils tombent tous dans
+ * un seul projet anonyme partagé par le monde entier, dont le quota du jour
+ * est épuisé en permanence. Mesuré sur le site en ligne : `429 Quota
+ * exceeded … consumer 'project_number:583797351490'`, à chaque essai.
+ *
+ * D'où les deux modes de ce bloc, décidés à la compilation :
+ *
+ * - **Avec `NEXT_PUBLIC_PSI_KEY`** — la mesure se fait ici, et le bulletin
+ *   s'affiche. La clé est publique par nature ; restreinte au domaine et à
+ *   cette seule API, elle ne donne accès à rien d'autre.
+ * - **Sans clé** — le bloc ne fait plus semblant. Le bouton mène directement
+ *   au même test sur le site de Google, l'adresse déjà remplie, et le panneau
+ *   de droite explique ce que le test dira. Faire patienter trente secondes
+ *   pour afficher une erreur garantie, c'est pire que ne rien proposer.
  *
  * Une mesure prend vingt à quarante secondes. Le bloc affiche le temps écoulé
  * pendant l'attente : une attente qu'on voit avancer se supporte, une roue qui
@@ -30,6 +44,22 @@ import { cn } from "@/lib/utils";
  */
 
 const API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+
+/** Inlinée à la compilation : sa présence décide du mode du bloc. */
+const CLE = process.env.NEXT_PUBLIC_PSI_KEY;
+const MESURE_ICI = Boolean(CLE);
+
+/**
+ * Le même test, sur le site de Google, l'adresse déjà remplie.
+ *
+ * Champ vide ou adresse invalide : on envoie à l'accueil de l'outil, où le
+ * visiteur tapera son adresse. Un `?url=` vide y afficherait un formulaire en
+ * erreur, ce qui ressemble à une panne du lien.
+ */
+const surGoogle = (adresse: string | null) =>
+  adresse
+    ? `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(adresse)}&form_factor=mobile`
+    : "https://pagespeed.web.dev/";
 const CATEGORIES = ["performance", "accessibility", "best-practices", "seo"] as const;
 type Categorie = (typeof CATEGORIES)[number];
 
@@ -46,6 +76,13 @@ type Etat =
   | { nom: "mesure"; depuis: number }
   | { nom: "resultat"; resultat: Resultat }
   | { nom: "erreur"; message: string; adresse?: string };
+
+/** 429 : notre quota, pas le site du visiteur. Le distinguer n'est pas un
+    détail de formulation — l'ancien message lui disait que son site était
+    peut-être inaccessible, ce qui est faux et inquiète pour rien. */
+function messageErreur(statut: number | null, textes: Dict["testSite"]) {
+  return statut === 429 ? textes.erreurs.quota : textes.erreurs.service;
+}
 
 /** Accepte « votre-commerce.ca », « www.x.ca » ou une adresse complète. */
 function normaliser(saisie: string): URL | null {
@@ -108,6 +145,13 @@ export function TestSite({
       return;
     }
 
+    // Sans clé, rien à tenter : le lien du bouton mène déjà chez Google. Ce
+    // chemin ne sert qu'au clavier, quand « Entrée » valide le formulaire.
+    if (!MESURE_ICI) {
+      window.open(surGoogle(url.href), "_blank", "noopener,noreferrer");
+      return;
+    }
+
     annulation.current?.abort();
     const controleur = new AbortController();
     annulation.current = controleur;
@@ -120,8 +164,10 @@ export function TestSite({
     const cle = process.env.NEXT_PUBLIC_PSI_KEY;
     if (cle) parametres.set("key", cle);
 
+    let statut: number | null = null;
     try {
       const reponse = await fetch(`${API}?${parametres}`, { signal: controleur.signal });
+      statut = reponse.status;
       if (!reponse.ok) throw new Error(String(reponse.status));
       const donnees = await reponse.json();
       const lh = donnees.lighthouseResult;
@@ -148,7 +194,11 @@ export function TestSite({
       });
     } catch {
       if (annulation.current === controleur) {
-        setEtat({ nom: "erreur", message: textes.erreurs.service, adresse: url.href });
+        setEtat({
+          nom: "erreur",
+          message: messageErreur(statut, textes),
+          adresse: url.href,
+        });
       }
     } finally {
       clearTimeout(delai);
@@ -190,17 +240,37 @@ export function TestSite({
               aria-invalid={etat.nom === "erreur" && etat.message === textes.erreurs.adresse}
               className="border-rule-strong bg-surface text-ink placeholder:text-ink-muted focus-visible:ring-signal min-w-0 flex-1 rounded-md border px-3.5 py-2.5 text-base focus-visible:ring-2 focus-visible:outline-none"
             />
-            <Button
-              type="submit"
-              size="lg"
-              disabled={mesureEnCours}
-              className="rounded-md text-base active:translate-y-px"
-            >
-              {textes.bouton}
-            </Button>
+            {MESURE_ICI ? (
+              <Button
+                type="submit"
+                size="lg"
+                disabled={mesureEnCours}
+                className="rounded-md text-base active:translate-y-px"
+              >
+                {textes.bouton}
+              </Button>
+            ) : (
+              /* Un vrai lien, et non un bouton qui ouvrirait une fenêtre :
+                 `window.open` après une saisie passe pour une pop-up et se
+                 fait bloquer. Le lien, lui, s'ouvre toujours, se copie, et
+                 fonctionne au clic du milieu. */
+              <Button
+                asChild
+                size="lg"
+                className="rounded-md text-base active:translate-y-px"
+              >
+                <a
+                  href={surGoogle(normaliser(saisie)?.href ?? null)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {textes.boutonGoogle} <ArrowRight aria-hidden />
+                </a>
+              </Button>
+            )}
           </div>
           <p id={`${id}-note`} className="text-ink-muted mt-3 text-sm leading-relaxed text-pretty">
-            {textes.viePrivee}
+            {MESURE_ICI ? textes.viePrivee : textes.surGoogle}
           </p>
         </form>
       </div>
@@ -212,7 +282,33 @@ export function TestSite({
         aria-busy={mesureEnCours}
         className="bg-surface border-rule rounded-2xl border p-6 sm:p-8 lg:col-span-7"
       >
-        {etat.nom === "erreur" ? (
+        {/* Sans clé, le bulletin resterait vide pour toujours : quatre tirets
+            qui promettent des chiffres qui ne viendront pas. À la place, ce
+            que le test dira — le visiteur sait alors pourquoi cliquer. */}
+        {!MESURE_ICI ? (
+          <>
+            <h3 className="font-display text-ink text-xl leading-tight font-semibold tracking-tight">
+              {textes.panneauTitre}
+            </h3>
+            <p className="text-ink-secondary mt-2 text-sm leading-relaxed">
+              {textes.panneauChapo}
+            </p>
+            <dl className="mt-6 space-y-4">
+              {CATEGORIES.map((c) => (
+                <div key={c} className="border-rule border-b border-dashed pb-4 last:border-0 last:pb-0">
+                  <dt className="text-ink font-medium">{textes.categories[c]}</dt>
+                  <dd className="text-ink-secondary mt-1 text-sm leading-relaxed text-pretty">
+                    {textes.panneauExplications[c]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="text-ink-muted mt-6 text-xs">
+              {textes.source} {textes.variation}
+            </p>
+          </>
+        ) : null}
+        {MESURE_ICI && etat.nom === "erreur" ? (
           <div role="alert">
             <p className="text-signal-aa leading-relaxed text-pretty">{etat.message}</p>
             {/* Si Google refuse — quota sans clé, le plus souvent — le
@@ -231,14 +327,14 @@ export function TestSite({
           </div>
         ) : null}
 
-        {mesureEnCours ? (
+        {MESURE_ICI && mesureEnCours ? (
           <p className="text-ink flex items-baseline justify-between gap-4 leading-relaxed">
             <span>{textes.enCours}</span>
             <span className="text-ink-muted shrink-0 tabular-nums">{secondes}&nbsp;s</span>
           </p>
         ) : null}
 
-        {resultat ? (
+        {MESURE_ICI && resultat ? (
           <p className="text-ink-secondary text-sm">
             {textes.resultatPour}{" "}
             <span className="text-ink font-medium break-all">{resultat.hote}</span>
@@ -247,6 +343,7 @@ export function TestSite({
 
         {/* Les quatre notes. Avant la première mesure, des tirets : le
             bulletin montre sa forme, pas des chiffres inventés. */}
+        {MESURE_ICI ? (
         <dl
           className={cn(
             "grid grid-cols-2 gap-x-6 gap-y-6",
@@ -286,8 +383,9 @@ export function TestSite({
             );
           })}
         </dl>
+        ) : null}
 
-        {resultat ? (
+        {MESURE_ICI && resultat ? (
           <>
             <dl className="border-rule mt-6 border-t pt-4 text-sm">
               {[
@@ -313,7 +411,7 @@ export function TestSite({
               {textes.source} {textes.variation}
             </p>
           </>
-        ) : etat.nom === "attente" ? (
+        ) : MESURE_ICI && etat.nom === "attente" ? (
           <p className="text-ink-muted mt-6 text-sm leading-relaxed">{textes.vide}</p>
         ) : null}
       </div>

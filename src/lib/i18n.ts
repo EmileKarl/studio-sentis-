@@ -619,6 +619,20 @@ export const DICT = {
       erreurs: {
         adresse: "Cette adresse n'a pas l'air valide. Essayez par exemple : votre-commerce.ca",
         service: "Google n'a pas pu mesurer ce site pour l'instant : trop de demandes, ou site inaccessible. Réessayez dans une minute.",
+        /** 429 : c'est NOTRE quota qui est plein, pas le site du visiteur qui
+            est en cause. Le message précédent disait « ou site inaccessible »,
+            ce qui accusait son site à tort. */
+        quota: "Le service de mesure de Google a atteint sa limite du jour. Votre site n'y est pour rien — le même test, sur le site de Google :",
+      },
+      boutonGoogle: "Tester sur Google",
+      surGoogle: "Le test s'ouvre sur le site de Google, dans un nouvel onglet. Rien n'est envoyé à ce site-ci.",
+      panneauTitre: "Ce que le test vous dira",
+      panneauChapo: "Quatre notes sur 100, et ce qui les explique :",
+      panneauExplications: {
+        performance: "le temps que votre site met à s'afficher sur un téléphone",
+        accessibility: "s'il reste utilisable par tout le monde, y compris aux gros caractères",
+        "best-practices": "les défauts techniques visibles de l'extérieur",
+        seo: "ce que les moteurs de recherche comprennent de vos pages",
       },
       resultatPour: "Résultat pour",
       lienGoogle: "Faire le test sur le site de Google",
@@ -1173,6 +1187,17 @@ export const DICT = {
       erreurs: {
         adresse: "That address does not look valid. Try, for example: your-business.ca",
         service: "Google could not test this site right now: too many requests, or the site is unreachable. Try again in a minute.",
+        quota: "Google's measurement service has hit its daily limit. Your site is not the problem — the same test, on Google's own site:",
+      },
+      boutonGoogle: "Test on Google",
+      surGoogle: "The test opens on Google's site, in a new tab. Nothing is sent to this site.",
+      panneauTitre: "What the test tells you",
+      panneauChapo: "Four scores out of 100, and what lies behind them:",
+      panneauExplications: {
+        performance: "how long your site takes to appear on a phone",
+        accessibility: "whether it stays usable for everyone, large type included",
+        "best-practices": "technical faults visible from the outside",
+        seo: "what search engines make of your pages",
       },
       resultatPour: "Result for",
       lienGoogle: "Run the test on Google's site",
