@@ -21,6 +21,7 @@ valeurs de couleur et de typographie.
 | Qui demande | Quoi lui envoyer |
 |---|---|
 | Imprimeur, enseigniste, brodeur, sérigraphe | `1-logo/svg/sentis-logo-horizontal-couleur.svg` |
+| Quelqu'un qui demande « à quoi ça ressemble ? » | `6-captures/haut/accueil-1440x900@2x.png` |
 | Réseau social, document Word, diaporama | `1-logo/png/sentis-logo-horizontal-couleur-1200.png` |
 | Grand format, affiche, lettrage de véhicule | le SVG, ou à défaut le PNG 2400 px |
 | Photo de profil | `1-logo/favicon-avatar/sentis-avatar-rond-1000.png` |
@@ -102,6 +103,16 @@ doit sortir du pointillé.
 ### `5-polices/`
 
 Inter en quatre graisses, sa licence, et comment l'installer.
+
+### `6-captures/`
+
+Des captures du site en ligne — sept pages, en quatre séries : le premier
+écran en double densité (`haut/`), un parcours en huit arrêts (`parcours/`),
+la page entière (`complet/`) et le téléphone (`mobile/`).
+
+Pour un flyer ou une publication, prendre `haut/`. Attention : trois éléments
+de ces images sont calculés à la lecture — le compte à rebours, la date de
+livraison, la date du jour — et vieillissent. Voir `6-captures/LISEZ-MOI.md`.
 
 ---
 

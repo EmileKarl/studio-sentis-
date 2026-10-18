@@ -613,7 +613,10 @@ pages.append(page("10 — Applications", "", f"""
   <div class="dossier">4-reseaux/</div>
   <div class="mono">avatars, couvertures et gabarits aux formats des plateformes.</div>
   <div class="dossier">5-polices/</div>
-  <div class="mono">où prendre Inter, et sa licence.</div>
+  <div class="mono">Inter en quatre graisses, sa licence, et comment l'installer.</div>
+  <div class="dossier">6-captures/</div>
+  <div class="mono">captures du site en ligne : premier écran en double densité, parcours en
+  huit arrêts, page entière, téléphone.</div>
 </div>
 
 <h3>Quel format donner à qui</h3>
@@ -623,6 +626,7 @@ pages.append(page("10 — Applications", "", f"""
   <tr><td>Réseaux sociaux, document Word, diaporama</td><td class="mono">PNG 1200 px</td></tr>
   <tr><td>Grand format, affiche, véhicule</td><td class="mono">SVG, ou PNG 2400 px au minimum</td></tr>
   <tr><td>Onglet de navigateur, application</td><td class="mono">favicon-avatar/sentis-icone-*.png</td></tr>
+  <tr><td>« À quoi ressemble le site ? »</td><td class="mono">6-captures/haut/accueil-1440x900@2x.png</td></tr>
 </table>
 """))
 
