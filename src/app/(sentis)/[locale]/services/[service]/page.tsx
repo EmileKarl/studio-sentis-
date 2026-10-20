@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { DonneesStructurees } from "@/components/sentis/donnees-structurees";
+import { EtapeDessin } from "@/components/sentis/etape-dessin";
 import { IllustrationService } from "@/components/sentis/illustration-service";
 import { Entree } from "@/components/motion/entree";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
@@ -213,6 +214,15 @@ export default async function PageService({
           {detail.etapes.map((etape, i) => (
             <Entree key={etape.titre} distance={14} delai={i * 70}>
               <li>
+                {/* Le dessin montre ce que l'étape dit — la grille de
+                    construction, les trois pistes, le périmètre et ses
+                    exclusions. S'il pouvait être retiré sans rien perdre, il
+                    n'aurait pas sa place ici. */}
+                <EtapeDessin
+                  cle={detail.cle}
+                  index={i}
+                  className={`${teinte.texte} mb-4 size-20`}
+                />
                 <span
                   className={`${teinte.texte} font-mono text-xs tracking-[0.2em] uppercase`}
                 >
