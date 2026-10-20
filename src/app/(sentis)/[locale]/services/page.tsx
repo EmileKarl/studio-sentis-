@@ -7,6 +7,7 @@ import { Carte3D, Couche3D } from "@/components/motion/carte-3d";
 import { Entree } from "@/components/motion/entree";
 import { Conseil } from "@/components/sentis/conseil";
 import { EnTetePage, Section, Zone } from "@/components/sentis/parts";
+import { CLES_SERVICE, SERVICES_DETAIL } from "@/lib/services-detail";
 import { PictoService } from "@/components/sentis/pictos";
 import { TemoinLivraison } from "@/components/sentis/temoin-livraison";
 import { Button } from "@/components/ui/button";
@@ -235,6 +236,44 @@ export default async function ServicesPage({
             </ul>
           </div>
         </Entree>
+      </Section>
+
+      {/* Les quatre pages de métier.
+
+          Seul ajout de ce commit à cette page, et il est là pour deux
+          raisons. La première est pour le visiteur : cette page présente les
+          quatre métiers ensemble, et quelqu'un qui sait déjà qu'il veut un
+          logo n'a aucune raison de lire les trois autres. La seconde est pour
+          les moteurs : une page sans lien entrant depuis le site est une page
+          orpheline, et le texte du lien est ce qui dit de quoi parle la page
+          d'arrivée. D'où « création de logo » plutôt qu'« en savoir plus ». */}
+      <Section tone="paper" titre={p.detailTitre} chapo={p.detailChapo}>
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {CLES_SERVICE.map((cle, i) => {
+            const detail = SERVICES_DETAIL[locale][cle];
+            return (
+              <Entree key={cle} distance={12} delai={i * 60}>
+                <li>
+                  <Link
+                    href={`/${locale}/services/${detail.slug[locale]}`}
+                    className="border-rule hover:border-rule-strong focus-visible:ring-signal bg-surface flex h-full flex-col gap-2 rounded-xl border p-6 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                  >
+                    <span className="font-display text-ink text-xl font-semibold tracking-tight">
+                      {detail.h1}
+                    </span>
+                    <span className="text-ink-secondary leading-relaxed text-pretty">
+                      {detail.chapo}
+                    </span>
+                    <span className="text-signal-aa mt-auto flex items-center gap-1.5 pt-3 font-medium">
+                      {detail.prix} · {detail.delai}
+                      <ArrowRight aria-hidden className="size-4" />
+                    </span>
+                  </Link>
+                </li>
+              </Entree>
+            );
+          })}
+        </ul>
       </Section>
 
       {/* Les limites, toutes ensemble et en petit.

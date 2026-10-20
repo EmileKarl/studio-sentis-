@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { LOCALES } from "@/lib/i18n";
+import { CLES_SERVICE, SERVICES_DETAIL } from "@/lib/services-detail";
 import { IDENTITE_INCOMPLETE, SITE_URL } from "@/lib/site";
 
 /**
@@ -44,5 +45,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return sentis;
+  /**
+   * Les quatre pages de métier.
+   *
+   * Elles ne peuvent pas rejoindre `pagesSentis` : contrairement au reste du
+   * site, **leurs adresses diffèrent d'une langue à l'autre** —
+   * `/fr/services/creation-de-logo` et `/en/services/logo-design`. Les
+   * `alternates` doivent donc être construites métier par métier, sinon le
+   * plan du site déclarerait des adresses anglaises qui n'existent pas.
+   *
+   * Priorité 0,9 : au-dessus des pages intérieures, en dessous de l'accueil.
+   * Ce sont elles qu'on veut voir sortir sur « création de logo ».
+   */
+  const services = LOCALES.flatMap((locale) =>
+    CLES_SERVICE.map((cle) => {
+      const detail = SERVICES_DETAIL[locale][cle];
+      return {
+        url: `${SITE_URL}/${locale}/services/${detail.slug[locale]}`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.9,
+        alternates: {
+          languages: Object.fromEntries(
+            LOCALES.map((l) => [
+              l,
+              `${SITE_URL}/${l}/services/${SERVICES_DETAIL[l][cle].slug[l]}`,
+            ]),
+          ),
+        },
+      };
+    }),
+  );
+
+  return [...sentis, ...services];
 }

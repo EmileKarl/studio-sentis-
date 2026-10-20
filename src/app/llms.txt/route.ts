@@ -1,4 +1,5 @@
 import { DICT, LOCALES } from "@/lib/i18n";
+import { CLES_SERVICE, SERVICES_DETAIL } from "@/lib/services-detail";
 import { BUSINESS, CONTACT_EMAIL, SITE_URL } from "@/lib/site";
 
 /**
@@ -58,6 +59,13 @@ export function GET() {
       (chemin) =>
         `- [${fr.seo[chemin].titre}](${SITE_URL}/fr${chemin}) : ${fr.seo[chemin].description}`,
     ),
+    // Les pages de métier ne sont pas dans `DICT.seo` : leurs adresses
+    // diffèrent d'une langue à l'autre, ce que `CHEMINS` ne sait pas
+    // représenter. Elles s'ajoutent depuis leur propre table.
+    ...CLES_SERVICE.map((cle) => {
+      const s = SERVICES_DETAIL.fr[cle];
+      return `- [${s.titre}](${SITE_URL}/fr/services/${s.slug.fr}) : ${s.description}`;
+    }),
     "",
     "## Pages (English)",
     "",
@@ -65,6 +73,10 @@ export function GET() {
       (chemin) =>
         `- [${DICT.en.seo[chemin].titre}](${SITE_URL}/en${chemin}) : ${DICT.en.seo[chemin].description}`,
     ),
+    ...CLES_SERVICE.map((cle) => {
+      const s = SERVICES_DETAIL.en[cle];
+      return `- [${s.titre}](${SITE_URL}/en/services/${s.slug.en}) : ${s.description}`;
+    }),
     "",
     "## Notes",
     "",

@@ -168,6 +168,9 @@ export const DICT = {
         deplier: "Comment ça se passe",
         limitesTitre: "Ce que je ne fais pas",
         limitesChapo: "Dit ici plutôt que découvert en cours de route.",
+        detailTitre: "Chaque métier, en détail",
+        detailChapo:
+          "Le prix, le délai, ce qui est compris et ce qui ne l'est pas — une page par métier.",
         items: [
           {
             nom: "Sites web",
@@ -816,6 +819,9 @@ export const DICT = {
         deplier: "How it works",
         limitesTitre: "What I don't do",
         limitesChapo: "Said here rather than discovered along the way.",
+        detailTitre: "Each craft, in detail",
+        detailChapo:
+          "The price, the lead time, what is included and what is not — one page per craft.",
         items: [
           {
             nom: "Websites",
