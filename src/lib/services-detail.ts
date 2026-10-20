@@ -28,8 +28,20 @@ export type CleService = (typeof CLES_SERVICE)[number];
 
 export type Question = { q: string; r: string };
 
+/**
+ * La couleur du métier, parmi les quatre du livre.
+ *
+ * Deux reprennent la couleur que la page Services donne déjà au même métier —
+ * le bleu aux sites, le jaune aux applications — pour que le site reste
+ * cohérent d'une page à l'autre. L'identité visuelle y est en sienne, et comme
+ * le logo et la charte en sont les deux moitiés, la charte prend le vert,
+ * libre ici puisque le suivi mensuel n'a pas de page de métier.
+ */
+export type CouleurService = "bleu" | "cyan" | "violet" | "vert";
+
 export type ServiceDetail = {
   cle: CleService;
+  couleur: CouleurService;
   /** Le segment d'URL, par langue. */
   slug: Record<Locale, string>;
   titre: string;
@@ -63,6 +75,7 @@ export type ServiceDetail = {
 const FR: Record<CleService, ServiceDetail> = {
   logo: {
     cle: "logo",
+    couleur: "violet",
     slug: { fr: "creation-de-logo", en: "logo-design" },
     titre: "Création de logo à Châteauguay — prix et délai affichés",
     description:
@@ -166,6 +179,7 @@ const FR: Record<CleService, ServiceDetail> = {
 
   charte: {
     cle: "charte",
+    couleur: "vert",
     slug: { fr: "charte-graphique", en: "brand-guidelines" },
     titre: "Charte graphique et identité visuelle — Châteauguay, Montérégie",
     description:
@@ -245,6 +259,7 @@ const FR: Record<CleService, ServiceDetail> = {
 
   site: {
     cle: "site",
+    couleur: "bleu",
     slug: { fr: "creation-de-site-web", en: "web-design" },
     titre: "Création de site web à Châteauguay — prix affichés, 18 jours",
     description:
@@ -332,6 +347,7 @@ const FR: Record<CleService, ServiceDetail> = {
 
   application: {
     cle: "application",
+    couleur: "cyan",
     slug: { fr: "application-mobile", en: "mobile-apps" },
     titre: "Application mobile et web sur mesure — Châteauguay, Montérégie",
     description:
@@ -410,6 +426,7 @@ const FR: Record<CleService, ServiceDetail> = {
 const EN: Record<CleService, ServiceDetail> = {
   logo: {
     cle: "logo",
+    couleur: "violet",
     slug: { fr: "creation-de-logo", en: "logo-design" },
     titre: "Logo design in Châteauguay — price and date published",
     description:
@@ -479,6 +496,7 @@ const EN: Record<CleService, ServiceDetail> = {
 
   charte: {
     cle: "charte",
+    couleur: "vert",
     slug: { fr: "charte-graphique", en: "brand-guidelines" },
     titre: "Brand guidelines and visual identity — Châteauguay, Quebec",
     description:
@@ -531,6 +549,7 @@ const EN: Record<CleService, ServiceDetail> = {
 
   site: {
     cle: "site",
+    couleur: "bleu",
     slug: { fr: "creation-de-site-web", en: "web-design" },
     titre: "Web design in Châteauguay — published prices, 18 days",
     description:
@@ -584,6 +603,7 @@ const EN: Record<CleService, ServiceDetail> = {
 
   application: {
     cle: "application",
+    couleur: "cyan",
     slug: { fr: "application-mobile", en: "mobile-apps" },
     titre: "Mobile and web apps, custom built — Châteauguay, Quebec",
     description:
