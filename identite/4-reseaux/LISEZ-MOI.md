@@ -2,9 +2,10 @@
 
 | Fichier | Où le poster |
 |---|---|
-| `statut-whatsapp-bleu.png` | **Statut WhatsApp** — 1080 × 1920. La version par défaut. |
-| `statut-whatsapp-papier.png` | Statut WhatsApp, version claire. |
-| `statut-whatsapp-encre.png` | Statut WhatsApp, version sombre. |
+| `affiche-whatsapp-bleu.png` | **Statut WhatsApp** — 1080 × 1920. La version par défaut. |
+| `affiche-whatsapp-papier.png` | Statut WhatsApp, version claire. |
+| `affiche-whatsapp-encre.png` | Statut WhatsApp, version sombre. |
+| `affiche-whatsapp-*-hd.png` | Les mêmes en **2160 × 3840**. Le maître : impression, autres plateformes, archives. |
 | `facebook-couverture-1640x856.png` | Couverture de page Facebook |
 | `linkedin-banniere-1584x396.png` | Bannière LinkedIn |
 | `publication-carree-1080x1080.png` | Publication Facebook, Instagram, LinkedIn |
@@ -20,10 +21,18 @@ Ils servent à vérifier, **pas à publier**.
   260 px en bas (barre « Répondre »). Tout ce qui compte tient entre les deux.
 - **Facebook** : le téléphone ne montre que le centre de la couverture.
 
-## Refaire les statuts
+## Quelle version téléverser
+
+**La version 1080 × 1920**, pas la HD. WhatsApp recompresse ce qu'on lui
+donne ; partir d'une image déjà à la bonne taille lui évite un
+redimensionnement de plus. La HD sert à tout le reste : impression, autres
+plateformes, et le jour où une plateforme demandera plus grand.
+
+## Refaire les affiches
 
 ```bash
-node scripts/identite/statut-whatsapp.mjs
+node scripts/identite/affiche-whatsapp.mjs     # les six fichiers
+node scripts/identite/verifier-affiche.mjs     # le contrôle de contraste
 ```
 
 Le logo vient des fichiers de `1-logo/` : si le logo change, les statuts
@@ -31,7 +40,13 @@ changent avec lui. Le slogan est celui du site.
 
 ## Ce qui a été mesuré
 
-Chaque couple texte/fond des trois statuts, calculé et non estimé. Pire
-couple : **4,60:1**, au-dessus du plancher de 4,5. Le lieu et l'adresse de la
-version bleue étaient d'abord à 3,30:1 — invisible à l'écran, et illisible sur
-un téléphone au soleil. L'opacité est passée de 72 % à 95 %.
+Le fond n'est pas un aplat : c'est un dégradé, troublé par un grain. La
+couleur derrière une ligne de texte n'est donc écrite nulle part — elle se
+**relève dans le PNG rendu**, pixel par pixel, à l'emplacement exact du texte.
+C'est ce que fait `verifier-affiche.mjs`, et il échoue sous 4,5:1.
+
+Pire couple des trois affiches : **6,16:1**. Le dégradé a même amélioré les
+contrastes, puisque le texte vit dans la partie basse, plus sombre.
+
+Le dégradé descend du clair vers le sombre et jamais l'inverse : éclaircir le
+haut du bleu faisait passer le blanc cassé de 4,93 à 3,81:1.
