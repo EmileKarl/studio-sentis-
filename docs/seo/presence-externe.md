@@ -22,7 +22,7 @@ Fixez une version, une seule, et ne la retouchez plus :
 ```
 Studio Sentis
 Châteauguay, Québec, Canada
-Emiletchesseu@gmail.com
+Ntek@studiosentis.ca
 https://www.studiosentis.ca
 ```
 

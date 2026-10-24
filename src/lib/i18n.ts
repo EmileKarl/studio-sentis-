@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL } from "@/lib/site";
+
 export const LOCALES = ["fr", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "fr";
@@ -368,7 +370,7 @@ export const DICT = {
         direct: "Ou écrivez directement à",
         infosTitre: "Coordonnées",
         infos: [
-          ["Courriel", "Emiletchesseu@gmail.com"],
+          ["Courriel", CONTACT_EMAIL],
           ["Secteur", "Châteauguay, Montérégie, Grand Montréal"],
           ["Langues", "Français et anglais"],
           ["Réponse", "Sous 48 heures, jours ouvrables"],
@@ -1004,7 +1006,7 @@ export const DICT = {
         direct: "Or write directly to",
         infosTitre: "Details",
         infos: [
-          ["Email", "Emiletchesseu@gmail.com"],
+          ["Email", CONTACT_EMAIL],
           ["Area", "Châteauguay, Montérégie, Greater Montreal"],
           ["Languages", "French and English"],
           ["Response", "Within 48 hours, business days"],

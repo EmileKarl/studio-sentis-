@@ -170,7 +170,7 @@ porter.</p>
   <tr><th>Zone desservie</th><td>Châteauguay · Montérégie · Grand Montréal · Québec</td></tr>
   <tr><th>Langues</th><td>Français (fr-CA) et anglais (en-CA)</td></tr>
   <tr><th>Site</th><td class="mono">www.studiosentis.ca</td></tr>
-  <tr><th>Courriel</th><td class="mono">Emiletchesseu@gmail.com</td></tr>
+  <tr><th>Courriel</th><td class="mono">Ntek@studiosentis.ca</td></tr>
 </table>
 
 <h3>D'où vient ce dessin</h3>

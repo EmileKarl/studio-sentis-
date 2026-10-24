@@ -11,7 +11,15 @@ export const SITE_URL =
 
 export const SITE_URL_IS_PLACEHOLDER = !process.env.NEXT_PUBLIC_SITE_URL;
 
-export const CONTACT_EMAIL = "Emiletchesseu@gmail.com";
+/**
+ * L'adresse professionnelle, hébergée chez Zoho (centre de données
+ * canadien). C'est **la seule définition** de l'adresse dans le code :
+ * l'en-tête, le pied de page, le formulaire, le configurateur, la fiche
+ * `LocalBusiness`, les traductions et la page d'erreur racine la lisent
+ * toutes d'ici. Elle était auparavant recopiée à quatre endroits, et une
+ * recopie finit toujours par être oubliée le jour où l'adresse change.
+ */
+export const CONTACT_EMAIL = "Ntek@studiosentis.ca";
 
 export const BUSINESS = {
   name: "Studio Sentis",

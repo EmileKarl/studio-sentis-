@@ -14,7 +14,7 @@ for d in (PAP, RES):
 BLEU, ENCRE, PAPIER, BEIGE = "#006eb8", "#1a1a1a", "#f8f5f2", "#e6dacd"
 GRIS = "#3d3c3a"
 SITE = "www.studiosentis.ca"
-COURRIEL = "Emiletchesseu@gmail.com"
+COURRIEL = "Ntek@studiosentis.ca"
 VILLE = "Châteauguay, Québec"
 PROMESSE = "Le prix et la date, dès le premier échange."
 # Le nom de la personne n'est écrit nulle part dans le dépôt : il reste un

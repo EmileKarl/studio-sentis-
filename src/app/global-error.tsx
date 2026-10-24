@@ -20,6 +20,8 @@
  * s'affiche même si la feuille de style ne s'est pas chargée. Elle est bilingue
  * parce qu'à ce niveau la langue du visiteur n'est plus connue.
  */
+import { CONTACT_EMAIL } from "@/lib/site";
+
 export default function GlobalError({
   error,
   reset,
@@ -99,7 +101,7 @@ export default function GlobalError({
               Réessayer / Try again
             </button>
             <a
-              href="mailto:Emiletchesseu@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               style={{
                 borderRadius: "0.5rem",
                 padding: "0.7rem 1.1rem",

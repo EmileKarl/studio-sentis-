@@ -149,7 +149,7 @@ Conséquences :
    l'OQLF avant toute affirmation publique — ne rien écrire de juridique sans
    cette vérification.
 
-**Contact : Emiletchesseu@gmail.com**, confirmé par le client. Le site propose
+**Contact : Ntek@studiosentis.ca**, confirmé par le client. Le site propose
 aujourd'hui un lien courriel et non un formulaire ; un formulaire capterait les
 personnes qui n'ont pas de client de messagerie configuré, mais il exige un
 service d'envoi qui n'est pas encore choisi.
