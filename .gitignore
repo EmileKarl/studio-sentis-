@@ -61,3 +61,8 @@ tests/__screenshots__/
 # (surfaces/) restent suivis : ils guident les prochaines retouches.
 /.impeccable/*
 !/.impeccable/surfaces/
+
+# Les 215 fiches de communication, en PNG : 30 Mo regenerables en une
+# commande a partir du corpus et du gabarit, qui sont suivis. Ce qui est
+# suivi, ce sont les planches-contact (3,4 Mo pour les 215) et REPONSES.md.
+/identite/5-fiches/png/
