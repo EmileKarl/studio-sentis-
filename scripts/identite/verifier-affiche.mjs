@@ -11,7 +11,9 @@
  * La méthode : on rend l'affiche une seconde fois avec chaque bloc de texte
  * masqué, on lit la couleur moyenne du fond à l'emplacement exact qu'il
  * occupait, et on la compare à la couleur du texte. Le fond mesuré comprend
- * le dégradé et le grain, puisqu'il vient de l'image.
+ * le dégradé, le grain et l'arc, puisqu'il vient de l'image. Seuls les
+ * textes et les trois traits (règle, fil, symbole) sont masqués : tout ce qui
+ * reste derrière eux est, par définition, leur fond.
  */
 import { chromium } from "playwright";
 import { dirname, join, resolve } from "node:path";
@@ -40,7 +42,7 @@ for (const v of affiche.VARIANTES) {
   await p.waitForTimeout(400);
 
   const mesures = await p.evaluate(() => {
-    const blocs = [...document.querySelectorAll(".slogan, .mot, .lieu, .site")];
+    const blocs = [...document.querySelectorAll(".question, .reponse, .mot, .lieu, .site")];
     return blocs.map((el) => {
       const b = el.getBoundingClientRect();
       return { classe: el.className, couleur: getComputedStyle(el).color,
@@ -51,7 +53,9 @@ for (const v of affiche.VARIANTES) {
 
   // Seconde passe, texte masqué : le fond redevient visible là où il était.
   await p.evaluate(() => {
-    document.querySelectorAll(".slogan, .mot, .lieu, .site, .regle, .symbole")
+    document.querySelectorAll(
+      ".question, .reponse, .mot, .lieu, .site, .regle, .symbole, .fil",
+    )
       .forEach((e) => (e.style.visibility = "hidden"));
   });
   await p.waitForTimeout(250);
