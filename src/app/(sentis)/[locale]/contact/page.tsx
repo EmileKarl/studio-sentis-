@@ -51,7 +51,15 @@ export default async function ContactPage({
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <div className="min-w-0">
-            <FormulaireSoumission dict={d} />
+            {/* Lu sur le serveur, au rendu : tant que le SMTP n'est pas
+                configuré, le formulaire garde le comportement d'avant plutôt
+                que de montrer une erreur à chaque visiteur. */}
+            <FormulaireSoumission
+              dict={d}
+              envoiActif={Boolean(
+                process.env.ZOHO_SMTP_UTILISATEUR && process.env.ZOHO_SMTP_MOTDEPASSE,
+              )}
+            />
 
             {/* Avis au point de collecte.
                 La Loi 25 demande que la personne sache, au moment où elle

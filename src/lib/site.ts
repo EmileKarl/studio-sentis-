@@ -69,7 +69,7 @@ export const IDENTITE_INCOMPLETE = Object.values(EXPLOITANT).some((v) => !v);
  * change** — c'est la seule information de ces pages qu'un visiteur peut
  * vérifier, et une date périmée les décrédibilise entièrement.
  */
-export const LEGAL_MAJ = "2026-10-05";
+export const LEGAL_MAJ = "2026-10-25";
 
 /**
  * Identifiants d'entité pour les données structurées.

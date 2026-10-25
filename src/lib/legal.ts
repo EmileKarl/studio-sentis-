@@ -17,9 +17,12 @@ import type { Locale } from "@/lib/i18n";
  * - aucune mesure d'audience, aucun témoin de suivi, aucun pixel, aucun
  *   réseau publicitaire (vérifiable : `grep -rn "gtag\|analytics\|fbq" src/`
  *   ne renvoie rien) ;
- * - le formulaire de soumission **n'envoie rien à ce site**. Il compose un
- *   message et le remet au logiciel de courrier du visiteur. Aucun serveur du
- *   studio ne reçoit, ne voit ni n'enregistre quoi que ce soit ;
+ * - le formulaire de soumission **envoie à ce site**, depuis le 25 octobre
+ *   2026. Une action serveur relaie le message par SMTP vers la boîte du
+ *   studio, puis l'oublie : rien n'est écrit dans une base de données. La
+ *   version précédente remettait le message au logiciel de courrier du
+ *   visiteur — ce qui ne marchait pas sur un téléphone sans client de
+ *   messagerie configuré, et perdait les demandes en silence ;
  * - la seule chose écrite sur l'appareil est la préférence de thème
  *   (clair / sombre / système), posée par le visiteur lui-même.
  *
@@ -152,7 +155,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
     confidentialite: {
       titre: "Politique de confidentialité",
       chapo:
-        "Ce site ne mesure rien, ne suit personne et ne reçoit aucune donnée. Voici comment le vérifier, et ce qu'il advient de ce que vous m'écrivez.",
+        "Ce site ne mesure rien et ne suit personne. La seule chose qu'il reçoit, c'est le message que vous choisissez de m'envoyer. Voici comment le vérifier, et ce qu'il en advient.",
       sections: [
         {
           titre: "Ce que ce site ne fait pas",
@@ -170,9 +173,9 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           ],
         },
         {
-          titre: "Le formulaire n'envoie rien à ce site",
+          titre: "Ce que devient votre message",
           corps: [
-            "Le formulaire de demande de soumission ne transmet rien à un serveur du studio, parce qu'il n'y en a pas pour le recevoir. Quand vous cliquez sur « Envoyer », il assemble votre message et l'ouvre dans votre propre logiciel de courrier, où vous pouvez encore le relire, le modifier ou l'abandonner.",
+            "Le formulaire de demande de soumission envoie votre message à un serveur du studio, qui le transmet aussitôt par courriel à ma boîte professionnelle. Il n'est écrit dans aucune base de données : le serveur le relaie et l'oublie. Les seules traces qui subsistent sont le courriel lui-même, dans ma boîte, et les journaux techniques de l'hébergeur, qui ne contiennent pas le contenu de votre message.",
             "Tant que vous n'avez pas envoyé ce courriel depuis votre logiciel, rien n'a quitté votre appareil et je n'ai connaissance de rien. Ce que vous tapez dans les champs n'est enregistré nulle part entre-temps.",
           ],
         },
@@ -200,7 +203,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "Où ils sont conservés, et hors du Québec",
           corps: [
-            "Mon adresse professionnelle est actuellement une adresse Gmail. Vos messages transitent donc par les serveurs de Google et y sont conservés ; Google exploite des centres de données hors du Québec, notamment aux États-Unis, où le cadre juridique de protection des renseignements personnels diffère de celui du Québec.",
+            "Mon adresse professionnelle est hébergée par Zoho, dans son centre de données canadien. Vos messages y sont conservés, au Canada. L'hébergeur reste une entreprise étrangère et peut, dans des cas prévus par la loi, être tenu de communiquer des renseignements à des autorités : c'est à prendre en compte, et c'est dit ici plutôt qu'enfoui.",
             "La Loi 25 exige que cette communication hors Québec soit dite clairement plutôt qu'enfouie : c'est fait. Si cela vous pose un problème, écrivez-moi par tout autre moyen, ou appelez — les renseignements sensibles n'ont pas à passer par un formulaire.",
             "Les documents de travail d'un mandat en cours sont conservés sur mes appareils, protégés par mot de passe et chiffrement de disque.",
           ],
@@ -247,7 +250,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "En cas d'incident",
           corps: [
-            "Si un incident de confidentialité présentait un risque de préjudice sérieux, je vous en aviserais ainsi que la Commission d'accès à l'information, avec diligence, et je tiens le registre des incidents que la loi exige. Vu ce qui précède — aucun serveur, aucune base de données, aucun stockage sur ce site —, la surface exposée se limite à ma boîte de courriel.",
+            "Si un incident de confidentialité présentait un risque de préjudice sérieux, je vous en aviserais ainsi que la Commission d'accès à l'information, avec diligence, et je tiens le registre des incidents que la loi exige. Vu ce qui précède — aucune base de données, aucun stockage de votre message sur ce site, un serveur qui relaie et oublie —, la surface exposée se limite à ma boîte de courriel.",
           ],
         },
         {
@@ -259,7 +262,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "Modifications",
           corps: [
-            "Cette politique changera quand le site changera — le jour où un formulaire enverra réellement à un serveur, ou qu'une mesure d'audience apparaîtra, il faudra la réécrire. La date de dernière mise à jour figure en tête de page ; c'est elle qui fait foi.",
+            "Cette politique change quand le site change. Elle a déjà été réécrite le jour où le formulaire s'est mis à envoyer réellement, et elle le sera le jour où une mesure d'audience apparaîtra. La date de dernière mise à jour figure en tête de page ; c'est elle qui fait foi.",
           ],
         },
       ],
@@ -348,7 +351,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
     confidentialite: {
       titre: "Privacy policy",
       chapo:
-        "This site measures nothing, tracks no one and receives no data. Here is how to check that, and what happens to what you write to me.",
+        "This site measures nothing and tracks no one. The only thing it receives is the message you choose to send me. Here is how to check that, and what happens to it.",
       sections: [
         {
           titre: "What this site does not do",
@@ -366,9 +369,9 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
           ],
         },
         {
-          titre: "The form sends nothing to this site",
+          titre: "What happens to your message",
           corps: [
-            "The quote request form transmits nothing to a studio server, because there is none to receive it. When you press Send, it assembles your message and opens it in your own mail application, where you can still reread it, change it or drop it.",
+            "The quote request form sends your message to a studio server, which immediately forwards it by email to my professional mailbox. It is written to no database: the server relays it and forgets it. The only traces left are the email itself, in my mailbox, and the host's technical logs, which do not contain the body of your message.",
             "Until you send that email from your own software, nothing has left your device and I know nothing about it. What you type into the fields is stored nowhere in the meantime.",
           ],
         },
@@ -396,7 +399,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "Where they are kept, including outside Quebec",
           corps: [
-            "My working address is currently a Gmail address. Your messages therefore pass through and are stored on Google's servers; Google operates data centres outside Quebec, notably in the United States, where the legal framework for personal information differs from Quebec's.",
+            "My working address is hosted by Zoho, in its Canadian data centre. Your messages are kept there, in Canada. The host is still a foreign company and may, in cases provided by law, be required to disclose information to authorities: that is worth knowing, and it is stated here rather than buried.",
             "Law 25 requires this communication outside Quebec to be stated plainly rather than buried: here it is. If that is a problem for you, write to me by any other means, or call — sensitive information does not have to go through a form.",
             "Working documents for an active mandate are kept on my own devices, behind a password and full-disk encryption.",
           ],
@@ -443,7 +446,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "In case of an incident",
           corps: [
-            "If a confidentiality incident presented a risk of serious injury, I would notify you and the Commission d'accès à l'information promptly, and I keep the incident register the law requires. Given the above — no server, no database, no storage on this site — the exposed surface is limited to my mailbox.",
+            "If a confidentiality incident presented a risk of serious injury, I would notify you and the Commission d'accès à l'information promptly, and I keep the incident register the law requires. Given the above — no database, no storage of your message on this site, a server that relays and forgets — the exposed surface is limited to my mailbox.",
           ],
         },
         {
@@ -455,7 +458,7 @@ export const TEXTES_LEGAUX: Record<Locale, TextesLegaux> = {
         {
           titre: "Changes",
           corps: [
-            "This policy will change when the site changes — the day a form actually posts to a server, or an analytics script appears, it will have to be rewritten. The last-updated date at the top of the page is the one that counts.",
+            "This policy changes when the site changes. It was already rewritten the day the form started actually sending, and it will be again the day an analytics script appears. The last-updated date at the top of the page is the one that counts.",
           ],
         },
       ],

@@ -1,7 +1,7 @@
 "use client";
 
 import { Send } from "lucide-react";
-import { useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,27 +16,64 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import type { Dict } from "@/lib/i18n";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { envoyerSoumission, type EtatSoumission } from "@/lib/soumission";
 
-type Erreurs = Partial<Record<"nom" | "courriel" | "message", string>>;
+type Champ = "nom" | "courriel" | "message";
+type Erreurs = Partial<Record<Champ, string>>;
+
+const DEPART: EtatSoumission = { etat: "repos" };
 
 /**
  * Formulaire de demande de soumission.
  *
- * Il n'y a pas encore de service d'envoi de courriel pour ce site : plutôt que
- * de simuler un envoi qui n'arriverait nulle part — le pire des deux mondes,
- * puisque le visiteur croit avoir écrit — le formulaire compose le message et
- * le remet au logiciel de courrier du visiteur. La page le dit avant qu'il
- * clique, et l'adresse directe reste affichée pour ceux qui préfèrent.
+ * ## Il envoie vraiment, maintenant
  *
- * La validation est côté client et le champ fautif reçoit le focus : sans
- * cela, sur un formulaire long, l'erreur se produit hors de l'écran et
- * personne ne comprend pourquoi rien ne se passe.
+ * La version précédente composait un `mailto:` et remettait le message au
+ * logiciel de courriel du visiteur. Sur un téléphone, où beaucoup de gens
+ * lisent leur courriel dans le navigateur sans logiciel configuré, le bouton
+ * ne faisait **rien** — et ces demandes-là étaient perdues sans que personne
+ * ne le sache. L'envoi passe désormais par une action serveur et le SMTP du
+ * studio.
+ *
+ * ## Le `mailto:` n'a pas disparu pour autant
+ *
+ * Il devient le filet. Si le serveur tombe, ou tant que les identifiants
+ * SMTP ne sont pas posés, le formulaire propose d'ouvrir le message déjà
+ * rempli dans le logiciel du visiteur. Un formulaire qui dit « réessayez
+ * plus tard » perd la demande ; celui-ci la garde.
+ *
+ * ## Deux validations, pas une
+ *
+ * Celle du navigateur donne la réponse immédiate et met le focus sur le
+ * champ fautif — sans cela, sur un formulaire long, l'erreur se produit hors
+ * de l'écran et personne ne comprend pourquoi rien ne se passe. Celle du
+ * serveur fait foi : elle est la seule qu'un robot ne peut pas contourner.
  */
-export function FormulaireSoumission({ dict }: { dict: Dict }) {
+export function FormulaireSoumission({
+  dict,
+  envoiActif,
+}: {
+  dict: Dict;
+  /**
+   * Faux tant que les identifiants SMTP ne sont pas posés chez l'hébergeur.
+   *
+   * Sans ce drapeau, le formulaire enverrait quand même, l'action répondrait
+   * « non configuré », et **chaque visiteur verrait une erreur** avant
+   * d'obtenir le filet. Ce serait pire que l'ancien comportement. Lu sur le
+   * serveur au rendu de la page : le jour où la variable existe, le
+   * formulaire bascule tout seul au déploiement suivant.
+   */
+  envoiActif: boolean;
+}) {
   const c = dict.pages.contact;
+  const [etat, agir, enCours] = useActionState(envoyerSoumission, DEPART);
   const [erreurs, setErreurs] = useState<Erreurs>({});
   const [service, setService] = useState("");
   const [budget, setBudget] = useState("");
+  /** Le corps du dernier envoi, pour le filet `mailto:` en cas de panne. */
+  const [dernierCorps, setDernierCorps] = useState("");
+  const [dernierNom, setDernierNom] = useState("");
+  const horodatage = useRef<HTMLInputElement>(null);
   /**
    * Verrou anti-double-envoi.
    *
@@ -52,11 +89,15 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
    * changé quand le second clic arrive. Une référence, elle, est à jour tout
    * de suite.
    */
-  const envoiEnCours = useRef(false);
+  // Le temps de remplissage, posé au montage. Un robot qui envoie le
+  // formulaire en moins de deux secondes et demie n'a rien lu. Le champ reste
+  // vide sans JavaScript, et l'action ne vérifie alors rien plutôt que de
+  // bloquer quelqu'un.
+  useEffect(() => {
+    if (horodatage.current) horodatage.current.value = String(Date.now());
+  }, []);
 
-  function soumettre(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (envoiEnCours.current) return;
+  function verifier(event: React.FormEvent<HTMLFormElement>) {
     const data = new FormData(event.currentTarget);
     const nom = String(data.get("nom") ?? "").trim();
     const courriel = String(data.get("courriel") ?? "").trim();
@@ -70,46 +111,83 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
     setErreurs(trouvees);
     const premier = Object.keys(trouvees)[0];
     if (premier) {
+      // On annule l'action serveur : rien ne part tant que c'est incomplet.
+      event.preventDefault();
       document.getElementById(premier)?.focus();
       return;
     }
 
-    const corps = [
-      `${c.champs.nom} : ${nom}`,
-      `${c.champs.entreprise} : ${String(data.get("entreprise") ?? "")}`,
-      `${c.champs.courriel} : ${courriel}`,
-      `${c.champs.telephone} : ${String(data.get("telephone") ?? "")}`,
-      `${c.champs.service} : ${service}`,
-      `${c.champs.budget} : ${budget}`,
-      "",
-      message,
-    ].join("\n");
+    // Gardé pour le filet : si l'envoi échoue, on sait quoi mettre dans le
+    // brouillon sans redemander au visiteur de tout retaper.
+    setDernierNom(nom);
+    const corps = (
+      [
+        `${c.champs.nom} : ${nom}`,
+        `${c.champs.entreprise} : ${String(data.get("entreprise") ?? "")}`,
+        `${c.champs.courriel} : ${courriel}`,
+        `${c.champs.telephone} : ${String(data.get("telephone") ?? "")}`,
+        `${c.champs.service} : ${service}`,
+        `${c.champs.budget} : ${budget}`,
+        "",
+        message,
+      ].join("\n")
+    );
+    setDernierCorps(corps);
 
-    envoiEnCours.current = true;
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      `${c.titre} — ${nom}`,
-    )}&body=${encodeURIComponent(corps)}`;
+    // Envoi inactif : on reprend exactement l'ancien chemin — le message part
+    // dans le logiciel du visiteur, et l'action serveur n'est jamais appelée.
+    if (!envoiActif) {
+      event.preventDefault();
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+        `${c.titre} — ${nom}`,
+      )}&body=${encodeURIComponent(corps)}`;
+    }
+  }
 
-    // Le verrou se relâche au bout d'un instant. Une navigation `mailto:` ne
-    // quitte pas la page : si le visiteur ferme son brouillon et veut
-    // recommencer, un bouton verrouillé pour toujours serait un cul-de-sac.
-    // Une seconde et demie couvre largement le double-clic sans gêner une
-    // seconde tentative volontaire.
-    window.setTimeout(() => {
-      envoiEnCours.current = false;
-    }, 1500);
+  const lienDeRepli = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    `${c.titre} — ${dernierNom}`,
+  )}&body=${encodeURIComponent(dernierCorps)}`;
+
+  // Le serveur a le dernier mot sur la validité : ses champs fautifs
+  // s'ajoutent à ceux que le navigateur avait laissés passer.
+  const fautif = (champ: Champ) =>
+    Boolean(erreurs[champ]) || (etat.etat === "invalide" && etat.champs.includes(champ));
+
+  if (etat.etat === "envoye") {
+    return (
+      <div className="border-rule bg-surface rounded-md border p-8">
+        <p className="text-2xl font-semibold">{c.succesTitre}</p>
+        <p className="text-ink-muted mt-3 max-w-(--content-max)">{c.succesTexte}</p>
+        <Button
+          type="button"
+          variant="outline"
+          className="mt-6 rounded-md"
+          onClick={() => window.location.reload()}
+        >
+          {c.succesRecommencer}
+        </Button>
+      </div>
+    );
   }
 
   return (
-    <form onSubmit={soumettre} noValidate className="space-y-6">
+    <form action={agir} onSubmit={verifier} noValidate className="space-y-6">
+      {/* Le piege a robots : invisible a l'oeil et au lecteur d'ecran, hors
+          du parcours au clavier. Un humain ne le remplit jamais. */}
+      <div aria-hidden className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="site">Ne remplissez pas ce champ</label>
+        <input id="site" name="site" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+      <input ref={horodatage} type="hidden" name="horodatage" />
+
       <div className="grid gap-6 sm:grid-cols-2">
-        <Champ id="nom" label={c.champs.nom} erreur={erreurs.nom} requis>
+        <Champ id="nom" label={c.champs.nom} erreur={fautif("nom") ? c.erreurs.nom : undefined} requis>
           <Input
             id="nom"
             name="nom"
             autoComplete="name"
-            aria-invalid={Boolean(erreurs.nom)}
-            aria-describedby={erreurs.nom ? "nom-erreur" : undefined}
+            aria-invalid={fautif("nom")}
+            aria-describedby={fautif("nom") ? "nom-erreur" : undefined}
             className="rounded-md"
           />
         </Champ>
@@ -121,15 +199,15 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
             className="rounded-md"
           />
         </Champ>
-        <Champ id="courriel" label={c.champs.courriel} erreur={erreurs.courriel} requis>
+        <Champ id="courriel" label={c.champs.courriel} erreur={fautif("courriel") ? c.erreurs.courriel : undefined} requis>
           <Input
             id="courriel"
             name="courriel"
             type="email"
             autoComplete="email"
             inputMode="email"
-            aria-invalid={Boolean(erreurs.courriel)}
-            aria-describedby={erreurs.courriel ? "courriel-erreur" : undefined}
+            aria-invalid={fautif("courriel")}
+            aria-describedby={fautif("courriel") ? "courriel-erreur" : undefined}
             className="rounded-md"
           />
         </Champ>
@@ -147,7 +225,7 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <Champ id="service" label={c.champs.service}>
-          <Select value={service} onValueChange={setService}>
+          <Select name="service" value={service} onValueChange={setService}>
             <SelectTrigger id="service" className="w-full rounded-md">
               <SelectValue placeholder="—" />
             </SelectTrigger>
@@ -161,7 +239,7 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
           </Select>
         </Champ>
         <Champ id="budget" label={c.champs.budget} note={c.champs.optionnel}>
-          <Select value={budget} onValueChange={setBudget}>
+          <Select name="budget" value={budget} onValueChange={setBudget}>
             <SelectTrigger id="budget" className="w-full rounded-md">
               <SelectValue placeholder="—" />
             </SelectTrigger>
@@ -176,20 +254,39 @@ export function FormulaireSoumission({ dict }: { dict: Dict }) {
         </Champ>
       </div>
 
-      <Champ id="message" label={c.champs.message} erreur={erreurs.message} requis>
+      <Champ id="message" label={c.champs.message} erreur={fautif("message") ? c.erreurs.message : undefined} requis>
         <Textarea
           id="message"
           name="message"
           rows={6}
-          aria-invalid={Boolean(erreurs.message)}
-          aria-describedby={erreurs.message ? "message-erreur" : undefined}
+          aria-invalid={fautif("message")}
+          aria-describedby={fautif("message") ? "message-erreur" : undefined}
           className="rounded-md"
         />
       </Champ>
 
+      {/* Le filet. Le serveur est tombe, ou les identifiants SMTP ne sont pas
+          encore poses : plutot que de perdre la demande, on la remet au
+          logiciel de courriel du visiteur, deja remplie. */}
+      {(etat.etat === "panne" || etat.etat === "non-configure") && (
+        <div role="alert" className="border-rule bg-surface rounded-md border p-5">
+          <p className="font-semibold">{c.echecTitre}</p>
+          <p className="text-ink-muted mt-2 text-sm">{c.echecTexte}</p>
+          <Button asChild variant="outline" className="mt-4 rounded-md">
+            <a href={lienDeRepli}>{c.echecBouton}</a>
+          </Button>
+        </div>
+      )}
+
       <div className="flex flex-wrap items-center gap-4">
-        <Button type="submit" size="lg" className="rounded-md text-base">
-          <Send aria-hidden /> {c.envoyer}
+        <Button
+          type="submit"
+          size="lg"
+          disabled={enCours}
+          aria-busy={enCours}
+          className="rounded-md text-base"
+        >
+          <Send aria-hidden /> {enCours ? c.envoiEnCours : c.envoyer}
         </Button>
         <p className="text-ink-muted max-w-(--content-max) text-sm">{c.ouverture}</p>
       </div>
