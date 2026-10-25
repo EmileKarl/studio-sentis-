@@ -677,3 +677,507 @@ Régénéré par `node scripts/identite/fiches.mjs`.
 **215** — Quelle ligne est la plus longue, A ou B ?
 > Elles font exactement la même longueur. Ce sont les pointes qui trompent : l'oeil mesure l'encombrement, pas le trait. Mêmes causes quand un bloc de texte paraît plus large qu'un autre de même largeur.
 
+**346** — Combien de triangles sont dessinés ?
+> Aucun. Pas un seul trait de triangle n'est tracé : il n'y a que trois disques entaillés. Le triangle blanc que vous voyez, bords et tout, est fabriqué par votre cerveau — c'est le triangle de Kanizsa. Même mécanisme que celui qui vous fait voir une colonne là où il n'y a que des blancs alignés.
+
+**347** — Combien de triangles sont dessinés ?
+> Aucun. Pas un seul trait de triangle n'est tracé : il n'y a que trois disques entaillés. Le triangle blanc que vous voyez, bords et tout, est fabriqué par votre cerveau — c'est le triangle de Kanizsa. Même mécanisme que celui qui vous fait voir une colonne là où il n'y a que des blancs alignés.
+
+**348** — Combien de triangles sont dessinés ?
+> Aucun. Pas un seul trait de triangle n'est tracé : il n'y a que trois disques entaillés. Le triangle blanc que vous voyez, bords et tout, est fabriqué par votre cerveau — c'est le triangle de Kanizsa. Même mécanisme que celui qui vous fait voir une colonne là où il n'y a que des blancs alignés.
+
+**349** — Combien de triangles sont dessinés ?
+> Aucun. Pas un seul trait de triangle n'est tracé : il n'y a que trois disques entaillés. Le triangle blanc que vous voyez, bords et tout, est fabriqué par votre cerveau — c'est le triangle de Kanizsa. Même mécanisme que celui qui vous fait voir une colonne là où il n'y a que des blancs alignés.
+
+**350** — Combien de triangles voyez-vous ?
+> 5. Il faut compter les petits, mais aussi ceux que forment plusieurs petits réunis, et le grand. Sur 2 rangs, la formule donne 5.
+
+**351** — Combien de triangles voyez-vous ?
+> 13. Il faut compter les petits, mais aussi ceux que forment plusieurs petits réunis, et le grand. Sur 3 rangs, la formule donne 13.
+
+**352** — Combien de triangles voyez-vous ?
+> 27. Il faut compter les petits, mais aussi ceux que forment plusieurs petits réunis, et le grand. Sur 4 rangs, la formule donne 27.
+
+**353** — Combien de triangles voyez-vous ?
+> 48. Il faut compter les petits, mais aussi ceux que forment plusieurs petits réunis, et le grand. Sur 5 rangs, la formule donne 48.
+
+**354** — Combien de triangles voyez-vous ?
+> 78. Il faut compter les petits, mais aussi ceux que forment plusieurs petits réunis, et le grand. Sur 6 rangs, la formule donne 78.
+
+**355** — Voyez-vous des points gris aux croisements ?
+> Ils n'existent pas. Les croisements sont exactement de la même couleur que le reste des couloirs — regardez-en un directement, il disparaît. C'est la grille d'Hermann : l'oeil accentue les contrastes en périphérie et invente les taches. C'est aussi pourquoi une grille de vignettes trop serrée fatigue.
+
+**356** — Voyez-vous des points gris aux croisements ?
+> Ils n'existent pas. Les croisements sont exactement de la même couleur que le reste des couloirs — regardez-en un directement, il disparaît. C'est la grille d'Hermann : l'oeil accentue les contrastes en périphérie et invente les taches. C'est aussi pourquoi une grille de vignettes trop serrée fatigue.
+
+**357** — Voyez-vous des points gris aux croisements ?
+> Ils n'existent pas. Les croisements sont exactement de la même couleur que le reste des couloirs — regardez-en un directement, il disparaît. C'est la grille d'Hermann : l'oeil accentue les contrastes en périphérie et invente les taches. C'est aussi pourquoi une grille de vignettes trop serrée fatigue.
+
+**358** — Voyez-vous des points gris aux croisements ?
+> Ils n'existent pas. Les croisements sont exactement de la même couleur que le reste des couloirs — regardez-en un directement, il disparaît. C'est la grille d'Hermann : l'oeil accentue les contrastes en périphérie et invente les taches. C'est aussi pourquoi une grille de vignettes trop serrée fatigue.
+
+**359** — Quelle ligne prolonge celle de gauche, A ou B ?
+> A. Presque tout le monde se trompe : la bande masquante fait dériver le prolongement dans l'oeil. C'est l'illusion de Poggendorff. Posez une règle sur l'écran pour vérifier.
+
+**360** — Quelle ligne prolonge celle de gauche, A ou B ?
+> B. Presque tout le monde se trompe : la bande masquante fait dériver le prolongement dans l'oeil. C'est l'illusion de Poggendorff. Posez une règle sur l'écran pour vérifier.
+
+**361** — Quelle ligne prolonge celle de gauche, A ou B ?
+> A. Presque tout le monde se trompe : la bande masquante fait dériver le prolongement dans l'oeil. C'est l'illusion de Poggendorff. Posez une règle sur l'écran pour vérifier.
+
+**362** — Quelle ligne prolonge celle de gauche, A ou B ?
+> B. Presque tout le monde se trompe : la bande masquante fait dériver le prolongement dans l'oeil. C'est l'illusion de Poggendorff. Posez une règle sur l'écran pour vérifier.
+
+**363** — Quelle barre est la plus longue, A ou B ?
+> Elles sont identiques, au pixel près. Les rails qui se rejoignent font lire la barre du haut comme étant plus loin — donc plus grande, puisqu'elle occupe autant de place. C'est l'illusion de Ponzo, et c'est le mécanisme de la perspective.
+
+**364** — Quelle barre est la plus longue, A ou B ?
+> Elles sont identiques, au pixel près. Les rails qui se rejoignent font lire la barre du haut comme étant plus loin — donc plus grande, puisqu'elle occupe autant de place. C'est l'illusion de Ponzo, et c'est le mécanisme de la perspective.
+
+**365** — Quelle barre est la plus longue, A ou B ?
+> Elles sont identiques, au pixel près. Les rails qui se rejoignent font lire la barre du haut comme étant plus loin — donc plus grande, puisqu'elle occupe autant de place. C'est l'illusion de Ponzo, et c'est le mécanisme de la perspective.
+
+**366** — Quelle barre est la plus longue, A ou B ?
+> Elles sont identiques, au pixel près. Les rails qui se rejoignent font lire la barre du haut comme étant plus loin — donc plus grande, puisqu'elle occupe autant de place. C'est l'illusion de Ponzo, et c'est le mécanisme de la perspective.
+
+**367** — Ce cube, le voyez-vous d'en haut ou d'en dessous ?
+> Les deux, et aucun n'est le bon. Aucune arête n'est cachée, donc rien dans le dessin ne dit quelle face est devant : votre cerveau choisit, puis change d'avis. C'est le cube de Necker. Fixez-le dix secondes, il bascule tout seul.
+
+**368** — Ce cube, le voyez-vous d'en haut ou d'en dessous ?
+> Les deux, et aucun n'est le bon. Aucune arête n'est cachée, donc rien dans le dessin ne dit quelle face est devant : votre cerveau choisit, puis change d'avis. C'est le cube de Necker. Fixez-le dix secondes, il bascule tout seul.
+
+**369** — Ce cube, le voyez-vous d'en haut ou d'en dessous ?
+> Les deux, et aucun n'est le bon. Aucune arête n'est cachée, donc rien dans le dessin ne dit quelle face est devant : votre cerveau choisit, puis change d'avis. C'est le cube de Necker. Fixez-le dix secondes, il bascule tout seul.
+
+**370** — Quelle figure complète la suite ?
+> A. La règle : le symbole tourne de 45 degrés à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**371** — Quelle figure complète la suite ?
+> C. La règle : le symbole tourne de 45 degrés à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**372** — Quelle figure complète la suite ?
+> B. La règle : les angles s'affûtent d'un cran régulier à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**373** — Quelle figure complète la suite ?
+> A. La règle : les angles s'affûtent d'un cran régulier à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**374** — Quelle figure complète la suite ?
+> C. La règle : le trait s'épaissit d'un cran régulier à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**375** — Quelle figure complète la suite ?
+> B. La règle : le trait s'épaissit d'un cran régulier à chaque case. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**376** — Quelle figure complète la suite ?
+> A. La règle : le sourire revient une case sur deux, et la case suivante est une case paire. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+**377** — Quelle figure complète la suite ?
+> C. La règle : le sourire revient une case sur deux, et la case suivante est une case paire. Les deux leurres sont cette même règle prise un cran trop tôt ou un cran trop loin.
+
+
+## Six mots (sans réponse)
+
+**216** — Logo livré. Client ravi. Facture impayée.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**217** — Site magnifique. Aucun visiteur. Trois ans.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**218** — Enseigne neuve. Rue déserte. Loyer impayé.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**219** — Il répondait toujours. Plus personne n'appelle.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**220** — Deux logos proposés. Il voulait trois.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**221** — Cartes imprimées. Numéro de téléphone faux.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**222** — Vingt ans d'enseigne. Trois mots effacés.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**223** — Refonte terminée. L'ancien site manquait déjà.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**224** — Il a choisi la police gratuite.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**225** — Boutique fermée. Le site tourne encore.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**226** — Mon premier client. Toujours le mien.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**227** — Elle a gardé la première maquette.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**228** — Devis gratuit. Réponse immédiate. Silence depuis.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**229** — Nouveau logo. Les habitués hésitent encore.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**230** — Il voulait moderne. Il voulait 1998.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**231** — Un seul client. Vingt ans ensemble.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**232** — Le camion roule. Personne ne lit.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**233** — Affiche parfaite. Date de l'événement oubliée.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**234** — Il a signé sans lire. Évidemment.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**235** — Trois polices. Aucune ne se parle.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**236** — Site rapide. Message clair. Toujours rien.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**237** — Elle voulait un logo. Pas seulement.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**238** — Atelier vide. Photos superbes. Clients absents.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**239** — Il imprime encore ses anciennes cartes.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**240** — Mon logo sur sa vitrine. Enfin.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**241** — Projet livré vendredi. Entreprise fermée lundi.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**242** — Il a tout refusé. Puis rappelé.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**243** — La maquette plaisait. Le budget non.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**244** — Première commande. Dix ans de retard.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**245** — Couleur choisie au téléphone. Mauvaise idée.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**246** — Nom déposé. Domaine pris. Recommencer demain.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**247** — Il disait : surprenez-moi. Puis il refusait.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**248** — Deux tasses servies. Une encore pleine.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**249** — Il a gardé la clé. Longtemps.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**250** — Billet aller acheté. Retour jamais utilisé.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**251** — Le chien attend encore la porte.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**252** — Elle a souri. Puis fermé l'album.
+> _Pas de réponse à donner : c'est une affirmation._
+
+**253** — Lumière allumée. Personne. Depuis trois jours.
+> _Pas de réponse à donner : c'est une affirmation._
+
+
+## Énigmes de situation
+
+**254** — Un homme pousse sa voiture jusqu'à un hôtel et annonce aussitôt qu'il est ruiné. Pourquoi ?
+> Il joue au Monopoly. Classique du folklore.
+
+**255** — Un homme entre dans un bar et demande un verre d'eau. Le barman sort un fusil. L'homme le remercie et s'en va. Que s'est-il passé ?
+> Il avait le hoquet. La peur l'a guéri, l'eau n'était plus nécessaire. Classique.
+
+**256** — On retrouve un homme sans vie au milieu d'un champ. À côté de lui, un paquet fermé. Que contenait le paquet ?
+> Un parachute qui ne s'est pas ouvert. Classique.
+
+**257** — Une femme appuie sur un interrupteur. Des dizaines de personnes meurent. Qui est-elle ?
+> La gardienne d'un phare : elle l'a éteint. Classique.
+
+**258** — Deux hommes disputent cinq parties d'échecs. Chacun en gagne trois. Aucune n'est nulle. Comment ?
+> Ils ne jouaient pas l'un contre l'autre. Classique.
+
+**259** — Un homme habite au vingtième étage. Il prend l'ascenseur jusqu'au dixième et monte le reste à pied — sauf les jours de pluie. Pourquoi ?
+> Il est trop petit pour atteindre le bouton du vingtième. Les jours de pluie, il a son parapluie. Classique.
+
+**260** — Antoine et Cléopâtre gisent sans vie sur le plancher, entourés d'eau et de verre brisé. Que s'est-il passé ?
+> Ce sont des poissons rouges : le bocal est tombé. Classique.
+
+**261** — Un homme regarde une photographie et déclare : je n'ai ni frère ni sœur, mais le père de cet homme est le fils de mon père. Qui est sur la photo ?
+> Son fils. Classique.
+
+**262** — Un chasseur marche dix kilomètres vers le sud, dix vers l'est, dix vers le nord, et se retrouve à son point de départ. Il aperçoit un ours. De quelle couleur est l'ours ?
+> Blanc : il est au pôle Nord. Classique.
+
+**263** — Un avion s'écrase exactement sur la frontière entre deux pays. Où enterre-t-on les survivants ?
+> Nulle part : on n'enterre pas les survivants. Classique.
+
+**264** — Un fermier possède dix-sept moutons. Tous meurent sauf neuf. Combien lui en reste-t-il ?
+> Neuf. « Tous sauf neuf » dit déjà la réponse. Classique.
+
+**265** — Deux pères et deux fils partent à la pêche. Ils attrapent trois poissons et chacun en rapporte un. Comment est-ce possible ?
+> Ils sont trois : un grand-père, un père, un fils. Classique.
+
+**266** — Vous dépassez le deuxième coureur d'une course. À quelle place êtes-vous ?
+> Deuxième. La plupart répondent premier. Classique.
+
+**267** — Il a plu sans arrêt pendant la nuit. Le lendemain matin, le soleil brillait. Y aura-t-il du soleil soixante-douze heures plus tard ?
+> Non : soixante-douze heures plus tard, il fera nuit. Classique.
+
+**268** — Plus on lui en enlève, plus il devient grand. Qu'est-ce que c'est ?
+> Un trou. Classique.
+
+**269** — Je parle toutes les langues sans en avoir appris aucune. Qui suis-je ?
+> L'écho. Classique.
+
+**270** — Plus il sèche, plus il est mouillé. Qu'est-ce que c'est ?
+> La serviette. Classique.
+
+**271** — Un homme est né un 29 février 1944 et a fêté son dix-huitième anniversaire en 2016. Comment ?
+> Son jour de naissance ne revient que les années bissextiles : 1948, 1952… 2016 est la dix-huitième.
+
+**272** — Un client approuve une maquette qu'il n'a jamais vue, et il a raison de le faire. Comment ?
+> Il l'avait décrite lui-même, mot pour mot, dans son brief. La maquette ne faisait que l'exécuter. Celle-là est de la maison.
+
+**273** — Un logo est validé par tout le monde et refusé par une seule personne, qui obtient gain de cause. Qui est-elle ?
+> La graveuse : il ne passait pas en broderie. Celle-là est de la maison.
+
+
+## Logique
+
+**274** — Une batte et une balle coûtent 1,10 $ ensemble. La batte coûte 1,00 $ de plus que la balle. Combien coûte la balle ?
+> 5 cents. Presque tout le monde répond 10, ce qui donnerait 1,20 $ au total. C'est le test de réflexion cognitive de Frederick.
+
+**275** — Un nénuphar double de surface chaque jour et recouvre le lac en 48 jours. Quand en recouvre-t-il la moitié ?
+> Le 47e jour. Doubler une fois de plus suffit à passer de la moitié au tout.
+
+**276** — Cinq machines fabriquent cinq objets en cinq minutes. Combien de temps pour que cent machines fabriquent cent objets ?
+> Cinq minutes. Chaque machine met cinq minutes par objet, quel que soit leur nombre.
+
+**277** — Trois portes. Derrière l'une, une voiture. Vous en choisissez une ; l'animateur, qui sait, ouvre une porte vide parmi les deux autres et vous propose de changer. Faut-il changer ?
+> Oui. Changer gagne deux fois sur trois, garder une fois sur trois. Le problème de Monty Hall.
+
+**278** — Deux portes, deux gardiens. L'un dit toujours vrai, l'autre ment toujours. Vous n'avez droit qu'à une question, à un seul gardien. Laquelle ?
+> « Que me répondrait l'autre si je lui demandais où est la sortie ? » Puis prenez l'inverse : les deux chemins passent par exactement un mensonge.
+
+**279** — Deux cordes brûlent chacune en une heure, mais irrégulièrement : une moitié de corde ne fait pas une demi-heure. Comment mesurer 45 minutes ?
+> Allumez la première aux deux bouts et la seconde à un seul. Quand la première est consumée, 30 minutes ont passé : allumez alors l'autre bout de la seconde, qui finira 15 minutes plus tard.
+
+**280** — Un escargot monte de 3 mètres le jour et redescend de 2 mètres la nuit. Le puits fait 10 mètres. Quand sort-il ?
+> Le huitième jour. Au soir du septième il est à 7 mètres ; le huitième jour il monte de 3 et sort avant de redescendre.
+
+**281** — Trois interrupteurs en bas, une ampoule à l'étage. Vous ne pouvez monter qu'une fois. Comment savoir lequel commande l'ampoule ?
+> Allumez le premier dix minutes, éteignez-le, allumez le second et montez. Allumée : le second. Éteinte et chaude : le premier. Éteinte et froide : le troisième.
+
+**282** — Dix personnes se saluent, chacune serrant la main de toutes les autres une seule fois. Combien de poignées de main ?
+> 45. Chacune en donne 9, mais chaque poignée est comptée deux fois : 10 × 9 ÷ 2.
+
+**283** — Un livre compte cent pages, numérotées de 1 à 100. Combien de chiffres l'imprimeur a-t-il composés ?
+> 192. Neuf pages à un chiffre, quatre-vingt-dix à deux, et la centième à trois : 9 + 180 + 3.
+
+**284** — Une pièce équilibrée vient de tomber cinq fois de suite sur pile. Quelle est la probabilité qu'elle tombe encore sur pile ?
+> Une sur deux. La pièce n'a pas de mémoire. C'est le sophisme du joueur.
+
+**285** — Vous avez douze billes identiques à l'oeil. L'une est plus lourde. Une balance à deux plateaux, trois pesées. Est-ce suffisant ?
+> Oui. Trois pesées distinguent jusqu'à 27 cas, et il n'y en a que 12. Pesez 4 contre 4, puis 2 contre 2 (ou 1 contre 1) dans le groupe suspect.
+
+**286** — Dans une salle, il suffit d'un certain nombre de personnes pour avoir plus d'une chance sur deux que deux d'entre elles partagent leur anniversaire. Combien ?
+> 23. On compare 253 paires, pas 23 dates. C'est le paradoxe des anniversaires.
+
+**287** — Un loup, une chèvre et un chou doivent traverser une rivière. La barque n'en porte qu'un. Seul, le loup mange la chèvre, et la chèvre mange le chou. Dans quel ordre ?
+> La chèvre, puis le chou — et on ramène la chèvre. Puis le loup, puis on revient chercher la chèvre. Classique.
+
+**288** — Deux sabliers : l'un de 7 minutes, l'autre de 11. Comment mesurer exactement 15 minutes ?
+> Lancez les deux. À 7, retournez le petit. À 11, retournez le petit encore : il lui reste 4 minutes à rendre, qui vous mènent à 15.
+
+**289** — La suite commence par 1, 11, 21, 1211, 111221. Quel est le terme suivant ?
+> 312211. Chaque terme décrit le précédent à voix haute : « trois 1, deux 2, un 1 ». C'est la suite de Conway.
+
+**290** — Combien de fois peut-on soustraire 10 du nombre 100 ? Une seule fois.
+> Une fois : après, on soustrait de 90, plus de 100. La question est un piège de formulation.
+
+
+## Développement
+
+**291** — Pourquoi 0,1 + 0,2 ne donne-t-il pas exactement 0,3 dans presque tous les langages ?
+> Parce qu'en base 2, 0,1 et 0,2 sont des développements infinis, comme 1/3 en base 10. La machine les arrondit, et les erreurs s'additionnent. On obtient 0,30000000000000004.
+
+**292** — Combien de fois faut-il plier une feuille de papier pour dépasser la distance Terre-Lune ?
+> 42. Chaque pli double l'épaisseur : 0,1 mm × 2⁴² fait environ 440 000 km, pour 384 400 km à parcourir. Au 41e, on est encore trop court.
+
+**293** — Un tableau contient tous les nombres de 1 à 100 sauf un, dans le désordre. Comment trouver le manquant en une seule lecture ?
+> On connaît d'avance la somme de 1 à 100 : 5050. On additionne ce qu'on lit, et la différence est le nombre absent.
+
+**294** — Chercher un mot dans un dictionnaire de mille pages prend environ dix coups d'oeil. Combien pour un dictionnaire d'un million de pages ?
+> Vingt. Couper en deux à chaque fois, c'est multiplier par mille pour dix étapes de plus. C'est la recherche dichotomique.
+
+**295** — Pourquoi le temps des ordinateurs commence-t-il le 1er janvier 1970 ?
+> Par convention. Les concepteurs d'Unix avaient besoin d'une origine, ont pris un 1er janvier rond et récent, et tout le monde a suivi. Il n'y a aucune raison plus profonde.
+
+**296** — Pourquoi un mot de passe long vaut-il mieux qu'un mot de passe compliqué ?
+> Parce que la difficulté croît avec la longueur de façon exponentielle, et avec les symboles de façon linéaire. Quatre mots ordinaires battent huit caractères tordus, et se retiennent.
+
+**297** — On dit qu'il n'y a que deux choses difficiles en informatique : nommer les choses, et… ?
+> Invalider les caches. La version longue ajoute « et les erreurs de un », en les numérotant un, deux, un — ce qui est la blague.
+
+**298** — Un écran courant affiche 256 nuances de rouge, 256 de vert et 256 de bleu. Combien de couleurs en tout ?
+> 16 777 216, soit 256³. C'est ce que veut dire « 24 bits ».
+
+**299** — Pourquoi un site rapide chez le développeur peut-il être lent chez le client ?
+> Parce que le développeur a le fichier en local, un réseau rapide et le cache déjà rempli. Le client a un téléphone, des données mobiles et aucun cache. Seule la seconde mesure compte.
+
+**300** — Un algorithme trie mille éléments en une seconde. Il est en n². Combien de temps pour deux mille ?
+> Quatre secondes. Doubler l'entrée quadruple le temps : c'est ce que veut dire « quadratique », et pourquoi ça finit toujours par faire mal.
+
+**301** — Pourquoi ne doit-on jamais enregistrer un mot de passe, même chiffré ?
+> Parce qu'un chiffrement se déchiffre. On enregistre une empreinte salée, impossible à remonter : le serveur sait vérifier le mot de passe sans jamais le connaître.
+
+**302** — Pourquoi le nombre 255 revient-il partout en informatique ?
+> Parce que c'est le plus grand entier tenant sur huit bits : 2⁸ − 1. Un octet compte de 0 à 255, d'où les couleurs, les adresses réseau et les limites de tout un tas de choses.
+
+**303** — Pourquoi un disque de 1 To affiche-t-il 931 Go une fois branché ?
+> Parce que le fabricant compte 10¹² octets et le système 2⁴⁰. Le téraoctet du marketing et le tébioctet de la machine diffèrent de 9 %. Personne ne ment, les deux ne parlent pas la même langue.
+
+**304** — Pourquoi le premier élément d'une liste porte-t-il le numéro zéro ?
+> Parce que l'indice n'est pas un rang, c'est un décalage depuis le début. Le premier élément est à zéro case du début. Dijkstra a écrit une note entière là-dessus.
+
+**305** — Combien de bits faut-il pour distinguer mille valeurs différentes ?
+> Dix. 2⁹ = 512, insuffisant ; 2¹⁰ = 1024, suffisant. C'est aussi pourquoi « kilo » vaut 1024 en informatique.
+
+**306** — Une image de 1000 × 1000 pixels, sans aucune compression. Combien pèse-t-elle ?
+> Environ 3 Mo : un million de pixels, trois octets chacun. C'est pourquoi un JPEG de 200 Ko est déjà un exploit de compression.
+
+**307** — Pourquoi un test qui passe ne prouve-t-il pas qu'un programme est correct ?
+> Parce qu'il prouve seulement que ce cas-là fonctionne. Dijkstra : les tests montrent la présence de bogues, jamais leur absence.
+
+**308** — Qu'est-ce qu'un bogue qui disparaît dès qu'on essaie de l'observer ?
+> Un heisenbug. Ajouter un affichage ou un point d'arrêt change le rythme du programme, et le défaut de synchronisation s'évanouit.
+
+**309** — Pourquoi les ordinateurs comptent-ils en 0 et 1 plutôt qu'en 0 à 9 ?
+> Parce qu'un circuit distingue de façon fiable deux états — passe ou ne passe pas — et très mal dix niveaux de tension. La base 2 est un choix d'ingénierie, pas de mathématiques.
+
+**310** — Pourquoi n'achète-t-on jamais vraiment un nom de domaine ?
+> Parce qu'on le loue, un an à la fois. Personne ne possède studiosentis.ca : on en détient le droit d'usage tant qu'on le renouvelle.
+
+**311** — Qu'est-ce qui différencie un site statique d'un site dynamique ?
+> Le moment où la page est fabriquée. Statique : une fois pour toutes, avant la visite. Dynamique : à chaque visite, par un serveur. Le premier est plus rapide et tombe moins souvent en panne.
+
+**312** — Pourquoi deux ordinateurs peuvent-ils afficher la même page différemment ?
+> Parce qu'une page web n'est pas une image : c'est une description que chaque navigateur interprète avec ses polices, sa taille d'écran et ses réglages. Le pixel près n'existe pas sur le web.
+
+**313** — Pourquoi un cache peut-il rendre un site plus lent ?
+> Quand il garde une version périmée qu'il faut ensuite vérifier, ou qu'il range plus de choses qu'il n'en ressort. Un cache mal réglé ajoute du travail au lieu d'en enlever.
+
+**314** — Qu'est-ce que la récursion ?
+> Voir : récursion. Plus sérieusement : une fonction qui s'appelle elle-même sur un cas plus petit, jusqu'à un cas si petit qu'il se résout directement.
+
+**315** — Pourquoi un identifiant peut-il être public alors qu'un mot de passe ne le doit jamais ?
+> Parce que l'identifiant dit qui vous prétendez être, et le mot de passe le prouve. Afficher son nom n'est pas un risque ; afficher sa preuve en est un.
+
+
+## L’oeil
+
+**316** — Pourquoi le O d'une police dépasse-t-il légèrement la hauteur du H ?
+> Parce qu'une forme ronde paraît plus petite qu'une forme droite de même hauteur. Le dessinateur la fait dépasser pour qu'elle paraisse égale : c'est le débord optique. Alignées mathématiquement, les lettres semblent sauter.
+
+**317** — Pourquoi un carré noir paraît-il plus petit qu'un carré blanc de même taille ?
+> Parce que le clair déborde sur le sombre dans l'oeil : c'est l'irradiation. C'est aussi pourquoi une police paraît plus grasse en blanc sur noir.
+
+**318** — Pourquoi centre-t-on un texte plus haut que le milieu exact de sa boîte ?
+> Parce que le centre optique est au-dessus du centre géométrique, d'environ 2 à 5 %. Un titre centré mathématiquement paraît tomber vers le bas.
+
+**319** — Pourquoi les barres horizontales d'un H sont-elles plus fines que les verticales ?
+> Parce que l'oeil perçoit une horizontale plus épaisse qu'une verticale de même épaisseur. Le dessinateur l'amincit pour qu'elles paraissent égales.
+
+**320** — Pourquoi une ligne verticale paraît-elle plus longue qu'une horizontale de même longueur ?
+> Parce que notre champ de vision est plus large que haut : la même longueur occupe une plus grande part du champ en hauteur. C'est l'illusion horizontale-verticale.
+
+**321** — Pourquoi un logo parfaitement centré paraît-il parfois décalé ?
+> Parce que l'oeil centre les masses, pas les boîtes. Une forme plus lourde d'un côté doit être déplacée vers l'autre pour paraître centrée. On aligne ce qu'on voit, pas ce qu'on mesure.
+
+**322** — Pourquoi le rouge pur et le bleu pur côte à côte font-ils vibrer l'oeil ?
+> Parce que l'oeil ne les met pas au point dans le même plan : le rouge semble avancer et le bleu reculer. C'est la chromostéréopsie, et c'est pourquoi on évite ce couple en texte.
+
+**323** — Pourquoi l'oeil suit-il un F sur une page web et un Z sur une affiche ?
+> Parce qu'une page se parcourt en cherchant, par balayages horizontaux de plus en plus courts, tandis qu'une affiche se prend d'un coup. La structure doit suivre le parcours, pas l'inverse.
+
+**324** — Pourquoi l'angle d'un carré arrondi moderne n'est-il pas un quart de cercle ?
+> Parce qu'un quart de cercle crée une rupture visible là où il rejoint la droite. Les logos récents utilisent une courbure progressive, qui entre et sort du virage sans cassure.
+
+**325** — Pourquoi un texte se lit-il plus vite en colonne étroite ?
+> Parce que l'oeil avance par bonds et doit retrouver le début de la ligne suivante. Passé 75 caractères environ, il se trompe de ligne. Les journaux ont des colonnes pour cette raison, pas par tradition.
+
+**326** — Pourquoi une couleur paraît-elle plus saturée sur une grande surface ?
+> Parce que la perception de saturation augmente avec l'aire. Un bleu choisi sur une pastille de 2 cm devient criard sur un mur — on valide toujours une couleur à sa taille réelle.
+
+**327** — Pourquoi l'italique penche-t-il à droite ?
+> Parce qu'il imite l'écriture manuscrite d'un droitier, dont la main pousse la plume vers l'avant. Un italique penché à gauche existe, et sert à signaler que quelque chose recule.
+
+**328** — Pourquoi un texte tout en capitales se lit-il plus lentement ?
+> Parce qu'on lit la silhouette des mots avant les lettres, et que les capitales donnent à tous les mots la même silhouette rectangulaire. On est forcé d'épeler.
+
+**329** — Pourquoi deux gris identiques paraissent-ils différents selon leur voisin ?
+> Parce que l'oeil mesure des écarts, jamais des valeurs absolues. C'est le contraste simultané, et c'est pourquoi une couleur de marque se valide sur ses vrais fonds.
+
+**330** — Pourquoi un pictogramme se dessine-t-il sur une grille ?
+> Pour que ses traits tombent sur les mêmes épaisseurs et ses formes sur les mêmes rayons d'un dessin à l'autre. Sans grille, une série de pictogrammes se voit comme une série de dessins séparés.
+
+**331** — Pourquoi une photo paraît-elle plus nette avec un léger grain ?
+> Parce que le grain ajoute du contraste local à haute fréquence, que l'oeil interprète comme du détail. C'est aussi pourquoi un aplat parfaitement lisse paraît plat.
+
+**332** — Pourquoi un triangle pointe en haut paraît-il plus grand qu'un carré de même aire ?
+> Parce que la pointe attire le regard vers le haut et que la base large lui donne de l'assise : l'oeil additionne une direction à une surface. Les formes se compensent à l'oeil, pas au calcul.
+
+**333** — Pourquoi un logo doit-il être légèrement plus épais en très petit ?
+> Parce que l'écran et l'encre mangent le trait fin. Les identités sérieuses livrent une version dessinée pour les petites tailles, pas une simple réduction.
+
+
+## Paradoxes
+
+**334** — On remplace une à une toutes les planches d'un bateau, jusqu'à ce qu'aucune d'origine ne subsiste. Est-ce encore le même bateau ?
+> Le bateau de Thésée. Aucune réponse ne fait consensus depuis deux mille ans — et c'est la même question que « est-ce encore la même marque après une refonte ».
+
+**335** — Retirez un grain d'un tas de sable : c'est encore un tas. Recommencez. Quand cesse-t-il d'en être un ?
+> Le paradoxe sorite. Il montre que certains mots n'ont pas de frontière nette — « moderne », « professionnel » et « simple » en font partie, d'où l'intérêt de montrer plutôt que de décrire.
+
+**336** — Cette phrase est fausse. Vraie ou fausse ?
+> Ni l'une ni l'autre : si elle est vraie, elle est fausse, et réciproquement. Le paradoxe du menteur, vieux de vingt-cinq siècles.
+
+**337** — Un traitement guérit mieux que l'autre chez les hommes, et mieux aussi chez les femmes. Peut-il être moins bon sur l'ensemble ?
+> Oui. C'est le paradoxe de Simpson : regrouper des données peut inverser une conclusion. Raison pour laquelle une moyenne globale ne prouve à peu près rien.
+
+**338** — Achille court dix fois plus vite que la tortue, qui part avec cent mètres d'avance. Quand il atteint son point de départ, elle a avancé ; quand il l'atteint, elle a encore avancé. La rattrape-t-il ?
+> Oui, après 111,11 mètres. Zénon découpe le trajet en une infinité d'étapes dont la somme est finie — une infinité de choses peut tenir dans un espace fini.
+
+**339** — Un village n'a qu'un barbier, qui rase tous ceux qui ne se rasent pas eux-mêmes, et eux seuls. Qui rase le barbier ?
+> Personne ne le peut : s'il se rase, il ne devrait pas ; s'il ne se rase pas, il le devrait. Russell s'en est servi pour montrer qu'un ensemble ne peut pas se contenir n'importe comment.
+
+**340** — Ajouter une route à un réseau routier saturé. Cela peut-il ralentir tout le monde ?
+> Oui. C'est le paradoxe de Braess : chacun choisit le trajet le meilleur pour lui, et l'ensemble y perd. On l'a vérifié en fermant des avenues, qui ont fluidifié le trafic.
+
+**341** — Une carte parfaitement exacte d'un territoire. Quelle serait sa taille ?
+> Celle du territoire, et elle ne servirait à rien. Borges en a fait une nouvelle d'un paragraphe. Une maquette qui montre tout ne montre rien : c'est le même problème.
+
+**342** — Vous faites la queue. L'autre file avance plus vite. Est-ce vraiment toujours le cas ?
+> Presque. S'il y a trois files, la vôtre n'est la plus rapide qu'une fois sur trois : vous avez donc deux chances sur trois d'avoir raison de râler.
+
+**343** — Un ordinateur ne fait jamais d'erreur, et pourtant tous les logiciels en contiennent. Où est la faute ?
+> Dans la consigne, jamais dans l'exécution. La machine fait exactement ce qu'on a écrit — le bogue est toujours un malentendu entre un humain et lui-même.
+
+**344** — Plus un devis est détaillé, moins le client le lit. Faut-il le raccourcir ?
+> Non : il faut le hiérarchiser. Un prix, une date, une liste courte en haut ; le détail en dessous pour qui le veut. Tout dire et être lu ne s'opposent que si tout est au même niveau.
+
+**345** — Une entreprise affiche ses prix et perd des clients. Elle les cache et en perd aussi. Que faut-il faire ?
+> Afficher. Ceux que le prix fait fuir ne seraient pas venus au bout ; ceux que l'absence de prix fait fuir, oui. On ne perd pas les mêmes.
+

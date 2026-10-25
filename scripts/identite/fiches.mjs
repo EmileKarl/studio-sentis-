@@ -31,7 +31,9 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { coque, lireSymbole, VARIANTES, parCle, RACINE } from "./gabarit.mjs";
 import * as C from "./fiches-contenu.mjs";
+import * as E from "./fiches-enigmes.mjs";
 import { DESSINS } from "./fiches-dessins.mjs";
+import { DESSINS_2 } from "./fiches-dessins-2.mjs";
 
 const SORTIE = join(RACINE, "identite", "5-fiches");
 const PNG = join(SORTIE, "png");
@@ -83,6 +85,19 @@ export const FICHES = [
   ...C.PHRASES.map((t) => ({ fam: "phrase", t, r: null })),
   ...C.CHIFFRES.map(([n, u, legende]) => ({ fam: "chiffre", n, u, legende, r: null })),
   ...DESSINS.map((d) => ({ fam: "jeu", etiq: "Petit jeu", q: d.q, svg: d.svg, r: d.r })),
+
+  // Seconde vague. Elle s'ajoute **à la fin** : les numéros 001 à 215 sont
+  // déjà imprimés sur des fichiers livrés et renvoient à REPONSES.md. Les
+  // décaler rendrait l'antisèche fausse pour toutes les fiches déjà en main.
+  ...E.SIXMOTS.map((t) => ({ fam: "sixmots", etiq: "Six mots", t, r: null })),
+  ...E.LATERALES.map(([mise, pointe, r]) => ({ fam: "laterale", etiq: "Énigme", mise, pointe, r })),
+  ...E.LOGIQUES.map(([mise, pointe, r]) => ({ fam: "logique", etiq: "Logique", mise, pointe, r })),
+  ...E.CODE.map((e) => (e.length === 3
+    ? { fam: "code", etiq: "Code", mise: e[0], pointe: e[1], r: e[2] }
+    : { fam: "code", etiq: "Code", q: e[0], r: e[1] })),
+  ...E.OEIL.map(([q, r]) => ({ fam: "oeil", etiq: "L’oeil", q, r })),
+  ...E.PARADOXES.map(([mise, pointe, r]) => ({ fam: "paradoxe", etiq: "Paradoxe", mise, pointe, r })),
+  ...DESSINS_2.map((d) => ({ fam: "jeu", etiq: "Petit jeu", q: d.q, svg: d.svg, r: d.r })),
 ].map((f, i) => ({ ...f, id: `${num(i + 1)}-${f.fam}` }));
 
 /* ------------------------------------------------------------------ */
@@ -111,6 +126,16 @@ const STYLE = `
   .grandmot{font-size:3.1em;line-height:1;font-weight:600;letter-spacing:-.04em}
   .phrase-seule{font-size:2.35em;line-height:1.16;font-weight:600;letter-spacing:-.03em;
                 text-wrap:balance}
+
+  /* Les six mots. Rien autour : le vide fait la moitie du travail. */
+  .sixmots{font-size:2.5em;line-height:1.2;font-weight:600;letter-spacing:-.032em;
+           text-wrap:balance}
+
+  /* Les enigmes longues : une mise en place, puis la pointe. C'est l'ecart
+     de corps entre les deux qui dit ou commence la question. */
+  .mise{font-size:1.2em;line-height:1.4;font-weight:400;text-wrap:pretty;opacity:.94}
+  .pointe{font-size:2em;line-height:1.14;font-weight:600;letter-spacing:-.028em;
+          margin-top:.9em;text-wrap:balance}
   .nombre{font-size:7.2em;line-height:.88;font-weight:600;letter-spacing:-.05em}
   .unite{font-size:.9em;letter-spacing:.24em;text-transform:uppercase;opacity:.8;
          margin-top:.6em}
@@ -128,6 +153,12 @@ const INVITE = {
   choix: "A ou B ? Répondez, je dis pourquoi.",
   mot: "Vous savez ce que c'est ?",
   jeu: "Votre compte en message privé.",
+  laterale: "Trouvé ? Dites-le-moi en privé.",
+  logique: "Votre réponse en message privé.",
+  code: "Répondez à ce statut — je donne la réponse.",
+  oeil: "Répondez à ce statut — je donne la réponse.",
+  // Un paradoxe n'a pas de bonne reponse : on ne demande donc pas LA reponse.
+  paradoxe: "Votre avis m'intéresse. En privé.",
 };
 
 const corpsDe = (f, v) => {
@@ -159,6 +190,18 @@ const corpsDe = (f, v) => {
     case "jeu":
       return `${etiq}<div class="demande-petite">${ech(f.q)}</div>
               <div class="boite-dessin">${f.svg}</div>${invite}`;
+    case "sixmots":
+      return `${etiq}<div class="sixmots">${ech(f.t)}</div>`;
+    case "oeil":
+      return `${etiq}<div class="demande">${ech(f.q)}</div>${invite}`;
+    case "laterale":
+    case "logique":
+    case "paradoxe":
+    case "code":
+      return f.mise
+        ? `${etiq}<div class="mise">${ech(f.mise)}</div>
+           <div class="pointe">${ech(f.pointe)}</div>${invite}`
+        : `${etiq}<div class="demande">${ech(f.q)}</div>${invite}`;
     default:
       throw new Error(`famille inconnue : ${f.fam}`);
   }
@@ -247,7 +290,9 @@ function ecrireReponses() {
     devinette: "Devinettes", ici: "Ici (Châteauguay, Montérégie)",
     vraifaux: "Vrai ou faux", choix: "A ou B", mot: "Le mot",
     phrase: "Phrases (sans réponse)", chiffre: "Chiffres (sans réponse)",
-    jeu: "Petits jeux",
+    jeu: "Petits jeux", sixmots: "Six mots (sans réponse)",
+    laterale: "Énigmes de situation", logique: "Logique",
+    code: "Développement", oeil: "L’oeil", paradoxe: "Paradoxes",
   };
   let md = `# Les réponses
 
@@ -263,7 +308,7 @@ Régénéré par \`node scripts/identite/fiches.mjs\`.
   for (const [fam, liste] of Object.entries(groupes)) {
     md += `\n## ${titres[fam] ?? fam}\n\n`;
     for (const f of liste) {
-      const pose = f.q ?? f.t ?? f.mot ?? `${f.n} ${f.u}`;
+      const pose = f.pointe ? `${f.mise} ${f.pointe}` : (f.q ?? f.t ?? f.mot ?? `${f.n} ${f.u}`);
       md += `**${f.id.split("-")[0]}** — ${pose}\n`;
       md += f.r ? `> ${f.r}\n\n` : `> _Pas de réponse à donner : c'est une affirmation._\n\n`;
     }

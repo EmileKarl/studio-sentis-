@@ -24,7 +24,8 @@ import { VARIANTES } from "./gabarit.mjs";
 import { FICHES, pageDe } from "./fiches.mjs";
 
 const BLOCS = ".etiquette, .demande, .demande-petite, .enonce, .invite, .opt, " +
-  ".duo span, .grandmot, .phrase-seule, .nombre, .unite, .legende, .mot, .lieu, .site";
+  ".duo span, .grandmot, .phrase-seule, .nombre, .unite, .legende, " +
+  ".sixmots, .mise, .pointe, .mot, .lieu, .site";
 const MASQUER = `${BLOCS}, .regle, .symbole, .fil, .dessin, .boite-dessin`;
 
 const lum = ([r, g, b]) => {
